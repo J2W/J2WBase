@@ -1,0 +1,9 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="j2w.team">
+
+    <application
+        android:allowBackup="true">
+
+    </application>
+
+</manifest>
