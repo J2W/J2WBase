@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+
 android {
     compileSdkVersion 21
     buildToolsVersion "21.1.2"
@@ -7,8 +8,8 @@ android {
         applicationId "j2w.team"
         minSdkVersion 19
         targetSdkVersion 21
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "2.0"
     }
     buildTypes {
         release {
@@ -18,7 +19,21 @@ android {
     }
 
 }
+apply plugin: 'robolectric'
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:21.0.3'
+    // 2. test-libs
+    androidTestCompile 'junit:junit:4.12'
+    androidTestCompile 'com.squareup:fest-android:1.0.8'
+    androidTestCompile 'org.robolectric:robolectric:2.4'
+}
+// 3. test settings
+robolectric {
+    // configure the set of classes for JUnit tests
+    include '**/*Test.class'
+    exclude '**/espresso/**/*.class'
+
+    // configure max heap size of the test JVM
+    maxHeapSize = "2048m"
 }

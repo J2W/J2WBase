@@ -13,7 +13,7 @@ public abstract class J2WBaseActivity extends ActionBarActivity {
 	/**
 	 * TAG标记
 	 */
-	abstract String getTag();
+	public abstract String getTag();
 
 	@Override
     protected void onCreate(Bundle savedInstanceState) {

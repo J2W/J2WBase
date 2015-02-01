@@ -14,7 +14,7 @@ public abstract class J2WApplication extends Application {
 	 * 
 	 * @return true 打印 false 不打印
 	 */
-	abstract boolean isLogOpen();
+	public abstract boolean isLogOpen();
 
 	/**
 	 * 应用程序启动首先被执行

@@ -1,11 +1,21 @@
 package j2w.team;
 
+import android.util.Log;
 
-import j2w.team.common.log.L;
+import junit.framework.Assert;
 
- public class ApplicationTest {
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.robolectric.RobolectricTestRunner;
+import org.robolectric.annotation.Config;
 
-	public void print_log() throws Exception {
-        L.i("打印思密达");
-    }
+
+@RunWith(RobolectricTestRunner.class) @Config(manifest = "./src/main/AndroidManifest.xml",emulateSdk = 18) public class ApplicationTest {
+
+	@Test public void testSample() {
+
+        Log.i("asdfasdf","asdfasdf");
+
+        Assert.assertEquals("asdf", "asdf");
+	}
 }
