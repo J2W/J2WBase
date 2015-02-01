@@ -13,12 +13,16 @@ android {
     }
     buildTypes {
         release {
+            // 支持自动去除没有使用的资源 默认关闭
             minifyEnabled false
+            shrinkResources false
+            //混淆文件
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 
 }
+// 1. test-plugin
 apply plugin: 'robolectric'
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
