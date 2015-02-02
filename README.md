@@ -3,7 +3,7 @@
 Gradle 版本
 ----------
 classpath 'com.android.tools.build:gradle:1.0.0'
-
+版本 - gradle-2.2.1-all.zip
 
 
 
