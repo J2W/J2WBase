@@ -30,7 +30,6 @@ public abstract class J2WBaseFragment extends Fragment implements J2WIView {
         super.onAttach(activity);
         L.tag(getTAG());
         L.i("Fragment-onAttach()");
-        initView();
     }
 
     @Override
