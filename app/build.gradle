@@ -41,3 +41,23 @@ robolectric {
     // configure max heap size of the test JVM
     maxHeapSize = "2048m"
 }
+// 1.maven-插件
+apply plugin: 'maven'
+// 2.maven-信息
+ext {
+    PUBLISH_GROUP_ID = 'j2w'
+    PUBLISH_ARTIFACT_ID = 'base'
+    PUBLISH_VERSION = android.defaultConfig.versionName
+}
+// 3.maven-路径
+uploadArchives {
+    repositories.mavenDeployer {
+        def deployPath = file(getProperty('aar.deployPath'))
+        repository(url: "file://${deployPath.absolutePath}")
+        pom.project {
+            groupId project.PUBLISH_GROUP_ID
+            artifactId project.PUBLISH_ARTIFACT_ID
+            version project.PUBLISH_VERSION
+        }
+    }
+}
