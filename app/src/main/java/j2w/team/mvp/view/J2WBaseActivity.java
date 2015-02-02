@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 
 import j2w.team.common.log.L;
-import j2w.team.mvp.J2WIView;
 
 /**
  * Created by sky on 15/1/26.

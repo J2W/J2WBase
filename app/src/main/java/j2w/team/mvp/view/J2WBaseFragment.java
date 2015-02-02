@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import j2w.team.common.log.L;
-import j2w.team.mvp.J2WIView;
 
 /**
  * Created by sky on 15/2/1.
@@ -111,6 +110,4 @@ public abstract class J2WBaseFragment extends Fragment implements J2WIView {
         L.tag(getTAG());
         L.i("Fragment-onDetach()");
     }
-
-
 }

@@ -2,7 +2,7 @@ package j2w.team.mvp.presenter;
 
 import java.lang.ref.WeakReference;
 
-import j2w.team.mvp.J2WIView;
+import j2w.team.mvp.view.J2WIView;
 
 /**
  * Created by sky on 15/2/1. 中央处理器
