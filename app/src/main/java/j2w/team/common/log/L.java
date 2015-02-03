@@ -172,7 +172,7 @@ public final class L {
             List<Tree> forest = FOREST;
             // noinspection ForLoopReplaceableByForEach
             for (int i = 0, count = forest.size(); i < count; i++) {
-                forest.get(i).i(message, args);
+                forest.get(i).m(message, args);
             }
         }
 

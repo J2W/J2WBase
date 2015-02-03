@@ -3,6 +3,7 @@ package j2w.team.mvp.view;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 
+import j2w.team.base.J2WHelper;
 import j2w.team.common.log.L;
 
 /**
@@ -25,6 +26,9 @@ public abstract class J2WBaseActivity extends ActionBarActivity implements J2WIV
 		super.onCreate(savedInstanceState);
 		L.tag(getTag());
 		L.i("onCreate()");
+        /** 添加到堆栈 **/
+        J2WHelper.getScreenHelper().pushActivity(this);
+        /** 初始化视图 **/
 		initView();
 	}
 
@@ -62,5 +66,7 @@ public abstract class J2WBaseActivity extends ActionBarActivity implements J2WIV
 		super.onDestroy();
 		L.tag(getTag());
 		L.i("onDestroy()");
+        /** 从堆栈里移除 **/
+        J2WHelper.getScreenHelper().popActivity(this);
 	}
 }
