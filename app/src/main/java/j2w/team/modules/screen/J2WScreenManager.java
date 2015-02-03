@@ -42,7 +42,7 @@ public class J2WScreenManager implements J2WIScreenManager {
 			L.i("FragmentActivity堆栈 size = 0");
 			return null;
 		}
-		FragmentActivity fragmentActivity = fragmentActivities.lastElement();
+		FragmentActivity fragmentActivity = fragmentActivities.peek();
 		L.i("获取当前FragmentActivity堆栈名称:" + fragmentActivity.getClass().getSimpleName());
 		return fragmentActivity;
 	}
