@@ -48,4 +48,6 @@ public final class AppUtils {
 			return "无法检测";
 		}
 	}
+
+
 }

@@ -1,11 +1,12 @@
-apply plugin: 'com.android.application'
-
+//框架开发模式-需要测试
+//apply plugin: 'com.android.application'
+apply plugin: 'android-library'
 android {
     compileSdkVersion 21
     buildToolsVersion "21.1.2"
 
     defaultConfig {
-        applicationId "j2w.team"
+//        applicationId "j2w.team"
         minSdkVersion 19
         targetSdkVersion 21
         versionCode 1
@@ -29,7 +30,8 @@ dependencies {
     compile 'com.android.support:appcompat-v7:21.0.3'
     // 2. test-libs
     androidTestCompile 'junit:junit:4.12'
-    androidTestCompile 'com.squareup:fest-android:1.0.8'
+    //框架开发模式-需要测试
+//    androidTestCompile 'com.squareup:fest-android:1.0.8'
     androidTestCompile 'org.robolectric:robolectric:2.4'
 }
 // 3. test settings
@@ -45,7 +47,7 @@ robolectric {
 apply plugin: 'maven'
 // 2.maven-信息
 ext {
-    PUBLISH_GROUP_ID = 'j2w'
+    PUBLISH_GROUP_ID = 'com.j2w'
     PUBLISH_ARTIFACT_ID = 'base'
     PUBLISH_VERSION = android.defaultConfig.versionName
 }
