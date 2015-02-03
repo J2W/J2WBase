@@ -47,7 +47,7 @@ robolectric {
 apply plugin: 'maven'
 // 2.maven-信息
 ext {
-    PUBLISH_GROUP_ID = 'com.j2w'
+    PUBLISH_GROUP_ID = 'j2w.team'
     PUBLISH_ARTIFACT_ID = 'base'
     PUBLISH_VERSION = android.defaultConfig.versionName
 }
