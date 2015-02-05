@@ -2,12 +2,10 @@ package j2w.team.mvp.presenter;
 
 import java.lang.ref.WeakReference;
 
-import j2w.team.mvp.view.J2WIView;
-
 /**
  * Created by sky on 15/2/1. 中央处理器
  */
-public class J2WPresenter<T extends J2WIView> {
+public class J2WPresenter<T> {
 
 	// 弱引用 view层接口
 	private WeakReference<T> iView;

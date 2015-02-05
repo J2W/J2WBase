@@ -5,6 +5,4 @@ package j2w.team.base;
  */
 public class J2WAppConfig {
 
-
-
 }

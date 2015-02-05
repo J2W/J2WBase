@@ -6,7 +6,6 @@ android {
     buildToolsVersion "21.1.2"
 
     defaultConfig {
-//        applicationId "j2w.team"
         minSdkVersion 19
         targetSdkVersion 21
         versionCode 1
@@ -31,8 +30,11 @@ dependencies {
     // 2. test-libs
     androidTestCompile 'junit:junit:4.12'
     //框架开发模式-需要测试
-//    androidTestCompile 'com.squareup:fest-android:1.0.8'
+    //    androidTestCompile 'com.squareup:fest-android:1.0.8'
     androidTestCompile 'org.robolectric:robolectric:2.4'
+    compile 'com.google.code.gson:gson:2.3.1'
+    compile 'com.squareup.dagger:dagger:1.2.2'
+    compile 'com.jakewharton:butterknife:6.1.0'
 }
 // 3. test settings
 robolectric {

@@ -4,6 +4,9 @@ import android.support.v4.app.FragmentActivity;
 
 import java.util.Stack;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import j2w.team.common.log.L;
 
 /**
