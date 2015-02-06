@@ -17,7 +17,7 @@ import j2w.team.common.log.L;
 import j2w.team.mvp.view.iview.J2WActionBarIView;
 
 /**
- * Created by sky on 15/2/5.
+ * Created by sky on 15/2/5. actionbarActivity 视图
  */
 public abstract class J2WBaseCustomActoinBarActivity extends ActionBarActivity implements J2WActionBarIView, View.OnClickListener {
 

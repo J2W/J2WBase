@@ -2,9 +2,9 @@ package j2w.team.mvp.view;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ViewAnimator;
@@ -15,14 +15,14 @@ import j2w.team.common.log.L;
 import j2w.team.mvp.view.iview.J2WFragmentIView;
 
 /**
- * Created by sky on 15/2/1.
+ * Created by sky on 15/2/1. fragment 视图
  */
-public abstract class J2WBaseFragment extends Fragment implements J2WFragmentIView {
+public abstract class J2WBaseFragment extends Fragment implements J2WFragmentIView,View.OnTouchListener {
 
+    /** view **/
+    View mContentView;
 	/** view **/
-	private View mContentView;
-	/** view **/
-	private ViewAnimator mViewAnimator;
+    ViewAnimator mViewAnimator;
 
 	/** 初始化视图 **/
 	@Override public void initData(Bundle savedInstanceState) {
@@ -42,7 +42,7 @@ public abstract class J2WBaseFragment extends Fragment implements J2WFragmentIVi
 		L.i("Fragment-onCreate()");
 	}
 
-	@Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+	@Override public View onCreateView(LayoutInflater inflater,  ViewGroup container,  Bundle savedInstanceState) {
 		L.tag(initTag());
 		L.i("Fragment-onCreateView()");
 		mContentView = inflater.inflate(R.layout.j2w_fragment_main, container, false);
@@ -51,8 +51,10 @@ public abstract class J2WBaseFragment extends Fragment implements J2WFragmentIVi
 
 		// 加载布局-初始化
 		mViewAnimator.addView(inflater.inflate(initLoadingLayout(), null, false));
+
 		// 内容布局-初始化
 		mViewAnimator.addView(inflater.inflate(layoutId(), null, false));
+
 		// 空布局-初始化
 		mViewAnimator.addView(inflater.inflate(initEmptyLayout(), null, false));
 		// 错误布局-初始化
@@ -62,7 +64,7 @@ public abstract class J2WBaseFragment extends Fragment implements J2WFragmentIVi
 		return mContentView;
 	}
 
-	@Override public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+	@Override public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		L.tag(initTag());
 		L.i("Fragment-onActivityCreated()");
@@ -176,4 +178,15 @@ public abstract class J2WBaseFragment extends Fragment implements J2WFragmentIVi
 		}
 		mViewAnimator.setDisplayedChild(3);
 	}
+
+    @Override
+    public boolean isTouch() {
+        return true;
+    }
+
+    /** 防止事件穿透 */
+
+    @Override public boolean onTouch(View v, MotionEvent event) {
+        return isTouch();
+    }
 }

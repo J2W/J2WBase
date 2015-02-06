@@ -29,4 +29,7 @@ public interface J2WFragmentIView extends J2WIView {
     public void showEmpty();
 
     public void showError();
+
+    /** 防止事件穿透开关 **/
+    public boolean isTouch();
 }

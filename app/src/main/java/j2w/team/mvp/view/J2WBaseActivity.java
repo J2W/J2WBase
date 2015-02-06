@@ -10,7 +10,7 @@ import j2w.team.common.log.L;
 import j2w.team.mvp.view.iview.J2WActivityIView;
 
 /**
- * Created by sky on 15/1/26.
+ * Created by sky on 15/1/26. activity 视图
  */
 public abstract class J2WBaseActivity extends FragmentActivity implements J2WActivityIView {
 
