@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">J2W</string>
     <string name="actoinbar_default_title_name">无标题</string>
+    <string name="fragment_empty">暂无数据</string>
+    <string name="fragment_error">错误</string>
 </resources>

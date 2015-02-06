@@ -2,4 +2,5 @@
 <resources>
     <dimen name="actoinbar_dimen_default">10dp</dimen>
     <dimen name="actoinbar_dimen_hight">2dp</dimen>
+    <dimen name="fragment_default_txt_size">11sp</dimen>
 </resources>
