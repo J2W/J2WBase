@@ -94,6 +94,9 @@ public abstract class J2WBaseListFragment extends J2WBaseFragment implements J2W
 			View footerView = LayoutInflater.from(getActivity()).inflate(getFooterLayout(), null, false);
 			listView.addFooterView(footerView);
 		}
+        //设置点击事件
+        listView.setOnItemClickListener(this);
+        listView.setOnItemLongClickListener(this);
 		mViewAnimator.addView(listView);
         // 内容布局-设置值
         mListAdapter = new ListAdapter();
@@ -129,7 +132,7 @@ public abstract class J2WBaseListFragment extends J2WBaseFragment implements J2W
 	public final boolean isAdapterNotNull() {
         L.tag(initTag());
         L.i("Fragment-isAdapterNotNull()");
-		return mListAdapter == null ? true : false;
+		return mListAdapter != null ? true : false;
 	}
 
     /**
