@@ -2,6 +2,7 @@
     package="j2w.team">
 
     <application
+        android:theme="@style/AppTheme"
         android:label="@string/app_name"
         android:allowBackup="true"></application>
 

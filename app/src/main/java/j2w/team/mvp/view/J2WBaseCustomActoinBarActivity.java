@@ -25,9 +25,9 @@ public abstract class J2WBaseCustomActoinBarActivity extends ActionBarActivity i
 	private ActionBar actionBar;
 
 	/** 初始化视图 **/
-	@Override public void initView(Bundle savedInstanceState) {
+	@Override public void initData(Bundle savedInstanceState) {
 		L.tag(initTag());
-		L.i("initView()");
+		L.i("initData()");
 	}
 
 	@Override public void onClick(View v) {
@@ -62,10 +62,12 @@ public abstract class J2WBaseCustomActoinBarActivity extends ActionBarActivity i
 		L.i("onCreate()");
 		/** 初始化视图 **/
 		setContentView(layoutId());
+        /** 初始化所有组建 **/
+        ButterKnife.inject(this);
 		/** 添加到堆栈 **/
 		J2WHelper.getScreenHelper().pushActivity(this);
 		/** 初始化视图组建 **/
-		initView(savedInstanceState);
+        initData(savedInstanceState);
 	}
 
 	@Override protected void onStart() {

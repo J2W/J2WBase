@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ViewAnimator;
 
 import butterknife.ButterKnife;
+import j2w.team.R;
 import j2w.team.common.log.L;
 import j2w.team.mvp.view.iview.J2WFragmentIView;
 
@@ -18,15 +19,15 @@ import j2w.team.mvp.view.iview.J2WFragmentIView;
  */
 public abstract class J2WBaseFragment extends Fragment implements J2WFragmentIView {
 
-    /** view **/
+	/** view **/
 	private View mContentView;
-    /** view **/
-    private ViewAnimator mViewAnimator;
+	/** view **/
+	private ViewAnimator mViewAnimator;
 
-    /** 初始化视图 **/
-	@Override public void initView(Bundle savedInstanceState) {
+	/** 初始化视图 **/
+	@Override public void initData(Bundle savedInstanceState) {
 		L.tag(initTag());
-		L.i("Fragment-initView()");
+		L.i("Fragment-initData()");
 	}
 
 	@Override public void onAttach(Activity activity) {
@@ -44,18 +45,18 @@ public abstract class J2WBaseFragment extends Fragment implements J2WFragmentIVi
 	@Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		L.tag(initTag());
 		L.i("Fragment-onCreateView()");
-		mContentView = inflater.inflate(layoutId(), container, false);
+		mContentView = inflater.inflate(R.layout.j2w_fragment_main, container, false);
 
-        mViewAnimator = ButterKnife.findById(mContentView,android.R.id.home);
+		mViewAnimator = ButterKnife.findById(mContentView, android.R.id.home);
 
-        //加载布局-初始化
-
-        //内容布局-初始化
-
-        //空布局-初始化
-
-        //错误布局-初始化
-
+		// 加载布局-初始化
+		mViewAnimator.addView(inflater.inflate(initLoadingLayout(), null, false));
+		// 内容布局-初始化
+		mViewAnimator.addView(inflater.inflate(layoutId(), null, false));
+		// 空布局-初始化
+		mViewAnimator.addView(inflater.inflate(initEmptyLayout(), null, false));
+		// 错误布局-初始化
+		mViewAnimator.addView(inflater.inflate(initErrorLayout(), null, false));
 
 		ButterKnife.inject(this, mContentView);
 		return mContentView;
@@ -65,7 +66,7 @@ public abstract class J2WBaseFragment extends Fragment implements J2WFragmentIVi
 		super.onActivityCreated(savedInstanceState);
 		L.tag(initTag());
 		L.i("Fragment-onActivityCreated()");
-		initView(savedInstanceState);
+		initData(savedInstanceState);
 	}
 
 	@Override public void onStart() {
@@ -123,48 +124,56 @@ public abstract class J2WBaseFragment extends Fragment implements J2WFragmentIVi
 		return mContentView;
 	}
 
-    @Override
-    public int initLoadingLayout() {
-        return 0;
-    }
+	@Override public int initLoadingLayout() {
+		return R.layout.j2w_fragment_loading;
+	}
 
-    @Override
-    public int initContentLayout() {
-        return 0;
-    }
+	@Override public int initEmptyLayout() {
+		return R.layout.j2w_fragment_empty;
+	}
 
-    @Override
-    public int initEmptyLayout() {
-        return 0;
-    }
+	@Override public int initErrorLayout() {
+		return R.layout.j2w_fragment_error;
+	}
 
-    @Override
-    public int initErrorLayout() {
-        return 0;
-    }
+	@Override public void onRefresh() {
+		L.tag(initTag());
+		L.i("Fragment-onRefresh()");
+	}
 
-    @Override
-    public void onLoadingLayout(View view) {
+	@Override public void showLoading() {
+		L.tag(initTag());
+		L.i("Fragment-loading()");
+		if (mViewAnimator == null) {
+			return;
+		}
+		mViewAnimator.setDisplayedChild(0);
+	}
 
-    }
+	@Override public void showContent() {
+		L.tag(initTag());
+		L.i("Fragment-content()");
+		if (mViewAnimator == null) {
+			return;
+		}
+		mViewAnimator.setDisplayedChild(1);
+	}
 
-    @Override
-    public void onContentLayout(View view) {
+	@Override public void showEmpty() {
+		L.tag(initTag());
+		L.i("Fragment-empty()");
+		if (mViewAnimator == null) {
+			return;
+		}
+		mViewAnimator.setDisplayedChild(2);
+	}
 
-    }
-
-    @Override
-    public void onEmptyLayout(View view) {
-
-    }
-
-    @Override
-    public void onErrorLaout(View view) {
-
-    }
-
-    @Override
-    public void onRefresh() {
-
-    }
+	@Override public void showError() {
+		L.tag(initTag());
+		L.i("Fragment-error()");
+		if (mViewAnimator == null) {
+			return;
+		}
+		mViewAnimator.setDisplayedChild(3);
+	}
 }

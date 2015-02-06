@@ -3,6 +3,8 @@ package j2w.team.mvp.view;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+
+import butterknife.ButterKnife;
 import j2w.team.base.J2WHelper;
 import j2w.team.common.log.L;
 import j2w.team.mvp.view.iview.J2WActivityIView;
@@ -13,9 +15,9 @@ import j2w.team.mvp.view.iview.J2WActivityIView;
 public abstract class J2WBaseActivity extends FragmentActivity implements J2WActivityIView {
 
 	/** 初始化视图 **/
-	@Override public void initView(Bundle savedInstanceState) {
+	@Override public void initData(Bundle savedInstanceState) {
 		L.tag(initTag());
-		L.i("initView()");
+		L.i("initData()");
 	}
 
 	/** onCreate 无法重写 **/
@@ -30,10 +32,12 @@ public abstract class J2WBaseActivity extends FragmentActivity implements J2WAct
 		L.i("onCreate()");
 		/** 初始化视图 **/
 		setContentView(layoutId());
+        /** 初始化所有组建 **/
+        ButterKnife.inject(this);
 		/** 添加到堆栈 **/
 		J2WHelper.getScreenHelper().pushActivity(this);
 		/** 初始化视图组建 **/
-		initView(savedInstanceState);
+        initData(savedInstanceState);
 	}
 
 	@Override protected void onStart() {
