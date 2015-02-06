@@ -8,14 +8,14 @@ classpath 'com.android.tools.build:gradle:1.0.0'
 版本 - gradle-2.2.1-all.zip
 
 
-base
+base [Base使用介绍](https://github.com/J2W/mvn-repo-j2w/blob/master/Explain/J2W_BASE.md)
 -----------------------------------
 还没来得及写
 
-### 帮助连接
-[Base使用介绍](https://github.com/J2W/mvn-repo-j2w/blob/master/Explain/J2W_BASE.md)
 
-MVP
+
+MVP [MVP使用介绍](https://github.com/J2W/mvn-repo-j2w/blob/master/Explain/J2W_MVP.md)
+
 -----------------------------------
 ### View层
 还没来得及写
@@ -23,19 +23,14 @@ MVP
 ### Presenter层
 还没来得及写
 
-### 帮助连接
-[MVP使用介绍](https://github.com/J2W/mvn-repo-j2w/blob/master/Explain/J2W_MVP.md)
 
-modules
+modules [modules使用介绍](https://github.com/J2W/mvn-repo-j2w/blob/master/Explain/J2W_MODULES.md)
 -----------------------------------
 还没来得及写
 
-### 帮助连接
-[modules使用介绍](https://github.com/J2W/mvn-repo-j2w/blob/master/Explain/J2W_MODULES.md)
 
-common
+
+common [common使用介绍](https://github.com/J2W/mvn-repo-j2w/blob/master/Explain/J2W_COMMON.md)
 -----------------------------------
 还没来得及写
 
-### 帮助连接
-[common使用介绍](https://github.com/J2W/mvn-repo-j2w/blob/master/Explain/J2W_COMMON.md)
