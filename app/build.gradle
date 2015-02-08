@@ -36,6 +36,7 @@ dependencies {
     compile 'com.jakewharton:butterknife:6.1.0'
     //noinspection GradleCompatible
     compile 'com.android.support:appcompat-v7:19.0.1'
+    compile 'com.squareup.dagger:dagger-compiler:1.2.2'
 }
 // 3. test settings
 robolectric {

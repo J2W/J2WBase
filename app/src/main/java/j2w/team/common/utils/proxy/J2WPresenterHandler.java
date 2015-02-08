@@ -18,11 +18,14 @@ public final class J2WPresenterHandler<T> extends BaseHandler<T> {
 	}
 	@Override public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
 		L.tag("J2W-Method");
-		if (!j2WPresenterBean.isCallBack) {
-			L.i("View层被销毁-回掉取消，并返回NULL");
-			return null;
+        StringBuffer stringBuffer = new StringBuffer();
+        if (!j2WPresenterBean.isCallBack) {
+            stringBuffer.append("View层被销毁-");
+            stringBuffer.append(method.getName());
+            stringBuffer.append("回调取消,并返回NULL");
+            L.i(stringBuffer.toString());
+            return null;
 		} else {
-			StringBuffer stringBuffer = new StringBuffer();
 			stringBuffer.append("执行:");
 			stringBuffer.append(method.getName());
 			L.i(stringBuffer.toString());

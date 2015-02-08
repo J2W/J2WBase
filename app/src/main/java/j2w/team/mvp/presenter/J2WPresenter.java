@@ -1,7 +1,5 @@
 package j2w.team.mvp.presenter;
 
-import javax.inject.Inject;
-
 import j2w.team.common.log.L;
 
 /**
@@ -9,7 +7,7 @@ import j2w.team.common.log.L;
  */
 public abstract class J2WPresenter<T> implements J2WIPresenter {
 
-	@Inject private J2WPresenterBean j2WPresenterBean;
+	private J2WPresenterBean j2WPresenterBean;
 
 	/** 禁止创建默认构造函数 **/
 	private J2WPresenter() {
@@ -17,7 +15,7 @@ public abstract class J2WPresenter<T> implements J2WIPresenter {
 
 	/**
 	 * 初始化
-	 * 
+	 *
 	 * @param iView
 	 *            传递接口
 	 */

@@ -1,9 +1,10 @@
 package j2w.team.mvp.presenter;
 
+import dagger.ObjectGraph;
+import dagger.internal.Modules;
 import j2w.team.modules.screen.J2WIScreenManager;
 import j2w.team.modules.screen.J2WScreenManager;
 import j2w.team.mvp.J2WApplication;
-
 /**
  * Created by sky on 15/1/28. helper 管理
  */
@@ -35,9 +36,6 @@ public class J2WHelper {
             }
         }
     }
-
-
-
 
     /**
      * fragmentactivity管理器
