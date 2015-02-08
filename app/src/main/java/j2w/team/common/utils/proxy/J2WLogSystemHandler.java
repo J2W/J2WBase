@@ -8,22 +8,14 @@ import j2w.team.common.log.L;
 /**
  * Created by sky on 15/1/27.动态代理-日志系统
  */
-public final class J2WLogSystemHandler<T> implements InvocationHandler {
+public final class J2WLogSystemHandler<T> extends BaseHandler<T>{
 
-	// 需要代理的类
-	private T t = null;
 
-	/**
-	 * 构造函数
-	 * 
-	 * @param t
-	 *            需要代理的类
-	 */
-	public J2WLogSystemHandler(T t) {
-		this.t = t;
-	}
+    public J2WLogSystemHandler(T t) {
+        super(t);
+    }
 
-	@Override public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+    @Override public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
 		/** 打印准备 **/
 		long startTime = 0;
 		StringBuffer stringBuffer = new StringBuffer();

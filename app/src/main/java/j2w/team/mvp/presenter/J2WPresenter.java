@@ -1,14 +1,15 @@
 package j2w.team.mvp.presenter;
 
-import java.lang.ref.WeakReference;
+import javax.inject.Inject;
+
+import j2w.team.common.log.L;
 
 /**
  * Created by sky on 15/2/1. 中央处理器
  */
-public class J2WPresenter<T> {
+public abstract class J2WPresenter<T> implements J2WIPresenter {
 
-	// 弱引用 view层接口
-	private WeakReference<T> iView;
+	@Inject private J2WPresenterBean j2WPresenterBean;
 
 	/** 禁止创建默认构造函数 **/
 	private J2WPresenter() {
@@ -21,20 +22,29 @@ public class J2WPresenter<T> {
 	 *            传递接口
 	 */
 	public J2WPresenter(T iView) {
-		this.iView = new WeakReference<T>(iView);
+		j2WPresenterBean = new J2WPresenterBean();
+		j2WPresenterBean.isCallBack = true;
+		j2WPresenterBean.setiView(iView);
+
 	}
 
-	/** 获取视图接口 **/
-	protected T getIView() {
-		return iView.get();
+	/***
+	 * 获取视图
+	 * 
+	 * @return 视图接口
+	 */
+	@Override public final T getView() {
+		return (T) j2WPresenterBean.getiView();
 	}
 
 	/**
-	 * 判断视图层是否存在
-	 * 
-	 * @return true 存在 false 不存在
+	 * 消除引用
 	 */
-	protected boolean isIView() {
-		return iView.get() != null ? true : false;
+	@Override public void detach() {
+		L.tag(initTag());
+		L.i("Presenter-detach()");
+		if (j2WPresenterBean != null) {
+			j2WPresenterBean.isCallBack = false;
+		}
 	}
 }

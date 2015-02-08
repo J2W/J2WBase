@@ -1,7 +1,8 @@
-package j2w.team.base;
+package j2w.team.mvp;
 
 import android.app.Application;
 
+import j2w.team.mvp.presenter.J2WHelper;
 import j2w.team.common.log.L;
 
 /**

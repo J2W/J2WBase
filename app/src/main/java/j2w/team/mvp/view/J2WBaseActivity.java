@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
 import butterknife.ButterKnife;
-import j2w.team.base.J2WHelper;
+import j2w.team.mvp.presenter.J2WHelper;
 import j2w.team.common.log.L;
 import j2w.team.mvp.view.iview.J2WActivityIView;
 
