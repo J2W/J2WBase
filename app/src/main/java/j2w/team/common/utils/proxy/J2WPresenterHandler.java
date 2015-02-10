@@ -25,7 +25,7 @@ public final class J2WPresenterHandler<T> extends BaseHandler<T> {
 			stringBuffer.append(method.getName());
 			stringBuffer.append("回调取消,并返回NULL");
 			L.i(stringBuffer.toString());
-			return new Object();
+			return null;
 		} else {
 			stringBuffer.append("执行:");
 			stringBuffer.append(method.getName());

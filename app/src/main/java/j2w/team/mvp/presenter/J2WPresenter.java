@@ -52,4 +52,5 @@ public abstract class J2WPresenter<T> implements J2WIPresenter {
 		L.i("Presenter-detach()");
 		isCallBack = false;
 	}
+
 }

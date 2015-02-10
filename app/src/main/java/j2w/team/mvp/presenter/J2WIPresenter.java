@@ -16,4 +16,5 @@ public interface J2WIPresenter<T> {
 
 	/** 消除 VIEW层 引用 **/
 	public void detach();
+    
 }

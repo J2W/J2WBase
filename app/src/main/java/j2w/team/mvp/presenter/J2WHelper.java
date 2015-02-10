@@ -1,7 +1,5 @@
 package j2w.team.mvp.presenter;
 
-import dagger.ObjectGraph;
-import dagger.internal.Modules;
 import j2w.team.modules.screen.J2WIScreenManager;
 import j2w.team.modules.screen.J2WScreenManager;
 import j2w.team.mvp.J2WApplication;
