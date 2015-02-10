@@ -5,11 +5,15 @@ package j2w.team.mvp.presenter;
  */
 public interface J2WIPresenter<T> {
 
-    /** 获取TAG标记**/
-    public String initTag();
-    
-    public T getView();
- 
+	/** 获取TAG标记 **/
+	public String initTag();
+
+	/** 获取视图 **/
+	public T getView();
+
+	/** 是否回调 **/
+	public boolean isCallBack();
+
 	/** 消除 VIEW层 引用 **/
 	public void detach();
 }

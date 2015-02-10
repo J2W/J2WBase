@@ -3,8 +3,7 @@ package j2w.team.common.utils.proxy;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
 
-import j2w.team.common.log.L;
-import j2w.team.mvp.presenter.J2WPresenterBean;
+import j2w.team.mvp.presenter.J2WPresenter;
 
 /**
  * Created by sky on 15/1/27. 通用动态代理类
@@ -58,7 +57,7 @@ public final class DynamicProxyUtils {
 	 * @param <D>
 	 * @return
 	 */
-	public static <D> D newProxyPresenter(D d,J2WPresenterBean j2WPresenterBean) {
+	public static <D> D newProxyPresenter(D d,J2WPresenter j2WPresenter) {
 		/** 根据日志 **/
 		// 获取Classloader
 		ClassLoader loader = d.getClass().getClassLoader();
@@ -69,7 +68,7 @@ public final class DynamicProxyUtils {
 			interfaces = d.getClass().getSuperclass().getInterfaces();
         }
 		// 获得Handler - 这里可以替换成其他代理方法
-		InvocationHandler invocationHandler = new J2WPresenterHandler<D>(d,j2WPresenterBean);
+		InvocationHandler invocationHandler = new J2WPresenterHandler<D>(d,j2WPresenter);
 		// 获取代理接口
 		D b = newProxyInstance(loader, interfaces, invocationHandler);
 		return b;
