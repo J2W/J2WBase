@@ -24,7 +24,7 @@ classpath 'com.android.tools.build:gradle:1.0.0'
 2.访问类型暂时提供两种<br />
    (1)OPEN_TYPE_ASSETS // 打开asset文件夹下的文件<br />
    (2)OPEN_TYPE_DATA   // 默认路径: SDCard/Android/data/你的应用包名/cache/<br />
-3.文件名称默认config.properties，科调用父类构造函数修改文件名称<br />
+3.文件名称默认config.properties，可调用父类构造函数修改文件名称<br />
 4.使用@Property注解属性，默认key值是属性名, 也可修改 @Property("name")<br />
 5.例子-声明<br />
 
