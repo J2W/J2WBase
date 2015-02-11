@@ -14,6 +14,8 @@ import java.lang.reflect.Field;
 
 import android.content.res.Resources;
 
+import org.apache.commons.lang.StringUtils;
+
 import j2w.team.common.log.L;
 import j2w.team.mvp.presenter.J2WHelper;
 
@@ -27,7 +29,11 @@ public abstract class J2WProperties {
      */
     public abstract String initTag();
 
-    public int asd;
+    /**
+     * 从那里打开文件*
+     */
+    public abstract int initType();
+
     /**
      * 获取文件路径 *
      */
@@ -36,7 +42,7 @@ public abstract class J2WProperties {
     /**
      * 编码格式
      */
-    private static final String DEFAULT_CODE = "gbk";
+    private static final String DEFAULT_CODE = "utf-8";
 
     private static final String DEFAUT_ANNOTATION_VALUE = "";
 
@@ -63,17 +69,15 @@ public abstract class J2WProperties {
 
     /**
      * 构造函数
-     *
-     * @param propertiesType 获取类型
      */
-    public J2WProperties(int propertiesType) {
-        this(propertiesType, "config");
+    public J2WProperties() {
+        this("config");
     }
 
-    public J2WProperties(int propertiesType, String propertiesFileName) {
+    public J2WProperties(String propertiesFileName) {
         propertyFilePath = J2WHelper.getInstance().getApplicationContext().getExternalCacheDir();
         mPropertiesFileName = propertiesFileName;
-        switch (propertiesType) {
+        switch (initType()) {
             case OPEN_TYPE_ASSETS:
                 Resources mResources = J2WHelper.getInstance().getApplicationContext().getResources();
                 openAssetProperties(mResources);
@@ -88,15 +92,15 @@ public abstract class J2WProperties {
      * asset文件夹下的文件 *
      */
     private void openAssetProperties(Resources resources) {
-        L.tag(initTag());
-        L.i("openProperties()");
         try {
             InputStream inputStream = resources.getAssets().open(mPropertiesFileName + EXTENSION);
+            L.tag(initTag());
+            L.i("openProperties() 路径:" + mPropertiesFileName + EXTENSION);
             mProperties.load(inputStream);
             loadPropertiesValues();
         } catch (IOException e) {
             L.tag(initTag());
-            L.e("openAssetProperties失败");
+            L.e("openAssetProperties失败:" + e.toString());
         }
     }
 
@@ -104,8 +108,6 @@ public abstract class J2WProperties {
      * data文件夹下的文件 *
      */
     private void openDataProperties() {
-        L.tag(initTag());
-        L.i("openDataProperties()");
         InputStream in = null;
         try {
             StringBuilder stringBuilder = new StringBuilder();
@@ -117,10 +119,12 @@ public abstract class J2WProperties {
                 file.createNewFile();
             }
             in = new BufferedInputStream(new FileInputStream(file));
+            L.tag(initTag());
+            L.i("openDataProperties() 路径:" + propertyFilePath + "/" + stringBuilder.toString());
             mProperties.load(in);
         } catch (Exception e) {
             L.tag(initTag());
-            L.e("openDataProperties失败");
+            L.e("openDataProperties失败:" + e.toString());
         } finally {
             if (in != null) {
                 try {
@@ -138,54 +142,84 @@ public abstract class J2WProperties {
      * 所有返回类型
      */
     private int getInt(String key, int defaultValue) {
+        String value = null;
         try {
+            value = mProperties.getProperty(key);
+            if (StringUtils.isEmpty(value)) {
+                return 0;
+            }
             return Integer.parseInt(mProperties.getProperty(key));
         } catch (Exception e) {
             L.tag(initTag());
-            L.e("%s 解析失败, 解析类型  %s ", key, "int");
+            L.e("%s 解析失败, 解析类型 %s, 解析数据 %s ", key, "int", value);
             return defaultValue;
         }
     }
 
     private float getFloat(String key, float defaultValue) {
+        String value = null;
         try {
+            value = mProperties.getProperty(key);
+            if (StringUtils.isEmpty(value)) {
+                return 0;
+            }
             return Float.parseFloat(mProperties.getProperty(key));
         } catch (Exception e) {
             L.tag(initTag());
-            L.e("%s 解析失败, 解析类型  %s ", key, "float");
+            L.e("%s 解析失败, 解析类型 %s, 解析数据 %s ", key, "float", value);
             return defaultValue;
         }
     }
 
     private double getDouble(String key, double defaultValue) {
+        String value = null;
         try {
+            value = mProperties.getProperty(key);
+            if (StringUtils.isEmpty(value)) {
+                return 0;
+            }
             return Double.parseDouble(mProperties.getProperty(key));
         } catch (Exception e) {
             L.tag(initTag());
-            L.e("%s 解析失败, 解析类型  %s ", key, "double");
+            L.e("%s 解析失败, 解析类型 %s, 解析数据 %s ", key, "double", value);
             return defaultValue;
         }
     }
 
     private boolean getBoolean(String key, boolean defaultValue) {
+        String value = null;
         try {
+            value = mProperties.getProperty(key);
+            if (StringUtils.isEmpty(value)) {
+                return false;
+            }
             return Boolean.parseBoolean(mProperties.getProperty(key));
         } catch (Exception e) {
             L.tag(initTag());
-            L.e("%s 解析失败, 解析类型  %s ", key, "boolean");
+            L.e("%s 解析失败, 解析类型 %s, 解析数据 %s ", key, "boolean", value);
             return defaultValue;
         }
     }
 
     private String getString(String key, String defaultValue) {
-        String result = mProperties.getProperty(key, defaultValue);
-        try {
-            result = new String(result.getBytes("ISO-8859-1"), DEFAULT_CODE);
-        } catch (UnsupportedEncodingException e) {
-            L.tag(initTag());
-            L.e("%s 解析失败, 解析类型  %s ", key, "String");
-            return defaultValue;
+        String result = null;
+
+        switch (initType()) {
+            case OPEN_TYPE_ASSETS:
+                try {
+                    result = new String(mProperties.getProperty(key, defaultValue).getBytes("ISO-8859-1"), DEFAULT_CODE);
+                } catch (UnsupportedEncodingException e) {
+                    L.tag(initTag());
+                    L.e("%s 解析失败, 解析类型  %s ", key, "String");
+                    return defaultValue;
+                }
+                break;
+            case OPEN_TYPE_DATA:
+                result = mProperties.getProperty(key, defaultValue);
+                break;
         }
+
+
         return result;
     }
 
@@ -195,7 +229,7 @@ public abstract class J2WProperties {
      */
     private void loadPropertiesValues() {
         L.tag(initTag());
-        L.i("loadPropertiesValues()");
+        L.i("loadPropertiesValues()-加载所有的值");
         Class<? extends J2WProperties> thisClass = this.getClass();
         Field[] fields = thisClass.getDeclaredFields();
         for (Field field : fields) {
@@ -214,16 +248,31 @@ public abstract class J2WProperties {
     }
 
     /**
-     * 获取某个属性名 并且赋值
+     * 所有属性写入到properties里
      */
-    private void setPropertyValue(String key) {
+    private void writePropertiesValues() {
+        L.tag(initTag());
+        L.i("writePropertiesValues()-写入所有的值");
         Class<? extends J2WProperties> thisClass = this.getClass();
         Field[] fields = thisClass.getDeclaredFields();
         for (Field field : fields) {
-            field.setAccessible(true);
-            String fieldName = field.getName();
-            if (fieldName.equals(key)) {
-                setFieldValue(field, fieldName);
+            if (field.isAnnotationPresent(Property.class)) {
+                field.setAccessible(true);
+                String fieldName = field.getName();
+                Property annotation = field.getAnnotation(Property.class);
+                if (annotation.value().equals(DEFAUT_ANNOTATION_VALUE)) {
+                    try {
+                        mProperties.put(fieldName, String.valueOf(field.get(this)));
+                    } catch (IllegalAccessException e) {
+                        L.e("Properties写入错误:" + e.toString());
+                    }
+                } else {
+                    try {
+                        mProperties.put(annotation.value(), String.valueOf(field.get(this)));
+                    } catch (IllegalAccessException e) {
+                        L.e("Properties写入错误:" + e.toString());
+                    }
+                }
             }
         }
     }
@@ -232,9 +281,6 @@ public abstract class J2WProperties {
      * 设置属性值 *
      */
     private void setFieldValue(Field field, String propertiesName) {
-        L.tag(initTag());
-        L.i("loadPropertiesValues()");
-
         Object value = getPropertyValue(field.getType(), propertiesName);
         try {
             field.set(this, value);
@@ -248,8 +294,6 @@ public abstract class J2WProperties {
      * 获取类型 *
      */
     private Object getPropertyValue(Class<?> clazz, String key) {
-        L.tag(initTag());
-        L.i("getPropertyValue()");
         if (clazz == String.class) {
             return getString(key, "");
         } else if (clazz == float.class || clazz == Float.class) {
@@ -265,16 +309,11 @@ public abstract class J2WProperties {
         }
     }
 
-    public <T> void putValue(String key, T value) {
-        mProperties.put(key, String.valueOf(value));
-        commit();
-        setPropertyValue(key);
-    }
-
     /**
      * 提交
      */
     public void commit() {
+
         OutputStream out = null;
         try {
             StringBuilder stringBuilder = new StringBuilder();
@@ -286,6 +325,7 @@ public abstract class J2WProperties {
             }
             synchronized (mProperties) {
                 out = new BufferedOutputStream(new FileOutputStream(file));
+                writePropertiesValues();
                 mProperties.store(out, "");
             }
         } catch (FileNotFoundException ex) {

@@ -37,6 +37,7 @@ dependencies {
     //noinspection GradleCompatible
     compile 'com.android.support:appcompat-v7:19.0.1'
     compile 'com.squareup.dagger:dagger-compiler:1.2.2'
+    compile 'commons-lang:commons-lang:2.6'
 }
 // 3. test settings
 robolectric {
