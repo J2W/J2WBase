@@ -24,13 +24,12 @@ classpath 'com.android.tools.build:gradle:1.0.0'
 2.访问类型暂时提供两种<br />
    (1)OPEN_TYPE_ASSETS // 打开asset文件夹下的文件<br />
    (2)OPEN_TYPE_DATA   // 默认路径: SDCard/Android/data/你的应用包名/cache/<br />
-3.文件名称默认config.properties，调用父类构造函数<br />
+3.文件名称默认config.properties，科调用父类构造函数修改文件名称<br />
 4.使用@Property注解属性，默认key值是属性名, 也可修改 @Property("name")<br />
 5.例子-声明<br />
-public class Config extends J2WProperties {
-    /** 1.单例模式 **/
-    private final static TestConfig testConfig = new TestConfig("新名字");
 
+    public class Config extends J2WProperties {
+    private final static TestConfig testConfig = new TestConfig("新名字");
     public static TestConfig getInstance() {
         return testConfig;
     }
@@ -59,6 +58,7 @@ public class Config extends J2WProperties {
     @Property
     public boolean MY_B;
     }
+    
 6.例子-使用<br />
 (1).直接赋值<br />
 TestConfig.getInstance().MY_NAME = "金灿是谁啊";<br />
