@@ -11,10 +11,28 @@ classpath 'com.android.tools.build:gradle:1.0.0'
 -----------------------------------
 
 ### View层
-还没来得及写
+说明: 通过接口跟Presenter层交互，所以方法都以接口定义 然后具体actvity实现
+
+#暂时提供以下接口和实现类
+接口:
+1.J2WActivityIView 普通
+2.J2WActionBarIView 自定义标题栏
+3.J2WFragmentIView 普通fragment
+4.J2WListFragmentIView 列表fragment 
+实现类:
+1.J2WBaseActivity 普通
+2.J2WBaseCustomActoinBarActivity 自定义标题栏
+3.J2WBaseFragment 普通fragment
+4.J2WBaseListFragment 列表fragment
 
 ### Presenter层
-还没来得及写
+#暂时提供以下接口和实现类
+接口:
+1.J2WIPresenter
+实现类:
+1.J2WPresenter
+帮助类:
+1.J2WHelper modules模块接口
 
 
 [modules](https://github.com/J2W/mvn-repo-j2w/blob/master/Explain/J2W_MODULES.md)
