@@ -93,13 +93,13 @@ TestConfig.getInstance().commit();<br />
 混淆过滤
 -----------------------------------
 #### greendao
--libraryjars libs/greendao-1.3.7.jar
--keep class de.greenrobot.dao.** {*;}
--keepclassmembers class * extends de.greenrobot.dao.AbstractDao {
-    public static java.lang.String TABLENAME;
-}
--keep class **$Properties
+-libraryjars libs/greendao-1.3.7.jar<br />
+-keep class de.greenrobot.dao.** {*;}<br />
+-keepclassmembers class * extends de.greenrobot.dao.AbstractDao {<br />
+    public static java.lang.String TABLENAME;<br />
+}<br />
+-keep class **$Properties<br />
 #### Gson
--keepattributes Signature
--keep class sun.misc.Unsafe { *; }
--keep class com.google.gson.examples.android.model.** { *; }
+-keepattributes Signature<br />
+-keep class sun.misc.Unsafe { *; }<br />
+-keep class com.google.gson.examples.android.model.** { *; }<br />
