@@ -90,3 +90,16 @@ TestConfig.getInstance().commit();<br />
 -----------------------------------
 还没来得及写
 
+混淆过滤
+-----------------------------------
+#### greendao
+-libraryjars libs/greendao-1.3.7.jar
+-keep class de.greenrobot.dao.** {*;}
+-keepclassmembers class * extends de.greenrobot.dao.AbstractDao {
+    public static java.lang.String TABLENAME;
+}
+-keep class **$Properties
+#### Gson
+-keepattributes Signature
+-keep class sun.misc.Unsafe { *; }
+-keep class com.google.gson.examples.android.model.** { *; }
