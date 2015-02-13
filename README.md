@@ -38,6 +38,8 @@ classpath 'com.android.tools.build:gradle:1.0.0'
 [modules](https://github.com/J2W/mvn-repo-j2w/blob/master/Explain/J2W_MODULES.md)
 -----------------------------------
 ### J2WProperties
+#### 功能：替代 SharedPreference 来存储数据
+
 1.继承J2WProperties,实现默认方法,并且使用单例模式<br />
 2.访问类型暂时提供两种<br />
    (1)OPEN_TYPE_ASSETS // 打开asset文件夹下的文件<br />
