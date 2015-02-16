@@ -6,6 +6,7 @@ import android.os.Debug;
 import android.text.format.Formatter;
 
 import java.util.List;
+import java.util.concurrent.Executor;
 
 /**
  * Created by sky on 15/1/29 程序工具包
@@ -48,6 +49,4 @@ public final class AppUtils {
 			return "无法检测";
 		}
 	}
-
-
 }
