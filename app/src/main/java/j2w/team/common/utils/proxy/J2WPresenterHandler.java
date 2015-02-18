@@ -25,7 +25,7 @@ public final class J2WPresenterHandler<T> extends BaseHandler<T> {
 
 	@Override public Object invoke(Object proxy, final Method method, final Object[] args) throws Throwable {
 		// 判断是否在主线程
-		boolean isMainLooper = Looper.myLooper() != Looper.getMainLooper();
+		boolean isMainLooper = Looper.getMainLooper().getThread() != Thread.currentThread();
 		if (isMainLooper) {
 			J2WHelper.getMainLooper().execute(new Runnable() {
 				@Override public void run() {
@@ -44,6 +44,7 @@ public final class J2WPresenterHandler<T> extends BaseHandler<T> {
 		}
 	}
 
+    
 	private Object runMethod(Method method, Object[] args) throws Throwable {
 		StringBuffer stringBuffer = new StringBuffer();
 		if (!j2WPresenter.isCallBack()) {
