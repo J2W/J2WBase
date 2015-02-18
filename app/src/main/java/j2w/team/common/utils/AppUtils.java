@@ -6,7 +6,10 @@ import android.os.Debug;
 import android.text.format.Formatter;
 
 import java.util.List;
-import java.util.concurrent.Executor;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+
+import j2w.team.mvp.view.J2WBaseFragment;
 
 /**
  * Created by sky on 15/1/29 程序工具包
@@ -48,5 +51,52 @@ public final class AppUtils {
 		} catch (Exception e) {
 			return "无法检测";
 		}
+	}
+
+	/**
+	 * 通过反射, 获得定义Class时声明的父类的泛型参数的类型. 如无法找到, 返回Object.class. 1.因为获取泛型类型-所以增加逻辑判定
+	 */
+	public static Class<Object> getSuperClassGenricType(final Class clazz, final int index) {
+
+		// 返回表示此 Class 所表示的实体（类、接口、基本类型或 void）的直接超类的 Type。
+		Type[] genType = clazz.getGenericInterfaces();
+		Type[] params = null;
+		Type baseType = clazz.getGenericSuperclass();
+		// 父类
+		if (baseType != null && (baseType instanceof ParameterizedType)) {
+			params = ((ParameterizedType) baseType).getActualTypeArguments();
+			if (index >= params.length || index < 0) {
+				return Object.class;
+			}
+			if (!(params[index] instanceof Class)) {
+				return Object.class;
+			}
+
+			return (Class<Object>) params[index];
+		}
+		// 接口
+		if (genType == null || genType.length < 1) {
+			Type testType = clazz.getGenericSuperclass();
+			if (!(testType instanceof ParameterizedType)) {
+				return Object.class;
+			}
+			// 返回表示此类型实际类型参数的 Type 对象的数组。
+			params = ((ParameterizedType) testType).getActualTypeArguments();
+		} else {
+			if (!(genType[index] instanceof ParameterizedType)) {
+				return Object.class;
+			}
+			// 返回表示此类型实际类型参数的 Type 对象的数组。
+			params = ((ParameterizedType) genType[index]).getActualTypeArguments();
+		}
+
+		if (index >= params.length || index < 0) {
+			return Object.class;
+		}
+		if (!(params[index] instanceof Class)) {
+			return Object.class;
+		}
+
+		return (Class<Object>) params[index];
 	}
 }

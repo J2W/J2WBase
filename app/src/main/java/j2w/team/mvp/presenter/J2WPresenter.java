@@ -6,33 +6,27 @@ import j2w.team.common.utils.proxy.DynamicProxyUtils;
 /**
  * Created by sky on 15/2/1. 中央处理器
  */
-public abstract class J2WPresenter<T> implements J2WIPresenter {
+public abstract class J2WPresenter<T> {
 
 	private boolean isCallBack;
 	private T iView;
 
-	/** 禁止创建默认构造函数 **/
-	private J2WPresenter() {
+	/** 初始化 **/
+	void initPresenter(T iView) {
+		isCallBack = true;
+		this.iView = DynamicProxyUtils.newProxyPresenter(iView, this);// 动态代理-业务
 	}
 
-	/**
-	 * 初始化
-	 *
-	 * @param iView
-	 *            传递接口
-	 */
-	public J2WPresenter(T iView) {
-		isCallBack = true;
-		this.iView = DynamicProxyUtils.newProxyPresenter(iView, this);
-	}
+	/** 获取TAG标记 **/
+	public abstract String initTag();
 
 	/***
 	 * 获取视图
 	 * 
 	 * @return 视图接口
 	 */
-	@Override public final T getView() {
-		return iView;
+	public final T getView() {
+		return this.iView;
 	}
 
 	/**
@@ -40,16 +34,16 @@ public abstract class J2WPresenter<T> implements J2WIPresenter {
 	 * 
 	 * @return
 	 */
-	@Override public boolean isCallBack() {
+	public boolean isCallBack() {
 		return isCallBack;
 	}
 
 	/**
 	 * 消除引用
 	 */
-	@Override public void detach() {
+	public void detach() {
 		L.tag(initTag());
-		L.i("Presenter-detach()");
+		L.i("detach()");
 		isCallBack = false;
 	}
 

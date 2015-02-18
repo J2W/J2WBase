@@ -24,21 +24,20 @@ public final class J2WPresenterHandler<T> extends BaseHandler<T> {
 	}
 
 	@Override public Object invoke(Object proxy, final Method method, final Object[] args) throws Throwable {
-        //判断是否在主线程
+		// 判断是否在主线程
 		boolean isMainLooper = Looper.myLooper() != Looper.getMainLooper();
 		if (isMainLooper) {
-            J2WHelper.getMainLooper().execute(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        runMethod(method, args);
-                    } catch (Throwable throwable) {
-                        L.tag("J2W-Method");
-                        L.i("方法执行失败");
-                        return;
-                    }
-                }
-            });
+			J2WHelper.getMainLooper().execute(new Runnable() {
+				@Override public void run() {
+					try {
+						runMethod(method, args);
+					} catch (Throwable throwable) {
+						L.tag("J2W-Method");
+						L.i("方法执行失败");
+						return;
+					}
+				}
+			});
 			return null;
 		} else {
 			return runMethod(method, args);
@@ -52,6 +51,8 @@ public final class J2WPresenterHandler<T> extends BaseHandler<T> {
 			stringBuffer.append(method.getName());
 			stringBuffer.append("回调取消,并返回NULL");
 			L.i(stringBuffer.toString());
+			// 取消关联
+			t = null;
 			return null;
 		} else {
 			stringBuffer.append("执行:");

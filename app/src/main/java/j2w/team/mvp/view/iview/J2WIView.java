@@ -5,11 +5,16 @@ import android.os.Bundle;
 /**
  * Created by sky on 15/2/1.MVP模式 VIEW 接口
  */
-interface J2WIView {
-    /** 获取TAG标记**/
-    public String initTag();
-    /** 获取布局ID */
-    public int layoutId();
-	/** 初始化视图 **/
-	public void initData(Bundle savedInstanceState);
+public interface J2WIView<T> {
+	/** 获取TAG标记 **/
+	public String initTag();
+
+	/** 获取布局ID */
+	public int layoutId();
+
+    /** 初始化视图 **/
+    public void initData(Bundle savedInstanceState);
+    
+	/** 获取Presenter **/
+	public T getPresenter();
 }

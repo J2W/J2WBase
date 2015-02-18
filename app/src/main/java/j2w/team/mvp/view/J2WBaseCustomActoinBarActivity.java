@@ -12,23 +12,42 @@ import android.widget.TextView;
 
 import butterknife.ButterKnife;
 import j2w.team.R;
+import j2w.team.common.utils.proxy.DynamicProxyUtils;
 import j2w.team.mvp.presenter.J2WHelper;
 import j2w.team.common.log.L;
+import j2w.team.mvp.presenter.J2WIPresenter;
+import j2w.team.mvp.presenter.J2WPresenter;
+import j2w.team.mvp.presenter.J2WPresenterUtils;
 import j2w.team.mvp.view.iview.J2WActionBarIView;
 
 /**
  * Created by sky on 15/2/5. actionbarActivity 视图
  */
-public abstract class J2WBaseCustomActoinBarActivity extends ActionBarActivity implements J2WActionBarIView, View.OnClickListener {
+public abstract class J2WBaseCustomActoinBarActivity<T extends J2WIPresenter,D extends J2WPresenter> extends ActionBarActivity implements J2WActionBarIView, View.OnClickListener {
 
 	/** 标题栏 **/
 	private ActionBar actionBar;
+
+    /** 业务逻辑对象 **/
+    private T presenter = null;
 
 	/** 初始化视图 **/
 	@Override public void initData(Bundle savedInstanceState) {
 		L.tag(initTag());
 		L.i("initData()");
 	}
+
+    @Override public final T getPresenter() {
+        if (presenter == null) {
+            synchronized (this) {
+                /** 创建业务类**/
+                presenter = J2WPresenterUtils.createPresenter(getClass(),this);
+                L.tag(initTag());
+                L.i("Presneter初始化完");
+            }
+        }
+        return presenter;
+    }
 
 	@Override public void onClick(View v) {
 		switch (v.getId()) {
@@ -104,6 +123,10 @@ public abstract class J2WBaseCustomActoinBarActivity extends ActionBarActivity i
 		super.onDestroy();
 		L.tag(initTag());
 		L.i("onDestroy()");
+        /** 切断关联 **/
+        if (presenter != null) {
+            presenter.detach();
+        }
 		/** 从堆栈里移除 **/
 		J2WHelper.getScreenHelper().popActivity(this);
 	}
