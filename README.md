@@ -34,7 +34,89 @@ classpath 'com.android.tools.build:gradle:1.0.0'
 帮助类:<br />
 1.J2WHelper modules模块接口<br />
 
+### 使用说明:
+简介: 简单用 展示一个列表为例子 , 以后继续完善 <br />
+1.定义View 层接口<br />
 
+    public interface TestListIView extends J2WListFragmentIView {
+       //显示列表  void setData(java.util.List list) 默认父类方法 
+       //可以加其他方法, 这里暂时什么都不写！
+    }
+2.定义Presneter 层 接口<br />
+
+    public interface TestListIPresenter extends J2WIPresenter {
+        public void setValues(); //加载数据后 显示列表
+    }
+3.创建Presneter 业务处理类<br />
+说明：继承 J2WPresenter<TestListIView>  第一个泛型 是 View层接口<br />
+
+    public class TestListFragmentPresenter extends J2WPresenter<TestListIView> implements TestListIPresenter //业务逻辑层接口 { 
+    	@Override public String initTag() {
+    		return "TestListFragmentPresenter";
+    	}
+    
+    
+    	@Override public void setValues() {
+    	    List<String> list = new ArrayList<String>();
+    		list.add("a");
+    		list.add("a");
+    		list.add("a");
+    		list.add("a");
+    		list.add("a");
+    		list.add("a");
+    		list.add("a");
+    		getView().setData(list);//调用View层接口
+    	}
+    }
+4.创建AdapterItem<br />
+
+    public class TestItemAdapter extends J2WBaseAdapterItem<String> {
+    	@InjectView(R.id.text) View test;
+    
+    	@Override public int getItemLayout() {
+    		return R.layout.item_test;
+    	}
+    
+    	@Override public void init(View view) {
+    		ButterKnife.inject(this,view);
+    	}
+    
+        @OnClick(R.id.text)
+        public void onClickTest(){
+            Toast.makeText(J2WHelper.getInstance().getApplicationContext(), "点击了", Toast.LENGTH_SHORT).show();
+    
+        }
+        
+    	@Override public void bindData(String s) {
+    		((TextView) test).setText(s);
+    	}
+    }
+
+5.创建View 显示类<br />
+
+    public class TestListFragment extends J2WBaseListFragment<TestListIPresenter,TestListFragmentPresenter> implements TestListIView //View层接口 {
+    
+    	@Override public String initTag() {iew
+    		return "TestListFragment";
+    	}
+    
+    	@Override public J2WBaseAdapterItem getJ2WAdapterItem() {
+    		return new TestItemAdapter(); // 第4步 的类
+    	}
+    
+    	@Override public void initData(Bundle savedInstanceState) {
+    		super.initData(savedInstanceState);
+    		getPresenter().setValues(); //调用业务逻辑类
+    	}
+    	
+    }
+    
+说明: J2WBaseListFragment<TestListIPresenter,TestListFragmentPresenter><br />
+1.第一个泛型是Presenter接口，第二个泛型是Presenter接口的实现类<br />
+2.View层 里 直接调用 getPresenter() 就能拿到业务逻辑类 引用！<br />
+3.Presenter层 里 直接调用 getView() 就能拿到显示类 引用！<br />
+
+注意: 销毁引用处理内部已经完成！如果当前视图被销毁，View层方法不会被回掉，不用担心空指针或其他异常！
 
 [modules](https://github.com/J2W/mvn-repo-j2w/blob/master/Explain/J2W_MODULES.md)
 -----------------------------------
