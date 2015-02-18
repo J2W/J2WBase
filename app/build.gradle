@@ -31,15 +31,13 @@ dependencies {
     //框架开发模式-需要测试
     //    androidTestCompile 'com.squareup:fest-android:1.0.8'
     androidTestCompile 'org.robolectric:robolectric:2.4'
+    //外部依赖
     compile 'com.google.code.gson:gson:2.3.1'
-    compile 'com.squareup.dagger:dagger:1.2.2'
     compile 'com.jakewharton:butterknife:6.1.0'
     //noinspection GradleCompatible
     compile 'com.android.support:appcompat-v7:19.0.1'
-    compile 'com.squareup.dagger:dagger-compiler:1.2.2'
     compile 'commons-lang:commons-lang:2.6'
-    compile 'de.greenrobot:greendao:1.3.7'
-    compile 'de.greenrobot:greendao-generator:1.3.1'
+    compile 'com.squareup.picasso:picasso:2.5.0'
 }
 // 3. test settings
 robolectric {
