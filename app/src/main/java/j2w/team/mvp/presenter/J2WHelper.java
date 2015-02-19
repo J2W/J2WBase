@@ -1,5 +1,11 @@
 package j2w.team.mvp.presenter;
 
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.PicassoTools;
+
+import java.io.IOException;
+
+import j2w.team.common.log.L;
 import j2w.team.common.utils.looper.SynchronousExecutor;
 import j2w.team.modules.screen.J2WIScreenManager;
 import j2w.team.modules.screen.J2WScreenManager;
@@ -58,4 +64,37 @@ public class J2WHelper {
 		return SynchronousExecutor.getInstance();
 	}
 
+	/**
+	 * 图片下载管理器
+	 * 
+	 * @return picasso
+	 */
+	public static Picasso getPicasso() {
+		return PicassoTools.with();
+	}
+
+	/**
+	 * 清空图片下载管理器缓存
+	 */
+	/**
+	 * 清空图片下载管理器缓存
+	 * 
+	 * @param flg
+	 *            true 清空内存和磁盘缓存 false 只清空内存缓存
+	 */
+	public static void clearPicassoCache(boolean flg) {
+		try {
+			if (flg) {
+				PicassoTools.removeDiskCache();
+			} else {
+				PicassoTools.clearCache();
+			}
+		} catch (IOException e) {
+			L.e("删除缓存错误");
+		}
+	}
+
+	public static void removePicassoCache(String key) {
+
+	}
 }

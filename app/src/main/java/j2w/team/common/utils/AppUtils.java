@@ -3,6 +3,7 @@ package j2w.team.common.utils;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.os.Debug;
+import android.os.Environment;
 import android.text.format.Formatter;
 
 import java.util.List;
@@ -98,5 +99,13 @@ public final class AppUtils {
 		}
 
 		return (Class<Object>) params[index];
+	}
+
+	/**
+	 * 判断SDCard状态是否可以读写
+	 */
+	public static boolean isSDCardState() {
+		final String state = Environment.getExternalStorageState();
+		return state.equals(Environment.MEDIA_MOUNTED);
 	}
 }

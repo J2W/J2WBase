@@ -2,9 +2,12 @@ package j2w.team.modules.screen;
 
 import android.support.v4.app.FragmentActivity;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.Stack;
 
 import j2w.team.common.log.L;
+import j2w.team.mvp.presenter.J2WHelper;
 
 /**
  * Created by sky on 15/1/26. fragmentactivity管理器
@@ -58,8 +61,8 @@ public class J2WScreenManager implements J2WIScreenManager {
 			return;
 		}
 		fragmentActivities.add(activity);
-        L.m("入栈:" + activity.getClass().getSimpleName());
-    }
+		L.m("入栈:" + activity.getClass().getSimpleName());
+	}
 
 	/**
 	 * 出栈
@@ -73,8 +76,11 @@ public class J2WScreenManager implements J2WIScreenManager {
 		}
 		activity.finish();
 		fragmentActivities.remove(activity);
-        L.m("出栈:" + activity.getClass().getSimpleName());
-        activity = null;
+		/** 清空内存缓存picasso **/
+        L.i("清空内存缓存-J2WHelper.clearPicassoCache(false)");
+		J2WHelper.clearPicassoCache(false);
+		L.m("出栈:" + activity.getClass().getSimpleName());
+		activity = null;
 	}
 
 	/**
