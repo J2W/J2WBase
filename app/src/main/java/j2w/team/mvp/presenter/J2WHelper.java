@@ -1,11 +1,7 @@
 package j2w.team.mvp.presenter;
 
-import com.squareup.picasso.Picasso;
 import com.squareup.picasso.PicassoTools;
 
-import java.io.IOException;
-
-import j2w.team.common.log.L;
 import j2w.team.common.utils.looper.SynchronousExecutor;
 import j2w.team.modules.screen.J2WIScreenManager;
 import j2w.team.modules.screen.J2WScreenManager;

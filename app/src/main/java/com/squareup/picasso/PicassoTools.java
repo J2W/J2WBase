@@ -93,6 +93,13 @@ public final class PicassoTools {
     public void clearCache() {
         // 清空缓存-内存
         with().cache.clear();
+        with().shutdown();
+        okHttpDownloader = null;
+        picasso = null;
+    }
+    
+    public void deleteCahce(String uri){
+//        okHttpDownloader.getClient().
     }
 
     /**
