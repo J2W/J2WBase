@@ -76,9 +76,11 @@ public class J2WScreenManager implements J2WIScreenManager {
 		}
 		activity.finish();
 		fragmentActivities.remove(activity);
-		/** 清空内存缓存picasso **/
-        L.i("清空内存缓存-J2WHelper.getPicassoHelper().clearCache()");
-		J2WHelper.getPicassoHelper().clearCache();
+        if(fragmentActivities.size() < 1){
+            /** 清空内存缓存picasso **/
+            L.i("清空内存缓存-J2WHelper.getPicassoHelper().clearCache()");
+            J2WHelper.getPicassoHelper().clearCache();
+        }
 		L.m("出栈:" + activity.getClass().getSimpleName());
 		activity = null;
 	}
