@@ -1,11 +1,5 @@
 package j2w.team.mvp.presenter;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-
 import j2w.team.common.log.L;
 import j2w.team.common.utils.AppUtils;
 import j2w.team.common.utils.proxy.DynamicProxyUtils;
