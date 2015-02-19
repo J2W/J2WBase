@@ -93,8 +93,4 @@ public class J2WHelper {
 			L.e("删除缓存错误");
 		}
 	}
-
-	public static void removePicassoCache(String key) {
-
-	}
 }
