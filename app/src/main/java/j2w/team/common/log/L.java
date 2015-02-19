@@ -25,7 +25,7 @@ public final class L {
 	public static void init(boolean isLogOpen, Context context) {
 		if (isLogOpen) {
             //打开图片加载标记
-			J2WHelper.getPicasso().setIndicatorsEnabled(true);
+			J2WHelper.getPicassoHelper().with().setIndicatorsEnabled(true);
 			L.plant(new DebugTree());
 			CONTEXT = context;
 		}
