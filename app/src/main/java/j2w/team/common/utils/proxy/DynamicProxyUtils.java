@@ -67,7 +67,7 @@ public final class DynamicProxyUtils {
             interfaces = d.getClass().getSuperclass().getInterfaces();
         }
         // 获得Handler - 这里可以替换成其他代理方法
-        InvocationHandler invocationHandler = new J2WSyncHandler<D>(d);
+        InvocationHandler invocationHandler = new J2WSyncHandler<D>(d,d.getClass());
         // 获取代理接口
         D b = newProxyInstance(loader, interfaces, invocationHandler);
 		return b;

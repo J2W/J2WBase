@@ -5,6 +5,7 @@ import com.squareup.picasso.PicassoTools;
 import j2w.team.common.utils.looper.SynchronousExecutor;
 import j2w.team.modules.screen.J2WIScreenManager;
 import j2w.team.modules.screen.J2WScreenManager;
+import j2w.team.modules.threadpool.J2WThreadPoolManager;
 import j2w.team.mvp.J2WApplication;
 
 /**
@@ -52,6 +53,14 @@ public class J2WHelper {
 	}
 
 	/**
+	 * J2WThreadPoolManager 线程池管理器
+	 */
+
+	public static final J2WThreadPoolManager getThreadPoolHelper() {
+		return J2WThreadPoolManager.getInstance();
+	}
+
+	/**
 	 * MainLooper 主线程中执行
 	 * 
 	 * @return
@@ -61,7 +70,7 @@ public class J2WHelper {
 	}
 
 	/**
-	 *  Picasso工具
+	 * Picasso工具
 	 * 
 	 * @return picasso
 	 */
