@@ -12,7 +12,6 @@ import android.widget.ViewAnimator;
 import butterknife.ButterKnife;
 import j2w.team.R;
 import j2w.team.common.log.L;
-import j2w.team.mvp.presenter.J2WHelper;
 import j2w.team.mvp.presenter.J2WIPresenter;
 import j2w.team.mvp.presenter.J2WPresenter;
 import j2w.team.mvp.presenter.J2WPresenterUtils;
