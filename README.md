@@ -35,9 +35,10 @@ classpath 'com.android.tools.build:gradle:1.0.0'
 1.J2WHelper modules模块接口<br />
 
 ####提供@Background 注解 子线程执行方法
-参数提供:1.SINGLE 串行执行<br />
-        2.MULTI  并行执行<br />
-参考代码:
+参数提供:<br />
+1.SINGLE 串行执行<br />
+2.MULTI  并行执行<br />
+参考代码:<br />
 1.默认为MULTI<br />
 
     @Background
