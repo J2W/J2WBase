@@ -2,7 +2,6 @@ package j2w.team.modules.screen;
 
 import android.support.v4.app.FragmentActivity;
 
-import com.squareup.picasso.Picasso;
 
 import java.util.Stack;
 

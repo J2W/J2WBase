@@ -2,9 +2,7 @@ package j2w.team.common.utils.proxy;
 
 import android.os.Looper;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.concurrent.Executor;
 
 import j2w.team.common.log.L;
 import j2w.team.mvp.presenter.J2WHelper;

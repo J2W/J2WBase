@@ -10,7 +10,6 @@ import android.util.Log;
 import android.util.SparseBooleanArray;
 
 import j2w.team.common.utils.AppUtils;
-import j2w.team.mvp.presenter.J2WHelper;
 
 /**
  * Create by sky

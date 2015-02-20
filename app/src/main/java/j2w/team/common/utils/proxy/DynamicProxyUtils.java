@@ -3,7 +3,6 @@ package j2w.team.common.utils.proxy;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
 
-import j2w.team.common.log.L;
 import j2w.team.mvp.presenter.J2WPresenter;
 
 /**

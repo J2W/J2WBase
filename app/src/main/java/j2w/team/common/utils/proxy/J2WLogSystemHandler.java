@@ -1,6 +1,5 @@
 package j2w.team.common.utils.proxy;
 
-import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
 import j2w.team.common.log.L;

@@ -10,7 +10,6 @@ import java.util.List;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
-import j2w.team.mvp.view.J2WBaseFragment;
 
 /**
  * Created by sky on 15/1/29 程序工具包
