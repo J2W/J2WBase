@@ -34,6 +34,23 @@ classpath 'com.android.tools.build:gradle:1.0.0'
 帮助类:<br />
 1.J2WHelper modules模块接口<br />
 
+####提供@Background 注解 子线程执行方法
+参数提供:1.SINGLE 串行执行<br />
+        2.MULTI  并行执行<br />
+参考代码:
+1.默认为MULTI<br />
+
+    @Background
+    @Override public void setValues() {
+    
+    }
+         
+2.设置并行<br />
+
+    @Background(SINGLE)
+    @Override public void setValues() {
+    
+    }
 ### 使用说明:
 简介: 简单用 展示一个列表为例子 , 以后继续完善 <br />
 1.定义View 层接口<br />
@@ -55,7 +72,7 @@ classpath 'com.android.tools.build:gradle:1.0.0'
     		return "TestListFragmentPresenter";
     	}
     
-    
+        @Background   //注解为在子线程执行方法
     	@Override public void setValues() {
     	    List<String> list = new ArrayList<String>();
     		list.add("a");
@@ -65,6 +82,13 @@ classpath 'com.android.tools.build:gradle:1.0.0'
     		list.add("a");
     		list.add("a");
     		list.add("a");
+    		
+    		try {
+                Thread.sleep(3000); //延迟3秒后显示
+            } catch (InterruptedException e) {
+            	e.printStackTrace();
+            }
+    		
     		getView().setData(list);//调用View层接口
     	}
     }
