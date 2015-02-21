@@ -141,7 +141,7 @@ classpath 'com.android.tools.build:gradle:1.0.0'
 2.View层 里 直接调用 getPresenter() 就能拿到业务逻辑类 引用！<br />
 3.Presenter层 里 直接调用 getView() 就能拿到显示类 引用！<br />
 
-注意: 销毁引用处理内部已经完成！如果当前视图被销毁，View层方法不会被回掉，不用担心空指针或其他异常！
+注意: 销毁引用处理内部已经完成！如果当前视图被销毁，View层方法不会被回掉，不用担心空指针或其他情况！
 
 [modules](https://github.com/J2W/mvn-repo-j2w/blob/master/Explain/J2W_MODULES.md)
 -----------------------------------
