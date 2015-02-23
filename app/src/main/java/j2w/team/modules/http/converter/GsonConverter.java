@@ -13,7 +13,7 @@ import java.nio.charset.Charset;
 /**
  * Created by sky on 15/2/23.
  */
-public class GsonConverter implements Converter {
+public class GsonConverter implements J2WConverter {
     
     private final Gson gson;
     private final Charset charset;

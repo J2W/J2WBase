@@ -9,7 +9,7 @@ import java.lang.reflect.Type;
 /**
  * Created by sky on 15/2/23.
  */
-public interface Converter {
+public interface J2WConverter {
 	/**
 	 * 将一个HTTP响应体指定类型的对象。
 	 * 
