@@ -1,7 +1,5 @@
 package j2w.team.modules.http;
 
-import android.graphics.Path;
-
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
@@ -15,7 +13,7 @@ import java.util.regex.Pattern;
 import j2w.team.modules.http.annotations.GET;
 import j2w.team.modules.http.annotations.HEAD;
 import j2w.team.modules.http.annotations.Headers;
-import j2w.team.modules.http.annotations.PATCH;
+import j2w.team.modules.http.annotations.Path;
 import j2w.team.modules.http.annotations.POST;
 
 /**
@@ -42,23 +40,26 @@ final class J2WMethodInfo {
 	Type responseObjectType;
 	// 请求方法
 	String requestMethod;
-    // 请求参数名称集合
-    Set<String> requestUrlParamNames;
-    // 请求url
-    String requestUrl;
-    // 请求查询
-    String requestQuery;
-    // 请求头信息
-    com.squareup.okhttp.Headers headers;
-    // 请求头信息内容类型
-    String contentTypeHeader;
-    
+	// 请求参数名称集合
+	Set<String> requestUrlParamNames;
+	// 请求url
+	String requestUrl;
+	// 请求查询
+	String requestQuery;
+	// 请求头信息
+	com.squareup.okhttp.Headers headers;
+	// 请求头信息内容类型
+	String contentTypeHeader;
+
+    //请求参数注解
+    Annotation[] requestParamAnnotations;
+
 	J2WMethodInfo(Method method) {
 		this.method = method;
 		executionType = parseResponseType();
 
 		parseMethodAnnotations();
-		// parseParameters();
+		parseParameters();
 	}
 
 	/**
@@ -67,173 +68,110 @@ final class J2WMethodInfo {
 	private void parseMethodAnnotations() {
 		for (Annotation methodAnnotation : method.getAnnotations()) {
 			Class<? extends Annotation> annotationType = methodAnnotation.annotationType();
-			 if (annotationType == GET.class) {
+			if (annotationType == GET.class) {
 				parseHttpMethodAndPath("GET", ((GET) methodAnnotation).value());
 			} else if (annotationType == HEAD.class) {
 				parseHttpMethodAndPath("HEAD", ((HEAD) methodAnnotation).value());
-			} else if (annotationType == PATCH.class) {
-				parseHttpMethodAndPath("PATCH", ((PATCH) methodAnnotation).value());
 			} else if (annotationType == POST.class) {
 				parseHttpMethodAndPath("POST", ((POST) methodAnnotation).value());
-			}  else if (annotationType == Headers.class) {
+			} else if (annotationType == Headers.class) {
 				String[] headersToParse = ((Headers) methodAnnotation).value();
 				if (headersToParse.length == 0) {
 					throw methodError("@Headers annotation is empty.");
 				}
 				headers = parseHeaders(headersToParse);
-			} 
+			}
 			if (requestMethod == null) {
 				throw methodError("HTTP method annotation is required (e.g., @GET, @POST, etc.).");
 			}
 		}
 	}
 
-    /**
-     * 解析参数
-     */
-    private void parseParameters() {
-        //获得参数类型数组
-        Type[] methodParameterTypes = method.getGenericParameterTypes();
-        //活的参数类型注解数组
-        Annotation[][] methodParameterAnnotationArrays = method.getParameterAnnotations();
-        //获取长度
-        int count = methodParameterAnnotationArrays.length;
-        if (executionType == ExecutionType.ASYNC) { //如果异步
-            count -= 1; // 回调是最后一个参数的时候没有同步方法
-        }
+	/**
+	 * 解析参数
+	 */
+	private void parseParameters() {
+		// 活的参数类型注解数组
+		Annotation[][] methodParameterAnnotationArrays = method.getParameterAnnotations();
+		// 获取长度
+		int count = methodParameterAnnotationArrays.length;
+		if (executionType == ExecutionType.ASYNC) { // 如果异步
+			count -= 1; // 回调是最后一个参数的时候没有同步方法
+		}
 
-        //生成
-        Annotation[] requestParamAnnotations = new Annotation[count];
+		// 生成
+		Annotation[] requestParamAnnotations = new Annotation[count];
 
-        boolean gotField = false;
-        boolean gotPart = false;
-        boolean gotBody = false;
+		for (int i = 0; i < count; i++) {
+			Annotation[] methodParameterAnnotations = methodParameterAnnotationArrays[i];
+			if (methodParameterAnnotations != null) {
+				for (Annotation methodParameterAnnotation : methodParameterAnnotations) {
+					Class<? extends Annotation> methodAnnotationType = methodParameterAnnotation.annotationType();
 
-        for (int i = 0; i < count; i++) {
-            Type methodParameterType = methodParameterTypes[i];
-            Annotation[] methodParameterAnnotations = methodParameterAnnotationArrays[i];
-            if (methodParameterAnnotations != null) {
-                for (Annotation methodParameterAnnotation : methodParameterAnnotations) {
-                    Class<? extends Annotation> methodAnnotationType =
-                            methodParameterAnnotation.annotationType();
+					if (methodAnnotationType == Path.class) {
+						String name = ((Path) methodParameterAnnotation).value();
+						validatePathName(i, name);
+					} else {
+						continue;
+					}
+					requestParamAnnotations[i] = methodParameterAnnotation;
+				}
+			}
 
-                    if (methodAnnotationType == Path.class) {
-                        String name = ((Path) methodParameterAnnotation).value();
-                        validatePathName(i, name);
-                    } else if (methodAnnotationType == Query.class) {
-                        // Nothing to do.
-                    } else if (methodAnnotationType == QueryMap.class) {
-                        if (!Map.class.isAssignableFrom(Types.getRawType(methodParameterType))) {
-                            throw parameterError(i, "@QueryMap parameter type must be Map.");
-                        }
-                    } else if (methodAnnotationType == Header.class) {
-                        // Nothing to do.
-                    } else if (methodAnnotationType == Field.class) {
-                        if (requestType != RequestType.FORM_URL_ENCODED) {
-                            throw parameterError(i, "@Field parameters can only be used with form encoding.");
-                        }
+			if (requestParamAnnotations[i] == null) {
+				throw parameterError(i, "没有发现注解.");
+			}
+		}
 
-                        gotField = true;
-                    } else if (methodAnnotationType == FieldMap.class) {
-                        if (requestType != RequestType.FORM_URL_ENCODED) {
-                            throw parameterError(i, "@FieldMap parameters can only be used with form encoding.");
-                        }
-                        if (!Map.class.isAssignableFrom(Types.getRawType(methodParameterType))) {
-                            throw parameterError(i, "@FieldMap parameter type must be Map.");
-                        }
+		this.requestParamAnnotations = requestParamAnnotations;
+	}
 
-                        gotField = true;
-                    } else if (methodAnnotationType == Part.class) {
-                        if (requestType != RequestType.MULTIPART) {
-                            throw parameterError(i, "@Part parameters can only be used with multipart encoding.");
-                        }
+	/**
+	 * 验证方法参数注解名称
+	 * 
+	 * @param index
+	 * @param name
+	 */
+	private void validatePathName(int index, String name) {
+		if (!PARAM_NAME_REGEX.matcher(name).matches()) {
+			throw parameterError(index, "@Path 参数名称必须匹配 %s. 名称： %s", PARAM_URL_REGEX.pattern(), name);
+		}
+		// 验证URL替换的名字实际上是URL路径。
+		if (!requestUrlParamNames.contains(name)) {
+			throw parameterError(index, "URL \"%s\" 不包含\"{%s}\".", requestUrl, name);
+		}
+	}
 
-                        gotPart = true;
-                    } else if (methodAnnotationType == PartMap.class) {
-                        if (requestType != RequestType.MULTIPART) {
-                            throw parameterError(i,
-                                    "@PartMap parameters can only be used with multipart encoding.");
-                        }
-                        if (!Map.class.isAssignableFrom(Types.getRawType(methodParameterType))) {
-                            throw parameterError(i, "@PartMap parameter type must be Map.");
-                        }
+	/**
+	 * 解析请求头
+	 * 
+	 * @param headers
+	 * @return
+	 */
+	com.squareup.okhttp.Headers parseHeaders(String[] headers) {
+		com.squareup.okhttp.Headers.Builder builder = new com.squareup.okhttp.Headers.Builder();
+		for (String header : headers) {
+			int colon = header.indexOf(':');
+			if (colon == -1 || colon == 0 || colon == header.length() - 1) {
+				throw methodError("@Headers value must be in the form \"Name: Value\". Found: \"%s\"", header);
+			}
+			String headerName = header.substring(0, colon);
+			String headerValue = header.substring(colon + 1).trim();
+			if ("Content-Type".equalsIgnoreCase(headerName)) {
+				contentTypeHeader = headerValue;
+			} else {
+				builder.add(headerName, headerValue);
+			}
+		}
+		return builder.build();
+	}
 
-                        gotPart = true;
-                    } else if (methodAnnotationType == Body.class) {
-                        if (requestType != RequestType.SIMPLE) {
-                            throw parameterError(i,
-                                    "@Body parameters cannot be used with form or multi-part encoding.");
-                        }
-                        if (gotBody) {
-                            throw methodError("Multiple @Body method annotations found.");
-                        }
-
-                        requestObjectType = methodParameterType;
-                        gotBody = true;
-                    } else {
-                        // This is a non-Retrofit annotation. Skip to the next one.
-                        continue;
-                    }
-
-                    if (requestParamAnnotations[i] != null) {
-                        throw parameterError(i,
-                                "Multiple Retrofit annotations found, only one allowed: @%s, @%s.",
-                                requestParamAnnotations[i].annotationType().getSimpleName(),
-                                methodAnnotationType.getSimpleName());
-                    }
-                    requestParamAnnotations[i] = methodParameterAnnotation;
-                }
-            }
-
-            if (requestParamAnnotations[i] == null) {
-                throw parameterError(i, "No Retrofit annotation found.");
-            }
-        }
-
-        if (requestType == RequestType.SIMPLE && !requestHasBody && gotBody) {
-            throw methodError("Non-body HTTP method cannot contain @Body or @TypedOutput.");
-        }
-        if (requestType == RequestType.FORM_URL_ENCODED && !gotField) {
-            throw methodError("Form-encoded method must contain at least one @Field.");
-        }
-        if (requestType == RequestType.MULTIPART && !gotPart) {
-            throw methodError("Multipart method must contain at least one @Part.");
-        }
-
-        this.requestParamAnnotations = requestParamAnnotations;
-    }
-    
-    
-
-    /**
-     * 解析请求头
-     * @param headers
-     * @return
-     */
-    com.squareup.okhttp.Headers parseHeaders(String[] headers) {
-        com.squareup.okhttp.Headers.Builder builder = new com.squareup.okhttp.Headers.Builder();
-        for (String header : headers) {
-            int colon = header.indexOf(':');
-            if (colon == -1 || colon == 0 || colon == header.length() - 1) {
-                throw methodError("@Headers value must be in the form \"Name: Value\". Found: \"%s\"",
-                        header);
-            }
-            String headerName = header.substring(0, colon);
-            String headerValue = header.substring(colon + 1).trim();
-            if ("Content-Type".equalsIgnoreCase(headerName)) {
-                contentTypeHeader = headerValue;
-            } else {
-                builder.add(headerName, headerValue);
-            }
-        }
-        return builder.build();
-    }
-    
-    /**
-     * 解析方法和参数
-     * @param method
-     * @param path
-     */
+	/**
+	 * 解析方法和参数
+	 * 
+	 * @param method
+	 * @param path
+	 */
 	private void parseHttpMethodAndPath(String method, String path) {
 		if (requestMethod != null) {
 			throw methodError("只能有一个HTTP方法 %s and %s.", requestMethod, method);
@@ -347,7 +285,7 @@ final class J2WMethodInfo {
 	}
 
 	/**
-	 * 自定义异常
+	 * 自定义异常 - 方法错误
 	 * 
 	 * @param message
 	 * @param args
@@ -358,5 +296,17 @@ final class J2WMethodInfo {
 			message = String.format(message, args);
 		}
 		return new IllegalArgumentException(method.getDeclaringClass().getSimpleName() + "." + method.getName() + ": " + message);
+	}
+
+	/**
+	 * 自定义异常 - 参数错误
+	 * 
+	 * @param index
+	 * @param message
+	 * @param args
+	 * @return
+	 */
+	private RuntimeException parameterError(int index, String message, Object... args) {
+		return methodError(message + " (parameter #" + (index + 1) + ")", args);
 	}
 }
