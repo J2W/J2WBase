@@ -412,9 +412,9 @@ public class J2WRestAdapter {
 			// 网络协议-默认使用okhttp
 			if (client == null) {
 				OkHttpClient okHttpClient = new OkHttpClient();
-				client.setConnectTimeout(15, TimeUnit.SECONDS);// 连接超时
-				client.setReadTimeout(15, TimeUnit.SECONDS);// 读取超时
-				client.setWriteTimeout(15, TimeUnit.SECONDS);// 写入超时
+                okHttpClient.setConnectTimeout(15, TimeUnit.SECONDS);// 连接超时
+                okHttpClient.setReadTimeout(15, TimeUnit.SECONDS);// 读取超时
+                okHttpClient.setWriteTimeout(15, TimeUnit.SECONDS);// 写入超时
 				client = okHttpClient;
 			}
 			// 错误处理程序-默认什么都不做
