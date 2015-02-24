@@ -51,14 +51,16 @@ final class J2WMethodInfo {
 	// 请求头信息内容类型
 	String contentTypeHeader;
 
-    //请求参数注解
-    Annotation[] requestParamAnnotations;
+	// 请求参数注解
+	Annotation[] requestParamAnnotations;
 
 	J2WMethodInfo(Method method) {
 		this.method = method;
+		// 拿到返回类型
 		executionType = parseResponseType();
-
+		// 解析方法上的注解
 		parseMethodAnnotations();
+		// 解析方法参数
 		parseParameters();
 	}
 
@@ -77,12 +79,12 @@ final class J2WMethodInfo {
 			} else if (annotationType == Headers.class) {
 				String[] headersToParse = ((Headers) methodAnnotation).value();
 				if (headersToParse.length == 0) {
-					throw methodError("@Headers annotation is empty.");
+					throw methodError("@Headers 空的.");
 				}
 				headers = parseHeaders(headersToParse);
 			}
 			if (requestMethod == null) {
-				throw methodError("HTTP method annotation is required (e.g., @GET, @POST, etc.).");
+				throw methodError("给方法注解( @GET, @POST).");
 			}
 		}
 	}
