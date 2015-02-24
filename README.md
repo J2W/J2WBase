@@ -385,9 +385,8 @@ TestConfig.getInstance().commit();<br />
     })
     @GET("/widget/list")
     List<Widget> widgetList();
-
-6. Header 可动态更新<br />
-
+    
+6.Header 可动态更新 <br />
 
     @GET("/user")
     void getUser(@Header("Authorization") String authorization, Callback<User> callback)
