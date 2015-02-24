@@ -3,6 +3,6 @@ package j2w.team.modules.threadpool;
 /**
  * Created by sky on 15/2/20.线程池类型
  */
-public enum Background1Type {
+public enum BackgroundType {
 	SINGLE, MULTI
 }

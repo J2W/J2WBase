@@ -3,7 +3,7 @@ package j2w.team.common.utils.proxy;
 import java.lang.reflect.Method;
 
 import j2w.team.common.log.L;
-import j2w.team.modules.threadpool.Background1Type;
+import j2w.team.modules.threadpool.BackgroundType;
 import j2w.team.modules.threadpool.Background;
 import j2w.team.modules.threadpool.J2WAsyncCall;
 import j2w.team.mvp.presenter.J2WHelper;
@@ -29,7 +29,7 @@ public class J2WSyncHandler<T> extends BaseHandler<T> {
 			L.i("主线程执行: " + method.getName());
 			return method.invoke(t, args);
 		}
-		Background1Type backgroundType = background.value();
+		BackgroundType backgroundType = background.value();
 		switch (backgroundType) {
 		case SINGLE:
             L.tag("J2W-Method");
