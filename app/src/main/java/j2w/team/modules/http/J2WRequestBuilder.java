@@ -12,6 +12,7 @@ import java.lang.reflect.Array;
 import java.net.URLEncoder;
 import java.util.Map;
 
+import j2w.team.common.log.L;
 import j2w.team.modules.http.annotations.Body;
 import j2w.team.modules.http.annotations.Header;
 import j2w.team.modules.http.annotations.Path;
@@ -311,7 +312,10 @@ final class J2WRequestBuilder implements J2WRequestInterceptor.RequestFacade {
         if (queryParams != null) {
             url.append(queryParams);
         }
-		// 请求体
+        //打印完整路径
+        L.tag("J2W-HTTP");
+        L.i("请求路径:"+url);
+        // 请求体
 		RequestBody body = this.body;
 		// 请求头
 		Headers.Builder headerBuilder = this.headers;
