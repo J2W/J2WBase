@@ -1,5 +1,10 @@
 package j2w.team.modules.http;
 
+import com.squareup.okhttp.MediaType;
+import com.squareup.okhttp.Response;
+import com.squareup.okhttp.ResponseBody;
+
+import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
@@ -15,16 +20,18 @@ import j2w.team.modules.http.annotations.HEAD;
 import j2w.team.modules.http.annotations.Headers;
 import j2w.team.modules.http.annotations.Path;
 import j2w.team.modules.http.annotations.POST;
+import okio.Buffer;
+import okio.BufferedSource;
 
 /**
  * Created by sky on 15/2/13.
  */
-final class J2WMethodInfo {
+public final class J2WMethodInfo {
 
 	/**
 	 * 枚举类型
 	 */
-	enum ExecutionType {
+	public enum ExecutionType {
 		ASYNC, SYNC
 	}
 
@@ -35,7 +42,7 @@ final class J2WMethodInfo {
 	// 方法属性
 	final Method method;
 	// 枚举类型
-	final ExecutionType executionType;
+	public final ExecutionType executionType;
 	// 响应类型
 	Type responseObjectType;
 	// 请求方法
@@ -246,7 +253,7 @@ final class J2WMethodInfo {
 		}
 
 		boolean hasReturnType = returnType != void.class; // 返回类型 是否为NULL
-		boolean hasCallback = lastArgClass != null && Callback.class.isAssignableFrom(lastArgClass);// 判断是否是回调接接口
+		boolean hasCallback = lastArgClass != null && J2WCallback.class.isAssignableFrom(lastArgClass);// 判断是否是回调接接口
 
 		if (hasReturnType && hasCallback) {
 			throw methodError("返回类型和回调接口不能同时存在！");
@@ -260,7 +267,7 @@ final class J2WMethodInfo {
 			return ExecutionType.SYNC;
 		}
 		// 获取父类的类型
-		lastArgType = Types.getSupertype(lastArgType, Types.getRawType(lastArgType), Callback.class);
+		lastArgType = Types.getSupertype(lastArgType, Types.getRawType(lastArgType), J2WCallback.class);
 		if (lastArgType instanceof ParameterizedType) { // 判断是否是参数类型
 			responseObjectType = getParameterUpperBound((ParameterizedType) lastArgType);// 获取绑定的参数类型
 			return ExecutionType.ASYNC;
@@ -310,5 +317,38 @@ final class J2WMethodInfo {
 	 */
 	private RuntimeException parameterError(int index, String message, Object... args) {
 		return methodError(message + " (parameter #" + (index + 1) + ")", args);
+	}
+
+	/**
+	 * Okhttp 读取结果集
+	 * 
+	 * @param response
+	 * @return
+	 * @throws IOException
+	 */
+	static Response readBodyToBytesIfNecessary(Response response) throws IOException {
+		final ResponseBody body = response.body();
+		if (body == null) {
+			return response;
+		}
+
+		BufferedSource source = body.source();
+		final Buffer buffer = new Buffer();
+		buffer.writeAll(source);
+		source.close();
+
+		return response.newBuilder().body(new ResponseBody() {
+			@Override public MediaType contentType() {
+				return body.contentType();
+			}
+
+			@Override public long contentLength() {
+				return buffer.size();
+			}
+
+			@Override public BufferedSource source() {
+				return buffer.clone();
+			}
+		}).build();
 	}
 }

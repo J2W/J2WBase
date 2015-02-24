@@ -98,7 +98,7 @@ public final class DynamicProxyUtils {
 
 
     /**
-     * 验证类
+     * 验证类 - 判断是否是一个接口
      * @param service
      * @param <T>
      */
@@ -109,5 +109,17 @@ public final class DynamicProxyUtils {
             stringBuilder.append("，该类不是接口！");
             throw new IllegalArgumentException(stringBuilder.toString());
         }
+    }
+
+    /**
+     * 验证类 - 判断是否继承其他接口
+     * @param service
+     * @param <T>
+     */
+    public static <T> void validateInterfaceServiceClass(Class<T> service) {
+        if (service.getInterfaces().length > 0) {
+            throw new IllegalArgumentException("接口不能继承其它接口");
+        }
+
     }
 }
