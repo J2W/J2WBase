@@ -5,7 +5,7 @@ import java.lang.reflect.InvocationHandler;
 /**
  * Created by sky on 15/2/7. 动态代理-handler
  */
-abstract class BaseHandler<T> implements InvocationHandler {
+public abstract class BaseHandler<T> implements InvocationHandler {
 	protected T t = null;
 
 	private BaseHandler() {

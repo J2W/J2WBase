@@ -15,7 +15,6 @@ import java.util.concurrent.TimeUnit;
 
 import j2w.team.common.log.L;
 import j2w.team.common.utils.proxy.DynamicProxyUtils;
-import j2w.team.common.utils.proxy.J2WRestHandler;
 import j2w.team.modules.http.converter.GsonConverter;
 import j2w.team.modules.http.converter.J2WConverter;
 import j2w.team.mvp.presenter.J2WHelper;
@@ -87,7 +86,7 @@ public class J2WRestAdapter {
 	 * @return
 	 * @throws Throwable
 	 */
-	public Object invokeSync(J2WMethodInfo methodInfo, Request request) throws Throwable {
+	Object invokeSync(J2WMethodInfo methodInfo, Request request) throws Throwable {
 		try {
 			// 发送请求
 			Response response = client.newCall(request).execute();
@@ -107,7 +106,7 @@ public class J2WRestAdapter {
 	 * @param request
 	 * @param callback
 	 */
-	public void invokeAsync(final J2WMethodInfo methodInfo, final Request request, final J2WCallback callback) {
+	void invokeAsync(final J2WMethodInfo methodInfo, final Request request, final J2WCallback callback) {
 		Call call = client.newCall(request);
 		call.enqueue(new com.squareup.okhttp.Callback() {
 			@Override public void onFailure(Request request, IOException e) {
@@ -263,7 +262,7 @@ public class J2WRestAdapter {
 	 *            参数
 	 * @return
 	 */
-	public Request createRequest(J2WMethodInfo methodInfo, Object[] args) {
+	Request createRequest(J2WMethodInfo methodInfo, Object[] args) {
 		// 获取url
 		String serverUrl = j2WEndpoint.url();
 		// 编辑请求
@@ -431,9 +430,9 @@ public class J2WRestAdapter {
 
 	public static void main(String[] args) {
 
-        /**
-         * 错误处理 
-         */
+		/**
+		 * 错误处理
+		 */
 		class MyErrorHandler implements J2WErrorHandler {
 			@Override public Throwable handleError(J2WError cause) {
 
@@ -442,7 +441,6 @@ public class J2WRestAdapter {
 		}
 		MyErrorHandler myErrorHandler = new MyErrorHandler();
 
-        
 		J2WRestAdapter restAdapter = new J2WRestAdapter.Builder().setErrorHandler(myErrorHandler).build();
 
 	}

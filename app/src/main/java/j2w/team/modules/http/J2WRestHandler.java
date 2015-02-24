@@ -1,14 +1,12 @@
-package j2w.team.common.utils.proxy;
-
-import com.squareup.okhttp.Request;
+package j2w.team.modules.http;
 
 import java.lang.reflect.Method;
 import java.util.Map;
 
+import com.squareup.okhttp.Request;
+
 import j2w.team.common.log.L;
-import j2w.team.modules.http.J2WCallback;
-import j2w.team.modules.http.J2WMethodInfo;
-import j2w.team.modules.http.J2WRestAdapter;
+import j2w.team.common.utils.proxy.BaseHandler;
 
 /**
  * Created by sky on 15/2/24. 动态代理 - 网络层
