@@ -11,5 +11,5 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 public @interface Background {
-    BackgroundType value() default BackgroundType.MULTI;
+    Background1Type value() default Background1Type.MULTI;
 }
