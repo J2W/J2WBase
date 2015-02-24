@@ -7,6 +7,32 @@ Gradle 版本
 classpath 'com.android.tools.build:gradle:1.0.0'
 版本 - gradle-2.2.1-all.zip
 
+新项目引用
+-----------------------------------
+build.gradle
+
+     buildscript {
+         repositories {
+             //从中央库里面获取依赖
+             jcenter()
+         }
+         dependencies {
+             classpath 'com.android.tools.build:gradle:1.0.0'
+         }
+     }
+     
+     allprojects {
+         repositories {
+             jcenter()
+             //远程仓库
+             maven { url "https://github.com/J2W/mvn-repo-j2w/raw/master/repository" }
+         }
+     }
+
+Gradle:
+
+     compile 'com.squareup.retrofit:retrofit:1.9.0'
+
 [MVP](https://github.com/J2W/mvn-repo-j2w/blob/master/Explain/J2W_MVP.md)
 -----------------------------------
 
