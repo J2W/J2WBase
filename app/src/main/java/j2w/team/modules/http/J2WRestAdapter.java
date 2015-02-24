@@ -427,21 +427,4 @@ public class J2WRestAdapter {
 			}
 		}
 	}
-
-	public static void main(String[] args) {
-
-		/**
-		 * 错误处理
-		 */
-		class MyErrorHandler implements J2WErrorHandler {
-			@Override public Throwable handleError(J2WError cause) {
-
-				return cause;
-			}
-		}
-		MyErrorHandler myErrorHandler = new MyErrorHandler();
-
-		J2WRestAdapter restAdapter = new J2WRestAdapter.Builder().setErrorHandler(myErrorHandler).build();
-
-	}
 }
