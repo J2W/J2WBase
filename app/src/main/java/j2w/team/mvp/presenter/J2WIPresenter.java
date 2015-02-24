@@ -16,5 +16,7 @@ public interface J2WIPresenter<T> {
 
 	/** 消除 VIEW层 引用 **/
 	public void detach();
-    
+
+	/** 方法异常 **/
+	public void methodError(String methodName, Throwable throwable);
 }

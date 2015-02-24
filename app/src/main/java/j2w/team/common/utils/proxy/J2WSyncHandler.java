@@ -1,5 +1,6 @@
 package j2w.team.common.utils.proxy;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import j2w.team.common.log.L;
@@ -19,6 +20,8 @@ public class J2WSyncHandler<T> extends BaseHandler<T> {
 	}
 
 	@Override public Object invoke(Object proxy, final Method method, final Object[] args) throws Throwable {
+        //获得错误处理方法
+        final Method methodError = aClass.getMethod("methodError",new Class[]{String.class,Throwable.class});
 
         Method oldMethod =  aClass.getMethod(method.getName());
 		// 获得注解数组
@@ -39,8 +42,14 @@ public class J2WSyncHandler<T> extends BaseHandler<T> {
 					try {
 						method.invoke(t, args);
 					} catch (Throwable e) {
-						L.e("执行异常:" + e.toString());
-					}
+                        try {
+                            methodError.invoke(t,new Object[]{method.getName(),e});
+                        } catch (IllegalAccessException e1) {
+                            L.e(e1.toString());
+                        } catch (InvocationTargetException e1) {
+                            L.e(e1.toString());
+                        }
+                    }
 				}
 			});
 			break;
@@ -52,7 +61,13 @@ public class J2WSyncHandler<T> extends BaseHandler<T> {
 					try {
 						method.invoke(t, args);
 					} catch (Throwable e) {
-						L.e("执行异常:" + e.toString());
+                        try {
+                            methodError.invoke(t,new Object[]{method.getName(),e});
+                        } catch (IllegalAccessException e1) {
+                            L.e(e1.toString());
+                        } catch (InvocationTargetException e1) {
+                            L.e(e1.toString());
+                        }
 					}
 				}
 			});

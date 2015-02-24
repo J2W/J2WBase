@@ -154,7 +154,7 @@ public class J2WRestAdapter {
 	 */
 	private void callFailure(final J2WCallback callback, J2WError error) {
 		Throwable throwable = handleError(error);
-		if (throwable != error) {
+		if (throwable != error) {//如果是自定义异常
 			Response response = error.getResponse();
 			if (response != null) {
 				error = J2WError.unexpectedError(response, throwable);
@@ -186,7 +186,7 @@ public class J2WRestAdapter {
 	private Throwable handleError(J2WError error) {
 		Throwable throwable = errorHandler.handleError(error);
 		if (throwable == null) {
-			return new IllegalStateException("Error handler returned null for wrapped exception.", error);
+			return new IllegalStateException("错误处理程序返回空.", error);
 		}
 		return throwable;
 	}
