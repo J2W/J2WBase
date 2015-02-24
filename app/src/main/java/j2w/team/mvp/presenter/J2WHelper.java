@@ -3,6 +3,7 @@ package j2w.team.mvp.presenter;
 import com.squareup.picasso.PicassoTools;
 
 import j2w.team.common.utils.looper.SynchronousExecutor;
+import j2w.team.modules.http.J2WRestAdapter;
 import j2w.team.modules.screen.J2WIScreenManager;
 import j2w.team.modules.screen.J2WScreenManager;
 import j2w.team.modules.threadpool.J2WThreadPoolManager;
@@ -41,6 +42,36 @@ public class J2WHelper {
 				}
 			}
 		}
+	}
+
+	/**
+	 * 单例模式-网络适配器
+	 */
+	private volatile static J2WRestAdapter mJ2WRestAdapter = null;
+
+	/**
+	 * 单例模式-初始化J2WRestAdapter网络适配器
+	 *
+	 * @param j2WRestAdapter
+	 *            网络适配器
+	 */
+	public static void initJ2WRestAdatper(J2WRestAdapter j2WRestAdapter) {
+		if (j2WRestAdapter == null) {
+			synchronized (J2WHelper.class) {
+				if (mJ2WRestAdapter == null) {
+					mJ2WRestAdapter = j2WRestAdapter;
+				}
+			}
+		}
+	}
+
+	/**
+	 * 网络适配器
+	 * 
+	 * @return 适配器
+	 */
+	public static final J2WRestAdapter getJ2WRestAdapter() {
+		return mJ2WRestAdapter;
 	}
 
 	/**

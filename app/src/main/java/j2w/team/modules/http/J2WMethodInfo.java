@@ -11,15 +11,20 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.lang.reflect.WildcardType;
 import java.util.LinkedHashSet;
+import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import j2w.team.common.log.L;
+import j2w.team.modules.http.annotations.Body;
 import j2w.team.modules.http.annotations.GET;
 import j2w.team.modules.http.annotations.HEAD;
 import j2w.team.modules.http.annotations.Headers;
 import j2w.team.modules.http.annotations.Path;
 import j2w.team.modules.http.annotations.POST;
+import j2w.team.modules.http.annotations.Query;
+import j2w.team.modules.http.annotations.QueryMap;
 import okio.Buffer;
 import okio.BufferedSource;
 
@@ -61,6 +66,8 @@ public final class J2WMethodInfo {
 	// 请求参数注解
 	Annotation[] requestParamAnnotations;
 
+	Type requestObjectType;
+
 	J2WMethodInfo(Method method) {
 		this.method = method;
 		// 拿到返回类型
@@ -100,6 +107,7 @@ public final class J2WMethodInfo {
 	 * 解析参数
 	 */
 	private void parseParameters() {
+		Type[] methodParameterTypes = method.getGenericParameterTypes();
 		// 活的参数类型注解数组
 		Annotation[][] methodParameterAnnotationArrays = method.getParameterAnnotations();
 		// 获取长度
@@ -107,11 +115,12 @@ public final class J2WMethodInfo {
 		if (executionType == ExecutionType.ASYNC) { // 如果异步
 			count -= 1; // 回调是最后一个参数的时候没有同步方法
 		}
-
+		boolean gotBody = false;
 		// 生成
 		Annotation[] requestParamAnnotations = new Annotation[count];
 
 		for (int i = 0; i < count; i++) {
+			Type methodParameterType = methodParameterTypes[i];
 			Annotation[] methodParameterAnnotations = methodParameterAnnotationArrays[i];
 			if (methodParameterAnnotations != null) {
 				for (Annotation methodParameterAnnotation : methodParameterAnnotations) {
@@ -120,7 +129,18 @@ public final class J2WMethodInfo {
 					if (methodAnnotationType == Path.class) {
 						String name = ((Path) methodParameterAnnotation).value();
 						validatePathName(i, name);
-					} else {
+					} else if (methodAnnotationType == Query.class) {
+						// 什么都不做
+					} else if (methodAnnotationType == QueryMap.class) {
+						if (!Map.class.isAssignableFrom(Types.getRawType(methodParameterType))) {
+							throw parameterError(i, "@QueryMap 参数类型必须map.");
+						}
+					} else if (methodAnnotationType == Body.class) {
+						requestObjectType = methodParameterType;
+						gotBody = true;
+					}
+
+					else {
 						continue;
 					}
 					requestParamAnnotations[i] = methodParameterAnnotation;
@@ -137,7 +157,7 @@ public final class J2WMethodInfo {
 
 	/**
 	 * 验证方法参数注解名称
-	 * 
+	 *
 	 * @param index
 	 * @param name
 	 */
@@ -153,7 +173,7 @@ public final class J2WMethodInfo {
 
 	/**
 	 * 解析请求头
-	 * 
+	 *
 	 * @param headers
 	 * @return
 	 */
@@ -177,7 +197,7 @@ public final class J2WMethodInfo {
 
 	/**
 	 * 解析方法和参数
-	 * 
+	 *
 	 * @param method
 	 * @param path
 	 */

@@ -240,10 +240,12 @@ TestConfig.getInstance().commit();<br />
 AndroidManifest 权限
 -----------------------------------
 <!-- SDCard中创建与删除文件权限 --><br />
-<uses-permissioandroid:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
+    
+    <uses-permissioandroid:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
 <!-- 读写权限 --><br />
-<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/><br />
-<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/><br />
+    
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/><br />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/><br />
 
 混淆过滤
 -----------------------------------

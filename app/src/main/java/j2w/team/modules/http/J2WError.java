@@ -9,7 +9,7 @@ import java.lang.reflect.Type;
 import j2w.team.modules.http.converter.J2WConverter;
 
 /**
- * Created by sky on 15/2/23.
+ * Created by sky on 15/2/23.错误处理
  */
 public class J2WError extends RuntimeException {
 

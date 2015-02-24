@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 
 /**
- * Created by sky on 15/2/23.
+ * Created by sky on 15/2/23. 转换器
  */
 public interface J2WConverter {
 	/**
