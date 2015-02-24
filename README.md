@@ -40,7 +40,7 @@ Gradle:
         }
     }
     //依赖
-    compile 'com.squareup.retrofit:retrofit:1.9.0'
+    compile 'j2w.team:base:1.0'
 
 [MVP](https://github.com/J2W/mvn-repo-j2w/blob/master/Explain/J2W_MVP.md)
 -----------------------------------
