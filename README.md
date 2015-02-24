@@ -31,7 +31,16 @@ build.gradle
 
 Gradle:
 
-     compile 'com.squareup.retrofit:retrofit:1.9.0'
+    android {
+        //配置信息
+        packagingOptions {
+        exclude 'META-INF/services/javax.annotation.processing.Processor'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+        }
+    }
+    //依赖
+    compile 'com.squareup.retrofit:retrofit:1.9.0'
 
 [MVP](https://github.com/J2W/mvn-repo-j2w/blob/master/Explain/J2W_MVP.md)
 -----------------------------------
