@@ -81,7 +81,7 @@ Gradle:
     
     }
          
-2.设置并行<br />
+2.设置串行<br />
 
     @Background(SINGLE)
     @Override public void setValues() {
