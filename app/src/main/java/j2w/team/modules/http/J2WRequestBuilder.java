@@ -243,7 +243,7 @@ final class J2WRequestBuilder implements J2WRequestInterceptor.RequestFacade {
 				Path path = (Path) annotation;
 				String name = path.value();
 				if (value == null) {
-					throw new IllegalArgumentException("Path parameter \"" + name + "\" value must not be null.");
+					throw new IllegalArgumentException("路径 key: \"" + name + "\" 值 不能为空.");
 				}
 				addPathParam(name, value.toString(), path.encode());
 			}else if (annotationType == Query.class) {
@@ -279,7 +279,7 @@ final class J2WRequestBuilder implements J2WRequestInterceptor.RequestFacade {
 
 			} else if (annotationType == Body.class) {
 				if (value == null) {
-					throw new IllegalArgumentException("Body parameter value must not be null.");
+					throw new IllegalArgumentException("请求体的参数值不得为空.");
 				}
 				if (value instanceof RequestBody) {
 					body = (RequestBody) value;
@@ -287,7 +287,7 @@ final class J2WRequestBuilder implements J2WRequestInterceptor.RequestFacade {
 					body = converter.toBody(value, value.getClass());
 				}
 			} else {
-				throw new IllegalArgumentException("Unknown annotation: " + annotationType.getCanonicalName());
+				throw new IllegalArgumentException("未知的注释： " + annotationType.getCanonicalName());
 			}
 		}
 	}
