@@ -35,7 +35,7 @@ public class J2WSyncHandler<T> extends BaseHandler<T> {
                 return method.invoke(t, args);
             }catch (Throwable throwable){
                 try {
-                    methodError.invoke(t, new Object[] { method.getName(), throwable });
+                   return methodError.invoke(t, new Object[] { method.getName(), throwable });
                 } catch (IllegalAccessException e1) {
                     L.e(e1.toString());
                 } catch (InvocationTargetException e1) {
