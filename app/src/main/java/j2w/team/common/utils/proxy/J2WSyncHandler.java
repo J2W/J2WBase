@@ -31,7 +31,17 @@ public class J2WSyncHandler<T> extends BaseHandler<T> {
 		if (background == null) {
 			L.tag("J2W-Method");
 			L.i("主线程执行: " + method.getName());
-			return method.invoke(t, args);
+            try{
+                return method.invoke(t, args);
+            }catch (Throwable throwable){
+                try {
+                    methodError.invoke(t, new Object[] { method.getName(), throwable });
+                } catch (IllegalAccessException e1) {
+                    L.e(e1.toString());
+                } catch (InvocationTargetException e1) {
+                    L.e("方法内部异常:" + e1.toString());
+                }
+            }
 		}
 		BackgroundType backgroundType = background.value();
 		switch (backgroundType) {
