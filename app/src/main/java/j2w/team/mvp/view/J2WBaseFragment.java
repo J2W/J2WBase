@@ -15,12 +15,13 @@ import j2w.team.common.log.L;
 import j2w.team.mvp.presenter.J2WIPresenter;
 import j2w.team.mvp.presenter.J2WPresenter;
 import j2w.team.mvp.presenter.J2WPresenterUtils;
+import j2w.team.mvp.presenter.Presenter;
 import j2w.team.mvp.view.iview.J2WFragmentIView;
 
 /**
  * Created by sky on 15/2/1. fragment 视图
  */
-public abstract class J2WBaseFragment<T extends J2WIPresenter,D extends J2WPresenter> extends Fragment implements J2WFragmentIView, View.OnTouchListener {
+public abstract class J2WBaseFragment<T extends J2WIPresenter> extends Fragment implements J2WFragmentIView, View.OnTouchListener {
 
     /**
      * view *

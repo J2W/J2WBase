@@ -103,14 +103,14 @@ public final class DynamicProxyUtils {
      * @param <T>
      */
     public static <T> void validateServiceClass(Class<T> service) {
-        if (!service.isInterface()) {
+        if (service == null || !service.isInterface()) {
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.append(service);
             stringBuilder.append("，该类不是接口！");
             throw new IllegalArgumentException(stringBuilder.toString());
         }
     }
-
+    
     /**
      * 验证类 - 判断是否继承其他接口
      * @param service

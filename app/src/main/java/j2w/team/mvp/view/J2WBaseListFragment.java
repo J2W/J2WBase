@@ -21,7 +21,7 @@ import j2w.team.mvp.view.iview.J2WListFragmentIView;
 /**
  * Created by sky on 15/2/6. ListFragment 视图
  */
-public abstract class J2WBaseListFragment<T extends J2WIPresenter, D extends J2WPresenter> extends J2WBaseFragment<T, D> implements J2WListFragmentIView, AdapterView.OnItemClickListener,
+public abstract class J2WBaseListFragment<T extends J2WIPresenter> extends J2WBaseFragment<T> implements J2WListFragmentIView, AdapterView.OnItemClickListener,
 		AdapterView.OnItemLongClickListener {
 
 	/**

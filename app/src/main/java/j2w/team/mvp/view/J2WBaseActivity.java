@@ -5,17 +5,19 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
 import butterknife.ButterKnife;
+import j2w.team.modules.appconfig.Property;
 import j2w.team.mvp.presenter.J2WHelper;
 import j2w.team.common.log.L;
 import j2w.team.mvp.presenter.J2WIPresenter;
 import j2w.team.mvp.presenter.J2WPresenter;
 import j2w.team.mvp.presenter.J2WPresenterUtils;
+import j2w.team.mvp.presenter.Presenter;
 import j2w.team.mvp.view.iview.J2WActivityIView;
 
 /**
  * Created by sky on 15/1/26. activity 视图
  */
-public abstract class J2WBaseActivity<T extends J2WIPresenter, D extends J2WPresenter> extends FragmentActivity implements J2WActivityIView {
+public abstract class J2WBaseActivity<T extends J2WIPresenter> extends FragmentActivity implements J2WActivityIView {
 
 	/** 业务逻辑对象 **/
 	private T presenter = null;

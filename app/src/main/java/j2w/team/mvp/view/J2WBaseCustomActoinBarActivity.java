@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.util.Objects;
+
 import butterknife.ButterKnife;
 import j2w.team.R;
 import j2w.team.mvp.presenter.J2WHelper;
@@ -17,12 +19,13 @@ import j2w.team.common.log.L;
 import j2w.team.mvp.presenter.J2WIPresenter;
 import j2w.team.mvp.presenter.J2WPresenter;
 import j2w.team.mvp.presenter.J2WPresenterUtils;
+import j2w.team.mvp.presenter.Presenter;
 import j2w.team.mvp.view.iview.J2WActionBarIView;
 
 /**
  * Created by sky on 15/2/5. actionbarActivity 视图
  */
-public abstract class J2WBaseCustomActoinBarActivity<T extends J2WIPresenter,D extends J2WPresenter> extends ActionBarActivity implements J2WActionBarIView, View.OnClickListener {
+public abstract class J2WBaseCustomActoinBarActivity<T extends J2WIPresenter> extends ActionBarActivity implements J2WActionBarIView, View.OnClickListener {
 
 	/** 标题栏 **/
 	private ActionBar actionBar;
