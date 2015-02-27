@@ -99,7 +99,15 @@ Gradle:
     public void methodError(String s, Throwable throwable) {
         L.e(throwable.toString());
     }
-      
+    
+####提供@Presenter 注解 给View层注入业务类
+说明：<br />
+1.TestListFragmentPresenter 是 TestListIPresenter 的 实现类<br />
+    
+    @Presenter(TestListFragmentPresenter.class)
+    public class TestListFragment extends J2WBaseListFragment<TestListIPresenter>{
+    }
+    
 ### 使用说明:
 简介: 简单用 展示一个列表为例子 , 以后继续完善 <br />
 1.定义View 层接口<br />
@@ -174,7 +182,8 @@ Gradle:
 
 5.创建View 显示类<br />
 
-    public class TestListFragment extends J2WBaseListFragment<TestListIPresenter,TestListFragmentPresenter> implements TestListIView //View层接口 {
+    @Presenter(TestListFragmentPresenter.class) //注入业务类
+    public class TestListFragment extends J2WBaseListFragment<TestListIPresenter> implements TestListIView //View层接口 {
     
     	@Override public String initTag() {iew
     		return "TestListFragment";
@@ -191,10 +200,9 @@ Gradle:
     	
     }
     
-说明: J2WBaseListFragment<TestListIPresenter,TestListFragmentPresenter><br />
-1.第一个泛型是Presenter接口，第二个泛型是Presenter接口的实现类<br />
-2.View层 里 直接调用 getPresenter() 就能拿到业务逻辑类 引用！<br />
-3.Presenter层 里 直接调用 getView() 就能拿到显示类 引用！<br />
+说明: 
+1.View层 里 直接调用 getPresenter() 就能拿到业务逻辑类 引用！<br />
+2.Presenter层 里 直接调用 getView() 就能拿到显示类 引用！<br />
 
 注意: 销毁引用处理内部已经完成！如果当前视图被销毁，View层方法不会被回掉，不用担心空指针或其他情况！
 
