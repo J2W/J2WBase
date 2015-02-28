@@ -2,11 +2,11 @@
 //apply plugin: 'com.android.application'
 apply plugin: 'android-library'
 android {
-    compileSdkVersion 19
+    compileSdkVersion 21
     buildToolsVersion "21.1.2"
 
     defaultConfig {
-        minSdkVersion 9
+        minSdkVersion 8
         targetSdkVersion 21
         versionCode 1
         versionName "1.0"
@@ -35,7 +35,7 @@ dependencies {
     compile 'com.google.code.gson:gson:2.3.1'
     compile 'com.jakewharton:butterknife:6.1.0'
     //noinspection GradleCompatible
-    compile 'com.android.support:appcompat-v7:19.0.1'
+    compile 'com.android.support:appcompat-v7:21.0.3'
     compile 'commons-lang:commons-lang:2.6'
     compile 'com.squareup.picasso:picasso:2.5.0'
     compile 'com.squareup.okhttp:okhttp:2.2.0'
@@ -49,23 +49,5 @@ robolectric {
     // configure max heap size of the test JVM
     maxHeapSize = "2048m"
 }
-// 1.maven-插件
-apply plugin: 'maven'
-// 2.maven-信息
-ext {
-    PUBLISH_GROUP_ID = 'j2w.team'
-    PUBLISH_ARTIFACT_ID = 'base'
-    PUBLISH_VERSION = android.defaultConfig.versionName
-}
-// 3.maven-路径
-uploadArchives {
-    repositories.mavenDeployer {
-        def deployPath = file(getProperty('aar.deployPath'))
-        repository(url: "file://${deployPath.absolutePath}")
-        pom.project {
-            groupId project.PUBLISH_GROUP_ID
-            artifactId project.PUBLISH_ARTIFACT_ID
-            version project.PUBLISH_VERSION
-        }
-    }
-}
+//打包
+apply from: 'maven-release-aar.gradle'
