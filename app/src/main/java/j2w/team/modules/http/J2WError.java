@@ -49,11 +49,15 @@ public class J2WError extends RuntimeException {
 		UNEXPECTED
 	}
 
-	private final String url;
-	private final Response response;
-	private final J2WConverter converter;
-	private final Type successType;
-	private final Kind kind;
+	private final String		url;
+
+	private final Response		response;
+
+	private final J2WConverter	converter;
+
+	private final Type			successType;
+
+	private final Kind			kind;
 
 	J2WError(String message, String url, Response response, J2WConverter converter, Type successType, Kind kind, Throwable exception) {
 		super(message, exception);
@@ -78,21 +82,23 @@ public class J2WError extends RuntimeException {
 	public Kind getKind() {
 		return kind;
 	}
-    /** 返回错误的结果集. */
+
+	/** 返回错误的结果集. */
 	public Object getBody() {
 		return getBodyAs(successType);
 	}
 
-    /** 类型*/
+	/** 类型 */
 	public Type getSuccessType() {
 		return successType;
 	}
 
-    /**
-     * 返回结果集*
-     * @param type
-     * @return
-     */
+	/**
+	 * 返回结果集*
+	 * 
+	 * @param type
+	 * @return
+	 */
 	public Object getBodyAs(Type type) {
 		if (response == null) {
 			return null;

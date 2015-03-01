@@ -7,16 +7,21 @@ import com.squareup.okhttp.Response;
  */
 public interface J2WCallback<T> {
 
-    /**
-     * 成功
-     * @param t 成功类型
-     * @param response 响应结果
-     */
-    void success(T t, Response response);
+	/**
+	 * 成功
+	 * 
+	 * @param t
+	 *            成功类型
+	 * @param response
+	 *            响应结果
+	 */
+	void success(T t, Response response);
 
-    /**
-     * 失败
-     * @param error 错误
-     */
-    void failure(J2WError error);
+	/**
+	 * 失败
+	 * 
+	 * @param error
+	 *            错误
+	 */
+	void failure(J2WError error);
 }

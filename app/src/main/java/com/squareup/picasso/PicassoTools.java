@@ -15,146 +15,152 @@ import j2w.team.mvp.presenter.J2WHelper;
  * Created by sky on 15/2/19. Picasso工具
  */
 public final class PicassoTools {
-    /**
-     * 单例 *
-     */
-    private static final PicassoTools singleton = new PicassoTools();
 
-    /**
-     * 单例 *
-     */
-    public static PicassoTools getInstance() {
-        return singleton;
-    }
+	/**
+	 * 单例 *
+	 */
+	private static final PicassoTools	singleton	= new PicassoTools();
 
-    static Picasso picasso = null;
-    static OkHttpDownloader okHttpDownloader = null;
+	/**
+	 * 单例 *
+	 */
+	public static PicassoTools getInstance() {
+		return singleton;
+	}
 
-    
-    /**
-     * 初始化和获取
-     *
-     * @return
-     */
-    public Picasso with() {
-        if (picasso == null) {
-            synchronized (Picasso.class) {
-                if (picasso == null) {
-                    picasso = new Builder().build();
-                }
-            }
-        }
-        return picasso;
-    }
+	static Picasso			picasso				= null;
 
-    /**
-     * 加载数据源
-     *
-     * @param file 文件
-     * @return
-     */
-    public RequestCreator load(File file) {
-        return with().load(file);
-    }
+	static OkHttpDownloader	okHttpDownloader	= null;
 
-    /**
-     * 加载数据源
-     *
-     * @param path 路径
-     * @return
-     */
-    public RequestCreator load(String path) {
-        return with().load(path);
-    }
+	/**
+	 * 初始化和获取
+	 *
+	 * @return
+	 */
+	public Picasso with() {
+		if (picasso == null) {
+			synchronized (Picasso.class) {
+				if (picasso == null) {
+					picasso = new Builder().build();
+				}
+			}
+		}
+		return picasso;
+	}
 
-    /**
-     * 加载数据源
-     *
-     * @param resourceId 资源文件
-     * @return
-     */
-    public RequestCreator load(int resourceId) {
-        return with().load(resourceId);
-    }
+	/**
+	 * 加载数据源
+	 *
+	 * @param file
+	 *            文件
+	 * @return
+	 */
+	public RequestCreator load(File file) {
+		return with().load(file);
+	}
 
-    /**
-     * 加载数据源
-     *
-     * @param uri
-     * @return
-     */
-    public RequestCreator load(Uri uri) {
-        return with().load(uri);
-    }
+	/**
+	 * 加载数据源
+	 *
+	 * @param path
+	 *            路径
+	 * @return
+	 */
+	public RequestCreator load(String path) {
+		return with().load(path);
+	}
 
-    /**
-     * 清空内存缓存-不清空磁盘缓存
-     */
-    public void clearCache() {
-        // 清空缓存-内存
-        with().cache.clear();
-        with().shutdown();
-        okHttpDownloader = null;
-        picasso = null;
-    }
-    
-    public void deleteCahce(String uri){
-//        okHttpDownloader.getClient().
-    }
+	/**
+	 * 加载数据源
+	 *
+	 * @param resourceId
+	 *            资源文件
+	 * @return
+	 */
+	public RequestCreator load(int resourceId) {
+		return with().load(resourceId);
+	}
 
-    /**
-     * 清空磁盘缓存
-     */
-    public void removeDiskCache() {
-        clearCache();
-        // 清空缓存-sdcard
-        try {
-            okHttpDownloader.getClient().getCache().evictAll();
-        } catch (IOException e) {
-            L.e("removeDiskCache() 异常");
-        }
-    }
+	/**
+	 * 加载数据源
+	 *
+	 * @param uri
+	 * @return
+	 */
+	public RequestCreator load(Uri uri) {
+		return with().load(uri);
+	}
 
-    public static class Builder {
-        /**
-         * 缓存路径 *
-         */
-        final static String CACHE_PATH = ".j2w_base/img_cache/";
-        /**
-         * 缓存大小 *
-         */
-        final static int DISK_CACHE_MAX_SIZE = 200 * 1024 * 1024;
+	/**
+	 * 清空内存缓存-不清空磁盘缓存
+	 */
+	public void clearCache() {
+		// 清空缓存-内存
+		with().cache.clear();
+		with().shutdown();
+		okHttpDownloader = null;
+		picasso = null;
+	}
 
-        private File file;
+	public void deleteCahce(String uri) {
+		// okHttpDownloader.getClient().
+	}
 
-        private void defaults() {
-            // 创建文件
-            if (file == null) {
-                if (AppUtils.isSDCardState()) {
-                    file = new File(Environment.getExternalStorageDirectory(), CACHE_PATH);
-                } else {
-                    file = new File(J2WHelper.getInstance().getApplicationContext().getCacheDir(), CACHE_PATH);
-                }
-                if (!file.exists()) {
-                    file.mkdirs();
-                }
-                Log.i("PicassoTools", file.getPath());
-            }
-            // 创建okhttp下载器
-            if (okHttpDownloader == null) {
-                okHttpDownloader = new OkHttpDownloader(file, DISK_CACHE_MAX_SIZE);
-            }
-            // 创建picasso
-            if (picasso == null) {
-                Picasso.Builder builder = new Picasso.Builder(J2WHelper.getInstance().getApplicationContext());
-                builder.downloader(okHttpDownloader);
-                picasso = builder.build();
-            }
-        }
+	/**
+	 * 清空磁盘缓存
+	 */
+	public void removeDiskCache() {
+		clearCache();
+		// 清空缓存-sdcard
+		try {
+			okHttpDownloader.getClient().getCache().evictAll();
+		} catch (IOException e) {
+			L.e("removeDiskCache() 异常");
+		}
+	}
 
-        public Picasso build() {
-            defaults();
-            return picasso;
-        }
-    }
+	public static class Builder {
+
+		/**
+		 * 缓存路径 *
+		 */
+		final static String	CACHE_PATH			= ".j2w_base/img_cache/";
+
+		/**
+		 * 缓存大小 *
+		 */
+		final static int	DISK_CACHE_MAX_SIZE	= 200 * 1024 * 1024;
+
+		private File		file;
+
+		private void defaults() {
+			// 创建文件
+			if (file == null) {
+				if (AppUtils.isSDCardState()) {
+					file = new File(Environment.getExternalStorageDirectory(), CACHE_PATH);
+				} else {
+					file = new File(J2WHelper.getInstance().getApplicationContext().getCacheDir(), CACHE_PATH);
+				}
+				if (!file.exists()) {
+					file.mkdirs();
+				}
+				Log.i("PicassoTools", file.getPath());
+			}
+			// 创建okhttp下载器
+			if (okHttpDownloader == null) {
+				okHttpDownloader = new OkHttpDownloader(file, DISK_CACHE_MAX_SIZE);
+			}
+			// 创建picasso
+			if (picasso == null) {
+				Picasso.Builder builder = new Picasso.Builder(J2WHelper.getInstance().getApplicationContext());
+				builder.downloader(okHttpDownloader);
+				picasso = builder.build();
+			}
+		}
+
+		public Picasso build() {
+			defaults();
+			return picasso;
+		}
+	}
 }

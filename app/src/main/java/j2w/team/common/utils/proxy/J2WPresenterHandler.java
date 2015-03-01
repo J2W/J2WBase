@@ -13,7 +13,7 @@ import j2w.team.mvp.presenter.J2WPresenter;
  */
 public final class J2WPresenterHandler<T> extends BaseHandler<T> {
 
-	J2WPresenter j2WPresenter;
+	J2WPresenter	j2WPresenter;
 
 	public J2WPresenterHandler(T t, J2WPresenter j2WPresenter) {
 		super(t);
@@ -26,6 +26,7 @@ public final class J2WPresenterHandler<T> extends BaseHandler<T> {
 		boolean isMainLooper = Looper.getMainLooper().getThread() != Thread.currentThread();
 		if (isMainLooper) {
 			J2WHelper.getMainLooper().execute(new Runnable() {
+
 				@Override public void run() {
 					try {
 						runMethod(method, args);
@@ -42,7 +43,6 @@ public final class J2WPresenterHandler<T> extends BaseHandler<T> {
 		}
 	}
 
-    
 	private Object runMethod(Method method, Object[] args) throws Throwable {
 		StringBuffer stringBuffer = new StringBuffer();
 		if (!j2WPresenter.isCallBack()) {

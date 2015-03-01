@@ -14,36 +14,45 @@ import j2w.team.mvp.presenter.J2WHelper;
  * Created by sky on 15/3/1. Dialog编辑器
  */
 public abstract class J2WDialogBuilder<T extends J2WDialogBuilder<T>> {
+
 	/**
 	 * 默认值
 	 */
 	/** 请求默认值 **/
-	public final static int DEFAULT_REQUEST_CODE = -42;
+	public final static int								DEFAULT_REQUEST_CODE			= -42;
+
 	/** TAG默认值 **/
-	public final static String DEFAULT_TAG = "j2w_simple_dialog";
+	public final static String							DEFAULT_TAG						= "j2w_simple_dialog";
+
 	/** 可取消默认值 **/
-	public final static String ARG_CANCELABLE_ON_TOUCH_OUTSIDE = "j2w_cancelable";
+	public final static String							ARG_CANCELABLE_ON_TOUCH_OUTSIDE	= "j2w_cancelable";
+
 	/** 请求默认值 **/
-	public final static String ARG_REQUEST_CODE = "j2w_request_code";
+	public final static String							ARG_REQUEST_CODE				= "j2w_request_code";
 
 	/** TAG值 **/
-	private String mTag = DEFAULT_TAG;
+	private String										mTag							= DEFAULT_TAG;
+
 	/** fragment堆栈管理器 **/
-	protected final FragmentManager mFragmentManager;
+	protected final FragmentManager						mFragmentManager;
+
 	/** 上下文 **/
-	protected final Context mContext;
+	protected final Context								mContext;
 
 	/** 当前编辑类 **/
-	protected final Class<? extends J2WDialogFragment> mClass;
+	protected final Class<? extends J2WDialogFragment>	mClass;
 
 	/** dialog 属性 **/
-	private boolean mCancelable = true;
+	private boolean										mCancelable						= true;
+
 	/** dialog 属性 **/
-	private boolean mCancelableOnTouchOutside = true;
+	private boolean										mCancelableOnTouchOutside		= true;
+
 	/** 目标碎片 **/
-	private Fragment mTargetFragment;
+	private Fragment									mTargetFragment;
+
 	/** 请求编号 **/
-	private int mRequestCode = DEFAULT_REQUEST_CODE;
+	private int											mRequestCode					= DEFAULT_REQUEST_CODE;
 
 	public J2WDialogBuilder(Class<? extends J2WDialogFragment> clazz) {
 		// 获取堆栈管理器
@@ -172,8 +181,8 @@ public abstract class J2WDialogBuilder<T extends J2WDialogBuilder<T>> {
 	 * @return
 	 */
 	public DialogFragment showAllowingStateLoss() {
-        L.tag("J2WDialogFragment");
-        L.i("showAllowingStateLoss() : TAG" + mTag);
+		L.tag("J2WDialogFragment");
+		L.i("showAllowingStateLoss() : TAG" + mTag);
 		J2WDialogFragment fragment = create();
 		FragmentTransaction ft = mFragmentManager.beginTransaction();
 		ft.add(fragment, mTag);

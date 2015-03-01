@@ -12,39 +12,42 @@ import okio.Okio;
  * Created by sky on 15/2/24.异常捕获请求正文
  */
 class ExceptionCatchingRequestBody extends ResponseBody {
-    private final ResponseBody delegate;
-    private IOException thrownException;
 
-    ExceptionCatchingRequestBody(ResponseBody delegate) {
-        this.delegate = delegate;
-    }
+	private final ResponseBody	delegate;
 
-    @Override public MediaType contentType() {
-        return delegate.contentType();
-    }
+	private IOException			thrownException;
 
-    @Override public long contentLength() {
-        return delegate.contentLength();
-    }
+	ExceptionCatchingRequestBody(ResponseBody delegate) {
+		this.delegate = delegate;
+	}
 
-    @Override public BufferedSource source() {
-        return Okio.buffer(new ForwardingSource(delegate.source()) {
-            @Override public long read(Buffer sink, long byteCount) throws IOException {
-                try {
-                    return super.read(sink, byteCount);
-                } catch (IOException e) {
-                    thrownException = e;
-                    throw e;
-                }
-            }
-        });
-    }
+	@Override public MediaType contentType() {
+		return delegate.contentType();
+	}
 
-    IOException getThrownException() {
-        return thrownException;
-    }
+	@Override public long contentLength() {
+		return delegate.contentLength();
+	}
 
-    boolean threwException() {
-        return thrownException != null;
-    }
+	@Override public BufferedSource source() {
+		return Okio.buffer(new ForwardingSource(delegate.source()) {
+
+			@Override public long read(Buffer sink, long byteCount) throws IOException {
+				try {
+					return super.read(sink, byteCount);
+				} catch (IOException e) {
+					thrownException = e;
+					throw e;
+				}
+			}
+		});
+	}
+
+	IOException getThrownException() {
+		return thrownException;
+	}
+
+	boolean threwException() {
+		return thrownException != null;
+	}
 }

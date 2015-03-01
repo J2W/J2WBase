@@ -23,23 +23,24 @@ import j2w.team.mvp.presenter.J2WHelper;
  * Created by sky on 15/2/24. 网络适配器
  */
 public class J2WRestAdapter {
+
 	// 缓存
-	private final Map<Class<?>, Map<Method, J2WMethodInfo>> serviceMethodInfoCache = new LinkedHashMap<Class<?>, Map<Method, J2WMethodInfo>>();
+	private final Map<Class<?>, Map<Method, J2WMethodInfo>>	serviceMethodInfoCache	= new LinkedHashMap<Class<?>, Map<Method, J2WMethodInfo>>();
 
 	// 端点地址
-	final J2WEndpoint j2WEndpoint;
+	final J2WEndpoint										j2WEndpoint;
 
 	// 转换器
-	private J2WConverter converter;
+	private J2WConverter									converter;
 
 	// 拦截器
-	private J2WRequestInterceptor requestInterceptor;
+	private J2WRequestInterceptor							requestInterceptor;
 
 	// OKHTTP
-	private final OkHttpClient client;
+	private final OkHttpClient								client;
 
 	// 错误
-	private J2WErrorHandler errorHandler;
+	private J2WErrorHandler									errorHandler;
 
 	/**
 	 * 构造器
@@ -109,6 +110,7 @@ public class J2WRestAdapter {
 	void invokeAsync(final J2WMethodInfo methodInfo, final Request request, final J2WCallback callback) {
 		Call call = client.newCall(request);
 		call.enqueue(new com.squareup.okhttp.Callback() {
+
 			@Override public void onFailure(Request request, IOException e) {
 				callFailure(callback, J2WError.networkFailure(request.urlString(), e));
 			}
@@ -134,6 +136,7 @@ public class J2WRestAdapter {
 	private void callResponse(final J2WCallback callback, final Object result, final Response response) {
 		// 主线程执行
 		J2WHelper.getMainLooper().execute(new Runnable() {
+
 			@Override public void run() {
 				try {
 					callback.success(result, response);
@@ -154,7 +157,7 @@ public class J2WRestAdapter {
 	 */
 	private void callFailure(final J2WCallback callback, J2WError error) {
 		Throwable throwable = handleError(error);
-		if (throwable != error) {//如果是自定义异常
+		if (throwable != error) {// 如果是自定义异常
 			Response response = error.getResponse();
 			if (response != null) {
 				error = J2WError.unexpectedError(response, throwable);
@@ -165,6 +168,7 @@ public class J2WRestAdapter {
 		final J2WError finalError = error;
 		// 主线程执行
 		J2WHelper.getMainLooper().execute(new Runnable() {
+
 			@Override public void run() {
 				try {
 					callback.failure(finalError);
@@ -314,26 +318,31 @@ public class J2WRestAdapter {
 	 * 生成器
 	 */
 	public static class Builder {
+
 		/**
 		 * 端点地址
 		 */
-		private J2WEndpoint endpoint;
+		private J2WEndpoint				endpoint;
+
 		/**
 		 * 网络协议
 		 */
-		private OkHttpClient client;
+		private OkHttpClient			client;
+
 		/**
 		 * 请求拦截器
 		 */
-		private J2WRequestInterceptor requestInterceptor;
+		private J2WRequestInterceptor	requestInterceptor;
+
 		/**
 		 * 转换器
 		 */
-		private J2WConverter converter;
+		private J2WConverter			converter;
+
 		/**
 		 * 错误处理程序
 		 */
-		private J2WErrorHandler errorHandler;
+		private J2WErrorHandler			errorHandler;
 
 		/**
 		 * 端点地址
@@ -412,9 +421,9 @@ public class J2WRestAdapter {
 			// 网络协议-默认使用okhttp
 			if (client == null) {
 				OkHttpClient okHttpClient = new OkHttpClient();
-                okHttpClient.setConnectTimeout(15, TimeUnit.SECONDS);// 连接超时
-                okHttpClient.setReadTimeout(15, TimeUnit.SECONDS);// 读取超时
-                okHttpClient.setWriteTimeout(15, TimeUnit.SECONDS);// 写入超时
+				okHttpClient.setConnectTimeout(15, TimeUnit.SECONDS);// 连接超时
+				okHttpClient.setReadTimeout(15, TimeUnit.SECONDS);// 读取超时
+				okHttpClient.setWriteTimeout(15, TimeUnit.SECONDS);// 写入超时
 				client = okHttpClient;
 			}
 			// 错误处理程序-默认什么都不做

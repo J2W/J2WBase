@@ -7,8 +7,9 @@ import static android.os.Process.THREAD_PRIORITY_BACKGROUND;
  * Created by sky on 15/2/20. 自定义线程
  */
 class J2WThread extends Thread {
-	public J2WThread(Runnable runnable,String name) {
-		super(runnable,name);
+
+	public J2WThread(Runnable runnable, String name) {
+		super(runnable, name);
 	}
 
 	@Override public void run() {

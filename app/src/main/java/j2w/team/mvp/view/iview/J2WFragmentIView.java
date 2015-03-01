@@ -22,14 +22,14 @@ public interface J2WFragmentIView extends J2WIView {
 	public void onRefresh();
 
 	/** 布局切换 **/
-    public void showLoading();
+	public void showLoading();
 
-    public void showContent();
+	public void showContent();
 
-    public void showEmpty();
+	public void showEmpty();
 
-    public void showError();
+	public void showError();
 
-    /** 防止事件穿透开关 **/
-    public boolean isTouch();
+	/** 防止事件穿透开关 **/
+	public boolean isTouch();
 }

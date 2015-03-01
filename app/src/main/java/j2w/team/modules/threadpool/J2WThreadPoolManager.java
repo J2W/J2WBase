@@ -2,25 +2,25 @@ package j2w.team.modules.threadpool;
 
 import java.util.concurrent.ExecutorService;
 
-
 /**
  * Created by sky on 15/2/20.调度
  */
 public final class J2WThreadPoolManager {
+
 	/**
 	 * J2WThreadPoolManager 单例模式
 	 */
-	private static final J2WThreadPoolManager instance = new J2WThreadPoolManager();
+	private static final J2WThreadPoolManager	instance	= new J2WThreadPoolManager();
 
 	public static J2WThreadPoolManager getInstance() {
 		return instance;
 	}
 
 	/** 线程服务-并行线程池 **/
-	private J2WExecutorService j2WExecutorService;
+	private J2WExecutorService			j2WExecutorService;
 
 	/** 线程服务-串行线程池 **/
-	private J2WSingleExecutorServiece j2WSingleExecutorServiece;
+	private J2WSingleExecutorServiece	j2WSingleExecutorServiece;
 
 	public synchronized ExecutorService getExecutorService() {
 		if (j2WExecutorService == null) {
@@ -37,7 +37,7 @@ public final class J2WThreadPoolManager {
 	}
 
 	public synchronized void finish() {
-        if (j2WExecutorService != null) {
+		if (j2WExecutorService != null) {
 			j2WExecutorService.shutdown();
 			j2WExecutorService = null;
 		}

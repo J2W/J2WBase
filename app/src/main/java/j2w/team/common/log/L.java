@@ -16,7 +16,7 @@ import j2w.team.common.utils.AppUtils;
  */
 public final class L {
 
-	private static Context CONTEXT;
+	private static Context	CONTEXT;
 
 	/**
 	 * 初始化操作
@@ -159,111 +159,124 @@ public final class L {
 		FOREST.clear();
 	}
 
-	static final List<Tree> FOREST = new CopyOnWriteArrayList<Tree>();
-	static final SparseBooleanArray TAGGED_TREES = new SparseBooleanArray();
+	static final List<Tree>			FOREST			= new CopyOnWriteArrayList<Tree>();
+
+	static final SparseBooleanArray	TAGGED_TREES	= new SparseBooleanArray();
 
 	/**
 	 * A {@link j2w.team.common.log.L.Tree} that delegates to all planted trees
 	 * in the {@link #FOREST forest}.
 	 */
-	private static final Tree TREE_OF_SOULS = new Tree() {
-		@Override public void m(String message, Object... args) {
-			List<Tree> forest = FOREST;
-			// noinspection ForLoopReplaceableByForEach
-			for (int i = 0, count = forest.size(); i < count; i++) {
-				forest.get(i).m(message, args);
-			}
-		}
+	private static final Tree		TREE_OF_SOULS	= new Tree() {
 
-		@Override public void v(String message, Object... args) {
-			List<Tree> forest = FOREST;
-			// noinspection ForLoopReplaceableByForEach
-			for (int i = 0, count = forest.size(); i < count; i++) {
-				forest.get(i).v(message, args);
-			}
-		}
+														@Override public void m(String message, Object... args) {
+															List<Tree> forest = FOREST;
+															// noinspection
+															// ForLoopReplaceableByForEach
+															for (int i = 0, count = forest.size(); i < count; i++) {
+																forest.get(i).m(message, args);
+															}
+														}
 
-		@Override public void v(Throwable t, String message, Object... args) {
-			List<Tree> forest = FOREST;
-			// noinspection ForLoopReplaceableByForEach
-			for (int i = 0, count = forest.size(); i < count; i++) {
-				forest.get(i).v(t, message, args);
-			}
-		}
+														@Override public void v(String message, Object... args) {
+															List<Tree> forest = FOREST;
+															// noinspection
+															// ForLoopReplaceableByForEach
+															for (int i = 0, count = forest.size(); i < count; i++) {
+																forest.get(i).v(message, args);
+															}
+														}
 
-		@Override public void d(String message, Object... args) {
-			List<Tree> forest = FOREST;
-			// noinspection ForLoopReplaceableByForEach
-			for (int i = 0, count = forest.size(); i < count; i++) {
-				forest.get(i).d(message, args);
-			}
-		}
+														@Override public void v(Throwable t, String message, Object... args) {
+															List<Tree> forest = FOREST;
+															// noinspection
+															// ForLoopReplaceableByForEach
+															for (int i = 0, count = forest.size(); i < count; i++) {
+																forest.get(i).v(t, message, args);
+															}
+														}
 
-		@Override public void d(Throwable t, String message, Object... args) {
-			List<Tree> forest = FOREST;
-			// noinspection ForLoopReplaceableByForEach
-			for (int i = 0, count = forest.size(); i < count; i++) {
-				forest.get(i).d(t, message, args);
-			}
-		}
+														@Override public void d(String message, Object... args) {
+															List<Tree> forest = FOREST;
+															// noinspection
+															// ForLoopReplaceableByForEach
+															for (int i = 0, count = forest.size(); i < count; i++) {
+																forest.get(i).d(message, args);
+															}
+														}
 
-		@Override public void i(String message, Object... args) {
-			List<Tree> forest = FOREST;
-			// noinspection ForLoopReplaceableByForEach
-			for (int i = 0, count = forest.size(); i < count; i++) {
-				forest.get(i).i(message, args);
-			}
-		}
+														@Override public void d(Throwable t, String message, Object... args) {
+															List<Tree> forest = FOREST;
+															// noinspection
+															// ForLoopReplaceableByForEach
+															for (int i = 0, count = forest.size(); i < count; i++) {
+																forest.get(i).d(t, message, args);
+															}
+														}
 
-		@Override public void i(Throwable t, String message, Object... args) {
-			List<Tree> forest = FOREST;
-			// noinspection ForLoopReplaceableByForEach
-			for (int i = 0, count = forest.size(); i < count; i++) {
-				forest.get(i).i(t, message, args);
-			}
-		}
+														@Override public void i(String message, Object... args) {
+															List<Tree> forest = FOREST;
+															// noinspection
+															// ForLoopReplaceableByForEach
+															for (int i = 0, count = forest.size(); i < count; i++) {
+																forest.get(i).i(message, args);
+															}
+														}
 
-		@Override public void w(String message, Object... args) {
-			List<Tree> forest = FOREST;
-			// noinspection ForLoopReplaceableByForEach
-			for (int i = 0, count = forest.size(); i < count; i++) {
-				forest.get(i).w(message, args);
-			}
-		}
+														@Override public void i(Throwable t, String message, Object... args) {
+															List<Tree> forest = FOREST;
+															// noinspection
+															// ForLoopReplaceableByForEach
+															for (int i = 0, count = forest.size(); i < count; i++) {
+																forest.get(i).i(t, message, args);
+															}
+														}
 
-		@Override public void w(Throwable t, String message, Object... args) {
-			List<Tree> forest = FOREST;
-			// noinspection ForLoopReplaceableByForEach
-			for (int i = 0, count = forest.size(); i < count; i++) {
-				forest.get(i).w(t, message, args);
-			}
-		}
+														@Override public void w(String message, Object... args) {
+															List<Tree> forest = FOREST;
+															// noinspection
+															// ForLoopReplaceableByForEach
+															for (int i = 0, count = forest.size(); i < count; i++) {
+																forest.get(i).w(message, args);
+															}
+														}
 
-		@Override public void e(String message, Object... args) {
-			List<Tree> forest = FOREST;
-			// noinspection ForLoopReplaceableByForEach
-			for (int i = 0, count = forest.size(); i < count; i++) {
-				forest.get(i).e(message, args);
-			}
-		}
+														@Override public void w(Throwable t, String message, Object... args) {
+															List<Tree> forest = FOREST;
+															// noinspection
+															// ForLoopReplaceableByForEach
+															for (int i = 0, count = forest.size(); i < count; i++) {
+																forest.get(i).w(t, message, args);
+															}
+														}
 
-		@Override public void e(Throwable t, String message, Object... args) {
-			List<Tree> forest = FOREST;
-			// noinspection ForLoopReplaceableByForEach
-			for (int i = 0, count = forest.size(); i < count; i++) {
-				forest.get(i).e(t, message, args);
-			}
-		}
-	};
+														@Override public void e(String message, Object... args) {
+															List<Tree> forest = FOREST;
+															// noinspection
+															// ForLoopReplaceableByForEach
+															for (int i = 0, count = forest.size(); i < count; i++) {
+																forest.get(i).e(message, args);
+															}
+														}
 
-	private L() {
-	}
+														@Override public void e(Throwable t, String message, Object... args) {
+															List<Tree> forest = FOREST;
+															// noinspection
+															// ForLoopReplaceableByForEach
+															for (int i = 0, count = forest.size(); i < count; i++) {
+																forest.get(i).e(t, message, args);
+															}
+														}
+													};
+
+	private L() {}
 
 	/**
 	 * A facade for handling logging calls. Install instances via {@link #plant}
 	 * .
 	 */
 	public interface Tree {
+
 		/**
 		 * 打印内存日志
 		 */
@@ -325,6 +338,7 @@ public final class L {
 	 * {@link #plant}
 	 */
 	public interface TaggedTree extends Tree {
+
 		/**
 		 * Set a one-time tag for use on the next logging call.
 		 */
@@ -336,11 +350,12 @@ public final class L {
 	 * infers the tag from the calling class.
 	 */
 	public static class DebugTree implements TaggedTree {
-		private static final Pattern ANONYMOUS_CLASS = Pattern.compile("\\$\\d+$");
-		private static final ThreadLocal<String> NEXT_TAG = new ThreadLocal<String>();
 
-		public DebugTree() {
-		}
+		private static final Pattern				ANONYMOUS_CLASS	= Pattern.compile("\\$\\d+$");
+
+		private static final ThreadLocal<String>	NEXT_TAG		= new ThreadLocal<String>();
+
+		public DebugTree() {}
 
 		private static String createTag() {
 			String tag = NEXT_TAG.get();
@@ -459,38 +474,28 @@ public final class L {
 	 * extending.
 	 */
 	public static class HollowTree implements Tree {
-		@Override public void m(String message, Object... args) {
-		}
 
-		@Override public void v(String message, Object... args) {
-		}
+		@Override public void m(String message, Object... args) {}
 
-		@Override public void v(Throwable t, String message, Object... args) {
-		}
+		@Override public void v(String message, Object... args) {}
 
-		@Override public void d(String message, Object... args) {
-		}
+		@Override public void v(Throwable t, String message, Object... args) {}
 
-		@Override public void d(Throwable t, String message, Object... args) {
-		}
+		@Override public void d(String message, Object... args) {}
 
-		@Override public void i(String message, Object... args) {
-		}
+		@Override public void d(Throwable t, String message, Object... args) {}
 
-		@Override public void i(Throwable t, String message, Object... args) {
-		}
+		@Override public void i(String message, Object... args) {}
 
-		@Override public void w(String message, Object... args) {
-		}
+		@Override public void i(Throwable t, String message, Object... args) {}
 
-		@Override public void w(Throwable t, String message, Object... args) {
-		}
+		@Override public void w(String message, Object... args) {}
 
-		@Override public void e(String message, Object... args) {
-		}
+		@Override public void w(Throwable t, String message, Object... args) {}
 
-		@Override public void e(Throwable t, String message, Object... args) {
-		}
+		@Override public void e(String message, Object... args) {}
+
+		@Override public void e(Throwable t, String message, Object... args) {}
 	}
 }
 /**

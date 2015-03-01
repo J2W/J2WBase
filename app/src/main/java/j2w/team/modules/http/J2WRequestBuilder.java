@@ -27,31 +27,37 @@ import okio.BufferedSink;
 final class J2WRequestBuilder implements J2WRequestInterceptor.RequestFacade {
 
 	/** 空头信息 */
-	private static final Headers NO_HEADERS = Headers.of();
+	private static final Headers	NO_HEADERS	= Headers.of();
 
 	/** 相对路径 **/
-	private String relativeUrl;
+	private String					relativeUrl;
 
 	/** 头信息-内容类型 **/
-	private String contentTypeHeader;
+	private String					contentTypeHeader;
 
 	/** okhttp 头信息 **/
-	private Headers.Builder headers;
+	private Headers.Builder			headers;
 
 	/** 是否是异步 **/
-	private final boolean async;
+	private final boolean			async;
+
 	/** API地址 **/
-	private final String apiUrl;
+	private final String			apiUrl;
+
 	/** 数据转换器 **/
-	private final J2WConverter converter;
+	private final J2WConverter		converter;
+
 	/** 参数注解数组 **/
-	private final Annotation[] paramAnnotations;
+	private final Annotation[]		paramAnnotations;
+
 	/** 请求方法名 **/
-	private final String requestMethod;
+	private final String			requestMethod;
+
 	/** 请求体 **/
-	private RequestBody body;
-    /** 请求参数**/
-    private StringBuilder queryParams;
+	private RequestBody				body;
+
+	/** 请求参数 **/
+	private StringBuilder			queryParams;
 
 	J2WRequestBuilder(String apiUrl, J2WMethodInfo methodInfo, J2WConverter converter) {
 		/**
@@ -67,11 +73,11 @@ final class J2WRequestBuilder implements J2WRequestInterceptor.RequestFacade {
 		if (methodInfo.headers != null) {
 			headers = methodInfo.headers.newBuilder();
 		}
-        /** 初始化-参数 */
-        String requestQuery = methodInfo.requestQuery;
-        if (requestQuery != null) {
-            queryParams = new StringBuilder().append('?').append(requestQuery);
-        }
+		/** 初始化-参数 */
+		String requestQuery = methodInfo.requestQuery;
+		if (requestQuery != null) {
+			queryParams = new StringBuilder().append('?').append(requestQuery);
+		}
 		/** 判断方法是否是异步 **/
 		async = methodInfo.executionType == J2WMethodInfo.ExecutionType.ASYNC;
 	}
@@ -100,97 +106,98 @@ final class J2WRequestBuilder implements J2WRequestInterceptor.RequestFacade {
 		addPathParam(name, value, false);
 	}
 
-    @Override public void addQueryParam(String name, String value) {
-        addQueryParam(name, value, false, true);
-    }
+	@Override public void addQueryParam(String name, String value) {
+		addQueryParam(name, value, false, true);
+	}
 
-    @Override public void addEncodedQueryParam(String name, String value) {
-        addQueryParam(name, value, false, false);
-    }
+	@Override public void addEncodedQueryParam(String name, String value) {
+		addQueryParam(name, value, false, false);
+	}
 
-    /**
-     * 添加参数 
-     * @param name
-     * @param value
-     * @param encodeName
-     * @param encodeValue
-     */
-    private void addQueryParam(String name, Object value, boolean encodeName, boolean encodeValue) {
-        if (value instanceof Iterable) {
-            for (Object iterableValue : (Iterable<?>) value) {
-                if (iterableValue != null) { // Skip null values
-                    addQueryParam(name, iterableValue.toString(), encodeName, encodeValue);
-                }
-            }
-        } else if (value.getClass().isArray()) {
-            for (int x = 0, arrayLength = Array.getLength(value); x < arrayLength; x++) {
-                Object arrayValue = Array.get(value, x);
-                if (arrayValue != null) { // Skip null values
-                    addQueryParam(name, arrayValue.toString(), encodeName, encodeValue);
-                }
-            }
-        } else {
-            addQueryParam(name, value.toString(), encodeName, encodeValue);
-        }
-    }
-    /**
-     * 添加参数 
-     * @param name
-     * @param value
-     * @param encodeName
-     * @param encodeValue
-     */
-    private void addQueryParam(String name, String value, boolean encodeName, boolean encodeValue) {
-        if (name == null) {
-            throw new IllegalArgumentException("参数的名称不能为空.");
-        }
-        if (value == null) {
-            throw new IllegalArgumentException("参数名： \"" + name + "\" 的值不能为空.");
-        }
-        try {
-            StringBuilder queryParams = this.queryParams;
-            if (queryParams == null) {
-                this.queryParams = queryParams = new StringBuilder();
-            }
+	/**
+	 * 添加参数
+	 * 
+	 * @param name
+	 * @param value
+	 * @param encodeName
+	 * @param encodeValue
+	 */
+	private void addQueryParam(String name, Object value, boolean encodeName, boolean encodeValue) {
+		if (value instanceof Iterable) {
+			for (Object iterableValue : (Iterable<?>) value) {
+				if (iterableValue != null) { // Skip null values
+					addQueryParam(name, iterableValue.toString(), encodeName, encodeValue);
+				}
+			}
+		} else if (value.getClass().isArray()) {
+			for (int x = 0, arrayLength = Array.getLength(value); x < arrayLength; x++) {
+				Object arrayValue = Array.get(value, x);
+				if (arrayValue != null) { // Skip null values
+					addQueryParam(name, arrayValue.toString(), encodeName, encodeValue);
+				}
+			}
+		} else {
+			addQueryParam(name, value.toString(), encodeName, encodeValue);
+		}
+	}
 
-            queryParams.append(queryParams.length() > 0 ? '&' : '?');
+	/**
+	 * 添加参数
+	 * 
+	 * @param name
+	 * @param value
+	 * @param encodeName
+	 * @param encodeValue
+	 */
+	private void addQueryParam(String name, String value, boolean encodeName, boolean encodeValue) {
+		if (name == null) {
+			throw new IllegalArgumentException("参数的名称不能为空.");
+		}
+		if (value == null) {
+			throw new IllegalArgumentException("参数名： \"" + name + "\" 的值不能为空.");
+		}
+		try {
+			StringBuilder queryParams = this.queryParams;
+			if (queryParams == null) {
+				this.queryParams = queryParams = new StringBuilder();
+			}
 
-            if (encodeName) {
-                name = URLEncoder.encode(name, "UTF-8");
-            }
-            if (encodeValue) {
-                value = URLEncoder.encode(value, "UTF-8");
-            }
-            queryParams.append(name).append('=').append(value);
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException(
-                    "无法将查询参数 \"" + name + "\" 值转换成 UTF-8: " + value, e);
-        }
-    }
+			queryParams.append(queryParams.length() > 0 ? '&' : '?');
 
-    /**
-     * 添加参数-map
-     * @param parameterNumber
-     * @param map
-     * @param encodeNames
-     * @param encodeValues
-     */
-    private void addQueryParamMap(int parameterNumber, Map<?, ?> map, boolean encodeNames,
-                                  boolean encodeValues) {
-        for (Map.Entry<?, ?> entry : map.entrySet()) {
-            Object entryKey = entry.getKey();
-            if (entryKey == null) {
-                throw new IllegalArgumentException(
-                        "Parameter #" + (parameterNumber + 1) + " map 为空.");
-            }
-            Object entryValue = entry.getValue();
-            if (entryValue != null) {
-                addQueryParam(entryKey.toString(), entryValue.toString(), encodeNames, encodeValues);
-            }
-        }
-    }
+			if (encodeName) {
+				name = URLEncoder.encode(name, "UTF-8");
+			}
+			if (encodeValue) {
+				value = URLEncoder.encode(value, "UTF-8");
+			}
+			queryParams.append(name).append('=').append(value);
+		} catch (UnsupportedEncodingException e) {
+			throw new RuntimeException("无法将查询参数 \"" + name + "\" 值转换成 UTF-8: " + value, e);
+		}
+	}
 
-    /**
+	/**
+	 * 添加参数-map
+	 * 
+	 * @param parameterNumber
+	 * @param map
+	 * @param encodeNames
+	 * @param encodeValues
+	 */
+	private void addQueryParamMap(int parameterNumber, Map<?, ?> map, boolean encodeNames, boolean encodeValues) {
+		for (Map.Entry<?, ?> entry : map.entrySet()) {
+			Object entryKey = entry.getKey();
+			if (entryKey == null) {
+				throw new IllegalArgumentException("Parameter #" + (parameterNumber + 1) + " map 为空.");
+			}
+			Object entryValue = entry.getValue();
+			if (entryValue != null) {
+				addQueryParam(entryKey.toString(), entryValue.toString(), encodeNames, encodeValues);
+			}
+		}
+	}
+
+	/**
 	 * 添加路径
 	 * 
 	 * @param name
@@ -246,17 +253,17 @@ final class J2WRequestBuilder implements J2WRequestInterceptor.RequestFacade {
 					throw new IllegalArgumentException("路径 key: \"" + name + "\" 值 不能为空.");
 				}
 				addPathParam(name, value.toString(), path.encode());
-			}else if (annotationType == Query.class) {
-                if (value != null) { // Skip null values.
-                    Query query = (Query) annotation;
-                    addQueryParam(query.value(), value, query.encodeName(), query.encodeValue());
-                }
-            } else if (annotationType == QueryMap.class) {
-                if (value != null) { // Skip null values.
-                    QueryMap queryMap = (QueryMap) annotation;
-                    addQueryParamMap(i, (Map<?, ?>) value, queryMap.encodeNames(), queryMap.encodeValues());
-                }
-            }  else if (annotationType == Header.class) {
+			} else if (annotationType == Query.class) {
+				if (value != null) { // Skip null values.
+					Query query = (Query) annotation;
+					addQueryParam(query.value(), value, query.encodeName(), query.encodeValue());
+				}
+			} else if (annotationType == QueryMap.class) {
+				if (value != null) { // Skip null values.
+					QueryMap queryMap = (QueryMap) annotation;
+					addQueryParamMap(i, (Map<?, ?>) value, queryMap.encodeNames(), queryMap.encodeValues());
+				}
+			} else if (annotationType == Header.class) {
 				if (value != null) { // Skip null values.
 					String name = ((Header) annotation).value();
 					if (value instanceof Iterable) {
@@ -307,15 +314,15 @@ final class J2WRequestBuilder implements J2WRequestInterceptor.RequestFacade {
 		}
 		// 增加相对路径
 		url.append(relativeUrl);
-        // 请求参数
-        StringBuilder queryParams = this.queryParams;
-        if (queryParams != null) {
-            url.append(queryParams);
-        }
-        //打印完整路径
-        L.tag("J2W-HTTP");
-        L.i("请求路径:"+url);
-        // 请求体
+		// 请求参数
+		StringBuilder queryParams = this.queryParams;
+		if (queryParams != null) {
+			url.append(queryParams);
+		}
+		// 打印完整路径
+		L.tag("J2W-HTTP");
+		L.i("请求路径:" + url);
+		// 请求体
 		RequestBody body = this.body;
 		// 请求头
 		Headers.Builder headerBuilder = this.headers;
@@ -341,8 +348,10 @@ final class J2WRequestBuilder implements J2WRequestInterceptor.RequestFacade {
 	 * 媒体类型重写请求正文
 	 */
 	private static class MediaTypeOverridingRequestBody extends RequestBody {
-		private final RequestBody delegate;
-		private final MediaType mediaType;
+
+		private final RequestBody	delegate;
+
+		private final MediaType		mediaType;
 
 		MediaTypeOverridingRequestBody(RequestBody delegate, String mediaType) {
 			this.delegate = delegate;

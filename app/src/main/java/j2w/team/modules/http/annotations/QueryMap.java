@@ -14,9 +14,10 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Target(PARAMETER)
 @Retention(RUNTIME)
 public @interface QueryMap {
-    /** 指定参数的名称（map）进行URL编码 */
-    boolean encodeNames() default false;
 
-    /** 指定的参数值（map）进行URL编码. */
-    boolean encodeValues() default true;
+	/** 指定参数的名称（map）进行URL编码 */
+	boolean encodeNames() default false;
+
+	/** 指定的参数值（map）进行URL编码. */
+	boolean encodeValues() default true;
 }

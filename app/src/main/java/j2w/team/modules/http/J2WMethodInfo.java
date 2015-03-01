@@ -40,33 +40,43 @@ public final class J2WMethodInfo {
 		ASYNC, SYNC
 	}
 
-	private static final String PARAM = "[a-zA-Z][a-zA-Z0-9_-]*";
-	private static final Pattern PARAM_NAME_REGEX = Pattern.compile(PARAM);
-	private static final Pattern PARAM_URL_REGEX = Pattern.compile("\\{(" + PARAM + ")\\}");
+	private static final String		PARAM				= "[a-zA-Z][a-zA-Z0-9_-]*";
+
+	private static final Pattern	PARAM_NAME_REGEX	= Pattern.compile(PARAM);
+
+	private static final Pattern	PARAM_URL_REGEX		= Pattern.compile("\\{(" + PARAM + ")\\}");
 
 	// 方法属性
-	final Method method;
+	final Method					method;
+
 	// 枚举类型
-	public final ExecutionType executionType;
+	public final ExecutionType		executionType;
+
 	// 响应类型
-	Type responseObjectType;
+	Type							responseObjectType;
+
 	// 请求方法
-	String requestMethod;
+	String							requestMethod;
+
 	// 请求参数名称集合
-	Set<String> requestUrlParamNames;
+	Set<String>						requestUrlParamNames;
+
 	// 请求url
-	String requestUrl;
+	String							requestUrl;
+
 	// 请求查询
-	String requestQuery;
+	String							requestQuery;
+
 	// 请求头信息
-	com.squareup.okhttp.Headers headers;
+	com.squareup.okhttp.Headers		headers;
+
 	// 请求头信息内容类型
-	String contentTypeHeader;
+	String							contentTypeHeader;
 
 	// 请求参数注解
-	Annotation[] requestParamAnnotations;
+	Annotation[]					requestParamAnnotations;
 
-	Type requestObjectType;
+	Type							requestObjectType;
 
 	J2WMethodInfo(Method method) {
 		this.method = method;
@@ -358,6 +368,7 @@ public final class J2WMethodInfo {
 		source.close();
 
 		return response.newBuilder().body(new ResponseBody() {
+
 			@Override public MediaType contentType() {
 				return body.contentType();
 			}

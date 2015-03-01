@@ -37,35 +37,36 @@ public abstract class J2WProperties {
 	/**
 	 * 获取文件路径 *
 	 */
-	private File propertyFilePath;
+	private File					propertyFilePath;
 
 	/**
 	 * 编码格式
 	 */
-	private static final String DEFAULT_CODE = "utf-8";
+	private static final String		DEFAULT_CODE			= "utf-8";
 
-	private static final String DEFAUT_ANNOTATION_VALUE = "";
+	private static final String		DEFAUT_ANNOTATION_VALUE	= "";
 
 	/**
 	 * 默认文件名 *
 	 */
-	private String mPropertiesFileName;
+	private String					mPropertiesFileName;
+
 	/**
 	 * 默认文件后缀名 *
 	 */
-	private static final String EXTENSION = ".properties";
+	private static final String		EXTENSION				= ".properties";
 
 	/**
 	 * 配置文件工具类 *
 	 */
-	private java.util.Properties mProperties = new java.util.Properties();
+	private java.util.Properties	mProperties				= new java.util.Properties();
 
 	/**
 	 * 类型 *
 	 */
-	public static final int OPEN_TYPE_ASSETS = 1;// 打开asset文件夹下的文件
+	public static final int			OPEN_TYPE_ASSETS		= 1;							// 打开asset文件夹下的文件
 
-	public static final int OPEN_TYPE_DATA = 2;// 打开应用程序data文件夹下的文件
+	public static final int			OPEN_TYPE_DATA			= 2;							// 打开应用程序data文件夹下的文件
 
 	/**
 	 * 构造函数
@@ -78,13 +79,13 @@ public abstract class J2WProperties {
 		propertyFilePath = J2WHelper.getInstance().getApplicationContext().getExternalCacheDir();
 		mPropertiesFileName = propertiesFileName;
 		switch (initType()) {
-		case OPEN_TYPE_ASSETS:
-			Resources mResources = J2WHelper.getInstance().getApplicationContext().getResources();
-			openAssetProperties(mResources);
-			break;
-		case OPEN_TYPE_DATA:
-			openDataProperties();
-			break;
+			case OPEN_TYPE_ASSETS:
+				Resources mResources = J2WHelper.getInstance().getApplicationContext().getResources();
+				openAssetProperties(mResources);
+				break;
+			case OPEN_TYPE_DATA:
+				openDataProperties();
+				break;
 		}
 	}
 
@@ -205,18 +206,18 @@ public abstract class J2WProperties {
 		String result = null;
 
 		switch (initType()) {
-		case OPEN_TYPE_ASSETS:
-			try {
-				result = new String(mProperties.getProperty(key, defaultValue).getBytes("ISO-8859-1"), DEFAULT_CODE);
-			} catch (UnsupportedEncodingException e) {
-				L.tag(initTag());
-				L.e("%s 解析失败, 解析类型  %s ", key, "String");
-				return defaultValue;
-			}
-			break;
-		case OPEN_TYPE_DATA:
-			result = mProperties.getProperty(key, defaultValue);
-			break;
+			case OPEN_TYPE_ASSETS:
+				try {
+					result = new String(mProperties.getProperty(key, defaultValue).getBytes("ISO-8859-1"), DEFAULT_CODE);
+				} catch (UnsupportedEncodingException e) {
+					L.tag(initTag());
+					L.e("%s 解析失败, 解析类型  %s ", key, "String");
+					return defaultValue;
+				}
+				break;
+			case OPEN_TYPE_DATA:
+				result = mProperties.getProperty(key, defaultValue);
+				break;
 		}
 
 		return result;

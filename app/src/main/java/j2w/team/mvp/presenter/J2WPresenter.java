@@ -8,8 +8,9 @@ import j2w.team.common.utils.proxy.DynamicProxyUtils;
  */
 public abstract class J2WPresenter<T> {
 
-	private boolean isCallBack;
-	private T iView;
+	private boolean	isCallBack;
+
+	private T		iView;
 
 	/** 初始化 **/
 	void initPresenter(T iView) {

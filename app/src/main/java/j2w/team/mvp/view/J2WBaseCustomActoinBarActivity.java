@@ -28,10 +28,10 @@ import j2w.team.mvp.view.iview.J2WActionBarIView;
 public abstract class J2WBaseCustomActoinBarActivity<T extends J2WIPresenter> extends ActionBarActivity implements J2WActionBarIView, View.OnClickListener {
 
 	/** 标题栏 **/
-	private ActionBar actionBar;
+	private ActionBar	actionBar;
 
-    /** 业务逻辑对象 **/
-    private T presenter = null;
+	/** 业务逻辑对象 **/
+	private T			presenter	= null;
 
 	/** 初始化视图 **/
 	@Override public void initData(Bundle savedInstanceState) {
@@ -39,30 +39,30 @@ public abstract class J2WBaseCustomActoinBarActivity<T extends J2WIPresenter> ex
 		L.i("initData()");
 	}
 
-    @Override public final T getPresenter() {
-        if (presenter == null) {
-            synchronized (this) {
-                /** 创建业务类**/
-                presenter = J2WPresenterUtils.createPresenter(getClass(),this);
-                L.tag(initTag());
-                L.i("Presneter初始化完");
-            }
-        }
-        return presenter;
-    }
+	@Override public final T getPresenter() {
+		if (presenter == null) {
+			synchronized (this) {
+				/** 创建业务类 **/
+				presenter = J2WPresenterUtils.createPresenter(getClass(), this);
+				L.tag(initTag());
+				L.i("Presneter初始化完");
+			}
+		}
+		return presenter;
+	}
 
 	@Override public void onClick(View v) {
 		switch (v.getId()) {
-		case android.R.id.button1:
-			L.tag(initTag());
-			L.i("onActionBarLeft()");
-			onActionBarLeft(v);
-			break;
-		case android.R.id.button2:
-			L.tag(initTag());
-			L.i("onActionBarRight()");
-			onActionBarRight(v);
-			break;
+			case android.R.id.button1:
+				L.tag(initTag());
+				L.i("onActionBarLeft()");
+				onActionBarLeft(v);
+				break;
+			case android.R.id.button2:
+				L.tag(initTag());
+				L.i("onActionBarRight()");
+				onActionBarRight(v);
+				break;
 		}
 	}
 
@@ -83,12 +83,12 @@ public abstract class J2WBaseCustomActoinBarActivity<T extends J2WIPresenter> ex
 		L.i("onCreate()");
 		/** 初始化视图 **/
 		setContentView(layoutId());
-        /** 初始化所有组建 **/
-        ButterKnife.inject(this);
+		/** 初始化所有组建 **/
+		ButterKnife.inject(this);
 		/** 添加到堆栈 **/
 		J2WHelper.getScreenHelper().pushActivity(this);
 		/** 初始化视图组建 **/
-        initData(savedInstanceState);
+		initData(savedInstanceState);
 	}
 
 	@Override protected void onStart() {
@@ -125,10 +125,10 @@ public abstract class J2WBaseCustomActoinBarActivity<T extends J2WIPresenter> ex
 		super.onDestroy();
 		L.tag(initTag());
 		L.i("onDestroy()");
-        /** 切断关联 **/
-        if (presenter != null) {
-            presenter.detach();
-        }
+		/** 切断关联 **/
+		if (presenter != null) {
+			presenter.detach();
+		}
 		/** 从堆栈里移除 **/
 		J2WHelper.getScreenHelper().popActivity(this);
 	}

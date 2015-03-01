@@ -2,7 +2,6 @@ package j2w.team.modules.screen;
 
 import android.support.v4.app.FragmentActivity;
 
-
 import java.util.Stack;
 
 import j2w.team.common.log.L;
@@ -13,17 +12,17 @@ import j2w.team.mvp.presenter.J2WHelper;
  */
 // 禁止继承
 public class J2WScreenManager implements J2WIScreenManager {
+
 	// TAG标签
-	public static final String TAG = "ScreenManager";
+	public static final String	TAG	= "ScreenManager";
 
 	// 禁止创建
-	private J2WScreenManager() {
-	}
+	private J2WScreenManager() {}
 
 	/**
 	 * ScreenManager 单例模式
 	 */
-	private static final J2WScreenManager instance = new J2WScreenManager();
+	private static final J2WScreenManager	instance	= new J2WScreenManager();
 
 	public static J2WScreenManager getInstance() {
 		return instance;
@@ -32,7 +31,7 @@ public class J2WScreenManager implements J2WIScreenManager {
 	/**
 	 * FragmentActivity堆栈 单例模式
 	 */
-	private static final Stack<FragmentActivity> fragmentActivities = new Stack<FragmentActivity>();
+	private static final Stack<FragmentActivity>	fragmentActivities	= new Stack<FragmentActivity>();
 
 	/**
 	 * 获取当前活动的activity

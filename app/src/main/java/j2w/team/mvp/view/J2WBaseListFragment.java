@@ -21,8 +21,7 @@ import j2w.team.mvp.view.iview.J2WListFragmentIView;
 /**
  * Created by sky on 15/2/6. ListFragment 视图
  */
-public abstract class J2WBaseListFragment<T extends J2WIPresenter> extends J2WBaseFragment<T> implements J2WListFragmentIView, AdapterView.OnItemClickListener,
-		AdapterView.OnItemLongClickListener {
+public abstract class J2WBaseListFragment<T extends J2WIPresenter> extends J2WBaseFragment<T> implements J2WListFragmentIView, AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
 
 	/**
 	 * 设置布局ID 禁止重写
@@ -125,7 +124,7 @@ public abstract class J2WBaseListFragment<T extends J2WIPresenter> extends J2WBa
 	/**
 	 * ListView adapter
 	 */
-	private ListAdapter mListAdapter;
+	private ListAdapter	mListAdapter;
 
 	/**
 	 * adapter是否为空
@@ -199,8 +198,9 @@ public abstract class J2WBaseListFragment<T extends J2WIPresenter> extends J2WBa
 	 * 内部类-列表适配器
 	 */
 	private final class ListAdapter extends BaseAdapter {
+
 		/** 数据集合 */
-		private List mList;
+		private List	mList;
 
 		/** 构造函数 **/
 		private ListAdapter() {

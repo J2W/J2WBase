@@ -17,7 +17,7 @@ public class J2WHelper {
 	/**
 	 * 单例模式-握有application
 	 */
-	private volatile static J2WApplication mJ2WApplication = null;
+	private volatile static J2WApplication	mJ2WApplication	= null;
 
 	/**
 	 * 单例模式 - 获取application
@@ -45,7 +45,7 @@ public class J2WHelper {
 	}
 
 	/** 生成器 **/
-	private static final J2WRestAdapter.Builder j2WRestAdapterBuilder = new J2WRestAdapter.Builder();
+	private static final J2WRestAdapter.Builder	j2WRestAdapterBuilder	= new J2WRestAdapter.Builder();
 
 	/**
 	 * 网络适配器-生成器

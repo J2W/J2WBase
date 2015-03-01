@@ -23,227 +23,203 @@ import j2w.team.mvp.view.iview.J2WFragmentIView;
  */
 public abstract class J2WBaseFragment<T extends J2WIPresenter> extends Fragment implements J2WFragmentIView, View.OnTouchListener {
 
-    /**
-     * view *
-     */
-    View mContentView;
-    /**
-     * view *
-     */
-    ViewAnimator mViewAnimator;
+	/**
+	 * view *
+	 */
+	View			mContentView;
 
-    /**
-     * 业务逻辑对象 *
-     */
-    private T presenter = null;
+	/**
+	 * view *
+	 */
+	ViewAnimator	mViewAnimator;
 
-    /**
-     * 初始化视图 *
-     */
-    @Override
-    public void initData(Bundle savedInstanceState) {
-        L.tag(initTag());
-        L.i("Fragment-initData()");
-    }
+	/**
+	 * 业务逻辑对象 *
+	 */
+	private T		presenter	= null;
 
-    @Override
-    public final T getPresenter() {
-        if (presenter == null) {
-            synchronized (this) {
-                /** 创建业务类**/
-                presenter = J2WPresenterUtils.createPresenter(getClass(),this);
-                L.tag(initTag());
-                L.i("Presneter初始化完");
-            }
-        }
-        return presenter;
-    }
+	/**
+	 * 初始化视图 *
+	 */
+	@Override public void initData(Bundle savedInstanceState) {
+		L.tag(initTag());
+		L.i("Fragment-initData()");
+	}
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        L.tag(initTag());
-        L.i("Fragment-onAttach()");
-    }
+	@Override public final T getPresenter() {
+		if (presenter == null) {
+			synchronized (this) {
+				/** 创建业务类 **/
+				presenter = J2WPresenterUtils.createPresenter(getClass(), this);
+				L.tag(initTag());
+				L.i("Presneter初始化完");
+			}
+		}
+		return presenter;
+	}
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        L.tag(initTag());
-        L.i("Fragment-onCreate()");
-    }
+	@Override public void onAttach(Activity activity) {
+		super.onAttach(activity);
+		L.tag(initTag());
+		L.i("Fragment-onAttach()");
+	}
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        L.tag(initTag());
-        L.i("Fragment-onCreateView()");
-        mContentView = inflater.inflate(R.layout.j2w_fragment_main, container, false);
+	@Override public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		L.tag(initTag());
+		L.i("Fragment-onCreate()");
+	}
 
-        mViewAnimator = ButterKnife.findById(mContentView, android.R.id.home);
+	@Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		L.tag(initTag());
+		L.i("Fragment-onCreateView()");
+		mContentView = inflater.inflate(R.layout.j2w_fragment_main, container, false);
 
-        // 加载布局-初始化
-        mViewAnimator.addView(inflater.inflate(initLoadingLayout(), null, false));
+		mViewAnimator = ButterKnife.findById(mContentView, android.R.id.home);
 
-        // 内容布局-初始化
-        mViewAnimator.addView(inflater.inflate(layoutId(), null, false));
+		// 加载布局-初始化
+		mViewAnimator.addView(inflater.inflate(initLoadingLayout(), null, false));
 
-        // 空布局-初始化
-        mViewAnimator.addView(inflater.inflate(initEmptyLayout(), null, false));
-        // 错误布局-初始化
-        mViewAnimator.addView(inflater.inflate(initErrorLayout(), null, false));
+		// 内容布局-初始化
+		mViewAnimator.addView(inflater.inflate(layoutId(), null, false));
 
-        ButterKnife.inject(this, mContentView);
-        return mContentView;
-    }
+		// 空布局-初始化
+		mViewAnimator.addView(inflater.inflate(initEmptyLayout(), null, false));
+		// 错误布局-初始化
+		mViewAnimator.addView(inflater.inflate(initErrorLayout(), null, false));
 
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        L.tag(initTag());
-        L.i("Fragment-onActivityCreated()");
-        initData(savedInstanceState);
-    }
+		ButterKnife.inject(this, mContentView);
+		return mContentView;
+	}
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        L.tag(initTag());
-        L.i("Fragment-onStart()");
-    }
+	@Override public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+		L.tag(initTag());
+		L.i("Fragment-onActivityCreated()");
+		initData(savedInstanceState);
+	}
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        L.tag(initTag());
-        L.m("Fragment-onResume()");
-    }
+	@Override public void onStart() {
+		super.onStart();
+		L.tag(initTag());
+		L.i("Fragment-onStart()");
+	}
 
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        L.tag(initTag());
-        L.i("Fragment-onSaveInstanceState()");
-    }
+	@Override public void onResume() {
+		super.onResume();
+		L.tag(initTag());
+		L.m("Fragment-onResume()");
+	}
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        L.tag(initTag());
-        L.i("Fragment-onSaveInstanceState()");
-    }
+	@Override public void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		L.tag(initTag());
+		L.i("Fragment-onSaveInstanceState()");
+	}
 
-    @Override
-    public void onStop() {
-        super.onStop();
-        L.tag(initTag());
-        L.i("Fragment-onStop()");
-    }
+	@Override public void onPause() {
+		super.onPause();
+		L.tag(initTag());
+		L.i("Fragment-onSaveInstanceState()");
+	}
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        L.tag(initTag());
-        L.i("Fragment-onDestroyView()");
-        /** 切断关联 **/
-        if (presenter != null) {
-            presenter.detach();
-        }
-        ButterKnife.reset(this);// 清空注解view
-    }
+	@Override public void onStop() {
+		super.onStop();
+		L.tag(initTag());
+		L.i("Fragment-onStop()");
+	}
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        L.tag(initTag());
-        L.m("Fragment-onDestroy()");
-    }
+	@Override public void onDestroyView() {
+		super.onDestroyView();
+		L.tag(initTag());
+		L.i("Fragment-onDestroyView()");
+		/** 切断关联 **/
+		if (presenter != null) {
+			presenter.detach();
+		}
+		ButterKnife.reset(this);// 清空注解view
+	}
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        L.tag(initTag());
-        L.i("Fragment-onDetach()");
-    }
+	@Override public void onDestroy() {
+		super.onDestroy();
+		L.tag(initTag());
+		L.m("Fragment-onDestroy()");
+	}
 
-    @Override
-    public View getContentView() {
-        L.tag(initTag());
-        L.i("Fragment-getContentView()");
-        return mContentView;
-    }
+	@Override public void onDetach() {
+		super.onDetach();
+		L.tag(initTag());
+		L.i("Fragment-onDetach()");
+	}
 
-    @Override
-    public int initLoadingLayout() {
-        return R.layout.j2w_fragment_loading;
-    }
+	@Override public View getContentView() {
+		L.tag(initTag());
+		L.i("Fragment-getContentView()");
+		return mContentView;
+	}
 
-    @Override
-    public int initEmptyLayout() {
-        return R.layout.j2w_fragment_empty;
-    }
+	@Override public int initLoadingLayout() {
+		return R.layout.j2w_fragment_loading;
+	}
 
-    @Override
-    public int initErrorLayout() {
-        return R.layout.j2w_fragment_error;
-    }
+	@Override public int initEmptyLayout() {
+		return R.layout.j2w_fragment_empty;
+	}
 
-    @Override
-    public void onRefresh() {
-        L.tag(initTag());
-        L.i("Fragment-onRefresh()");
-    }
+	@Override public int initErrorLayout() {
+		return R.layout.j2w_fragment_error;
+	}
 
-    @Override
-    public void showLoading() {
-        L.tag(initTag());
-        L.i("Fragment-loading()");
-        if (mViewAnimator == null) {
-            return;
-        }
-        mViewAnimator.setDisplayedChild(0);
-    }
+	@Override public void onRefresh() {
+		L.tag(initTag());
+		L.i("Fragment-onRefresh()");
+	}
 
-    @Override
-    public void showContent() {
-        L.tag(initTag());
-        L.i("Fragment-content()");
-        if (mViewAnimator == null) {
-            return;
-        }
-        mViewAnimator.setDisplayedChild(1);
-    }
+	@Override public void showLoading() {
+		L.tag(initTag());
+		L.i("Fragment-loading()");
+		if (mViewAnimator == null) {
+			return;
+		}
+		mViewAnimator.setDisplayedChild(0);
+	}
 
-    @Override
-    public void showEmpty() {
-        L.tag(initTag());
-        L.i("Fragment-empty()");
-        if (mViewAnimator == null) {
-            return;
-        }
-        mViewAnimator.setDisplayedChild(2);
-    }
+	@Override public void showContent() {
+		L.tag(initTag());
+		L.i("Fragment-content()");
+		if (mViewAnimator == null) {
+			return;
+		}
+		mViewAnimator.setDisplayedChild(1);
+	}
 
-    @Override
-    public void showError() {
-        L.tag(initTag());
-        L.i("Fragment-error()");
-        if (mViewAnimator == null) {
-            return;
-        }
-        mViewAnimator.setDisplayedChild(3);
-    }
+	@Override public void showEmpty() {
+		L.tag(initTag());
+		L.i("Fragment-empty()");
+		if (mViewAnimator == null) {
+			return;
+		}
+		mViewAnimator.setDisplayedChild(2);
+	}
 
-    @Override
-    public boolean isTouch() {
-        return true;
-    }
+	@Override public void showError() {
+		L.tag(initTag());
+		L.i("Fragment-error()");
+		if (mViewAnimator == null) {
+			return;
+		}
+		mViewAnimator.setDisplayedChild(3);
+	}
 
-    /**
-     * 防止事件穿透
-     */
+	@Override public boolean isTouch() {
+		return true;
+	}
 
-    @Override
-    public boolean onTouch(View v, MotionEvent event) {
-        return isTouch();
-    }
+	/**
+	 * 防止事件穿透
+	 */
+
+	@Override public boolean onTouch(View v, MotionEvent event) {
+		return isTouch();
+	}
 }

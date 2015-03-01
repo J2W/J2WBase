@@ -4,10 +4,12 @@ package j2w.team.modules.http;
  * Created by sky on 15/2/24. 端点地址
  */
 public abstract class J2WEndpoint {
+
 	/** 创建url端点地址. */
 	public static J2WEndpoint createFixed(final String url) {
 		checkNotNull(url, "url == null");
 		return new J2WEndpoint() {
+
 			@Override public String url() {
 				return url;
 			}

@@ -20,7 +20,7 @@ import j2w.team.mvp.view.iview.J2WActivityIView;
 public abstract class J2WBaseActivity<T extends J2WIPresenter> extends FragmentActivity implements J2WActivityIView {
 
 	/** 业务逻辑对象 **/
-	private T presenter = null;
+	private T	presenter	= null;
 
 	/** 初始化视图 **/
 	@Override public void initData(Bundle savedInstanceState) {

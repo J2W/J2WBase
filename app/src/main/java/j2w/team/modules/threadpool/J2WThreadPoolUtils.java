@@ -18,6 +18,7 @@ final class J2WThreadPoolUtils {
 	 */
 	public static ThreadFactory threadFactory(final String name, final boolean daemon) {
 		return new ThreadFactory() {
+
 			@Override public Thread newThread(Runnable runnable) {
 				J2WThread result = new J2WThread(runnable, name);
 				result.setDaemon(daemon);

@@ -35,39 +35,55 @@ public class J2WDialogFragment extends DialogFragment implements DialogInterface
 	protected static class Builder {
 
 		/** 上下文 **/
-		private final Context mContext;
+		private final Context					mContext;
+
 		/** ViewGroup **/
-		private final ViewGroup mContainer;
+		private final ViewGroup					mContainer;
+
 		/** 布局加载器 **/
-		private final LayoutInflater mInflater;
+		private final LayoutInflater			mInflater;
+
 		/** 标题值 **/
-		private CharSequence mTitle = null;
+		private CharSequence					mTitle	= null;
+
 		/** 正面-按钮值 **/
-		private CharSequence mPositiveButtonText;
+		private CharSequence					mPositiveButtonText;
+
 		/** 正面-按钮事件 **/
-		private View.OnClickListener mPositiveButtonListener;
+		private View.OnClickListener			mPositiveButtonListener;
+
 		/** 负面-按钮值 **/
-		private CharSequence mNegativeButtonText;
+		private CharSequence					mNegativeButtonText;
+
 		/** 负面-按钮事件 **/
-		private View.OnClickListener mNegativeButtonListener;
+		private View.OnClickListener			mNegativeButtonListener;
+
 		/** 中性-按钮值 **/
-		private CharSequence mNeutralButtonText;
+		private CharSequence					mNeutralButtonText;
+
 		/** 中性-按钮事件 **/
-		private View.OnClickListener mNeutralButtonListener;
+		private View.OnClickListener			mNeutralButtonListener;
+
 		/** 内容数据 **/
-		private CharSequence mMessage;
+		private CharSequence					mMessage;
+
 		/** 主要布局 **/
-		private View mCustomView;
+		private View							mCustomView;
+
 		/** 列表适配器 **/
-		private ListAdapter mListAdapter;
+		private ListAdapter						mListAdapter;
+
 		/** 列表选中id **/
-		private int mListCheckedItemIdx;
+		private int								mListCheckedItemIdx;
+
 		/** 选择模式 **/
-		private int mChoiceMode;
+		private int								mChoiceMode;
+
 		/** 列表选中id集合 **/
-		private int[] mListCheckedItemMultipleIds;
+		private int[]							mListCheckedItemMultipleIds;
+
 		/** 列表选中事件 **/
-		private AdapterView.OnItemClickListener mOnItemClickListener;
+		private AdapterView.OnItemClickListener	mOnItemClickListener;
 
 		/**
 		 * 构造器
@@ -312,9 +328,9 @@ public class J2WDialogFragment extends DialogFragment implements DialogInterface
 				}
 			}
 
-            /**
-             * 判断字体长度 显示不同样式 
-             */
+			/**
+			 * 判断字体长度 显示不同样式
+			 */
 			if (shouldStackButtons()) {
 				set(vPositiveButtonStacked, mPositiveButtonText, mPositiveButtonListener);
 				set(vNegativeButtonStacked, mNegativeButtonText, mNegativeButtonListener);
@@ -328,7 +344,7 @@ public class J2WDialogFragment extends DialogFragment implements DialogInterface
 				vButtonsDefault.setVisibility(View.VISIBLE);
 				vButtonsStacked.setVisibility(View.GONE);
 			}
-            //判断按钮值
+			// 判断按钮值
 			if (TextUtils.isEmpty(mPositiveButtonText) && TextUtils.isEmpty(mNegativeButtonText) && TextUtils.isEmpty(mNeutralButtonText)) {
 				vButtonsDefault.setVisibility(View.GONE);
 			}

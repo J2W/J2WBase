@@ -14,8 +14,9 @@ import j2w.team.common.utils.proxy.BaseHandler;
  */
 public class J2WRestHandler extends BaseHandler {
 
-	private final Map<Method, J2WMethodInfo> methodDetailsCache;
-	private final J2WRestAdapter j2WRestAdapter;
+	private final Map<Method, J2WMethodInfo>	methodDetailsCache;
+
+	private final J2WRestAdapter				j2WRestAdapter;
 
 	public J2WRestHandler(J2WRestAdapter j2WRestAdapter, Map<Method, J2WMethodInfo> methodDetailsCache) {
 		super("");
@@ -37,13 +38,13 @@ public class J2WRestHandler extends BaseHandler {
 		// 创建请求
 		Request request = j2WRestAdapter.createRequest(methodInfo, args);
 		switch (methodInfo.executionType) {
-		case SYNC:
-			return j2WRestAdapter.invokeSync(methodInfo, request);
-		case ASYNC:
-			j2WRestAdapter.invokeAsync(methodInfo, request, (J2WCallback) args[args.length - 1]);
-			return null;
-		default:
-			throw new IllegalStateException("未知的反应类型: " + methodInfo.executionType);
+			case SYNC:
+				return j2WRestAdapter.invokeSync(methodInfo, request);
+			case ASYNC:
+				j2WRestAdapter.invokeAsync(methodInfo, request, (J2WCallback) args[args.length - 1]);
+				return null;
+			default:
+				throw new IllegalStateException("未知的反应类型: " + methodInfo.executionType);
 		}
 	}
 

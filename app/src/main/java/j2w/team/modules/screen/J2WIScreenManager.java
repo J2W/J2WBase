@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentActivity;
  * Created by sky on 15/1/27.fragmentactivity管理器
  */
 public interface J2WIScreenManager {
+
 	/**
 	 * 获取当前活动的activity
 	 *
