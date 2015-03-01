@@ -54,6 +54,7 @@ public abstract class J2WDialogBuilder<T extends J2WDialogBuilder<T>> {
 	/** 请求编号 **/
 	private int											mRequestCode					= DEFAULT_REQUEST_CODE;
 
+	/** 构造函数 */
 	public J2WDialogBuilder(Class<? extends J2WDialogFragment> clazz) {
 		// 获取堆栈管理器
 		mFragmentManager = J2WHelper.getScreenHelper().currentActivity().getSupportFragmentManager();

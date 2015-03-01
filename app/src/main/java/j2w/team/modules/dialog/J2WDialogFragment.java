@@ -1,9 +1,12 @@
 package j2w.team.modules.dialog;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Typeface;
+import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,18 +18,172 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import butterknife.ButterKnife;
 import j2w.team.R;
+import j2w.team.common.log.L;
+import j2w.team.modules.dialog.iface.ISimpleDialogCancelListener;
 
 /**
  * Created by sky on 15/2/28. dialog 基类
  */
-public class J2WDialogFragment extends DialogFragment implements DialogInterface.OnShowListener {
+public abstract class J2WDialogFragment extends DialogFragment implements DialogInterface.OnShowListener {
+
+	/** 请求编码 **/
+	protected int	mRequestCode;
+
+	@Override public Dialog onCreateDialog(Bundle savedInstanceState) {
+		L.tag("J2WDialogFragment");
+		L.i("onCreateDialog()");
+		// 获取参数
+		Bundle args = getArguments();
+		// 创建对话框
+		Dialog dialog = new Dialog(getActivity(), R.style.J2W_Dialog);
+		// 获取参数-设置是否可取消
+		if (args != null) {
+			dialog.setCanceledOnTouchOutside(args.getBoolean(J2WDialogBuilder.ARG_CANCELABLE_ON_TOUCH_OUTSIDE));
+		}
+		// 调用show()时触发事件
+		dialog.setOnShowListener(this);
+		return dialog;
+	}
+
+	@Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		L.tag("J2WDialogFragment");
+		L.i("onCreateView()");
+		Builder builder = new Builder(getActivity(), inflater, container);
+		return build(builder).create();
+	}
+
+	@Override public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+		L.tag("J2WDialogFragment");
+		L.i("onActivityCreated()");
+		// 获取指定碎片
+		final Fragment targetFragment = getTargetFragment();
+		// 如果有指定碎片 从指定碎片里获取请求码，反之既然
+		if (targetFragment != null) {
+			mRequestCode = getTargetRequestCode();
+		} else {
+			Bundle args = getArguments();
+			if (args != null) {
+				mRequestCode = args.getInt(J2WDialogBuilder.ARG_REQUEST_CODE, 0);
+			}
+		}
+	}
+
+	@Override public void onDestroyView() {
+		L.tag("J2WDialogFragment");
+		L.i("onDestroyView()");
+		// 销毁
+		if (getDialog() != null && getRetainInstance()) {
+			getDialog().setDismissMessage(null);
+		}
+		super.onDestroyView();
+	}
+
+	/** 定制对话框 **/
+	protected abstract Builder build(Builder initialBuilder);
 
 	@Override public void onShow(DialogInterface dialog) {
+		L.tag("J2WDialogFragment");
+		L.i("onShow()");
+		if (getView() != null) {
+			ScrollView vMessageScrollView = (ScrollView) getView().findViewById(R.id.j2w_message_scrollview);
+			ListView vListView = (ListView) getView().findViewById(R.id.j2w_list);
+			FrameLayout vCustomViewNoScrollView = (FrameLayout) getView().findViewById(R.id.j2w_custom);
+			boolean customViewNoScrollViewScrollable = false;
+			if (vCustomViewNoScrollView.getChildCount() > 0) {
+				View firstChild = vCustomViewNoScrollView.getChildAt(0);
+				if (firstChild instanceof ViewGroup) {
+					customViewNoScrollViewScrollable = isScrollable((ViewGroup) firstChild);
+				}
+			}
+			boolean listViewScrollable = isScrollable(vListView);
+			boolean messageScrollable = isScrollable(vMessageScrollView);
+			boolean scrollable = listViewScrollable || messageScrollable || customViewNoScrollViewScrollable;
+			modifyButtonsBasedOnScrollableContent(scrollable);
+		}
+	}
 
+	/**
+	 * 取消
+	 * 
+	 * @param dialog
+	 */
+	@Override public void onCancel(DialogInterface dialog) {
+		super.onCancel(dialog);
+		for (ISimpleDialogCancelListener listener : getCancelListeners()) {
+			listener.onCancelled(mRequestCode);
+		}
+	}
+
+	/**
+	 * 获取取消的所有事件
+	 * 
+	 * @return
+	 */
+	protected List<ISimpleDialogCancelListener> getCancelListeners() {
+		return getDialogListeners(ISimpleDialogCancelListener.class);
+	}
+
+	/**
+	 * 获取某种类型的所有侦听器
+	 */
+	protected <T> List<T> getDialogListeners(Class<T> listenerInterface) {
+		final Fragment targetFragment = getTargetFragment();
+		List<T> listeners = new ArrayList<T>(2);
+		if (targetFragment != null && listenerInterface.isAssignableFrom(targetFragment.getClass())) {
+			listeners.add((T) targetFragment);
+		}
+		if (getActivity() != null && listenerInterface.isAssignableFrom(getActivity().getClass())) {
+			listeners.add((T) getActivity());
+		}
+		return Collections.unmodifiableList(listeners);
+	}
+
+	/**
+	 * 是否滚动
+	 * 
+	 * @param listView
+	 *            列表
+	 * @return
+	 */
+	private boolean isScrollable(ViewGroup listView) {
+		int totalHeight = 0;
+		for (int i = 0; i < listView.getChildCount(); i++) {
+			totalHeight += listView.getChildAt(i).getMeasuredHeight();
+		}
+		return listView.getMeasuredHeight() < totalHeight;
+	}
+
+	/**
+	 * 如果内容是可滚动.
+	 */
+	private void modifyButtonsBasedOnScrollableContent(boolean scrollable) {
+		if (getView() == null) {
+			return;
+		}
+		View vButtonDivider = getView().findViewById(R.id.j2w_button_divider);
+		View vButtonsBottomSpace = getView().findViewById(R.id.j2w_buttons_bottom_space);
+		View vDefaultButtons = getView().findViewById(R.id.j2w_buttons_default);
+		View vStackedButtons = getView().findViewById(R.id.j2w_buttons_stacked);
+		if (vDefaultButtons.getVisibility() == View.GONE && vStackedButtons.getVisibility() == View.GONE) {
+			vButtonDivider.setVisibility(View.GONE);
+			vButtonsBottomSpace.setVisibility(View.GONE);
+		} else if (scrollable) {
+			vButtonDivider.setVisibility(View.VISIBLE);
+			vButtonsBottomSpace.setVisibility(View.GONE);
+		} else {
+			vButtonDivider.setVisibility(View.GONE);
+			vButtonsBottomSpace.setVisibility(View.VISIBLE);
+		}
 	}
 
 	/**
