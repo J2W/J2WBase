@@ -51,4 +51,8 @@ public interface J2WActionBarIView extends J2WIView {
 	 * @return
 	 */
 	public void setActionBarTitle(String value);
+    /**
+     * 是否固定竖屏
+     */
+    public boolean isFixedVerticalScreen();
 }

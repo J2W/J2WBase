@@ -113,7 +113,7 @@ public abstract class J2WDialogFragment extends DialogFragment implements Dialog
 
 	/**
 	 * 取消
-	 * 
+	 *
 	 * @param dialog
 	 */
 	@Override public void onCancel(DialogInterface dialog) {
@@ -125,7 +125,7 @@ public abstract class J2WDialogFragment extends DialogFragment implements Dialog
 
 	/**
 	 * 获取取消的所有事件
-	 * 
+	 *
 	 * @return
 	 */
 	protected List<IDialogCancelListener> getCancelListeners() {
@@ -149,7 +149,7 @@ public abstract class J2WDialogFragment extends DialogFragment implements Dialog
 
 	/**
 	 * 是否滚动
-	 * 
+	 *
 	 * @param listView
 	 *            列表
 	 * @return
@@ -243,7 +243,7 @@ public abstract class J2WDialogFragment extends DialogFragment implements Dialog
 
 		/**
 		 * 构造器
-		 * 
+		 *
 		 * @param context
 		 * @param inflater
 		 * @param container
@@ -256,7 +256,7 @@ public abstract class J2WDialogFragment extends DialogFragment implements Dialog
 
 		/**
 		 * 获取布局加载器
-		 * 
+		 *
 		 * @return
 		 */
 		public LayoutInflater getLayoutInflater() {
@@ -265,7 +265,7 @@ public abstract class J2WDialogFragment extends DialogFragment implements Dialog
 
 		/**
 		 * 设置标题
-		 * 
+		 *
 		 * @param titleId
 		 * @return
 		 */
@@ -276,7 +276,7 @@ public abstract class J2WDialogFragment extends DialogFragment implements Dialog
 
 		/**
 		 * 设置标题
-		 * 
+		 *
 		 * @param title
 		 * @return
 		 */
@@ -287,7 +287,7 @@ public abstract class J2WDialogFragment extends DialogFragment implements Dialog
 
 		/**
 		 * 设置正面按钮
-		 * 
+		 *
 		 * @param textId
 		 * @param listener
 		 * @return
@@ -300,7 +300,7 @@ public abstract class J2WDialogFragment extends DialogFragment implements Dialog
 
 		/**
 		 * 设置正面按钮
-		 * 
+		 *
 		 * @param text
 		 * @param listener
 		 * @return
@@ -313,7 +313,7 @@ public abstract class J2WDialogFragment extends DialogFragment implements Dialog
 
 		/**
 		 * 设置负面按钮
-		 * 
+		 *
 		 * @param textId
 		 * @param listener
 		 * @return
@@ -326,7 +326,7 @@ public abstract class J2WDialogFragment extends DialogFragment implements Dialog
 
 		/**
 		 * 设置负面按钮
-		 * 
+		 *
 		 * @param text
 		 * @param listener
 		 * @return
@@ -339,7 +339,7 @@ public abstract class J2WDialogFragment extends DialogFragment implements Dialog
 
 		/**
 		 * 设置中性按钮
-		 * 
+		 *
 		 * @param textId
 		 * @param listener
 		 * @return
@@ -352,7 +352,7 @@ public abstract class J2WDialogFragment extends DialogFragment implements Dialog
 
 		/**
 		 * 设置中性按钮
-		 * 
+		 *
 		 * @param text
 		 * @param listener
 		 * @return
@@ -365,7 +365,7 @@ public abstract class J2WDialogFragment extends DialogFragment implements Dialog
 
 		/**
 		 * 设置内容
-		 * 
+		 *
 		 * @param messageId
 		 * @return
 		 */
@@ -376,7 +376,7 @@ public abstract class J2WDialogFragment extends DialogFragment implements Dialog
 
 		/**
 		 * 设置内容
-		 * 
+		 *
 		 * @param message
 		 * @return
 		 */
@@ -387,7 +387,7 @@ public abstract class J2WDialogFragment extends DialogFragment implements Dialog
 
 		/**
 		 * 设置内容集合
-		 * 
+		 *
 		 * @param listAdapter
 		 * @param checkedItemIds
 		 * @param choiceMode
@@ -405,7 +405,7 @@ public abstract class J2WDialogFragment extends DialogFragment implements Dialog
 
 		/**
 		 * 设置内容集合
-		 * 
+		 *
 		 * @param listAdapter
 		 * @param checkedItemIdx
 		 * @param listener
@@ -421,7 +421,7 @@ public abstract class J2WDialogFragment extends DialogFragment implements Dialog
 
 		/**
 		 * 设置主要布局
-		 * 
+		 *
 		 * @param view
 		 * @return
 		 */
@@ -432,7 +432,7 @@ public abstract class J2WDialogFragment extends DialogFragment implements Dialog
 
 		/**
 		 * 创建
-		 * 
+		 *
 		 * @return
 		 */
 		public View create() {

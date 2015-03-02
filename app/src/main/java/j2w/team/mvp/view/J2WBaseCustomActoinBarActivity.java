@@ -66,8 +66,10 @@ public abstract class J2WBaseCustomActoinBarActivity<T extends J2WIPresenter> ex
 		}
 	}
 
-	/** 是否固定竖屏 **/
-	protected boolean isFixedVerticalScreen() {
+	/**
+	 * 是否固定竖屏
+	 */
+	@Override public boolean isFixedVerticalScreen() {
 		return true;
 	}
 

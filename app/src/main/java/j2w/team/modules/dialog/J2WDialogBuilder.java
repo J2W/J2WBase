@@ -66,7 +66,7 @@ public abstract class J2WDialogBuilder<T extends J2WDialogBuilder<T>> {
 
 	/**
 	 * 设置可取消
-	 * 
+	 *
 	 * @param cancelable
 	 *            取消
 	 * @return
@@ -78,7 +78,7 @@ public abstract class J2WDialogBuilder<T extends J2WDialogBuilder<T>> {
 
 	/**
 	 * 设置可取消-手势触摸
-	 * 
+	 *
 	 * @param cancelable
 	 * @return
 	 */
@@ -92,7 +92,7 @@ public abstract class J2WDialogBuilder<T extends J2WDialogBuilder<T>> {
 
 	/**
 	 * 设置目标碎片
-	 * 
+	 *
 	 * @param fragment
 	 *            碎片
 	 * @param requestCode
@@ -107,7 +107,7 @@ public abstract class J2WDialogBuilder<T extends J2WDialogBuilder<T>> {
 
 	/**
 	 * 设置请求编号
-	 * 
+	 *
 	 * @param requestCode
 	 *            编号
 	 * @return
@@ -119,7 +119,7 @@ public abstract class J2WDialogBuilder<T extends J2WDialogBuilder<T>> {
 
 	/**
 	 * 设置TAG值
-	 * 
+	 *
 	 * @param tag
 	 *            TAG
 	 * @return
