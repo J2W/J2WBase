@@ -17,12 +17,9 @@
 package j2w.team.modules.dialog.iface;
 
 /**
- * Implement this interface in Activity or Fragment to react when the dialog is cancelled.
- * This listener is common for all types of dialogs.
- *
- * @author Tomáš Kypta
+ * 所有dialog取消回调接口
  */
-public interface ISimpleDialogCancelListener {
+public interface IDialogCancelListener {
 
-    public void onCancelled(int requestCode);
+	public void onCancelled(int requestCode);
 }

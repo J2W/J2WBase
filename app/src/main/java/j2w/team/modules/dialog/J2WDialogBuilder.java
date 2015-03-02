@@ -183,7 +183,7 @@ public abstract class J2WDialogBuilder<T extends J2WDialogBuilder<T>> {
 	 */
 	public DialogFragment showAllowingStateLoss() {
 		L.tag("J2WDialogFragment");
-		L.i("showAllowingStateLoss() : TAG" + mTag);
+		L.i("showAllowingStateLoss() : TAG :" + mTag);
 		J2WDialogFragment fragment = create();
 		FragmentTransaction ft = mFragmentManager.beginTransaction();
 		ft.add(fragment, mTag);

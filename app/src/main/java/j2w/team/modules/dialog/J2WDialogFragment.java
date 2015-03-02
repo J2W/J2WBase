@@ -3,7 +3,6 @@ package j2w.team.modules.dialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -28,7 +27,7 @@ import java.util.List;
 import butterknife.ButterKnife;
 import j2w.team.R;
 import j2w.team.common.log.L;
-import j2w.team.modules.dialog.iface.ISimpleDialogCancelListener;
+import j2w.team.modules.dialog.iface.IDialogCancelListener;
 
 /**
  * Created by sky on 15/2/28. dialog 基类
@@ -119,7 +118,7 @@ public abstract class J2WDialogFragment extends DialogFragment implements Dialog
 	 */
 	@Override public void onCancel(DialogInterface dialog) {
 		super.onCancel(dialog);
-		for (ISimpleDialogCancelListener listener : getCancelListeners()) {
+		for (IDialogCancelListener listener : getCancelListeners()) {
 			listener.onCancelled(mRequestCode);
 		}
 	}
@@ -129,8 +128,8 @@ public abstract class J2WDialogFragment extends DialogFragment implements Dialog
 	 * 
 	 * @return
 	 */
-	protected List<ISimpleDialogCancelListener> getCancelListeners() {
-		return getDialogListeners(ISimpleDialogCancelListener.class);
+	protected List<IDialogCancelListener> getCancelListeners() {
+		return getDialogListeners(IDialogCancelListener.class);
 	}
 
 	/**
@@ -457,9 +456,9 @@ public abstract class J2WDialogFragment extends DialogFragment implements Dialog
 			ListView vList = ButterKnife.findById(content, R.id.j2w_list);
 
 			// 设置标题样式
-			vTitle.setTextAppearance(mContext, R.style.J2W_TextView_Title_Dark);
+//			vTitle.setTextAppearance(mContext, R.style.J2W_TextView_Title_Dark);
 			// 设置内容样式
-			vMessage.setTextAppearance(mContext, R.style.J2W_TextView_Message_Dark);
+//			vMessage.setTextAppearance(mContext, R.style.J2W_TextView_Message_Dark);
 			// 设置标题值
 			set(vTitle, mTitle);
 			// 设置内容值

@@ -2,14 +2,7 @@
 
     <style name="None" />
 
-    <style name="J2W" />
-
-
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
-        <item name="android:progressBarStyle">@style/Widget.J2W.ProgressBar</item>
-    </style>
+    <style name="J2W"/>
 
     <!-- 默认布局 -->
     <style name="J2W.Layout">
@@ -17,9 +10,14 @@
         <item name="android:layout_height">match_parent</item>
         <item name="android:orientation">vertical</item>
     </style>
+
+    <style name="J2W.Layout.Wrap">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
     
     <!-- 进度条样式. -->
-    <style name="Widget.J2W.ProgressBar" parent="None">
+    <style name="Widget.J2W.ProgressBar" parent="J2W.Layout.Wrap">
         <item name="android:indeterminateDrawable">@drawable/j2w_progress_indeterminate</item>
         <item name="android:indeterminateOnly">true</item>
         <item name="android:indeterminateBehavior">repeat</item>
