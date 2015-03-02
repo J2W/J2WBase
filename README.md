@@ -453,6 +453,114 @@ TestConfig.getInstance().commit();<br />
     	 */
     	public void popAllActivityExceptMain(Class clazz);
     	
+    	
+### Dialog
+####暂时提供以下接口和实现类
+#####进度条对话框
+1.调用
+    
+    ProgressDailogFragment.createBuilder()
+        .setTitle("title")//设置标题
+        .setMessage("message")//设置内容
+        .setRequestCode(1)//设置请求编码
+        .show();//显示
+
+#####简单对话框
+1.调用
+    
+    //说明一下,三个按钮如果text过长 从上往下排序显示，否则从左往右显示
+    SimpleDialogFragment.createBuilder()
+        .setTitle("title")//设置标题
+        .setMessage("message")//设置内容
+        .setRequestCode(1)//设置请求编码
+        .setPositiveButtonText("正面按钮")
+        .setNegativeButtonText("反面按钮")
+        .setNeutralButtonText("中性按钮")
+        .show();
+
+2.拦截点击事件
+    
+    //三个按钮 - 也可以单独拦截一个按钮 三个接口:
+    1.INegativeButtonDialogListener
+    2.IPositiveButtonDialogListener
+    3.INeutralButtonDialogListener
+    
+    public class MainActivity implements IDialogListener{
+    
+        @Override public void onNegativeButtonClicked(int i) {
+            L.i("onNegativeButtonClicked" + i);
+        }
+
+        @Override public void onNeutralButtonClicked(int i) {
+            L.i("onNeutralButtonClicked" + i);
+        }
+
+        @Override public void onPositiveButtonClicked(int i) {
+            L.i("onPositiveButtonClicked" + i);
+        }
+    }
+
+#####列表对话框
+    
+    ListDialogFragment.createBuilder()
+        .setTitle("Your favorite character:")//标题
+        .setItems(new String[]{"Jayne", "Malcolm", "Kaylee", "Wash", "Zoe", "River"})//设置数据
+        .setRequestCode(12) //请求编码
+        .setChoiceMode(AbsListView.CHOICE_MODE_SINGLE) //设置列表属性
+        .show();
+
+    setChoiceMode 有三个属性
+    1.AbsListView.CHOICE_MODE_SINGLE 列表是单选对话框
+    2.AbsListView.CHOICE_MODE_MULTIPLE 列表是多选对话框
+    3.AbsListView.REQUEST_LIST_SIMPLE 列表是简单对话框
+
+#####自定义对话框
+说明：为了扩展，可以自定义一个对话框
+    
+    //1.继承简单对话框
+    public class JayneHatDialogFragment extends SimpleDialogFragment {
+    
+        @Override
+        public BaseDialogFragment.Builder build(BaseDialogFragment.Builder builder) {
+            //设置标题栏
+            builder.setTitle("Jayne's hat");
+            //设置布局文件
+            builder.setView(LayoutInflater.from(getActivity()).inflate(R.layout.view_jayne_hat, null));
+            //设置按钮
+            builder.setPositiveButton("I want one", new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    for (IPositiveButtonDialogListener listener : getPositiveButtonDialogListeners()) {
+                        listener.onPositiveButtonClicked(mRequestCode);
+                    }
+                    dismiss();
+                }
+            });
+            return builder;
+        }
+    }
+    
+    
+
+#####统一拦截取消
+
+    public class MainActivity implements IDialogCancelListener{
+        @Override public void onCancelled(int i) {//i 是请求编码
+        		L.i("取消" + i);
+        }
+    }
+
+#####统一修改样式
+    
+    //架构里默认样式 - google一下下面属性, 就知道怎么修改样式了
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+            <item name="colorPrimary">@color/primary</item> 
+            <item name="colorPrimaryDark">@color/accent</item> 
+            <item name="colorAccent">@color/accent</item> //修改系统样式颜色
+            <item name="android:progressBarStyle">@style/Widget.J2W.ProgressBar</item>
+    </style>
+    
+    
 
 [common](https://github.com/J2W/mvn-repo-j2w/blob/master/Explain/J2W_COMMON.md)
 -----------------------------------
