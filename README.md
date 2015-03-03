@@ -512,7 +512,7 @@ TestConfig.getInstance().commit();<br />
     setChoiceMode 有三个属性
     1.AbsListView.CHOICE_MODE_SINGLE 列表是单选对话框
     2.AbsListView.CHOICE_MODE_MULTIPLE 列表是多选对话框
-    3.AbsListView.REQUEST_LIST_SIMPLE 列表是简单对话框
+    3.AbsListView.CHOICE_MODE_NONE 列表是简单对话框
 
 #####自定义对话框
 说明：为了扩展，可以自定义一个对话框
