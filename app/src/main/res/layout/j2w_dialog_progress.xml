@@ -5,7 +5,7 @@
     style="@style/J2W.Layout.Progress">
 
     <ProgressBar
-        style="@style/Widget.J2W.ProgressBar"
+        style="@style/J2W.Layout.Wrap.ProgressBar"
         android:layout_margin="@dimen/grid_4"
         android:id="@+id/J2W_progress"/>
 

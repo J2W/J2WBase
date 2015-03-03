@@ -15,9 +15,10 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
+
     
     <!-- 进度条样式. -->
-    <style name="Widget.J2W.ProgressBar" parent="J2W.Layout.Wrap">
+    <style name="J2W.Layout.Wrap.ProgressBar">
         <item name="android:indeterminateDrawable">@drawable/j2w_progress_indeterminate</item>
         <item name="android:indeterminateOnly">true</item>
         <item name="android:indeterminateBehavior">repeat</item>
