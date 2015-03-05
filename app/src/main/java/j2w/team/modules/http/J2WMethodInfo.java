@@ -16,7 +16,6 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import j2w.team.common.log.L;
 import j2w.team.modules.http.annotations.Body;
 import j2w.team.modules.http.annotations.GET;
 import j2w.team.modules.http.annotations.HEAD;
@@ -29,7 +28,7 @@ import okio.Buffer;
 import okio.BufferedSource;
 
 /**
- * Created by sky on 15/2/13.
+ * Created by sky on 15/2/13. 解析方法上的注解
  */
 public final class J2WMethodInfo {
 
@@ -91,6 +90,7 @@ public final class J2WMethodInfo {
 	/**
 	 * 解析方法上的注解
 	 */
+
 	private void parseMethodAnnotations() {
 		for (Annotation methodAnnotation : method.getAnnotations()) {
 			Class<? extends Annotation> annotationType = methodAnnotation.annotationType();
