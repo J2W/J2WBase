@@ -188,10 +188,10 @@ public abstract class J2WBaseListFragment<T extends J2WIPresenter> extends J2WBa
 			if (state == 1 && list.isEmpty()) {
 				showEmpty();
 			} else if (state != 2 && !list.isEmpty()) {
-				showContent();
+                showContent();
 			}
-			mListAdapter.notifyDataSetChanged();
-		}
+            mListAdapter.notifyDataSetChanged();
+        }
 	}
 
 	/**

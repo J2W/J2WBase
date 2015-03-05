@@ -178,37 +178,25 @@ public abstract class J2WBaseFragment<T extends J2WIPresenter> extends Fragment 
 	@Override public void showLoading() {
 		L.tag(initTag());
 		L.i("Fragment-loading()");
-		if (mViewAnimator == null) {
-			return;
-		}
-		mViewAnimator.setDisplayedChild(0);
+		show(0);
 	}
 
 	@Override public void showContent() {
 		L.tag(initTag());
 		L.i("Fragment-content()");
-		if (mViewAnimator == null) {
-			return;
-		}
-		mViewAnimator.setDisplayedChild(1);
-	}
+        show(1);
+    }
 
 	@Override public void showEmpty() {
 		L.tag(initTag());
 		L.i("Fragment-empty()");
-		if (mViewAnimator == null) {
-			return;
-		}
-		mViewAnimator.setDisplayedChild(2);
-	}
+        show(2);
+    }
 
 	@Override public void showError() {
 		L.tag(initTag());
 		L.i("Fragment-error()");
-		if (mViewAnimator == null) {
-			return;
-		}
-		mViewAnimator.setDisplayedChild(3);
+        show(3);
 	}
 
 	@Override public boolean isTouch() {
@@ -221,5 +209,19 @@ public abstract class J2WBaseFragment<T extends J2WIPresenter> extends Fragment 
 
 	@Override public boolean onTouch(View v, MotionEvent event) {
 		return isTouch();
+	}
+
+	/**
+	 * 显示 * @param showState 0，1，2，3
+	 */
+	private final void show(int showState) {
+        if (mViewAnimator == null) {
+            return;
+        }
+		int displayedChild = mViewAnimator.getDisplayedChild();
+		if (displayedChild == showState) {
+			return;
+		}
+		mViewAnimator.setDisplayedChild(showState);
 	}
 }

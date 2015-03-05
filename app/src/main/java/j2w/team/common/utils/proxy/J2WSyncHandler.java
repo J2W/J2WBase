@@ -25,7 +25,7 @@ public class J2WSyncHandler<T> extends BaseHandler<T> {
 		// 获得错误处理方法
 		final Method methodError = aClass.getMethod("methodError", new Class[] { String.class, Throwable.class });
 
-		Method oldMethod = aClass.getMethod(method.getName());
+		Method oldMethod = aClass.getMethod(method.getName(),method.getParameterTypes());
 		// 获得注解数组
 		Background background = oldMethod.getAnnotation(Background.class);
 

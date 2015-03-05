@@ -2,6 +2,7 @@ package j2w.team.mvp.presenter;
 
 import j2w.team.common.log.L;
 import j2w.team.common.utils.proxy.DynamicProxyUtils;
+import j2w.team.modules.http.J2WError;
 
 /**
  * Created by sky on 15/2/1. 中央处理器
@@ -48,4 +49,16 @@ public abstract class J2WPresenter<T> {
 		isCallBack = false;
 	}
 
+	/**
+	 * 错误处理
+	 * 
+	 * @param methodName
+	 * @param throwable
+	 */
+	public void methodError(String methodName, Throwable throwable) {
+        L.tag(initTag());
+        L.i("methodError()");
+		// 打印错误信息
+		throwable.printStackTrace();
+	}
 }
