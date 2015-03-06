@@ -2,7 +2,7 @@
 
     <style name="None" />
 
-    <style name="J2W"/>
+    <style name="J2W" />
 
     <!-- 默认布局 -->
     <style name="J2W.Layout">
@@ -16,7 +16,7 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
 
-    
+
     <!-- 进度条样式. -->
     <style name="J2W.Layout.Wrap.ProgressBar">
         <item name="android:indeterminateDrawable">@drawable/j2w_progress_indeterminate</item>
@@ -29,5 +29,23 @@
         <item name="android:maxHeight">40dp</item>
     </style>
 
+    <!-- Viewpager -->
+    <style name="J2W.Layout.Viewpager">
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
+    <!-- TabHost -->
+    <style name="J2W.Layout.TabHost">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@android:color/white</item>
+    </style>
+
+    <!-- Tabcontent -->
+    <style name="J2W.Layout.Tabcontent">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_weight">0</item>
+    </style>
 
 </resources>

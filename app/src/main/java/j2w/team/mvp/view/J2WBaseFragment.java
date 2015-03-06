@@ -79,15 +79,12 @@ public abstract class J2WBaseFragment<T extends J2WIPresenter> extends Fragment 
 
 		// 加载布局-初始化
 		mViewAnimator.addView(inflater.inflate(initLoadingLayout(), null, false));
-
 		// 内容布局-初始化
 		mViewAnimator.addView(inflater.inflate(layoutId(), null, false));
-
 		// 空布局-初始化
 		mViewAnimator.addView(inflater.inflate(initEmptyLayout(), null, false));
 		// 错误布局-初始化
 		mViewAnimator.addView(inflater.inflate(initErrorLayout(), null, false));
-
 		ButterKnife.inject(this, mContentView);
 		return mContentView;
 	}
@@ -184,19 +181,19 @@ public abstract class J2WBaseFragment<T extends J2WIPresenter> extends Fragment 
 	@Override public void showContent() {
 		L.tag(initTag());
 		L.i("Fragment-content()");
-        show(1);
-    }
+		show(1);
+	}
 
 	@Override public void showEmpty() {
 		L.tag(initTag());
 		L.i("Fragment-empty()");
-        show(2);
-    }
+		show(2);
+	}
 
 	@Override public void showError() {
 		L.tag(initTag());
 		L.i("Fragment-error()");
-        show(3);
+		show(3);
 	}
 
 	@Override public boolean isTouch() {
@@ -215,9 +212,9 @@ public abstract class J2WBaseFragment<T extends J2WIPresenter> extends Fragment 
 	 * 显示 * @param showState 0，1，2，3
 	 */
 	private final void show(int showState) {
-        if (mViewAnimator == null) {
-            return;
-        }
+		if (mViewAnimator == null) {
+			return;
+		}
 		int displayedChild = mViewAnimator.getDisplayedChild();
 		if (displayedChild == showState) {
 			return;
