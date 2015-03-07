@@ -36,7 +36,9 @@ public abstract class J2WBaseFragment<T extends J2WIPresenter> extends Fragment 
 	/**
 	 * 业务逻辑对象 *
 	 */
-	private T		presenter	= null;
+	private T		presenter		= null;
+
+	private boolean	isDelayedData	= false;
 
 	/**
 	 * 初始化视图 *
@@ -86,6 +88,7 @@ public abstract class J2WBaseFragment<T extends J2WIPresenter> extends Fragment 
 		// 错误布局-初始化
 		mViewAnimator.addView(inflater.inflate(initErrorLayout(), null, false));
 		ButterKnife.inject(this, mContentView);
+
 		return mContentView;
 	}
 
@@ -105,7 +108,7 @@ public abstract class J2WBaseFragment<T extends J2WIPresenter> extends Fragment 
 	@Override public void onResume() {
 		super.onResume();
 		L.tag(initTag());
-		L.m("Fragment-onResume()");
+		L.i("Fragment-onResume()");
 	}
 
 	@Override public void onSaveInstanceState(Bundle outState) {
@@ -153,6 +156,22 @@ public abstract class J2WBaseFragment<T extends J2WIPresenter> extends Fragment 
 		L.tag(initTag());
 		L.i("Fragment-getContentView()");
 		return mContentView;
+	}
+
+	@Override public void isDelayedData() {
+		if (isDelayedData) {
+			return;
+		}
+		L.tag(initTag());
+		L.i("Fragment-isDelayedData()");
+		// 为了只初始化一次
+		isDelayedData = true;
+		initDelayedData();
+	}
+
+	@Override public void initDelayedData() {
+		L.tag(initTag());
+		L.i("Fragment-initDelayedData()");
 	}
 
 	@Override public int initLoadingLayout() {

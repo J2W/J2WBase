@@ -7,6 +7,9 @@ import android.support.v4.app.Fragment;
  */
 public class TabHostModel {
 
+	/** TAG **/
+	public String						tag;
+
 	/** Tab图标 **/
 	public int							tabIcon;
 
