@@ -30,7 +30,7 @@ public interface J2WViewpagerIView extends J2WActivityIView {
 	/**
 	 * 设置Item信息
 	 */
-	public int getTabsBackgroundResource();
+	public int getTabsBackgroundResource(); // 背景颜色
 
 	public boolean getTabsShouldExpand();// 设置Tab是自动填充满屏幕的
 

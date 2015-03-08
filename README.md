@@ -206,6 +206,195 @@ Gradle:
 
 注意: 销毁引用处理内部已经完成！如果当前视图被销毁，View层方法不会被回掉，不用担心空指针或其他情况！
 
+### Viewpager
+说明: 继承 J2WBaseViewPagerAcitvity<br />
+####配合J2WBaseFragment 使用
+
+        //J2WBaseFragment 提供延迟初始化, 当Viewpager滑动到当前页面，初始化一次，以后不在调用
+        @Override
+        public void initDelayedData() {
+            super.initDelayedData();
+        }
+        //当Viewpager滑动到当前页面，每次都需要刷新的话 重写onResume
+        @Override
+        public void onResume() {
+            super.onResume();
+
+        }
+        //当Viewpager离开当前页面 会执行 onPause(); 做处理
+        @Override
+        public void onPause() {
+            super.onPause();
+
+        }
+
+####提供修改TabsItem接口
+
+        public int getTabsBackgroundResource(); // 背景颜色
+
+        public boolean getTabsShouldExpand();// 设置Tab是自动填充满屏幕的
+
+        public int getTabsDividerColor();// 设置Tab的分割线是透明的
+
+        public int getTabsTitleColor(); // 设置Tab的文字颜色
+
+        public int getTabsTitleSize();// 设置Tab标题文字的大小
+
+        public int getTabsSelectedTitleColor();// 设置选中Tab文字的颜色
+
+        public int getTabsIndicatorColor();// 设置Tab Indicator 指示灯的颜色
+
+        public int getTabsOnClickTitleColor();//设置点击颜色
+
+        public int getTabsUnderlineColor();//设置Tab底部线的颜色
+
+        public int getTabsUnderlineHeight();//设置Tab底部线的高度
+
+    
+####提供4种适配器类型
+1.DefaultPagerAdapter  - 文本<br />
+
+        @Override public ViewPagerModel[] getViewPagerModels() {
+            	ViewPagerModel viewPagerModel = new ViewPagerModel();
+            	viewPagerModel.title = "我的主页";
+            	viewPagerModel.fragment = new Fragment1();
+            
+            	ViewPagerModel viewPagerModel1 = new ViewPagerModel();
+            	viewPagerModel1.title = "我的病人";
+            	viewPagerModel1.fragment = new Fragment2();
+            
+            	ViewPagerModel viewPagerModel2 = new ViewPagerModel();
+            	viewPagerModel2.title = "我的工作";
+            	viewPagerModel2.fragment = new Fragment3();
+            
+            	ViewPagerModel viewPagerModel3 = new ViewPagerModel();
+            	viewPagerModel3.title = "我的工作";
+            	viewPagerModel3.fragment = new Fragment4();
+            	return new ViewPagerModel[] { viewPagerModel, viewPagerModel1, viewPagerModel2, viewPagerModel3 };
+        }
+        
+        //适配器类型
+        @Override public PagerAdapter getPagerAdapter() {
+           		return new DefaultPagerAdapter();
+        }
+        
+2.DefaultIconPagerAdapter - 图标<br />
+    
+    	@Override public ViewPagerModel[] getViewPagerModels() {
+    		ViewPagerModel viewPagerModel = new ViewPagerModel();
+            viewPagerModel.icon = R.drawable.tab_infusion;
+    		viewPagerModel.fragment = new Fragment1();
+    
+    		ViewPagerModel viewPagerModel1 = new ViewPagerModel();
+            viewPagerModel1.icon = R.drawable.tab_mypatient;
+    
+            viewPagerModel1.fragment = new Fragment2();
+    
+    		ViewPagerModel viewPagerModel2 = new ViewPagerModel();
+            viewPagerModel2.icon = R.drawable.tab_mywork;
+    
+            viewPagerModel2.fragment = new Fragment3();
+    
+    		ViewPagerModel viewPagerModel3 = new ViewPagerModel();
+            viewPagerModel3.icon = R.drawable.tab_personal;
+    
+            viewPagerModel3.fragment = new Fragment4();
+    		return new ViewPagerModel[] { viewPagerModel, viewPagerModel1, viewPagerModel2, viewPagerModel3 };
+    	}
+    
+    	@Override public String initTag() {
+    		return "TestViewPagerActivity";
+    	}
+    
+    	@Override public PagerAdapter getPagerAdapter() {
+    		return new DefaultIconPagerAdapter();
+    	}
+    	
+3.DefaultCountPagerAdapter - 文本 + 数量<br />
+
+    	@Override public ViewPagerModel[] getViewPagerModels() {
+    		ViewPagerModel viewPagerModel = new ViewPagerModel();
+    		viewPagerModel.title = "我的主页";
+    		viewPagerModel.fragment = new Fragment1();
+    
+    		ViewPagerModel viewPagerModel1 = new ViewPagerModel();
+    		viewPagerModel1.title = "我的病人";
+    		viewPagerModel1.fragment = new Fragment2();
+    
+    		ViewPagerModel viewPagerModel2 = new ViewPagerModel();
+    		viewPagerModel2.title = "我的工作";
+    		viewPagerModel2.fragment = new Fragment3();
+    
+    		ViewPagerModel viewPagerModel3 = new ViewPagerModel();
+    		viewPagerModel3.title = "我的工作";
+    		viewPagerModel3.fragment = new Fragment4();
+    		return new ViewPagerModel[] { viewPagerModel, viewPagerModel1, viewPagerModel2, viewPagerModel3 };
+    	}
+    
+    	@Override public PagerAdapter getPagerAdapter() {
+    		return new DefaultCountPagerAdapter();
+    	}
+    
+        @Override
+        public void initData(Bundle savedInstanceState) {
+            super.initData(savedInstanceState);
+            setTitleCount(0,"20");
+            setTitleCount(1,"30");
+            setTitleCount(2,"40");
+            setTitleCount(3,"50");
+        }
+        
+4.CustomPagerAdapter - 自定义<br />
+
+    	int	icon[]	= { R.drawable.tab_infusion, R.drawable.tab_mypatient, R.drawable.tab_mywork, R.drawable.tab_personal };
+    
+        String value[] = {"我的主页","我的工作","我的工1","我的工2"};
+    
+    	@Override public int getViewPagerItemLayout() {
+    		return R.layout.tab_content;
+    	}
+    
+    	@Override public ViewPagerModel[] getViewPagerModels() {
+    		ViewPagerModel viewPagerModel = new ViewPagerModel();
+    		viewPagerModel.title = "我的主页";
+    		viewPagerModel.fragment = new Fragment1();
+    
+    		ViewPagerModel viewPagerModel1 = new ViewPagerModel();
+    		viewPagerModel1.title = "我的病人";
+    		viewPagerModel1.fragment = new Fragment2();
+    
+    		ViewPagerModel viewPagerModel2 = new ViewPagerModel();
+    		viewPagerModel2.title = "我的工作";
+    		viewPagerModel2.fragment = new Fragment3();
+    
+    		ViewPagerModel viewPagerModel3 = new ViewPagerModel();
+    		viewPagerModel3.title = "我的工作";
+    		viewPagerModel3.fragment = new Fragment4();
+    		return new ViewPagerModel[] { viewPagerModel, viewPagerModel1, viewPagerModel2, viewPagerModel3 };
+    	}
+    
+    	@Override public String initTag() {
+    		return "TestViewPagerActivity";
+    	}
+    
+    	@Override public PagerAdapter getPagerAdapter() {
+    		return new CustomPagerAdapter();
+    	}
+    
+    	@Override public void initTab(View view, int position) {
+    		ImageView mImageView = (ImageView) view.findViewById(R.id.tab_imageview);
+    		TextView mTextView = (TextView) view.findViewById(R.id.tab_textview);
+    		mImageView.setBackgroundResource(icon[position]);
+    		mTextView.setText(value[position]);
+    	}
+
+#### style - 可以修改tab高度 默认48dp
+
+    <style name="J2W.Layout.ViewPagerTabStrip">
+        <item name="android:layout_height">100dp</item>
+    </style>
+
+
 [modules](https://github.com/J2W/mvn-repo-j2w/blob/master/Explain/J2W_MODULES.md)
 -----------------------------------
 ### 线程池 
