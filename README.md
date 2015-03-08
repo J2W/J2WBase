@@ -456,7 +456,11 @@ Gradle:
         oldView = view;
         oldPosition = position;
     }
+#### style - 可以修改tab高度 默认48dp
 
+    <style name="J2W.Layout.TabHost">
+        <item name="android:layout_height">100dp</item>
+    </style>
 
 [modules](https://github.com/J2W/mvn-repo-j2w/blob/master/Explain/J2W_MODULES.md)
 -----------------------------------
