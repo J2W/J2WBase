@@ -171,15 +171,15 @@ public abstract class J2WBaseViewPagerAcitvity extends FragmentActivity implemen
 
 	@Override public void onExtraPageScrolled(int i, float v, int i2) {}
 
-	@Override public void onExtraPageSelected(int i) {
+	@Override public void onExtraPageSelected(View view,int i) {
 		L.tag(initTag());
 		L.i("onExtraPageSelected()");
 	}
 
 	@Override public void onExtraPageScrollStateChanged(int i) {}
 
-	@Override public final int layoutId() {
-		return R.layout.j2w_fragment_viewpager;
+	@Override public int layoutId() {
+		return R.layout.j2w_activity_viewpager;
 	}
 
 	@Override public void setIndex(int index, boolean bool) {
@@ -266,7 +266,6 @@ public abstract class J2WBaseViewPagerAcitvity extends FragmentActivity implemen
 
 		@Override public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 			onExtraPageScrolled(position, positionOffset, positionOffsetPixels);
-
 		}
 
 		@Override public void onPageSelected(int position) {
@@ -279,7 +278,8 @@ public abstract class J2WBaseViewPagerAcitvity extends FragmentActivity implemen
 				((J2WBaseFragment) viewPagerDatas[position].fragment).isDelayedData(); // 调用延迟加载
 			}
 			currentPageIndex = position;
-			onExtraPageSelected(position);
+
+			onExtraPageSelected(tabs.tabsContainer.getChildAt(position), position);
 		}
 
 		@Override public void onPageScrollStateChanged(int state) {

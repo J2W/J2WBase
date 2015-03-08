@@ -32,7 +32,7 @@
 
     <!-- TabHost -->
     <style name="J2W.Layout.TabHost">
-        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_height">48dp</item>
         <item name="android:background">@android:color/white</item>
     </style>
 
@@ -51,7 +51,7 @@
     </style>
     <!-- Viewpager -->
     <style name="J2W.Layout.Viewpager">
+        <item name="android:background">@android:color/white</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
-
 </resources>

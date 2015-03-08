@@ -64,7 +64,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 
 	public OnPageChangeListener			delegatePageListener;
 
-	private LinearLayout				tabsContainer;
+	public LinearLayout				tabsContainer;
 
 	private ViewPager					pager;
 
@@ -237,6 +237,9 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 				}
 				currentPosition = pager.getCurrentItem();
 				scrollToChild(currentPosition, 0);
+                if(delegatePageListener != null){
+                    delegatePageListener.onPageSelected(currentPosition);
+                }
 			}
 		});
 

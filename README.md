@@ -394,6 +394,69 @@ Gradle:
         <item name="android:layout_height">100dp</item>
     </style>
 
+### TabHost
+说明: 
+1.继承 J2WBaseTabHostAcitvity<br />
+2.内容fragment和TabsItem修改接口，与viewpager一致<br />
+参考代码：
+
+    int	icon[]	= { R.drawable.tab_infusion, R.drawable.tab_mypatient, R.drawable.tab_mywork, R.drawable.tab_personal };
+
+    String value[] = {"我的主页","我的工作","我的工1","我的工2"};
+
+    @Override public String initTag() {
+        return "TestViewPagerActivity";
+    }
+
+    @Override
+    public int getTabsContentLayout() {
+        return R.layout.tab_content;
+    }
+
+    @Override public void initTab(View view, int position) {
+        ImageView mImageView = (ImageView) view.findViewById(R.id.tab_imageview);
+        TextView mTextView = (TextView) view.findViewById(R.id.tab_textview);
+        mImageView.setBackgroundResource(icon[position]);
+        mTextView.setText(value[position]);
+    }
+
+    @Override public ViewPagerModel[] getViewPagerModels() {
+        ViewPagerModel viewPagerModel = new ViewPagerModel();
+        viewPagerModel.title = "我的主页";
+        viewPagerModel.fragment = new Fragment1();
+
+        ViewPagerModel viewPagerModel1 = new ViewPagerModel();
+        viewPagerModel1.title = "我的病人";
+        viewPagerModel1.fragment = new Fragment2();
+
+        ViewPagerModel viewPagerModel2 = new ViewPagerModel();
+        viewPagerModel2.title = "我的工作";
+        viewPagerModel2.fragment = new Fragment3();
+
+        ViewPagerModel viewPagerModel3 = new ViewPagerModel();
+        viewPagerModel3.title = "我的工作";
+        viewPagerModel3.fragment = new Fragment4();
+        return new ViewPagerModel[] { viewPagerModel, viewPagerModel1, viewPagerModel2, viewPagerModel3 };
+    }
+
+    //选中状态设置
+    private View oldView;
+    private int oldPosition;
+    @Override
+    public void onExtraPageSelected(View view,int position) {
+        super.onExtraPageSelected(view,position);
+        if(oldView != null){
+            ImageView mImageView = (ImageView) oldView.findViewById(R.id.tab_imageview);
+            mImageView.setBackgroundResource(icon[oldPosition]);
+        }
+
+        ImageView mImageView = (ImageView) view.findViewById(R.id.tab_imageview);
+        mImageView.setBackgroundResource(R.drawable.ic_launcher);
+
+        oldView = view;
+        oldPosition = position;
+    }
+
 
 [modules](https://github.com/J2W/mvn-repo-j2w/blob/master/Explain/J2W_MODULES.md)
 -----------------------------------

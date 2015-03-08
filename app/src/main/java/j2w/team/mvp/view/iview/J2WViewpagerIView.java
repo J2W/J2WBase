@@ -53,7 +53,7 @@ public interface J2WViewpagerIView extends J2WActivityIView {
     /** 初始化事件 **/
     public void onExtraPageScrolled(int i, float v, int i2);
 
-    public void onExtraPageSelected(int i);
+    public void onExtraPageSelected(View view,int i);
 
     public void onExtraPageScrollStateChanged(int i);
 
