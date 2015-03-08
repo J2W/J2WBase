@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -41,7 +40,7 @@ public abstract class J2WBaseViewPagerAcitvity extends FragmentActivity implemen
 	/**
 	 * 适配器
 	 */
-	private PagerAdapter	adapter;
+	private PagerAdapter			adapter;
 
 	/**
 	 * 初始化视图 *
@@ -64,8 +63,8 @@ public abstract class J2WBaseViewPagerAcitvity extends FragmentActivity implemen
 		setContentView(layoutId());
 		tabs = (PagerSlidingTabStrip) findViewById(android.R.id.tabs);
 		pager = (ViewPager) findViewById(R.id.pager);
-        // 设置Viewpager内部
-        initViewPager();
+		// 设置Viewpager内部
+		initViewPager();
 		// 设置Viewpager头部
 		initTabsValue();
 		// 设置数据
@@ -74,7 +73,7 @@ public abstract class J2WBaseViewPagerAcitvity extends FragmentActivity implemen
 
 	@Override public void initTabsValue() {
 		L.tag(initTag());
-		L.i("ViewPagerFragment-initTabsValue() tabs :" + tabs);
+		L.i("ViewPagerActivity-initTabsValue() tabs :" + tabs);
 		DisplayMetrics dm = getResources().getDisplayMetrics();
 		// 设置Tab是自动填充满屏幕的
 		tabs.setShouldExpand(getTabsShouldExpand());
@@ -82,9 +81,9 @@ public abstract class J2WBaseViewPagerAcitvity extends FragmentActivity implemen
 		tabs.setDividerColor(getTabsDividerColor());
 		// 设置Tab底部线的高度
 		tabs.setUnderlineHeight((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, getTabsUnderlineHeight(), dm));
-        // 设置Tab底部线的颜色
-        tabs.setUnderlineColor(getTabsUnderlineColor());
-        // 设置Tab Indicator的高度
+		// 设置Tab底部线的颜色
+		tabs.setUnderlineColor(getTabsUnderlineColor());
+		// 设置Tab Indicator的高度
 		tabs.setIndicatorHeight((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4, dm));
 		// 设置Tab标题文字的大小
 		tabs.setTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, getTabsTitleSize(), dm));
@@ -102,7 +101,7 @@ public abstract class J2WBaseViewPagerAcitvity extends FragmentActivity implemen
 
 	@Override public void initViewPager() {
 		L.tag(initTag());
-		L.i("ViewPagerFragment-initViewPager()");
+		L.i("ViewPagerActivity-initViewPager()");
 		// 设置适配器
 		if (adapter == null) {
 			adapter = getPagerAdapter();
@@ -116,7 +115,17 @@ public abstract class J2WBaseViewPagerAcitvity extends FragmentActivity implemen
 		tabs.setViewPager(pager);
 	}
 
-	@Override public PagerAdapter getPagerAdapter() {
+	@Override public int getViewPagerItemLayout() {
+		return 0;
+	}
+
+    @Override
+    public void initTab(View view,int position) {
+        L.tag(initTag());
+        L.i("ViewPagerActivity-initTabsItem()");
+    }
+
+    @Override public PagerAdapter getPagerAdapter() {
 		return new DefaultPagerAdapter();
 	}
 
@@ -148,22 +157,19 @@ public abstract class J2WBaseViewPagerAcitvity extends FragmentActivity implemen
 		return Color.parseColor("#51A3FF");
 	}
 
-    @Override
-    public int getTabsOnClickTitleColor() {
-        return 0;
-    }
+	@Override public int getTabsOnClickTitleColor() {
+		return 0;
+	}
 
-    @Override
-    public int getTabsUnderlineColor() {
-        return 0;
-    }
+	@Override public int getTabsUnderlineColor() {
+		return 0;
+	}
 
-    @Override
-    public int getTabsUnderlineHeight() {
-        return 1;
-    }
+	@Override public int getTabsUnderlineHeight() {
+		return 1;
+	}
 
-    @Override public void onExtraPageScrolled(int i, float v, int i2) {}
+	@Override public void onExtraPageScrolled(int i, float v, int i2) {}
 
 	@Override public void onExtraPageSelected(int i) {
 		L.tag(initTag());
@@ -201,12 +207,12 @@ public abstract class J2WBaseViewPagerAcitvity extends FragmentActivity implemen
 
 		private FragmentManager	fragmentManager;
 
-        private int				currentPageIndex	= 0;	// 当前page索引（切换之前）
+		private int				currentPageIndex	= 0;	// 当前page索引（切换之前）
 
 		public DefaultPagerAdapter() {
 			viewPagerDatas = getViewPagerModels();
 			fragmentManager = getSupportFragmentManager();
-            tabs.setOnPageChangeListener(this);
+			tabs.setOnPageChangeListener(this);
 		}
 
 		public ViewPagerModel[] getViewPagerDatas() {
@@ -231,12 +237,11 @@ public abstract class J2WBaseViewPagerAcitvity extends FragmentActivity implemen
 			container.removeView(viewPagerDatas[position].fragment.getView()); // 移出viewpager两边之外的page布局
 		}
 
-        @Override
-        public boolean isViewFromObject(View view, Object object) {
-            return view == object;
-        }
+		@Override public boolean isViewFromObject(View view, Object object) {
+			return view == object;
+		}
 
-        @Override public Object instantiateItem(ViewGroup container, int position) {
+		@Override public Object instantiateItem(ViewGroup container, int position) {
 			L.i("instantiateItem:" + position);
 			Fragment fragment = viewPagerDatas[position].fragment;
 			if (!fragment.isAdded()) { // 如果fragment还没有added
@@ -272,7 +277,7 @@ public abstract class J2WBaseViewPagerAcitvity extends FragmentActivity implemen
 				viewPagerDatas[position].fragment.onResume(); // 调用切换后Fargment的onResume()
 				((J2WBaseFragment) viewPagerDatas[position].fragment).isDelayedData(); // 调用延迟加载
 			}
-            currentPageIndex = position;
+			currentPageIndex = position;
 			onExtraPageSelected(position);
 		}
 
@@ -294,7 +299,7 @@ public abstract class J2WBaseViewPagerAcitvity extends FragmentActivity implemen
 	/**
 	 * 默认带数量标题的
 	 */
-    public final class DefaultCountPagerAdapter extends DefaultPagerAdapter implements PagerSlidingTabStrip.TitleCountTabProvider {
+	public final class DefaultCountPagerAdapter extends DefaultPagerAdapter implements PagerSlidingTabStrip.TitleCountTabProvider {
 
 		@Override public String getPageCount(int position) {
 			String count = viewPagerDatas[position].count;
@@ -302,6 +307,23 @@ public abstract class J2WBaseViewPagerAcitvity extends FragmentActivity implemen
 				return null;
 			}
 			return count;
+		}
+	}
+
+	/**
+	 * 自定义适配器
+	 */
+	public final class CustomPagerAdapter extends DefaultPagerAdapter implements PagerSlidingTabStrip.CustomTabProvider {
+
+		@Override public int getCustomTabView() {
+			if (getViewPagerItemLayout() == 0) {
+				new IllegalArgumentException("必须要有自定义布局！");
+			}
+			return getViewPagerItemLayout();
+		}
+
+		@Override public void initTabsItem(View view,int position) {
+            initTab(view,position);
 		}
 	}
 

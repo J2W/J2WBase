@@ -13,10 +13,12 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.text.Layout;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.HorizontalScrollView;
@@ -39,6 +41,14 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 	public interface TitleCountTabProvider {
 
 		public String getPageCount(int position);
+
+	}
+
+	public interface CustomTabProvider {
+
+		public int getCustomTabView();
+
+		public void initTabsItem(View view,int position);
 	}
 
 	// @formatter:off
@@ -207,6 +217,8 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 				addTextIconTab(i, pager.getAdapter().getPageTitle(i).toString(), ((TitleCountTabProvider) pager.getAdapter()).getPageCount(i));
 			} else if (pager.getAdapter() instanceof IconTabProvider) {
 				addIconTab(i, ((IconTabProvider) pager.getAdapter()).getPageIconResId(i));
+			} else if (pager.getAdapter() instanceof CustomTabProvider) {
+				addCustomTab(i);
 			} else {
 				addTextTab(i, pager.getAdapter().getPageTitle(i).toString());
 			}
@@ -218,16 +230,29 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 		getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
 
 			@Override public void onGlobalLayout() {
-                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
-                    getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                } else {
-                    getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                }
+				if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+					getViewTreeObserver().removeGlobalOnLayoutListener(this);
+				} else {
+					getViewTreeObserver().removeOnGlobalLayoutListener(this);
+				}
 				currentPosition = pager.getCurrentItem();
 				scrollToChild(currentPosition, 0);
 			}
 		});
 
+	}
+
+	private void addCustomTab(final int position) {
+		View tab = LayoutInflater.from(getContext()).inflate(((CustomTabProvider) pager.getAdapter()).getCustomTabView(), null);
+		((CustomTabProvider) pager.getAdapter()).initTabsItem(tab,position);
+		tab.setFocusable(true);
+		tab.setOnClickListener(new OnClickListener() {
+
+			@Override public void onClick(View v) {
+				pager.setCurrentItem(position, false);
+			}
+		});
+		tabsContainer.addView(tab, position, shouldExpand ? expandedTabLayoutParams : defaultTabLayoutParams);
 	}
 
 	private void addTextIconTab(final int position, String title, String count) {
@@ -271,7 +296,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 		tab.setOnClickListener(new OnClickListener() {
 
 			@Override public void onClick(View v) {
-				pager.setCurrentItem(position,false);
+				pager.setCurrentItem(position, false);
 			}
 		});
 
@@ -332,48 +357,49 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 	}
 
 	@Override protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
+		super.onDraw(canvas);
 
-        if (isInEditMode() || tabCount == 0) {
-            return;
-        }
+		if (isInEditMode() || tabCount == 0) {
+			return;
+		}
 
-        final int height = getHeight();
+		final int height = getHeight();
 
-        // draw indicator line
+		// draw indicator line
 
-        rectPaint.setColor(indicatorColor);
+		rectPaint.setColor(indicatorColor);
 
-        // default: line below current tab
-        View currentTab = tabsContainer.getChildAt(currentPosition);
-        float lineLeft = currentTab.getLeft();
-        float lineRight = currentTab.getRight();
+		// default: line below current tab
+		View currentTab = tabsContainer.getChildAt(currentPosition);
+		float lineLeft = currentTab.getLeft();
+		float lineRight = currentTab.getRight();
 
-        // if there is an offset, start interpolating left and right coordinates between current and next tab
-        if (currentPositionOffset > 0f && currentPosition < tabCount - 1) {
+		// if there is an offset, start interpolating left and right coordinates
+		// between current and next tab
+		if (currentPositionOffset > 0f && currentPosition < tabCount - 1) {
 
-            View nextTab = tabsContainer.getChildAt(currentPosition + 1);
-            final float nextTabLeft = nextTab.getLeft();
-            final float nextTabRight = nextTab.getRight();
+			View nextTab = tabsContainer.getChildAt(currentPosition + 1);
+			final float nextTabLeft = nextTab.getLeft();
+			final float nextTabRight = nextTab.getRight();
 
-            lineLeft = (currentPositionOffset * nextTabLeft + (1f - currentPositionOffset) * lineLeft);
-            lineRight = (currentPositionOffset * nextTabRight + (1f - currentPositionOffset) * lineRight);
-        }
+			lineLeft = (currentPositionOffset * nextTabLeft + (1f - currentPositionOffset) * lineLeft);
+			lineRight = (currentPositionOffset * nextTabRight + (1f - currentPositionOffset) * lineRight);
+		}
 
-        canvas.drawRect(lineLeft, height - indicatorHeight, lineRight, height, rectPaint);
+		canvas.drawRect(lineLeft, height - indicatorHeight, lineRight, height, rectPaint);
 
-        // draw underline
+		// draw underline
 
-        rectPaint.setColor(underlineColor);
-        canvas.drawRect(0, height - underlineHeight, tabsContainer.getWidth(), height, rectPaint);
+		rectPaint.setColor(underlineColor);
+		canvas.drawRect(0, height - underlineHeight, tabsContainer.getWidth(), height, rectPaint);
 
-        // draw divider
+		// draw divider
 
-        dividerPaint.setColor(dividerColor);
-        for (int i = 0; i < tabCount - 1; i++) {
-            View tab = tabsContainer.getChildAt(i);
-            canvas.drawLine(tab.getRight(), dividerPadding, tab.getRight(), height - dividerPadding, dividerPaint);
-        }
+		dividerPaint.setColor(dividerColor);
+		for (int i = 0; i < tabCount - 1; i++) {
+			View tab = tabsContainer.getChildAt(i);
+			canvas.drawLine(tab.getRight(), dividerPadding, tab.getRight(), height - dividerPadding, dividerPaint);
+		}
 	}
 
 	private class PageListener implements OnPageChangeListener {

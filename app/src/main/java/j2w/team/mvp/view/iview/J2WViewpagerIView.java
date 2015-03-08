@@ -3,6 +3,7 @@ package j2w.team.mvp.view.iview;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTabHost;
 import android.support.v4.view.PagerAdapter;
+import android.view.View;
 
 import j2w.team.mvp.model.TabHostModel;
 import j2w.team.mvp.model.ViewPagerModel;
@@ -21,6 +22,8 @@ public interface J2WViewpagerIView extends J2WActivityIView {
 	public void initViewPager();
 
 	public int getViewPagerItemLayout();
+
+    public void initTab(View view,int position);
 
 	public PagerAdapter getPagerAdapter();
 
