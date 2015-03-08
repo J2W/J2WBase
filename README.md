@@ -395,7 +395,7 @@ Gradle:
     </style>
 
 ### TabHost
-说明: 
+说明: <br />
 1.继承 J2WBaseTabHostAcitvity<br />
 2.内容fragment和TabsItem修改接口，与viewpager一致<br />
 参考代码：
