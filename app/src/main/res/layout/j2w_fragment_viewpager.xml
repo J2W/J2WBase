@@ -5,7 +5,7 @@
         android:id="@android:id/tabs"
         style="@style/J2W.Layout.ViewPagerTabStrip" />
 
-    <android.support.v4.view.ViewPager
+    <j2w.team.common.widget.J2WViewPager
         android:id="@+id/pager"
         style="@style/J2W.Layout.Viewpager"
         android:layout_below="@android:id/tabs" />

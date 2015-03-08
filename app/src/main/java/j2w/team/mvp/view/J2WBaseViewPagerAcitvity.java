@@ -13,11 +13,15 @@ import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+
+import com.nineoldandroids.view.ViewHelper;
 
 import org.apache.commons.lang.StringUtils;
 
 import j2w.team.R;
 import j2w.team.common.log.L;
+import j2w.team.common.widget.J2WViewPager;
 import j2w.team.common.widget.PagerSlidingTabStrip;
 import j2w.team.mvp.model.ViewPagerModel;
 import j2w.team.mvp.view.iview.J2WViewpagerIView;
@@ -35,7 +39,7 @@ public abstract class J2WBaseViewPagerAcitvity extends FragmentActivity implemen
 	/**
 	 * Viewpager 内部*
 	 */
-	private ViewPager				pager;
+	private J2WViewPager			pager;
 
 	/**
 	 * 适配器
@@ -62,7 +66,7 @@ public abstract class J2WBaseViewPagerAcitvity extends FragmentActivity implemen
 		L.i("ViewPagerActivity-onCreate()");
 		setContentView(layoutId());
 		tabs = (PagerSlidingTabStrip) findViewById(android.R.id.tabs);
-		pager = (ViewPager) findViewById(R.id.pager);
+		pager = (J2WViewPager) findViewById(R.id.pager);
 		// 设置Viewpager内部
 		initViewPager();
 		// 设置Viewpager头部
@@ -119,13 +123,12 @@ public abstract class J2WBaseViewPagerAcitvity extends FragmentActivity implemen
 		return 0;
 	}
 
-    @Override
-    public void initTab(View view,int position) {
-        L.tag(initTag());
-        L.i("ViewPagerActivity-initTabsItem()");
-    }
+	@Override public void initTab(View view, int position) {
+		L.tag(initTag());
+		L.i("ViewPagerActivity-initTabsItem()");
+	}
 
-    @Override public PagerAdapter getPagerAdapter() {
+	@Override public PagerAdapter getPagerAdapter() {
 		return new DefaultPagerAdapter();
 	}
 
@@ -233,7 +236,6 @@ public abstract class J2WBaseViewPagerAcitvity extends FragmentActivity implemen
 
 		@Override public void destroyItem(ViewGroup container, int position, Object object) {
 			L.i("destroyItem:" + position);
-
 			container.removeView(viewPagerDatas[position].fragment.getView()); // 移出viewpager两边之外的page布局
 		}
 
@@ -259,6 +261,8 @@ public abstract class J2WBaseViewPagerAcitvity extends FragmentActivity implemen
 			if (fragment.getView().getParent() == null) {
 				container.addView(fragment.getView()); // 为viewpager增加布局
 			}
+
+            pager.setObjectForPosition(fragment.getView(), position);
 
 			return fragment.getView();
 		}
@@ -322,8 +326,8 @@ public abstract class J2WBaseViewPagerAcitvity extends FragmentActivity implemen
 			return getViewPagerItemLayout();
 		}
 
-		@Override public void initTabsItem(View view,int position) {
-            initTab(view,position);
+		@Override public void initTabsItem(View view, int position) {
+			initTab(view, position);
 		}
 	}
 
