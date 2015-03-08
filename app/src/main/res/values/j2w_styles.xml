@@ -29,11 +29,6 @@
         <item name="android:maxHeight">40dp</item>
     </style>
 
-    <!-- Viewpager -->
-    <style name="J2W.Layout.Viewpager">
-        <item name="android:layout_height">0dp</item>
-        <item name="android:layout_weight">1</item>
-    </style>
 
     <!-- TabHost -->
     <style name="J2W.Layout.TabHost">
@@ -46,6 +41,17 @@
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">0dp</item>
         <item name="android:layout_weight">0</item>
+    </style>
+
+    <!-- ViewPagerTab -->
+    <style name="J2W.Layout.ViewPagerTabStrip">
+        <item name="android:layout_height">48dp</item>
+        <!-- 背景颜色-->
+        <item name="android:background">@drawable/j2w_viewpager_background_tabs</item>
+    </style>
+    <!-- Viewpager -->
+    <style name="J2W.Layout.Viewpager">
+        <item name="android:layout_height">wrap_content</item>
     </style>
 
 </resources>
