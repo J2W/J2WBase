@@ -34,7 +34,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewConfiguration;
 
-import com.sky.demo.R;
+import j2w.team.R;
 
 
 /**
