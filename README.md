@@ -40,7 +40,7 @@ Gradle:
         }
     }
     //依赖
-    compile 'j2w.team:base:1.2'
+    compile 'j2w.team:base:1.0.2'
 
 [MVP](https://github.com/J2W/mvn-repo-j2w/blob/master/Explain/J2W_MVP.md)
 -----------------------------------
