@@ -138,7 +138,9 @@ public abstract class J2WBaseCustomActoinBarActivity<T extends J2WIPresenter> ex
 	@Override public void initActionBar() {
 		L.tag(initTag());
 		L.i("initActionBar()");
+
 		actionBar = getSupportActionBar();
+
 		actionBar.setCustomView(actionBarLayoutID()); // 设置actionbar布局ID
 		actionBar.setDisplayShowCustomEnabled(true); // 使自定义的普通View能在title栏显示
 		actionBar.setDisplayShowHomeEnabled(false);// 使左上角图标是否显示

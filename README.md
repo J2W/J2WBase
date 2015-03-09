@@ -820,7 +820,54 @@ TestConfig.getInstance().commit();<br />
 
 [common](https://github.com/J2W/mvn-repo-j2w/blob/master/Explain/J2W_COMMON.md)
 -----------------------------------
-还没来得及写
+###自动轮播 AutoScrollViewPager
+####样式定义
+
+    <RelativeLayout 
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+
+    <j2w.team.common.widget.infiniteviewpager.AutoScrollViewPager
+        android:id="@+id/autoScrollViewPager"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        />
+
+
+    <j2w.team.common.widget.infiniteviewpager.InfiniteCirclePageIndicator
+        android:id="@+id/infiniteCirclePageIndicator"
+        android:layout_width="fill_parent"
+        android:layout_height="30dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_above="@+id/autoScrollViewPager"
+
+        //填充颜色
+        app:fillColor="@color/default_circle_indicator_fill_color"
+        //默认显示颜色
+        app:pageColor="@android:color/holo_purple"
+        //大小
+        app:radius="4dp"
+        //圆圈颜色
+        app:strokeColor="@color/default_circle_indicator_stroke_color"
+        app:strokeWidth="0dp"
+      />
+      
+####参考代码
+
+        AutoScrollViewPager mViewPager = (AutoScrollViewPager) findViewById(R.id.sample_infinite_pager);
+		NumbersAdapter numbersAdapter = new NumbersAdapter(getSupportFragmentManager());//适配器
+		mViewPager.setAdapter(numbersAdapter);
+		mViewPager.setInterval(3000);//轮播速度-毫秒
+		mViewPager.startAutoScroll();//开始轮播
+		InfiniteCirclePageIndicator mPageIndicator = (InfiniteCirclePageIndicator) findViewById(R.id.sample_infinite_page_indicator);
+		mPageIndicator.setSnap(true);//是否viewpager滑动时跟随滑动
+		mPageIndicator.setViewPager(mViewPager);//交给indicator
+
+</RelativeLayout>
 
 
 AndroidManifest 权限
