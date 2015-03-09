@@ -87,6 +87,8 @@ public abstract class J2WBaseCustomActoinBarActivity<T extends J2WIPresenter> ex
 		setContentView(layoutId());
 		/** 初始化所有组建 **/
 		ButterKnife.inject(this);
+        /** 初始化标题栏**/
+        initActionBar();
 		/** 添加到堆栈 **/
 		J2WHelper.getScreenHelper().pushActivity(this);
 		/** 初始化视图组建 **/

@@ -6,7 +6,6 @@
         <item name="colorPrimaryDark">@color/accent</item>
         <item name="colorAccent">@color/accent</item>
         <item name="android:progressBarStyle">@style/J2W.Layout.Wrap.ProgressBar</item>
-        <item name="actionBarStyle">@style/J2WActionbar</item>
     </style>
 
     <style name="AppThemeDark" parent="Theme.AppCompat">
@@ -14,11 +13,6 @@
         <item name="colorPrimaryDark">@color/accent</item>
         <item name="colorAccent">@color/accent</item>
         <item name="android:progressBarStyle">@style/J2W.Layout.Wrap.ProgressBar</item>
-        <item name="actionBarStyle">@style/J2WActionbar</item>
-    </style>
-
-    <style name="J2WActionbar" parent="@style/Widget.AppCompat.Light.ActionBar">
-
     </style>
 
 </resources>
