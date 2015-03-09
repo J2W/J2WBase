@@ -59,7 +59,7 @@ AndroidManifest 权限
 
     <uses-permission android:name="android.permission.INTERNET" />
 
-架构用法 wiki
+Wiki
 -----------------------------------
 [1.View层用法](https://github.com/J2W/J2WBase/wiki/1.View%E5%B1%82%E7%94%A8%E6%B3%95)<br />
 [2.presenter用法](https://github.com/J2W/J2WBase/wiki/2.presenter%E7%94%A8%E6%B3%95)<br />
