@@ -56,7 +56,7 @@ Gradle:
 4.J2WListFragmentIView 列表fragment <br />
 实现类:<br />
 1.J2WBaseActivity 普通<br />
-2.J2WBaseCustomActoinBarActivity 自定义标题栏<br />
+2.J2WBaseActoinBarActivity 自定义标题栏<br />
 3.J2WBaseFragment 普通fragment<br />
 4.J2WBaseListFragment 列表fragment<br />
 
