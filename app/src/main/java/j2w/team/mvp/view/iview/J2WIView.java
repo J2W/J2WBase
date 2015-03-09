@@ -13,7 +13,7 @@ public interface J2WIView<T> {
 	/** 获取布局ID */
 	public int layoutId();
 
-	/** 初始化视图 **/
+	/** 初始化数据 **/
 	public void initData(Bundle savedInstanceState);
 
 	/** 获取Presenter **/
