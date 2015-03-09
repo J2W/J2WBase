@@ -855,7 +855,7 @@ TestConfig.getInstance().commit();<br />
         app:strokeColor="@color/default_circle_indicator_stroke_color"
         app:strokeWidth="0dp"
       />
-      
+      </RelativeLayout>
 ####参考代码
 
         AutoScrollViewPager mViewPager = (AutoScrollViewPager) findViewById(R.id.sample_infinite_pager);
@@ -866,6 +866,24 @@ TestConfig.getInstance().commit();<br />
 		InfiniteCirclePageIndicator mPageIndicator = (InfiniteCirclePageIndicator) findViewById(R.id.sample_infinite_page_indicator);
 		mPageIndicator.setSnap(true);//是否viewpager滑动时跟随滑动
 		mPageIndicator.setViewPager(mViewPager);//交给indicator
+
+        private class NumbersAdapter extends InfiniteStatePagerAdapter {
+
+            public int	count	= 3;
+
+            public NumbersAdapter(FragmentManager fm) {
+                super(fm);
+            }
+
+            @Override public int getCount() {
+                return count;
+            }
+
+            @Override public Fragment getItem(int i) {
+                return ArrayFragment.newInstance(i);
+            }
+
+        }
 
 </RelativeLayout>
 
