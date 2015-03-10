@@ -40,9 +40,9 @@ public abstract class J2WBaseFragment<T extends J2WIPresenter> extends Fragment 
 
 	private boolean	isDelayedData	= false;
 
-    @Override public String initTag() {
-        return getClass().getSimpleName();
-    }
+	@Override public String initTag() {
+		return getClass().getSimpleName();
+	}
 
 	/**
 	 * 初始化视图 *
@@ -79,6 +79,8 @@ public abstract class J2WBaseFragment<T extends J2WIPresenter> extends Fragment 
 	@Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		L.tag(initTag());
 		L.i("Fragment-onCreateView()");
+		/** 打开开关触发菜单项 **/
+		setHasOptionsMenu(true);
 		mContentView = inflater.inflate(R.layout.j2w_fragment_main, container, false);
 
 		mViewAnimator = ButterKnife.findById(mContentView, android.R.id.home);
@@ -113,6 +115,9 @@ public abstract class J2WBaseFragment<T extends J2WIPresenter> extends Fragment 
 		super.onResume();
 		L.tag(initTag());
 		L.i("Fragment-onResume()");
+        if(isDelayedData){
+            updateActionBar();
+        }
 	}
 
 	@Override public void onSaveInstanceState(Bundle outState) {
@@ -162,7 +167,7 @@ public abstract class J2WBaseFragment<T extends J2WIPresenter> extends Fragment 
 		return mContentView;
 	}
 
-	@Override public void isDelayedData() {
+	@Override public final void isDelayedData() {
 		if (isDelayedData) {
 			return;
 		}
@@ -171,6 +176,8 @@ public abstract class J2WBaseFragment<T extends J2WIPresenter> extends Fragment 
 		// 为了只初始化一次
 		isDelayedData = true;
 		initDelayedData();
+        //更新actionbar
+        updateActionBar();
 	}
 
 	@Override public void initDelayedData() {
@@ -178,7 +185,13 @@ public abstract class J2WBaseFragment<T extends J2WIPresenter> extends Fragment 
 		L.i("Fragment-initDelayedData()");
 	}
 
-	@Override public int initLoadingLayout() {
+    @Override
+    public void updateActionBar() {
+        L.tag(initTag());
+        L.i("Fragment-updateActionBar()");
+    }
+
+    @Override public int initLoadingLayout() {
 		return R.layout.j2w_fragment_loading;
 	}
 

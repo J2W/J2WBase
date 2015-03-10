@@ -10,10 +10,13 @@ public interface J2WFragmentIView extends J2WIView {
 	/** 获取主视图 **/
 	public View getContentView();
 
-	/** 延迟初始化 **/
+	/** ViewPager切换 延迟初始化 **/
 	public void isDelayedData();
 
 	public void initDelayedData();
+
+	/** ViewPager切换 更新ActionBar **/
+	public void updateActionBar();
 
 	/** 初始化布局 **/
 	public int initLoadingLayout();

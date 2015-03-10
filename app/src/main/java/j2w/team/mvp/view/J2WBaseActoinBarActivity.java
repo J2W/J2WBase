@@ -127,4 +127,5 @@ public abstract class J2WBaseActoinBarActivity<T extends J2WIPresenter> extends 
 		actionBar.setDisplayHomeAsUpEnabled(false);// 是否显示返回图标
 		actionBar.setDisplayShowTitleEnabled(false);// 隐藏/显示Tittle true 显示 false
 	}
+
 }
