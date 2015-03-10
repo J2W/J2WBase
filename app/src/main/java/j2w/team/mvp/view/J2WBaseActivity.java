@@ -22,6 +22,10 @@ public abstract class J2WBaseActivity<T extends J2WIPresenter> extends FragmentA
 	/** 业务逻辑对象 **/
 	private T	presenter	= null;
 
+	@Override public String initTag() {
+		return getClass().getSimpleName();
+	}
+
 	/** 初始化视图 **/
 	@Override public void initData(Bundle savedInstanceState) {
 		L.tag(initTag());

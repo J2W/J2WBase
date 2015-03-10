@@ -1,5 +1,8 @@
 package j2w.team.mvp.presenter;
 
+import android.content.Intent;
+import android.os.Bundle;
+
 import com.squareup.picasso.PicassoTools;
 
 import j2w.team.common.utils.looper.SynchronousExecutor;
@@ -90,4 +93,34 @@ public class J2WHelper {
 	public static PicassoTools getPicassoHelper() {
 		return PicassoTools.getInstance();
 	}
+
+
+    /**
+     * 跳转工具
+     * @param clazz
+     */
+    public static final void intentTo(Class clazz) {
+        Intent intent = new Intent();
+        intent.setClass(J2WHelper.getScreenHelper().currentActivity(), clazz);
+        J2WHelper.getScreenHelper().currentActivity().startActivity(intent);
+    }
+
+    public static final void intentTo(Class clazz,Bundle bundle) {
+        Intent intent = new Intent();
+        intent.setClass(J2WHelper.getScreenHelper().currentActivity(), clazz);
+        intent.putExtras(bundle);
+        J2WHelper.getScreenHelper().currentActivity().startActivity(intent);
+    }
+
+    public static final void intentTo(Class clazz,int requestCode) {
+        Intent intent = new Intent();
+        intent.setClass(J2WHelper.getScreenHelper().currentActivity(), clazz);
+        J2WHelper.getScreenHelper().currentActivity().startActivityForResult(intent,requestCode);
+    }
+    public static final void intentTo(Class clazz,Bundle bundle,int requestCode) {
+        Intent intent = new Intent();
+        intent.setClass(J2WHelper.getScreenHelper().currentActivity(), clazz);
+        intent.putExtras(bundle);
+        J2WHelper.getScreenHelper().currentActivity().startActivityForResult(intent,requestCode);
+    }
 }

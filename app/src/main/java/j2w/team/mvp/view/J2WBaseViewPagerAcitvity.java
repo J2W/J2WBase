@@ -9,6 +9,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;
@@ -16,17 +18,19 @@ import android.view.ViewGroup;
 
 import org.apache.commons.lang.StringUtils;
 
+import butterknife.ButterKnife;
 import j2w.team.R;
 import j2w.team.common.log.L;
 import j2w.team.common.widget.J2WViewPager;
 import j2w.team.common.widget.PagerSlidingTabStrip;
 import j2w.team.mvp.model.ViewPagerModel;
+import j2w.team.mvp.presenter.J2WHelper;
 import j2w.team.mvp.view.iview.J2WViewpagerIView;
 
 /**
  * Created by sky on 15/3/3.ViewPager
  */
-public abstract class J2WBaseViewPagerAcitvity extends FragmentActivity implements J2WViewpagerIView {
+public abstract class J2WBaseViewPagerAcitvity extends J2WBaseActoinBarActivity implements J2WViewpagerIView {
 
 	/**
 	 * ViewPager 头部 *
@@ -43,6 +47,10 @@ public abstract class J2WBaseViewPagerAcitvity extends FragmentActivity implemen
 	 */
 	private PagerAdapter			adapter;
 
+    @Override public String initTag() {
+        return getClass().getSimpleName();
+    }
+
 	/**
 	 * 初始化视图 *
 	 */
@@ -53,7 +61,6 @@ public abstract class J2WBaseViewPagerAcitvity extends FragmentActivity implemen
 
 	@Override public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
 		/** 是否固定竖屏 **/
 		if (isFixedVerticalScreen()) {
 			/** 竖屏显示 **/
@@ -62,12 +69,18 @@ public abstract class J2WBaseViewPagerAcitvity extends FragmentActivity implemen
 		L.tag(initTag());
 		L.i("ViewPagerActivity-onCreate()");
 		setContentView(layoutId());
+        /** 初始化标题栏**/
+        initActionBar();
 		tabs = (PagerSlidingTabStrip) findViewById(android.R.id.tabs);
 		pager = (J2WViewPager) findViewById(R.id.pager);
 		// 设置Viewpager内部
 		initViewPager();
 		// 设置Viewpager头部
 		initTabsValue();
+        /** 初始化所有组建 **/
+        ButterKnife.inject(this);
+        /** 添加到堆栈 **/
+        J2WHelper.getScreenHelper().pushActivity(this);
 		// 设置数据
 		initData(savedInstanceState);
 	}
@@ -187,11 +200,6 @@ public abstract class J2WBaseViewPagerAcitvity extends FragmentActivity implemen
 		if (0 < index && index < childCount) {
 			pager.setCurrentItem(index, bool);
 		}
-	}
-
-	@Override public final Object getPresenter() {
-		L.i("Viewpager不需要业务类");
-		return null;
 	}
 
 	@Override public boolean isFixedVerticalScreen() {

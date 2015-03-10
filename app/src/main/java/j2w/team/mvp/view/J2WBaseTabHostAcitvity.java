@@ -1,8 +1,6 @@
 package j2w.team.mvp.view;
 
-import android.graphics.Color;
 import android.support.v4.view.PagerAdapter;
-import android.widget.TabHost;
 
 import j2w.team.R;
 import j2w.team.mvp.view.iview.J2WTabHostIView;

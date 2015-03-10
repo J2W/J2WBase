@@ -40,6 +40,10 @@ public abstract class J2WBaseFragment<T extends J2WIPresenter> extends Fragment 
 
 	private boolean	isDelayedData	= false;
 
+    @Override public String initTag() {
+        return getClass().getSimpleName();
+    }
+
 	/**
 	 * 初始化视图 *
 	 */

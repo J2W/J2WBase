@@ -28,16 +28,10 @@ import j2w.team.mvp.view.iview.J2WActionBarIView;
 public abstract class J2WBaseActoinBarActivity<T extends J2WIPresenter> extends ActionBarActivity implements J2WActionBarIView {
 
 	/** 标题栏 **/
-	private ActionBar	actionBar;
+    ActionBar actionBar;
 
 	/** 业务逻辑对象 **/
 	private T			presenter	= null;
-
-	/** 初始化视图 **/
-	@Override public void initData(Bundle savedInstanceState) {
-		L.tag(initTag());
-		L.i("initData()");
-	}
 
 	@Override public final T getPresenter() {
 		if (presenter == null) {
@@ -59,7 +53,7 @@ public abstract class J2WBaseActoinBarActivity<T extends J2WIPresenter> extends 
 	}
 
 	/** onCreate 无法重写 **/
-	@Override protected final void onCreate(Bundle savedInstanceState) {
+	@Override protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		/** 是否固定竖屏 **/
 		if (isFixedVerticalScreen()) {
@@ -74,14 +68,13 @@ public abstract class J2WBaseActoinBarActivity<T extends J2WIPresenter> extends 
         initActionBar();
 		/** 初始化所有组建 **/
 		ButterKnife.inject(this);
-
 		/** 添加到堆栈 **/
 		J2WHelper.getScreenHelper().pushActivity(this);
 		/** 初始化视图组建 **/
 		initData(savedInstanceState);
 	}
 
-	@Override protected void onStart() {
+    @Override protected void onStart() {
 		super.onStart();
 		L.tag(initTag());
 		L.i("onStart()");
@@ -133,7 +126,5 @@ public abstract class J2WBaseActoinBarActivity<T extends J2WIPresenter> extends 
 		actionBar.setDisplayShowHomeEnabled(false);// 使左上角图标是否显示
 		actionBar.setDisplayHomeAsUpEnabled(false);// 是否显示返回图标
 		actionBar.setDisplayShowTitleEnabled(false);// 隐藏/显示Tittle true 显示 false
-        //初始化
-        ButterKnife.inject(actionBar.getCustomView());
 	}
 }

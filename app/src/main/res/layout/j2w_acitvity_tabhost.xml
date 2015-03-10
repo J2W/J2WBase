@@ -6,7 +6,9 @@
         android:id="@+id/pager"
         android:layout_weight="1"
         style="@style/J2W.Layout.Viewpager" />
-
+    <View
+        style="@style/J2W.Layout.Wrap.View"
+        />
     <j2w.team.common.widget.PagerSlidingTabStrip
         android:id="@android:id/tabs"
         style="@style/J2W.Layout.TabHost" />

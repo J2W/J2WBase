@@ -12,7 +12,7 @@ import j2w.team.mvp.view.J2WBaseTabHostAcitvity;
 /**
  * Created by sky on 15/3/3. viewpager 接口
  */
-public interface J2WViewpagerIView extends J2WActivityIView {
+public interface J2WViewpagerIView extends J2WActionBarIView {
 
 	/**
 	 * 初始化Viewpager
