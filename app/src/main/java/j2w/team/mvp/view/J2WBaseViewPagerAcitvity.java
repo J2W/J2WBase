@@ -47,9 +47,9 @@ public abstract class J2WBaseViewPagerAcitvity extends J2WBaseActoinBarActivity 
 	 */
 	private PagerAdapter			adapter;
 
-    @Override public String initTag() {
-        return getClass().getSimpleName();
-    }
+	@Override public String initTag() {
+		return getClass().getSimpleName();
+	}
 
 	/**
 	 * 初始化视图 *
@@ -61,6 +61,7 @@ public abstract class J2WBaseViewPagerAcitvity extends J2WBaseActoinBarActivity 
 
 	@Override public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
 		/** 是否固定竖屏 **/
 		if (isFixedVerticalScreen()) {
 			/** 竖屏显示 **/
@@ -83,6 +84,7 @@ public abstract class J2WBaseViewPagerAcitvity extends J2WBaseActoinBarActivity 
         J2WHelper.getScreenHelper().pushActivity(this);
 		// 设置数据
 		initData(savedInstanceState);
+
 	}
 
 	@Override public void initTabsValue() {
@@ -184,7 +186,7 @@ public abstract class J2WBaseViewPagerAcitvity extends J2WBaseActoinBarActivity 
 
 	@Override public void onExtraPageScrolled(int i, float v, int i2) {}
 
-	@Override public void onExtraPageSelected(View view,int i) {
+	@Override public void onExtraPageSelected(View view, int i) {
 		L.tag(initTag());
 		L.i("onExtraPageSelected()");
 	}
@@ -267,7 +269,7 @@ public abstract class J2WBaseViewPagerAcitvity extends J2WBaseActoinBarActivity 
 				container.addView(fragment.getView()); // 为viewpager增加布局
 			}
 
-            pager.setObjectForPosition(fragment.getView(), position);
+			pager.setObjectForPosition(fragment.getView(), position);
 
 			return fragment.getView();
 		}

@@ -74,7 +74,9 @@ public final class AutoScrollViewPager extends ViewPager {
 
 	@Override public void setAdapter(PagerAdapter adapter) {
         infinitePagerAdapter = new InfinitePagerAdapter((InfiniteStatePagerAdapter) adapter);
-		super.setAdapter(infinitePagerAdapter);
+        super.setAdapter(infinitePagerAdapter);
+
+        ((InfiniteStatePagerAdapter) adapter).autoScrollViewPager.setOnPageChangeListener(infinitePagerAdapter);
 		setCurrentItem(0);
 	}
 

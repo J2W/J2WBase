@@ -20,7 +20,9 @@ public abstract class J2WPresenter<T> {
 	}
 
 	/** 获取TAG标记 **/
-	public abstract String initTag();
+	public String initTag(){
+        return getClass().getSimpleName();
+    }
 
 	/***
 	 * 获取视图
