@@ -345,4 +345,17 @@ public abstract class J2WProperties {
 			}
 		}
 	}
+
+    /**
+     * 清空文件内容
+     */
+    public void clear() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(mPropertiesFileName);
+        stringBuilder.append(EXTENSION);
+        File file = new File(propertyFilePath, stringBuilder.toString());
+        if (file.exists()) {
+            file.delete();
+        }
+    }
 }
