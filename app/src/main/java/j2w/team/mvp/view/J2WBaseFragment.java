@@ -115,15 +115,13 @@ public abstract class J2WBaseFragment<T extends J2WIPresenter> extends Fragment 
 		super.onResume();
 		L.tag(initTag());
 		L.i("Fragment-onResume()");
-        if(isDelayedData){
-            updateActionBar();
-        }
 	}
 
 	@Override public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 		L.tag(initTag());
 		L.i("Fragment-onSaveInstanceState()");
+
 	}
 
 	@Override public void onPause() {

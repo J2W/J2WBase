@@ -70,18 +70,18 @@ public abstract class J2WBaseViewPagerAcitvity extends J2WBaseActoinBarActivity 
 		L.tag(initTag());
 		L.i("ViewPagerActivity-onCreate()");
 		setContentView(layoutId());
-        /** 初始化标题栏**/
-        initActionBar();
+		/** 初始化标题栏 **/
+		initActionBar();
 		tabs = (PagerSlidingTabStrip) findViewById(android.R.id.tabs);
 		pager = (J2WViewPager) findViewById(R.id.pager);
 		// 设置Viewpager内部
 		initViewPager();
 		// 设置Viewpager头部
 		initTabsValue();
-        /** 初始化所有组建 **/
-        ButterKnife.inject(this);
-        /** 添加到堆栈 **/
-        J2WHelper.getScreenHelper().pushActivity(this);
+		/** 初始化所有组建 **/
+		ButterKnife.inject(this);
+		/** 添加到堆栈 **/
+		J2WHelper.getScreenHelper().pushActivity(this);
 		// 设置数据
 		initData(savedInstanceState);
 
@@ -280,10 +280,14 @@ public abstract class J2WBaseViewPagerAcitvity extends J2WBaseActoinBarActivity 
 
 		@Override public void onPageSelected(int position) {
 			L.tag(initTag());
-			L.i("onPageSelected() : " + position);
+			L.i("onPageSelected() :getCurrentItem() :" + pager.getCurrentItem() + " currentPageIndex : " + currentPageIndex + " position :" + position);
 			viewPagerDatas[currentPageIndex].fragment.onPause(); // 调用切换前Fargment的onPause()
 			// 调用切换前Fargment的onStop()
 			if (viewPagerDatas[position].fragment.isAdded()) {
+				if (pager.getCurrentItem() == position) {
+					// 更新actionbar
+					((J2WBaseFragment) viewPagerDatas[position].fragment).updateActionBar();
+				}
 				viewPagerDatas[position].fragment.onResume(); // 调用切换后Fargment的onResume()
 				((J2WBaseFragment) viewPagerDatas[position].fragment).isDelayedData(); // 调用延迟加载
 			}
