@@ -117,7 +117,8 @@ public abstract class J2WProperties {
 			File file = new File(propertyFilePath, stringBuilder.toString());
 			/** 处理配置文件的变化 **/
 			if (!file.exists()) {
-				file.createNewFile();
+                L.tag("J2WProperties create file ");
+                L.i(file.createNewFile() + "");
 			}
 			in = new BufferedInputStream(new FileInputStream(file));
 			L.tag(initTag());
@@ -281,9 +282,12 @@ public abstract class J2WProperties {
 	 */
 	private void setFieldValue(Field field, String propertiesName) {
 		Object value = getPropertyValue(field.getType(), propertiesName);
+        if(value == null){
+            return;
+        }
 		try {
 			field.set(this, value);
-		} catch (IllegalAccessException e) {
+		} catch (Exception e) {
 			L.tag(initTag());
 			L.e("setFieldValue失败 ， 属性名 %s 文件名 %s", field.getName(), propertiesName);
 		}

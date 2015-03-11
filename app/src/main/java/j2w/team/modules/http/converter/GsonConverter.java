@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.ResponseBody;
+
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -40,19 +42,34 @@ public class GsonConverter implements J2WConverter {
 	}
 
 	@Override public Object fromBody(ResponseBody body, Type type) throws IOException {
-        L.tag("GsonConverter");
-        L.i(body.toString());
         Charset charset = this.charset;
 		if (body.contentType() != null) {
 			charset = body.contentType().charset(charset);
 		}
 
+        L.tag("GsonConverter");
+
 		InputStream is = body.byteStream();
-		try {
-			return gson.fromJson(new InputStreamReader(is, charset), type);
+
+
+        InputStreamReader inputStreamReader = new InputStreamReader(is, charset);
+        BufferedReader bufferedReader = null;
+        try {
+            bufferedReader = new BufferedReader(inputStreamReader);
+            StringBuilder result = new StringBuilder();
+            String line = null;
+            while((line = bufferedReader.readLine()) != null){
+                result.append(line + "\n");
+            }
+            String json = result.toString();
+            L.i(result.toString());
+            return gson.fromJson(json, type);
 		} finally {
 			try {
-				is.close();
+                inputStreamReader.close();
+                is.close();
+                bufferedReader.close();
+
 			} catch (IOException ignored) {
 			}
 		}
