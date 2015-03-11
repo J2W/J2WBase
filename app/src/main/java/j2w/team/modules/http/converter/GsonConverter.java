@@ -10,6 +10,8 @@ import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.nio.charset.Charset;
 
+import j2w.team.common.log.L;
+
 /**
  * Created by sky on 15/2/23.
  */
@@ -38,7 +40,9 @@ public class GsonConverter implements J2WConverter {
 	}
 
 	@Override public Object fromBody(ResponseBody body, Type type) throws IOException {
-		Charset charset = this.charset;
+        L.tag("GsonConverter");
+        L.i(body.toString());
+        Charset charset = this.charset;
 		if (body.contentType() != null) {
 			charset = body.contentType().charset(charset);
 		}

@@ -287,6 +287,7 @@ public abstract class J2WBaseViewPagerAcitvity extends J2WBaseActoinBarActivity 
 				viewPagerDatas[position].fragment.onResume(); // 调用切换后Fargment的onResume()
 				((J2WBaseFragment) viewPagerDatas[position].fragment).isDelayedData(); // 调用延迟加载
 			}
+
 			currentPageIndex = position;
 
 			onExtraPageSelected(tabs.tabsContainer.getChildAt(position), position);
