@@ -50,12 +50,11 @@ public abstract class J2WBaseActoinBarActivity<T extends J2WIPresenter> extends 
 		return presenter;
 	}
 
-    @Override
-    public boolean isOpenEventBus() {
-        return false;
-    }
+	@Override public boolean isOpenEventBus() {
+		return false;
+	}
 
-    /**
+	/**
 	 * 是否固定竖屏
 	 */
 	@Override public boolean isFixedVerticalScreen() {
@@ -94,9 +93,11 @@ public abstract class J2WBaseActoinBarActivity<T extends J2WIPresenter> extends 
 		super.onResume();
 		L.tag(initTag());
 		L.i("onResume()");
-        if (isOpenEventBus()) {
-            EventBus.getDefault().register(this);
-        }
+		if (isOpenEventBus()) {
+			if (!EventBus.getDefault().isRegistered(this)) {
+				EventBus.getDefault().register(this);
+			}
+		}
 	}
 
 	@Override protected void onPause() {
@@ -125,9 +126,11 @@ public abstract class J2WBaseActoinBarActivity<T extends J2WIPresenter> extends 
 		if (presenter != null) {
 			presenter.detach();
 		}
-        if(isOpenEventBus()){
-            EventBus.getDefault().unregister(this);
-        }
+		if (isOpenEventBus()) {
+			if (EventBus.getDefault().isRegistered(this)) {
+				EventBus.getDefault().unregister(this);
+			}
+		}
 		/** 从堆栈里移除 **/
 		J2WHelper.getScreenHelper().popActivity(this);
 	}

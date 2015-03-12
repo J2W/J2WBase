@@ -81,7 +81,9 @@ public abstract class J2WBaseActivity<T extends J2WIPresenter> extends FragmentA
 		L.tag(initTag());
 		L.i("onResume()");
         if (isOpenEventBus()) {
-            EventBus.getDefault().register(this);
+            if(!EventBus.getDefault().isRegistered(this)){
+                EventBus.getDefault().register(this);
+            }
         }
 	}
 
@@ -112,7 +114,9 @@ public abstract class J2WBaseActivity<T extends J2WIPresenter> extends FragmentA
 			presenter.detach();
 		}
         if (isOpenEventBus()) {
-            EventBus.getDefault().unregister(this);
+			if (EventBus.getDefault().isRegistered(this)) {
+				EventBus.getDefault().unregister(this);
+			}
         }
 		/** 从堆栈里移除 **/
 		J2WHelper.getScreenHelper().popActivity(this);

@@ -121,7 +121,9 @@ public abstract class J2WBaseFragment<T extends J2WIPresenter> extends Fragment 
 		L.tag(initTag());
 		L.i("Fragment-onResume()");
 		if (isOpenEventBus()) {
-			EventBus.getDefault().register(this);
+			if (!EventBus.getDefault().isRegistered(this)) {
+				EventBus.getDefault().register(this);
+			}
 		}
 	}
 
@@ -160,7 +162,9 @@ public abstract class J2WBaseFragment<T extends J2WIPresenter> extends Fragment 
 		L.tag(initTag());
 		L.m("Fragment-onDestroy()");
 		if (isOpenEventBus()) {
-			EventBus.getDefault().unregister(this);
+			if (EventBus.getDefault().isRegistered(this)) {
+				EventBus.getDefault().unregister(this);
+			}
 		}
 	}
 
