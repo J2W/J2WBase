@@ -1,13 +1,9 @@
 package j2w.team.mvp.view.iview;
 
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentTabHost;
 import android.support.v4.view.PagerAdapter;
 import android.view.View;
 
-import j2w.team.mvp.model.TabHostModel;
 import j2w.team.mvp.model.ViewPagerModel;
-import j2w.team.mvp.view.J2WBaseTabHostAcitvity;
 
 /**
  * Created by sky on 15/3/3. viewpager 接口
@@ -23,7 +19,7 @@ public interface J2WViewpagerIView extends J2WActionBarIView {
 
 	public int getViewPagerItemLayout();
 
-	public void initTab(View view, int position);
+	public void initTab(View view, ViewPagerModel viewPagerModel);
 
 	public PagerAdapter getPagerAdapter();
 
@@ -50,7 +46,7 @@ public interface J2WViewpagerIView extends J2WActionBarIView {
 
 	public int getTabsUnderlineHeight();// 设置Tab底部线的高度
 
-	public void replaceViewPageItem(int position, ViewPagerModel viewPagerModel); // 替换item
+	public void replaceViewPageItem(ViewPagerModel... viewPagerModels); // 替换item
 
 	/** 初始化事件 **/
 	public void onExtraPageScrolled(int i, float v, int i2);

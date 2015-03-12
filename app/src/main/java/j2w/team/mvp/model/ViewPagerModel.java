@@ -7,6 +7,9 @@ import android.support.v4.app.Fragment;
  */
 public class ViewPagerModel {
 
+	// position
+	public int		position;
+
 	// tab
 	public String	title;
 

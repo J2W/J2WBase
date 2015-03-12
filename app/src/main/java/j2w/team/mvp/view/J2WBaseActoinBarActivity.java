@@ -28,10 +28,14 @@ import j2w.team.mvp.view.iview.J2WActionBarIView;
 public abstract class J2WBaseActoinBarActivity<T extends J2WIPresenter> extends ActionBarActivity implements J2WActionBarIView {
 
 	/** 标题栏 **/
-    ActionBar actionBar;
+	ActionBar	actionBar;
 
 	/** 业务逻辑对象 **/
-	private T			presenter	= null;
+	private T	presenter	= null;
+
+	@Override public String initTag() {
+		return getClass().getSimpleName();
+	}
 
 	@Override public final T getPresenter() {
 		if (presenter == null) {
@@ -64,8 +68,8 @@ public abstract class J2WBaseActoinBarActivity<T extends J2WIPresenter> extends 
 		L.i("onCreate()");
 		/** 初始化视图 **/
 		setContentView(layoutId());
-        /** 初始化标题栏**/
-        initActionBar();
+		/** 初始化标题栏 **/
+		initActionBar();
 		/** 初始化所有组建 **/
 		ButterKnife.inject(this);
 		/** 添加到堆栈 **/
@@ -74,7 +78,7 @@ public abstract class J2WBaseActoinBarActivity<T extends J2WIPresenter> extends 
 		initData(savedInstanceState);
 	}
 
-    @Override protected void onStart() {
+	@Override protected void onStart() {
 		super.onStart();
 		L.tag(initTag());
 		L.i("onStart()");
