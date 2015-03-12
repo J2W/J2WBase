@@ -59,8 +59,7 @@ public abstract class J2WBaseListFragment<T extends J2WIPresenter> extends J2WBa
 		return 1;
 	}
 
-
-	/**
+    /**
 	 * 返回类型
 	 * 
 	 * @param position

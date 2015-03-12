@@ -25,4 +25,5 @@ public abstract class J2WBaseTabHostAcitvity extends J2WBaseViewPagerAcitvity im
 	@Override public final int getViewPagerItemLayout() {
 		return getTabsContentLayout();
 	}
+
 }

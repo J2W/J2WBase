@@ -18,4 +18,7 @@ public interface J2WIView<T> {
 
 	/** 获取Presenter **/
 	public T getPresenter();
+
+    /** 是否打开 **/
+    public boolean isOpenEventBus();
 }

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
 import butterknife.ButterKnife;
+import de.greenrobot.event.EventBus;
 import j2w.team.modules.appconfig.Property;
 import j2w.team.mvp.presenter.J2WHelper;
 import j2w.team.common.log.L;
@@ -44,7 +45,12 @@ public abstract class J2WBaseActivity<T extends J2WIPresenter> extends FragmentA
 		return presenter;
 	}
 
-	/** onCreate 无法重写 **/
+    @Override
+    public boolean isOpenEventBus() {
+        return false;
+    }
+
+    /** onCreate 无法重写 **/
 	@Override protected final void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		/** 是否固定竖屏 **/
@@ -74,6 +80,9 @@ public abstract class J2WBaseActivity<T extends J2WIPresenter> extends FragmentA
 		super.onResume();
 		L.tag(initTag());
 		L.i("onResume()");
+        if (isOpenEventBus()) {
+            EventBus.getDefault().register(this);
+        }
 	}
 
 	@Override protected void onPause() {
@@ -102,6 +111,9 @@ public abstract class J2WBaseActivity<T extends J2WIPresenter> extends FragmentA
 		if (presenter != null) {
 			presenter.detach();
 		}
+        if (isOpenEventBus()) {
+            EventBus.getDefault().unregister(this);
+        }
 		/** 从堆栈里移除 **/
 		J2WHelper.getScreenHelper().popActivity(this);
 	}

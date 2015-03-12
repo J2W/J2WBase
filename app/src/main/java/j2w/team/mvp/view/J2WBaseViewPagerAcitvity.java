@@ -314,6 +314,7 @@ public abstract class J2WBaseViewPagerAcitvity extends J2WBaseActoinBarActivity 
             Fragment fragment = viewPagerDatas[position].fragment;
             if (!fragment.isAdded()) { // 如果fragment还没有added
                 FragmentTransaction ft = fragmentManager.beginTransaction();
+                ft.setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out, android.R.animator.fade_in, android.R.animator.fade_out);
                 ft.add(fragment, fragment.getClass().getSimpleName() + position);
                 ft.commit();
                 /**
@@ -322,7 +323,7 @@ public abstract class J2WBaseViewPagerAcitvity extends J2WBaseActoinBarActivity 
                  * 要注意的是，所有的回调和相关的行为都会在这个调用中被执行完成，因此要仔细确认这个方法的调用位置。
                  */
                 fragmentManager.executePendingTransactions();
-                if(replacePosition != -1){
+                if (replacePosition != -1) {
                     ((J2WBaseFragment) viewPagerDatas[replacePosition].fragment).isDelayedData();
                     replacePosition = -1;
                 }

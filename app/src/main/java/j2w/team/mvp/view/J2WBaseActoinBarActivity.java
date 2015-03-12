@@ -13,6 +13,7 @@ import android.widget.TextView;
 import java.util.Objects;
 
 import butterknife.ButterKnife;
+import de.greenrobot.event.EventBus;
 import j2w.team.R;
 import j2w.team.mvp.presenter.J2WHelper;
 import j2w.team.common.log.L;
@@ -49,7 +50,12 @@ public abstract class J2WBaseActoinBarActivity<T extends J2WIPresenter> extends 
 		return presenter;
 	}
 
-	/**
+    @Override
+    public boolean isOpenEventBus() {
+        return false;
+    }
+
+    /**
 	 * 是否固定竖屏
 	 */
 	@Override public boolean isFixedVerticalScreen() {
@@ -88,6 +94,9 @@ public abstract class J2WBaseActoinBarActivity<T extends J2WIPresenter> extends 
 		super.onResume();
 		L.tag(initTag());
 		L.i("onResume()");
+        if (isOpenEventBus()) {
+            EventBus.getDefault().register(this);
+        }
 	}
 
 	@Override protected void onPause() {
@@ -116,6 +125,9 @@ public abstract class J2WBaseActoinBarActivity<T extends J2WIPresenter> extends 
 		if (presenter != null) {
 			presenter.detach();
 		}
+        if(isOpenEventBus()){
+            EventBus.getDefault().unregister(this);
+        }
 		/** 从堆栈里移除 **/
 		J2WHelper.getScreenHelper().popActivity(this);
 	}

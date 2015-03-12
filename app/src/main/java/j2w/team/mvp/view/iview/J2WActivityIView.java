@@ -5,6 +5,7 @@ package j2w.team.mvp.view.iview;
  */
 public interface J2WActivityIView extends J2WIView {
 
+
 	/**
 	 * 是否固定竖屏
 	 */

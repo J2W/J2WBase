@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ViewAnimator;
 
 import butterknife.ButterKnife;
+import de.greenrobot.event.EventBus;
 import j2w.team.R;
 import j2w.team.common.log.L;
 import j2w.team.mvp.presenter.J2WIPresenter;
@@ -64,6 +65,10 @@ public abstract class J2WBaseFragment<T extends J2WIPresenter> extends Fragment 
 		return presenter;
 	}
 
+	@Override public boolean isOpenEventBus() {
+		return false;
+	}
+
 	@Override public void onAttach(Activity activity) {
 		super.onAttach(activity);
 		L.tag(initTag());
@@ -115,6 +120,9 @@ public abstract class J2WBaseFragment<T extends J2WIPresenter> extends Fragment 
 		super.onResume();
 		L.tag(initTag());
 		L.i("Fragment-onResume()");
+		if (isOpenEventBus()) {
+			EventBus.getDefault().register(this);
+		}
 	}
 
 	@Override public void onSaveInstanceState(Bundle outState) {
@@ -151,6 +159,9 @@ public abstract class J2WBaseFragment<T extends J2WIPresenter> extends Fragment 
 		super.onDestroy();
 		L.tag(initTag());
 		L.m("Fragment-onDestroy()");
+		if (isOpenEventBus()) {
+			EventBus.getDefault().unregister(this);
+		}
 	}
 
 	@Override public void onDetach() {
@@ -174,8 +185,8 @@ public abstract class J2WBaseFragment<T extends J2WIPresenter> extends Fragment 
 		// 为了只初始化一次
 		isDelayedData = true;
 		initDelayedData();
-        //更新actionbar
-        updateActionBar();
+		// 更新actionbar
+		updateActionBar();
 	}
 
 	@Override public void initDelayedData() {
@@ -183,13 +194,12 @@ public abstract class J2WBaseFragment<T extends J2WIPresenter> extends Fragment 
 		L.i("Fragment-initDelayedData()");
 	}
 
-    @Override
-    public void updateActionBar() {
-        L.tag(initTag());
-        L.i("Fragment-updateActionBar()");
-    }
+	@Override public void updateActionBar() {
+		L.tag(initTag());
+		L.i("Fragment-updateActionBar()");
+	}
 
-    @Override public int initLoadingLayout() {
+	@Override public int initLoadingLayout() {
 		return R.layout.j2w_fragment_loading;
 	}
 
