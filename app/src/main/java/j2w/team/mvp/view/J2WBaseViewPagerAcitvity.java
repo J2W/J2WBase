@@ -23,6 +23,7 @@ import j2w.team.R;
 import j2w.team.common.log.L;
 import j2w.team.common.widget.J2WViewPager;
 import j2w.team.common.widget.PagerSlidingTabStrip;
+import j2w.team.mvp.model.TabHostModel;
 import j2w.team.mvp.model.ViewPagerModel;
 import j2w.team.mvp.presenter.J2WHelper;
 import j2w.team.mvp.view.iview.J2WViewpagerIView;
@@ -184,7 +185,15 @@ public abstract class J2WBaseViewPagerAcitvity extends J2WBaseActoinBarActivity 
 		return 1;
 	}
 
-	@Override public void onExtraPageScrolled(int i, float v, int i2) {}
+    @Override
+    public void replaceViewPageItem(int position, ViewPagerModel viewPagerModel) {
+        if(adapter instanceof DefaultPagerAdapter){
+            ((DefaultPagerAdapter) adapter).replaceViewPagerDatas(position,viewPagerModel);
+            adapter.notifyDataSetChanged();
+        }
+    }
+
+    @Override public void onExtraPageScrolled(int i, float v, int i2) {}
 
 	@Override public void onExtraPageSelected(View view, int i) {
 		L.tag(initTag());
@@ -224,6 +233,10 @@ public abstract class J2WBaseViewPagerAcitvity extends J2WBaseActoinBarActivity 
 			fragmentManager = getSupportFragmentManager();
 			tabs.setOnPageChangeListener(this);
 		}
+
+        public void replaceViewPagerDatas(int position, ViewPagerModel viewPagerModel){
+            viewPagerDatas[position] = viewPagerModel;
+        }
 
 		public ViewPagerModel[] getViewPagerDatas() {
 			return viewPagerDatas;

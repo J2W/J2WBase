@@ -23,7 +23,7 @@ public interface J2WViewpagerIView extends J2WActionBarIView {
 
 	public int getViewPagerItemLayout();
 
-    public void initTab(View view,int position);
+	public void initTab(View view, int position);
 
 	public PagerAdapter getPagerAdapter();
 
@@ -44,18 +44,20 @@ public interface J2WViewpagerIView extends J2WActionBarIView {
 
 	public int getTabsIndicatorColor();// 设置Tab Indicator 指示灯的颜色
 
-    public int getTabsOnClickTitleColor();//设置点击颜色
+	public int getTabsOnClickTitleColor();// 设置点击颜色
 
-    public int getTabsUnderlineColor();//设置Tab底部线的颜色
+	public int getTabsUnderlineColor();// 设置Tab底部线的颜色
 
-    public int getTabsUnderlineHeight();//设置Tab底部线的高度
+	public int getTabsUnderlineHeight();// 设置Tab底部线的高度
 
-    /** 初始化事件 **/
-    public void onExtraPageScrolled(int i, float v, int i2);
+	public void replaceViewPageItem(int position, ViewPagerModel viewPagerModel); // 替换item
 
-    public void onExtraPageSelected(View view,int i);
+	/** 初始化事件 **/
+	public void onExtraPageScrolled(int i, float v, int i2);
 
-    public void onExtraPageScrollStateChanged(int i);
+	public void onExtraPageSelected(View view, int i);
+
+	public void onExtraPageScrollStateChanged(int i);
 
 	/**
 	 * 设置自定义适配器
