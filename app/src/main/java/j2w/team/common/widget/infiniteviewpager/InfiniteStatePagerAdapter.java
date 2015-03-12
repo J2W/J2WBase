@@ -53,7 +53,7 @@ public abstract class InfiniteStatePagerAdapter extends PagerAdapter{
         if (!fragment.isAdded()) { // 如果fragment还没有added
             FragmentTransaction ft = manager.beginTransaction();
             ft.add(fragment, fragment.getClass().getSimpleName());
-            ft.commit();
+            ft.commitAllowingStateLoss();
             /**
              * 在用FragmentTransaction.commit()方法提交FragmentTransaction对象后
              * 会在进程的主线程中，用异步的方式来执行。 如果想要立即执行这个等待中的操作，就要调用这个方法（只能在主线程中调用）。
