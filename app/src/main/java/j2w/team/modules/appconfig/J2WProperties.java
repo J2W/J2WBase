@@ -276,7 +276,35 @@ public abstract class J2WProperties {
 			}
 		}
 	}
-
+    /**
+     * 所有属性写入到properties里
+     */
+    private void writeDefaultPropertiesValues() {
+        L.tag(initTag());
+        L.i("writePropertiesValues()-写入所有的值");
+        Class<? extends J2WProperties> thisClass = this.getClass();
+        Field[] fields = thisClass.getDeclaredFields();
+        for (Field field : fields) {
+            if (field.isAnnotationPresent(Property.class)) {
+                field.setAccessible(true);
+                String fieldName = field.getName();
+                Property annotation = field.getAnnotation(Property.class);
+                if (annotation.value().equals(DEFAUT_ANNOTATION_VALUE)) {
+                    try {
+                        mProperties.put(fieldName, "");
+                    } catch (Exception e) {
+                        L.e("Properties写入错误:" + e.toString());
+                    }
+                } else {
+                    try {
+                        mProperties.put(annotation.value(), "");
+                    } catch (Exception e) {
+                        L.e("Properties写入错误:" + e.toString());
+                    }
+                }
+            }
+        }
+    }
 	/**
 	 * 设置属性值 *
 	 */
@@ -350,12 +378,32 @@ public abstract class J2WProperties {
      * 清空文件内容
      */
     public void clear() {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(mPropertiesFileName);
-        stringBuilder.append(EXTENSION);
-        File file = new File(propertyFilePath, stringBuilder.toString());
-        if (file.exists()) {
-            file.delete();
+        OutputStream out = null;
+        try {
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.append(mPropertiesFileName);
+            stringBuilder.append(EXTENSION);
+            File file = new File(propertyFilePath, stringBuilder.toString());
+            if (!file.exists()) {
+                return;
+            }
+            synchronized (mProperties) {
+                out = new BufferedOutputStream(new FileOutputStream(file));
+                writeDefaultPropertiesValues();
+                mProperties.store(out, "");
+            }
+        } catch (FileNotFoundException ex) {
+            L.e("" + ex);
+        } catch (IOException ex) {
+            L.e("" + ex);
+        } finally {
+            if (null != out) {
+                try {
+                    out.close();
+                } catch (IOException ex) {
+                    L.e("" + ex);
+                }
+            }
         }
     }
 }
