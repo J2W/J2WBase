@@ -59,8 +59,6 @@ public abstract class J2WPresenter<T> {
 	 */
 	public void methodError(String methodName, Throwable throwable) {
         L.tag(initTag());
-        L.i("methodError()");
-		// 打印错误信息
-		throwable.printStackTrace();
+        L.i("methodError() methodName : " + methodName);
 	}
 }
