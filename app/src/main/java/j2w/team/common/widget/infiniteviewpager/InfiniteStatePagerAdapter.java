@@ -2,16 +2,13 @@ package j2w.team.common.widget.infiniteviewpager;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import j2w.team.common.log.L;
 import j2w.team.mvp.view.J2WBaseFragment;
@@ -19,21 +16,18 @@ import j2w.team.mvp.view.J2WBaseFragment;
 /**
  * Created by sky on 15/1/22.
  */
-public abstract class InfiniteStatePagerAdapter extends PagerAdapter {
+public class InfiniteStatePagerAdapter extends PagerAdapter {
 
 	FragmentManager						manager;
 
-	List<Fragment>						fragments;
+	List<Fragment>						fragments	= new ArrayList<>();
 
 	public InfiniteCirclePageIndicator	autoScrollViewPager;
 
 	public InfiniteStatePagerAdapter(InfiniteCirclePageIndicator autoScrollViewPager, FragmentManager fm) {
 		manager = fm;
 		this.autoScrollViewPager = autoScrollViewPager;
-		fragments = getItemFragments();
 	}
-
-	public abstract List<Fragment> getItemFragments();
 
 	public FragmentManager getManager() {
 		return manager;
@@ -42,6 +36,29 @@ public abstract class InfiniteStatePagerAdapter extends PagerAdapter {
 	@Override public void destroyItem(ViewGroup container, int position, Object object) {
 		L.i("destroyItem:" + position);
 		container.removeView(fragments.get(position).getView()); // 移出viewpager两边之外的page布局
+	}
+
+	public void addData(Fragment fragment) {
+		fragments.add(fragment);
+	}
+
+	public void setData(List<Fragment> fragments) {
+		this.fragments = fragments;
+	}
+
+	public void addData(List<Fragment> fragments) {
+		this.fragments.add((Fragment) fragments);
+	}
+
+	public void clearData() {
+		for (Fragment fragment : fragments) {
+            manager.beginTransaction().remove(fragment).commitAllowingStateLoss();
+		}
+		fragments.clear();
+	}
+
+	@Override public int getCount() {
+		return fragments.size();
 	}
 
 	@Override public boolean isViewFromObject(View view, Object object) {
@@ -71,7 +88,7 @@ public abstract class InfiniteStatePagerAdapter extends PagerAdapter {
 		return fragment.getView();
 	}
 
-    private int	currentPageIndex	= 0;
+	private int	currentPageIndex	= 0;
 
 	public void onPageSelected(int position) {
 		L.i("onPageSelected() currentPageIndex : " + currentPageIndex + " position : " + position);
