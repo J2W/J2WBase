@@ -292,12 +292,14 @@ public abstract class J2WProperties {
                 if (annotation.value().equals(DEFAUT_ANNOTATION_VALUE)) {
                     try {
                         mProperties.put(fieldName, "");
+                        setFieldValue(field, fieldName);
                     } catch (Exception e) {
                         L.e("Properties写入错误:" + e.toString());
                     }
                 } else {
                     try {
                         mProperties.put(annotation.value(), "");
+                        setFieldValue(field, annotation.value());
                     } catch (Exception e) {
                         L.e("Properties写入错误:" + e.toString());
                     }
