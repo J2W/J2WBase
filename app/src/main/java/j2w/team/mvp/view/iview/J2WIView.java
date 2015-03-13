@@ -19,6 +19,18 @@ public interface J2WIView<T> {
 	/** 获取Presenter **/
 	public T getPresenter();
 
-    /** 是否打开 **/
-    public boolean isOpenEventBus();
+	/** 是否打开 **/
+	public boolean isOpenEventBus();
+
+	/** 跳转 **/
+	public void intent2Activity(Class clazz);
+
+	public void intent2Activity(Class clazz, Bundle bundle);
+
+	public void intent2Activity(Class clazz, int requestCode);
+
+	public void intent2Activity(Class clazz, Bundle bundle, int requestCode);
+
+	/** 销毁当前页面 **/
+	public void activityFinish();
 }

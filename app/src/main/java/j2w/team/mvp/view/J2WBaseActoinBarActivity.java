@@ -54,6 +54,28 @@ public abstract class J2WBaseActoinBarActivity<T extends J2WIPresenter> extends 
 		return false;
 	}
 
+	@Override public void intent2Activity(Class clazz) {
+		J2WHelper.intentTo(clazz);
+	}
+
+	@Override public void intent2Activity(Class clazz, Bundle bundle) {
+		J2WHelper.intentTo(clazz, bundle);
+	}
+
+	@Override public void intent2Activity(Class clazz, int requestCode) {
+		J2WHelper.intentTo(clazz, requestCode);
+	}
+
+	@Override public void intent2Activity(Class clazz, Bundle bundle, int requestCode) {
+		J2WHelper.intentTo(clazz, bundle, requestCode);
+	}
+
+	@Override public void activityFinish() {
+		L.tag(initTag());
+		L.i("activityFinish()");
+		finish();
+	}
+
 	/**
 	 * 是否固定竖屏
 	 */

@@ -45,12 +45,36 @@ public abstract class J2WBaseActivity<T extends J2WIPresenter> extends FragmentA
 		return presenter;
 	}
 
+	@Override public boolean isOpenEventBus() {
+		return false;
+	}
+
+	@Override public void intent2Activity(Class clazz) {
+        J2WHelper.intentTo(clazz);
+	}
+
     @Override
-    public boolean isOpenEventBus() {
-        return false;
+    public void intent2Activity(Class clazz, Bundle bundle) {
+        J2WHelper.intentTo(clazz,bundle);
     }
 
-    /** onCreate 无法重写 **/
+    @Override
+    public void intent2Activity(Class clazz, int requestCode) {
+        J2WHelper.intentTo(clazz,requestCode);
+    }
+
+    @Override
+    public void intent2Activity(Class clazz, Bundle bundle, int requestCode) {
+        J2WHelper.intentTo(clazz,bundle,requestCode);
+    }
+
+    @Override public void activityFinish() {
+		L.tag(initTag());
+		L.i("activityFinish()");
+		finish();
+	}
+
+	/** onCreate 无法重写 **/
 	@Override protected final void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		/** 是否固定竖屏 **/
@@ -80,11 +104,11 @@ public abstract class J2WBaseActivity<T extends J2WIPresenter> extends FragmentA
 		super.onResume();
 		L.tag(initTag());
 		L.i("onResume()");
-        if (isOpenEventBus()) {
-            if(!EventBus.getDefault().isRegistered(this)){
-                EventBus.getDefault().register(this);
-            }
-        }
+		if (isOpenEventBus()) {
+			if (!EventBus.getDefault().isRegistered(this)) {
+				EventBus.getDefault().register(this);
+			}
+		}
 	}
 
 	@Override protected void onPause() {
@@ -113,11 +137,11 @@ public abstract class J2WBaseActivity<T extends J2WIPresenter> extends FragmentA
 		if (presenter != null) {
 			presenter.detach();
 		}
-        if (isOpenEventBus()) {
+		if (isOpenEventBus()) {
 			if (EventBus.getDefault().isRegistered(this)) {
 				EventBus.getDefault().unregister(this);
 			}
-        }
+		}
 		/** 从堆栈里移除 **/
 		J2WHelper.getScreenHelper().popActivity(this);
 	}

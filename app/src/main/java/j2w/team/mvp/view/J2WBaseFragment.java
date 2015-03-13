@@ -13,6 +13,7 @@ import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
 import j2w.team.R;
 import j2w.team.common.log.L;
+import j2w.team.mvp.presenter.J2WHelper;
 import j2w.team.mvp.presenter.J2WIPresenter;
 import j2w.team.mvp.presenter.J2WPresenter;
 import j2w.team.mvp.presenter.J2WPresenterUtils;
@@ -69,7 +70,32 @@ public abstract class J2WBaseFragment<T extends J2WIPresenter> extends Fragment 
 		return false;
 	}
 
-	@Override public void onAttach(Activity activity) {
+    @Override public void intent2Activity(Class clazz) {
+        J2WHelper.intentTo(clazz);
+    }
+
+    @Override
+    public void intent2Activity(Class clazz, Bundle bundle) {
+        J2WHelper.intentTo(clazz,bundle);
+    }
+
+    @Override
+    public void intent2Activity(Class clazz, int requestCode) {
+        J2WHelper.intentTo(clazz,requestCode);
+    }
+
+    @Override
+    public void intent2Activity(Class clazz, Bundle bundle, int requestCode) {
+        J2WHelper.intentTo(clazz,bundle,requestCode);
+    }
+
+    @Override public void activityFinish() {
+        L.tag(initTag());
+        L.i("activityFinish()");
+        getActivity().finish();
+    }
+
+    @Override public void onAttach(Activity activity) {
 		super.onAttach(activity);
 		L.tag(initTag());
 		L.i("Fragment-onAttach()");
