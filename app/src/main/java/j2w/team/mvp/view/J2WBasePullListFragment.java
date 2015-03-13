@@ -10,12 +10,13 @@ import butterknife.ButterKnife;
 import j2w.team.R;
 import j2w.team.common.log.L;
 import j2w.team.common.widget.swipeRefresh.SwipeRefreshLayout;
+import j2w.team.mvp.presenter.J2WIPresenter;
 import j2w.team.mvp.view.iview.J2WPullListFragmentIView;
 
 /**
  * Created by sky on 15/3/13.
  */
-public abstract class J2WBasePullListFragment extends J2WBaseListFragment implements J2WPullListFragmentIView {
+public abstract class J2WBasePullListFragment<T extends J2WIPresenter> extends J2WBaseListFragment<T> implements J2WPullListFragmentIView {
 
 	private SwipeRefreshLayout	swipe_container;
 
