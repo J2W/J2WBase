@@ -327,7 +327,7 @@ public abstract class J2WProperties {
      * 设置属性值 *
      */
     private void setFieldDefaultValue(Field field, String propertiesName) {
-        Object value = getPropertyDefaultValue(field.getType(), propertiesName);
+        Object value = getPropertyDefaultValue(field.getType());
         if(value == null){
             return;
         }
@@ -361,7 +361,7 @@ public abstract class J2WProperties {
     /**
      * 获取类型 *
      */
-    private Object getPropertyDefaultValue(Class<?> clazz, String key) {
+    private Object getPropertyDefaultValue(Class<?> clazz) {
         if (clazz == String.class) {
             return "";
         } else if (clazz == float.class || clazz == Float.class) {
