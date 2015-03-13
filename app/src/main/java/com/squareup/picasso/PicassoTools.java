@@ -95,9 +95,13 @@ public final class PicassoTools {
 	 * 清空内存缓存-不清空磁盘缓存
 	 */
 	public void clearCache() {
+		if (picasso == null) {
+			okHttpDownloader = null;
+			return;
+		}
 		// 清空缓存-内存
-		with().cache.clear();
-		with().shutdown();
+		picasso.cache.clear();
+		picasso.shutdown();
 		okHttpDownloader = null;
 		picasso = null;
 	}
