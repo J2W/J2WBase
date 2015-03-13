@@ -292,14 +292,14 @@ public abstract class J2WProperties {
                 if (annotation.value().equals(DEFAUT_ANNOTATION_VALUE)) {
                     try {
                         mProperties.put(fieldName, "");
-                        setFieldValue(field, fieldName);
+                        setFieldDefaultValue(field, fieldName);
                     } catch (Exception e) {
                         L.e("Properties写入错误:" + e.toString());
                     }
                 } else {
                     try {
                         mProperties.put(annotation.value(), "");
-                        setFieldValue(field, annotation.value());
+                        setFieldDefaultValue(field, annotation.value());
                     } catch (Exception e) {
                         L.e("Properties写入错误:" + e.toString());
                     }
@@ -323,6 +323,22 @@ public abstract class J2WProperties {
 		}
 	}
 
+    /**
+     * 设置属性值 *
+     */
+    private void setFieldDefaultValue(Field field, String propertiesName) {
+        Object value = getPropertyDefaultValue(field.getType(), propertiesName);
+        if(value == null){
+            return;
+        }
+        try {
+            field.set(this, value);
+        } catch (Exception e) {
+            L.tag(initTag());
+            L.e("setFieldValue失败 ， 属性名 %s 文件名 %s", field.getName(), propertiesName);
+        }
+    }
+
 	/**
 	 * 获取类型 *
 	 */
@@ -341,6 +357,25 @@ public abstract class J2WProperties {
 			return null;
 		}
 	}
+
+    /**
+     * 获取类型 *
+     */
+    private Object getPropertyDefaultValue(Class<?> clazz, String key) {
+        if (clazz == String.class) {
+            return "";
+        } else if (clazz == float.class || clazz == Float.class) {
+            return 0;
+        } else if (clazz == double.class || clazz == Double.class) {
+            return 0;
+        } else if (clazz == boolean.class || clazz == Boolean.class) {
+            return false;
+        } else if (clazz == int.class || clazz == Integer.class) {
+            return 0;
+        } else {
+            return null;
+        }
+    }
 
 	/**
 	 * 提交
