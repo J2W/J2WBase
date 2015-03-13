@@ -215,11 +215,6 @@ public abstract class J2WBaseFragment<T extends J2WIPresenter> extends Fragment 
 		return R.layout.j2w_fragment_error;
 	}
 
-	@Override public void onRefresh() {
-		L.tag(initTag());
-		L.i("Fragment-onRefresh()");
-	}
-
 	@Override public void showLoading() {
 		L.tag(initTag());
 		L.i("Fragment-loading()");

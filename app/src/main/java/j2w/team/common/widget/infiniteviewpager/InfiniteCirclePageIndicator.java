@@ -306,6 +306,7 @@ public class InfiniteCirclePageIndicator extends View implements PageIndicator {
 
     @Override
     public void notifyDataSetChanged() {
+        mViewPager.getAdapter().notifyDataSetChanged();
         invalidate();
     }
 

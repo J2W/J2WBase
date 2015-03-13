@@ -28,7 +28,7 @@ public abstract class J2WBaseListFragment<T extends J2WIPresenter> extends J2WBa
 	 * 
 	 * @return
 	 */
-	@Override public final int layoutId() {
+	@Override public int layoutId() {
 		return R.layout.j2w_fragment_list;
 	}
 
@@ -74,7 +74,7 @@ public abstract class J2WBaseListFragment<T extends J2WIPresenter> extends J2WBa
 		return null;
 	}
 
-	@Override public final View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+	@Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		L.tag(initTag());
 		L.i("Fragment-onCreateView()");
 		mContentView = inflater.inflate(R.layout.j2w_fragment_main, container, false);
@@ -124,7 +124,7 @@ public abstract class J2WBaseListFragment<T extends J2WIPresenter> extends J2WBa
 	/**
 	 * ListView adapter
 	 */
-	private ListAdapter	mListAdapter;
+     ListAdapter	mListAdapter;
 
 	/**
 	 * adapter是否为空
@@ -197,13 +197,13 @@ public abstract class J2WBaseListFragment<T extends J2WIPresenter> extends J2WBa
 	/**
 	 * 内部类-列表适配器
 	 */
-	private final class ListAdapter extends BaseAdapter {
+     final class ListAdapter extends BaseAdapter {
 
 		/** 数据集合 */
 		private List	mList;
 
 		/** 构造函数 **/
-		private ListAdapter() {
+        public ListAdapter() {
 			/** 初始化空数据源 **/
 			mList = new ArrayList();
 		}

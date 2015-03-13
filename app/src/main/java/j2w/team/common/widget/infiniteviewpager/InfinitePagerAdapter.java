@@ -25,8 +25,8 @@ public class InfinitePagerAdapter extends PagerAdapter implements ViewPager.OnPa
 
 	public InfinitePagerAdapter(InfiniteStatePagerAdapter adapter) {
 		this.adapter = adapter;
-        adapter.autoScrollViewPager.setOnPageChangeListener(this);
-    }
+		adapter.autoScrollViewPager.setOnPageChangeListener(this);
+	}
 
 	@Override public int getCount() {
 		if (infinitePagesEnabled) {
@@ -65,7 +65,6 @@ public class InfinitePagerAdapter extends PagerAdapter implements ViewPager.OnPa
 	@Override public boolean isViewFromObject(View view, Object object) {
 		return view == object;
 	}
-
 
 	public int getVirtualPosition(int position) {
 		return infinitePagesEnabled ? position % getRealCount() : position;

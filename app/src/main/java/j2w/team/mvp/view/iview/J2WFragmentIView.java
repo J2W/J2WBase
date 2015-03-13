@@ -25,10 +25,6 @@ public interface J2WFragmentIView extends J2WIView {
 
 	public int initErrorLayout();
 
-	/** 初始化布局-事件 **/
-
-	public void onRefresh();
-
 	/** 布局切换 **/
 	public void showLoading();
 

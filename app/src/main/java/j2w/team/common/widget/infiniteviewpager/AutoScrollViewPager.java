@@ -13,76 +13,83 @@ import android.view.MotionEvent;
 import android.view.animation.Interpolator;
 
 /**
- * create by skyJC
- * 使用方式
- * 1.继承 InfiniteStatePagerAdapter
- * 2.写一个fragment
- * 3.setAdapter
- * 4.startAutoScroll()
- * 5.从布局 找到 InfiniteCirclePageIndicator
- * 6.setSnap(true)
- * 7.setViewPager
+ * create by skyJC 使用方式 1.继承 InfiniteStatePagerAdapter 2.写一个fragment
+ * 3.setAdapter 4.startAutoScroll() 5.从布局 找到 InfiniteCirclePageIndicator
+ * 6.setSnap(true) 7.setViewPager
  */
 public final class AutoScrollViewPager extends ViewPager {
 
 	// 默认时间
-	public static final int DEFAULT_INTERVAL = 3000;
+	public static final int			DEFAULT_INTERVAL			= 3000;
 
-	public static final int LEFT = 0;
-	public static final int RIGHT = 1;
+	public static final int			LEFT						= 0;
+
+	public static final int			RIGHT						= 1;
 
 	/** 什么也不做，当滑动最后或第一项 **/
-	public static final int SLIDE_BORDER_MODE_NONE = 0;
-	/** 循环滑动时在最后或第一项 **/
-	public static final int SLIDE_BORDER_MODE_CYCLE = 1;
-	/** 提供事件母滑动时在最后或第一项 **/
-	public static final int SLIDE_BORDER_MODE_TO_PARENT = 2;
+	public static final int			SLIDE_BORDER_MODE_NONE		= 0;
 
-	private long interval = DEFAULT_INTERVAL;
+	/** 循环滑动时在最后或第一项 **/
+	public static final int			SLIDE_BORDER_MODE_CYCLE		= 1;
+
+	/** 提供事件母滑动时在最后或第一项 **/
+	public static final int			SLIDE_BORDER_MODE_TO_PARENT	= 2;
+
+	private long					interval					= DEFAULT_INTERVAL;
 
 	/** 默认往右滑动 **/
-	private int direction = RIGHT;
+	private int						direction					= RIGHT;
 
 	/**
 	 * 自动循环时是否自动滚动到最后或第一项， 默认 true
 	 **/
-	private boolean isCycle = true;
+	private boolean					isCycle						= true;
+
 	/** 是否停止自动滚动接触时，默认 true **/
-	private boolean stopScrollWhenTouch = true;
+	private boolean					stopScrollWhenTouch			= true;
+
 	/**
 	 * 如何处理当滑动最后或第一项
 	 **/
-	private int slideBorderMode = SLIDE_BORDER_MODE_NONE;
+	private int						slideBorderMode				= SLIDE_BORDER_MODE_NONE;
+
 	/** 动画时是否自动滚动最后或第一项 **/
-	private boolean isBorderAnimation = true;
+	private boolean					isBorderAnimation			= true;
+
 	/** 自动滚动动画滚动因子 1.0 **/
-	private double autoScrollFactor = 1.0;
+	private double					autoScrollFactor			= 1.0;
+
 	/** 滑动滚动动画滚动因子,1.0 **/
-	private double swipeScrollFactor = 1.0;
+	private double					swipeScrollFactor			= 1.0;
 
-	private Handler handler;
-	private boolean isAutoScroll = false;
-	private boolean isStopByTouch = false;
-	private float touchX = 0f, downX = 0f;
-	private CustomDurationScroller scroller = null;
+	private Handler					handler;
 
-	public static final int SCROLL_WHAT = 0;
+	private boolean					isAutoScroll				= false;
 
-	private boolean infinitePagesEnabled = true;
+	private boolean					isStopByTouch				= false;
 
-    InfinitePagerAdapter infinitePagerAdapter;
+	private float					touchX						= 0f, downX = 0f;
+
+	private CustomDurationScroller	scroller					= null;
+
+	public static final int			SCROLL_WHAT					= 0;
+
+	private boolean					infinitePagesEnabled		= true;
+
+	InfinitePagerAdapter			infinitePagerAdapter;
 
 	@Override public void setAdapter(PagerAdapter adapter) {
-        infinitePagerAdapter = new InfinitePagerAdapter((InfiniteStatePagerAdapter) adapter);
-        super.setAdapter(infinitePagerAdapter);
+		infinitePagerAdapter = new InfinitePagerAdapter((InfiniteStatePagerAdapter) adapter);
+        infinitePagerAdapter.enableInfinitePages(infinitePagesEnabled);
+		super.setAdapter(infinitePagerAdapter);
 
-        ((InfiniteStatePagerAdapter) adapter).autoScrollViewPager.setOnPageChangeListener(infinitePagerAdapter);
+		((InfiniteStatePagerAdapter) adapter).autoScrollViewPager.setOnPageChangeListener(infinitePagerAdapter);
 		setCurrentItem(0);
 	}
 
 	/**
 	 * 计算位置
-	 * 
+	 *
 	 * @param item
 	 */
 	@Override public void setCurrentItem(int item) {
@@ -97,7 +104,7 @@ public final class AutoScrollViewPager extends ViewPager {
 		infinitePagesEnabled = enable;
 		if (getAdapter() instanceof InfinitePagerAdapter) {
 			InfinitePagerAdapter infAdapter = (InfinitePagerAdapter) getAdapter();
-			infAdapter.enableInfinitePages(enable);
+            infAdapter.enableInfinitePages(infinitePagesEnabled);
 		}
 	}
 
@@ -135,7 +142,7 @@ public final class AutoScrollViewPager extends ViewPager {
 
 	/**
 	 * 执行滚动
-	 * 
+	 *
 	 * @param delayTimeInMills
 	 *            间隔时间
 	 */
@@ -265,13 +272,13 @@ public final class AutoScrollViewPager extends ViewPager {
 			super.handleMessage(msg);
 
 			switch (msg.what) {
-			case SCROLL_WHAT:
-				scroller.setScrollDurationFactor(autoScrollFactor);
-				scrollOnce();
-				scroller.setScrollDurationFactor(swipeScrollFactor);
-				sendScrollMessage(interval + scroller.getDuration());
-			default:
-				break;
+				case SCROLL_WHAT:
+					scroller.setScrollDurationFactor(autoScrollFactor);
+					scrollOnce();
+					scroller.setScrollDurationFactor(swipeScrollFactor);
+					sendScrollMessage(interval + scroller.getDuration());
+				default:
+					break;
 			}
 		}
 	}
