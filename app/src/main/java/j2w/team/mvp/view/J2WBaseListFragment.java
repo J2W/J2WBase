@@ -142,7 +142,7 @@ public abstract class J2WBaseListFragment<T extends J2WIPresenter> extends J2WBa
 	 * 
 	 * @param list
 	 */
-	public final void setData(List list) {
+	public void setData(List list) {
 		L.tag(initTag());
 		L.i("Fragment-setData(List)");
 		if (isAdapterNotNull()) {
@@ -156,7 +156,7 @@ public abstract class J2WBaseListFragment<T extends J2WIPresenter> extends J2WBa
 	 * 
 	 * @param list
 	 */
-	public final void addData(List list) {
+	public void addData(List list) {
 		L.tag(initTag());
 		L.i("Fragment-addData(List)");
 		if (isAdapterNotNull()) {

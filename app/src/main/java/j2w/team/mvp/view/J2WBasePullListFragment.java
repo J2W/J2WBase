@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import java.util.List;
+
 import butterknife.ButterKnife;
 import j2w.team.R;
 import j2w.team.common.log.L;
@@ -68,12 +70,29 @@ public abstract class J2WBasePullListFragment<T extends J2WIPresenter> extends J
         return mContentView;
     }
 
-    @Override
-    public SwipeRefreshLayout getSwipeRefreshLayout() {
-        return swipe_container;
-    }
-
     @Override public void setLoadingColor(int colorRes1, int colorRes2, int colorRes3, int colorRes4) {
 		swipe_container.setColor(colorRes1, colorRes2, colorRes3, colorRes4);
 	}
+
+    /**
+     * 设置数据
+     *
+     * @param list
+     */
+
+    @Override
+    public void setData(List list) {
+        super.setData(list);
+        swipe_container.setRefreshing(false);
+    }
+
+    /**
+     * 追加数据
+     *
+     * @param list
+     */
+    public void addData(List list) {
+        super.addData(list);
+        swipe_container.setLoading(false);
+    }
 }
