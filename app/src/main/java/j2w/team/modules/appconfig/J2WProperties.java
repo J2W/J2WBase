@@ -158,7 +158,7 @@ public abstract class J2WProperties {
 		}
 	}
 
-    private long getLong(String key, int defaultValue) {
+    private long getLong(String key, long defaultValue) {
         String value = null;
         try {
             value = mProperties.getProperty(key);
