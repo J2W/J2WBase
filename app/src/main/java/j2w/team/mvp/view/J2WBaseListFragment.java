@@ -75,9 +75,11 @@ public abstract class J2WBaseListFragment<T extends J2WIPresenter> extends J2WBa
 	}
 
 	@Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		L.tag(initTag());
+
+        L.tag(initTag());
 		L.i("Fragment-onCreateView()");
-		mContentView = inflater.inflate(R.layout.j2w_fragment_main, container, false);
+        setHasOptionsMenu(true);
+        mContentView = inflater.inflate(R.layout.j2w_fragment_main, container, false);
 
 		mViewAnimator = ButterKnife.findById(mContentView, android.R.id.home);
 
