@@ -69,6 +69,11 @@ public abstract class J2WProperties {
 	public static final int			OPEN_TYPE_DATA			= 2;							// 打开应用程序data文件夹下的文件
 
 	/**
+	 * 成功回调
+	 */
+	private PropertyCallback		propertyCallback;
+
+	/**
 	 * 构造函数
 	 */
 	public J2WProperties() {
@@ -117,8 +122,8 @@ public abstract class J2WProperties {
 			File file = new File(propertyFilePath, stringBuilder.toString());
 			/** 处理配置文件的变化 **/
 			if (!file.exists()) {
-                L.tag("J2WProperties create file ");
-                L.i(file.createNewFile() + "");
+				L.tag("J2WProperties create file ");
+				L.i(file.createNewFile() + "");
 			}
 			in = new BufferedInputStream(new FileInputStream(file));
 			L.tag(initTag());
@@ -140,6 +145,10 @@ public abstract class J2WProperties {
 		loadPropertiesValues();
 	}
 
+	public void setPropertyCallback(PropertyCallback propertyCallback) {
+		this.propertyCallback = propertyCallback;
+	}
+
 	/**
 	 * 所有返回类型
 	 */
@@ -158,22 +167,22 @@ public abstract class J2WProperties {
 		}
 	}
 
-    private long getLong(String key, int defaultValue) {
-        String value = null;
-        try {
-            value = mProperties.getProperty(key);
-            if (StringUtils.isEmpty(value)) {
-                return 0;
-            }
-            return Long.parseLong(mProperties.getProperty(key));
-        } catch (Exception e) {
-            L.tag(initTag());
-            L.e("%s 解析失败, 解析类型 %s, 解析数据 %s ", key, "int", value);
-            return defaultValue;
-        }
-    }
+	private long getLong(String key, long defaultValue) {
+		String value = null;
+		try {
+			value = mProperties.getProperty(key);
+			if (StringUtils.isEmpty(value)) {
+				return 0;
+			}
+			return Long.parseLong(mProperties.getProperty(key));
+		} catch (Exception e) {
+			L.tag(initTag());
+			L.e("%s 解析失败, 解析类型 %s, 解析数据 %s ", key, "int", value);
+			return defaultValue;
+		}
+	}
 
-    private float getFloat(String key, float defaultValue) {
+	private float getFloat(String key, float defaultValue) {
 		String value = null;
 		try {
 			value = mProperties.getProperty(key);
@@ -291,45 +300,47 @@ public abstract class J2WProperties {
 			}
 		}
 	}
-    /**
-     * 所有属性写入到properties里
-     */
-    private void writeDefaultPropertiesValues() {
-        L.tag(initTag());
-        L.i("writePropertiesValues()-写入所有的值");
-        Class<? extends J2WProperties> thisClass = this.getClass();
-        Field[] fields = thisClass.getDeclaredFields();
-        for (Field field : fields) {
-            if (field.isAnnotationPresent(Property.class)) {
-                field.setAccessible(true);
-                String fieldName = field.getName();
-                Property annotation = field.getAnnotation(Property.class);
-                if (annotation.value().equals(DEFAUT_ANNOTATION_VALUE)) {
-                    try {
-                        mProperties.put(fieldName, "");
-                        setFieldDefaultValue(field, fieldName);
-                    } catch (Exception e) {
-                        L.e("Properties写入错误:" + e.toString());
-                    }
-                } else {
-                    try {
-                        mProperties.put(annotation.value(), "");
-                        setFieldDefaultValue(field, annotation.value());
-                    } catch (Exception e) {
-                        L.e("Properties写入错误:" + e.toString());
-                    }
-                }
-            }
-        }
-    }
+
+	/**
+	 * 所有属性写入到properties里
+	 */
+	private void writeDefaultPropertiesValues() {
+		L.tag(initTag());
+		L.i("writePropertiesValues()-写入所有的值");
+		Class<? extends J2WProperties> thisClass = this.getClass();
+		Field[] fields = thisClass.getDeclaredFields();
+		for (Field field : fields) {
+			if (field.isAnnotationPresent(Property.class)) {
+				field.setAccessible(true);
+				String fieldName = field.getName();
+				Property annotation = field.getAnnotation(Property.class);
+				if (annotation.value().equals(DEFAUT_ANNOTATION_VALUE)) {
+					try {
+						mProperties.put(fieldName, "");
+						setFieldDefaultValue(field, fieldName);
+					} catch (Exception e) {
+						L.e("Properties写入错误:" + e.toString());
+					}
+				} else {
+					try {
+						mProperties.put(annotation.value(), "");
+						setFieldDefaultValue(field, annotation.value());
+					} catch (Exception e) {
+						L.e("Properties写入错误:" + e.toString());
+					}
+				}
+			}
+		}
+	}
+
 	/**
 	 * 设置属性值 *
 	 */
 	private void setFieldValue(Field field, String propertiesName) {
 		Object value = getPropertyValue(field.getType(), propertiesName);
-        if(value == null){
-            return;
-        }
+		if (value == null) {
+			return;
+		}
 		try {
 			field.set(this, value);
 		} catch (Exception e) {
@@ -338,21 +349,21 @@ public abstract class J2WProperties {
 		}
 	}
 
-    /**
-     * 设置属性值 *
-     */
-    private void setFieldDefaultValue(Field field, String propertiesName) {
-        Object value = getPropertyDefaultValue(field.getType());
-        if(value == null){
-            return;
-        }
-        try {
-            field.set(this, value);
-        } catch (Exception e) {
-            L.tag(initTag());
-            L.e("setFieldValue失败 ， 属性名 %s 文件名 %s", field.getName(), propertiesName);
-        }
-    }
+	/**
+	 * 设置属性值 *
+	 */
+	private void setFieldDefaultValue(Field field, String propertiesName) {
+		Object value = getPropertyDefaultValue(field.getType());
+		if (value == null) {
+			return;
+		}
+		try {
+			field.set(this, value);
+		} catch (Exception e) {
+			L.tag(initTag());
+			L.e("setFieldValue失败 ， 属性名 %s 文件名 %s", field.getName(), propertiesName);
+		}
+	}
 
 	/**
 	 * 获取类型 *
@@ -369,30 +380,32 @@ public abstract class J2WProperties {
 		} else if (clazz == int.class || clazz == Integer.class) {
 			return getInt(key, 0);
 		} else if (clazz == long.class || clazz == Long.class) {
-            return getLong(key, 0);
-        }else {
+			return getLong(key, 0);
+		} else {
 			return null;
 		}
 	}
 
-    /**
-     * 获取类型 *
-     */
-    private Object getPropertyDefaultValue(Class<?> clazz) {
-        if (clazz == String.class) {
-            return "";
-        } else if (clazz == float.class || clazz == Float.class) {
-            return 0;
-        } else if (clazz == double.class || clazz == Double.class) {
-            return 0;
-        } else if (clazz == boolean.class || clazz == Boolean.class) {
-            return false;
-        } else if (clazz == int.class || clazz == Integer.class) {
-            return 0;
-        } else {
-            return null;
-        }
-    }
+	/**
+	 * 获取类型 *
+	 */
+	private Object getPropertyDefaultValue(Class<?> clazz) {
+		if (clazz == String.class) {
+			return "";
+		} else if (clazz == float.class || clazz == Float.class) {
+			return 0;
+		} else if (clazz == double.class || clazz == Double.class) {
+			return 0;
+		} else if (clazz == boolean.class || clazz == Boolean.class) {
+			return false;
+		} else if (clazz == int.class || clazz == Integer.class) {
+			return 0;
+		} else if (clazz == long.class || clazz == Long.class) {
+			return 0;
+		} else {
+			return null;
+		}
+	}
 
 	/**
 	 * 提交
@@ -413,6 +426,9 @@ public abstract class J2WProperties {
 				writePropertiesValues();
 				mProperties.store(out, "");
 			}
+            if(propertyCallback != null){
+                propertyCallback.onSuccess();
+            }
 		} catch (FileNotFoundException ex) {
 			L.e("" + ex);
 		} catch (IOException ex) {
@@ -428,36 +444,36 @@ public abstract class J2WProperties {
 		}
 	}
 
-    /**
-     * 清空文件内容
-     */
-    public void clear() {
-        OutputStream out = null;
-        try {
-            StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.append(mPropertiesFileName);
-            stringBuilder.append(EXTENSION);
-            File file = new File(propertyFilePath, stringBuilder.toString());
-            if (!file.exists()) {
-                return;
-            }
-            synchronized (mProperties) {
-                out = new BufferedOutputStream(new FileOutputStream(file));
-                writeDefaultPropertiesValues();
-                mProperties.store(out, "");
-            }
-        } catch (FileNotFoundException ex) {
-            L.e("" + ex);
-        } catch (IOException ex) {
-            L.e("" + ex);
-        } finally {
-            if (null != out) {
-                try {
-                    out.close();
-                } catch (IOException ex) {
-                    L.e("" + ex);
-                }
-            }
-        }
-    }
+	/**
+	 * 清空文件内容
+	 */
+	public void clear() {
+		OutputStream out = null;
+		try {
+			StringBuilder stringBuilder = new StringBuilder();
+			stringBuilder.append(mPropertiesFileName);
+			stringBuilder.append(EXTENSION);
+			File file = new File(propertyFilePath, stringBuilder.toString());
+			if (!file.exists()) {
+				return;
+			}
+			synchronized (mProperties) {
+				out = new BufferedOutputStream(new FileOutputStream(file));
+				writeDefaultPropertiesValues();
+				mProperties.store(out, "");
+			}
+		} catch (FileNotFoundException ex) {
+			L.e("" + ex);
+		} catch (IOException ex) {
+			L.e("" + ex);
+		} finally {
+			if (null != out) {
+				try {
+					out.close();
+				} catch (IOException ex) {
+					L.e("" + ex);
+				}
+			}
+		}
+	}
 }
