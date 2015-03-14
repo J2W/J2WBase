@@ -444,6 +444,45 @@ public abstract class J2WProperties {
 		}
 	}
 
+    /**
+     * 提交
+     * @param callback
+     */
+    public void commit(PropertyCallback	callback) {
+
+        OutputStream out = null;
+        try {
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.append(mPropertiesFileName);
+            stringBuilder.append(EXTENSION);
+            File file = new File(propertyFilePath, stringBuilder.toString());
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+            synchronized (mProperties) {
+                out = new BufferedOutputStream(new FileOutputStream(file));
+                writePropertiesValues();
+                mProperties.store(out, "");
+            }
+            if (callback != null) {
+                callback.onSuccess();
+            }
+
+        } catch (FileNotFoundException ex) {
+            L.e("" + ex);
+        } catch (IOException ex) {
+            L.e("" + ex);
+        } finally {
+            if (null != out) {
+                try {
+                    out.close();
+                } catch (IOException ex) {
+                    L.e("" + ex);
+                }
+            }
+        }
+    }
+
 	/**
 	 * 清空文件内容
 	 */
