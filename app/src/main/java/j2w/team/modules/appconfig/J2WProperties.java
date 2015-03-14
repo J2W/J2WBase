@@ -158,7 +158,22 @@ public abstract class J2WProperties {
 		}
 	}
 
-	private float getFloat(String key, float defaultValue) {
+    private long getLong(String key, int defaultValue) {
+        String value = null;
+        try {
+            value = mProperties.getProperty(key);
+            if (StringUtils.isEmpty(value)) {
+                return 0;
+            }
+            return Long.parseLong(mProperties.getProperty(key));
+        } catch (Exception e) {
+            L.tag(initTag());
+            L.e("%s 解析失败, 解析类型 %s, 解析数据 %s ", key, "int", value);
+            return defaultValue;
+        }
+    }
+
+    private float getFloat(String key, float defaultValue) {
 		String value = null;
 		try {
 			value = mProperties.getProperty(key);
@@ -353,7 +368,9 @@ public abstract class J2WProperties {
 			return getBoolean(key, false);
 		} else if (clazz == int.class || clazz == Integer.class) {
 			return getInt(key, 0);
-		} else {
+		} else if (clazz == long.class || clazz == Long.class) {
+            return getLong(key, 0);
+        }else {
 			return null;
 		}
 	}
