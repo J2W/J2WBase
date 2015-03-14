@@ -91,6 +91,14 @@ public final class PicassoTools {
 		return with().load(uri);
 	}
 
+    /**
+     * 是否打开debug 标记
+     * @param bool
+     */
+    public void isOpenDebug(boolean bool){
+        with().setIndicatorsEnabled(bool);
+    }
+
 	/**
 	 * 清空内存缓存-不清空磁盘缓存
 	 */
