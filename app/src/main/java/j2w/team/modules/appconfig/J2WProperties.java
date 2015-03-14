@@ -167,24 +167,6 @@ public abstract class J2WProperties {
 		}
 	}
 
-<<<<<<< HEAD
-	private long getLong(String key, long defaultValue) {
-		String value = null;
-		try {
-			value = mProperties.getProperty(key);
-			if (StringUtils.isEmpty(value)) {
-				return 0;
-			}
-			return Long.parseLong(mProperties.getProperty(key));
-		} catch (Exception e) {
-			L.tag(initTag());
-			L.e("%s 解析失败, 解析类型 %s, 解析数据 %s ", key, "int", value);
-			return defaultValue;
-		}
-	}
-
-	private float getFloat(String key, float defaultValue) {
-=======
     private long getLong(String key, long defaultValue) {
         String value = null;
         try {
@@ -201,7 +183,6 @@ public abstract class J2WProperties {
     }
 
     private float getFloat(String key, float defaultValue) {
->>>>>>> origin/master
 		String value = null;
 		try {
 			value = mProperties.getProperty(key);
