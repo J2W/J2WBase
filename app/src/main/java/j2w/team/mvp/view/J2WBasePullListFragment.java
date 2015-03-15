@@ -71,6 +71,16 @@ public abstract class J2WBasePullListFragment<T extends J2WIPresenter> extends J
         return mContentView;
     }
 
+    @Override
+    public void setRefreshing(boolean bool) {
+        swipe_container.setRefreshing(bool);
+    }
+
+    @Override
+    public void setLoading(boolean bool) {
+        swipe_container.setLoading(bool);
+    }
+
     @Override public void setLoadingColor(int colorRes1, int colorRes2, int colorRes3, int colorRes4) {
 		swipe_container.setColor(colorRes1, colorRes2, colorRes3, colorRes4);
 	}
