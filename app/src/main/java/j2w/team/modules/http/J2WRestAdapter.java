@@ -396,6 +396,17 @@ public class J2WRestAdapter {
 		}
 
 		/**
+		 * 设置网络模块
+		 */
+		public Builder setHttpClient(OkHttpClient okHttpClient) {
+			if (okHttpClient == null) {
+				throw new NullPointerException("错误处理网络服务不能为空");
+			}
+			this.client = okHttpClient;
+			return this;
+		}
+
+		/**
 		 * 创建网络适配器 推荐使用单例模式
 		 *
 		 * @return
