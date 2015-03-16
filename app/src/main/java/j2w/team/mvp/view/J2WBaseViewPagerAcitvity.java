@@ -243,7 +243,7 @@ public abstract class J2WBaseViewPagerAcitvity<T extends J2WIPresenter> extends 
     /**
      * 默认是文字
      */
-    protected class DefaultPagerAdapter extends PagerAdapter implements ViewPager.OnPageChangeListener {
+    protected class DefaultPagerAdapter<T extends J2WIPresenter> extends PagerAdapter implements ViewPager.OnPageChangeListener {
 
         ViewPagerModel[] viewPagerDatas;
 
@@ -373,7 +373,7 @@ public abstract class J2WBaseViewPagerAcitvity<T extends J2WIPresenter> extends 
     /**
      * 默认是只有图标
      */
-    public final class DefaultIconPagerAdapter extends DefaultPagerAdapter implements PagerSlidingTabStrip.IconTabProvider {
+    public final class DefaultIconPagerAdapter<T extends J2WIPresenter> extends DefaultPagerAdapter implements PagerSlidingTabStrip.IconTabProvider {
 
         @Override
         public int getPageIconResId(int position) {
@@ -384,7 +384,7 @@ public abstract class J2WBaseViewPagerAcitvity<T extends J2WIPresenter> extends 
     /**
      * 默认带数量标题的
      */
-    public final class DefaultCountPagerAdapter extends DefaultPagerAdapter implements PagerSlidingTabStrip.TitleCountTabProvider {
+    public final class DefaultCountPagerAdapter<T extends J2WIPresenter> extends DefaultPagerAdapter implements PagerSlidingTabStrip.TitleCountTabProvider {
 
         @Override
         public String getPageCount(int position) {
@@ -399,7 +399,7 @@ public abstract class J2WBaseViewPagerAcitvity<T extends J2WIPresenter> extends 
     /**
      * 自定义适配器
      */
-    public final class CustomPagerAdapter extends DefaultPagerAdapter implements PagerSlidingTabStrip.CustomTabProvider {
+    public final class CustomPagerAdapter<T extends J2WIPresenter> extends DefaultPagerAdapter implements PagerSlidingTabStrip.CustomTabProvider {
 
         @Override
         public int getCustomTabView() {

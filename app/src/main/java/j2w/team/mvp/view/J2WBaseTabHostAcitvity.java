@@ -19,7 +19,7 @@ public abstract class J2WBaseTabHostAcitvity<T extends J2WIPresenter> extends J2
 		return 0;
 	}
 
-	@Override public final PagerAdapter getPagerAdapter() {
+	@Override public final DefaultPagerAdapter getPagerAdapter() {
 		return new CustomPagerAdapter();
 	}
 
