@@ -429,8 +429,8 @@ public class SwipeRefreshLayout extends ViewGroup {
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
-        mProgressBar.draw(canvas);
-        mProgressBarBottom.draw(canvas);
+            mProgressBar.draw(canvas);
+            mProgressBarBottom.draw(canvas);
     }
 
     @Override
@@ -509,6 +509,10 @@ public class SwipeRefreshLayout extends ViewGroup {
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
+
+        if(mRefreshing || mLoading){
+            return false;
+        }
         ensureTarget();
 
         final int action = MotionEventCompat.getActionMasked(ev);
