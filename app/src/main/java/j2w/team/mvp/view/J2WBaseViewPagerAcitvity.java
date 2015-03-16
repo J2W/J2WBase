@@ -22,12 +22,13 @@ import j2w.team.common.widget.J2WViewPager;
 import j2w.team.common.widget.PagerSlidingTabStrip;
 import j2w.team.mvp.model.ViewPagerModel;
 import j2w.team.mvp.presenter.J2WHelper;
+import j2w.team.mvp.presenter.J2WIPresenter;
 import j2w.team.mvp.view.iview.J2WViewpagerIView;
 
 /**
  * Created by sky on 15/3/3.ViewPager
  */
-public abstract class J2WBaseViewPagerAcitvity extends J2WBaseActoinBarActivity implements J2WViewpagerIView {
+public abstract class J2WBaseViewPagerAcitvity<T extends J2WIPresenter> extends J2WBaseActoinBarActivity<T> implements J2WViewpagerIView {
 
     /**
      * ViewPager 头部 *
