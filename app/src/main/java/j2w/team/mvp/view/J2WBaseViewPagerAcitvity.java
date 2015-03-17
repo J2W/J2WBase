@@ -204,7 +204,7 @@ public abstract class J2WBaseViewPagerAcitvity<T extends J2WIPresenter> extends 
 
 	@Override public void setIndex(int index, boolean bool) {
 		int childCount = pager.getChildCount();
-		if (0 < index && index < childCount) {
+		if (0 <= index && index < childCount) {
 			pager.setCurrentItem(index, bool);
 		}
 	}
