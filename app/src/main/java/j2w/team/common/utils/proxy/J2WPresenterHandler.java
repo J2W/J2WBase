@@ -3,6 +3,7 @@ package j2w.team.common.utils.proxy;
 import android.os.Looper;
 
 import java.lang.reflect.Method;
+import java.util.Objects;
 
 import j2w.team.common.log.L;
 import j2w.team.mvp.presenter.J2WHelper;
@@ -15,6 +16,7 @@ public final class J2WPresenterHandler<T> extends BaseHandler<T> {
 
 	J2WPresenter	j2WPresenter;
 
+    Object methodReturn;
 	public J2WPresenterHandler(T t, J2WPresenter j2WPresenter) {
 		super(t);
 		this.j2WPresenter = j2WPresenter;
@@ -25,11 +27,12 @@ public final class J2WPresenterHandler<T> extends BaseHandler<T> {
 		// 判断是否在主线程
 		boolean isMainLooper = Looper.getMainLooper().getThread() != Thread.currentThread();
 		if (isMainLooper) {
-			J2WHelper.getMainLooper().execute(new Runnable() {
+
+            J2WHelper.getMainLooper().execute(new Runnable() {
 
 				@Override public void run() {
 					try {
-						runMethod(method, args);
+                        methodReturn = runMethod(method, args);
 					} catch (Throwable throwable) {
 						L.tag("J2W-Method");
 						L.i("方法执行失败");
@@ -37,7 +40,7 @@ public final class J2WPresenterHandler<T> extends BaseHandler<T> {
 					}
 				}
 			});
-			return null;
+			return methodReturn;
 		} else {
 			return runMethod(method, args);
 		}
