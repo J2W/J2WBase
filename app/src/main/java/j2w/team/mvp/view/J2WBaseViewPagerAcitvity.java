@@ -320,6 +320,7 @@ public abstract class J2WBaseViewPagerAcitvity<T extends J2WIPresenter> extends 
 					// 更新actionbar
 					((J2WBaseFragment) viewPagerDatas[position].fragment).updateActionBar();
 				}
+
 				viewPagerDatas[position].fragment.onResume(); // 调用切换后Fargment的onResume()
 
 				((J2WBaseFragment) viewPagerDatas[position].fragment).isDelayedData(); // 调用延迟加载\
@@ -339,10 +340,10 @@ public abstract class J2WBaseViewPagerAcitvity<T extends J2WIPresenter> extends 
 		super.onRestart();
 
 		if (adapter instanceof DefaultPagerAdapter) {
-            DefaultPagerAdapter defaultPagerAdapter = (DefaultPagerAdapter) adapter;
+			DefaultPagerAdapter defaultPagerAdapter = (DefaultPagerAdapter) adapter;
 			ViewPagerModel viewPagerModel = defaultPagerAdapter.getData(pager.getCurrentItem());
-            ((J2WBaseFragment) viewPagerModel.fragment).onViewPagerFragmentRestart(viewPagerModel.position);
-        }
+			((J2WBaseFragment) viewPagerModel.fragment).onViewPagerFragmentRestart(viewPagerModel.position);
+		}
 	}
 
 	/**
