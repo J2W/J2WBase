@@ -14,5 +14,5 @@ public abstract class J2WBaseAdapterItem<T> {
 	public abstract void init(View contentView);
 
 	/** 绑定数据 **/
-	public abstract void bindData(T t);
+	public abstract void bindData(T t,int position);
 }

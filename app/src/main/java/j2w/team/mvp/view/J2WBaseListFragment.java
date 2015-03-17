@@ -275,7 +275,7 @@ public abstract class J2WBaseListFragment<T extends J2WIPresenter> extends J2WBa
 			// 获取item
 			item = item == null ? (J2WBaseAdapterItem) convertView.getTag() : item;
 			// 绑定数据
-			item.bindData(mList.get(position));
+			item.bindData(mList.get(position),position);
 			return convertView;
 		}
 	}
