@@ -163,7 +163,7 @@ public abstract class J2WBaseFragment<T extends J2WIPresenter> extends Fragment 
 	@Override public void onPause() {
 		super.onPause();
 		L.tag(initTag());
-		L.i("Fragment-onSaveInstanceState()");
+		L.i("Fragment-onPause()");
 	}
 
 	@Override public void onStop() {
@@ -224,7 +224,13 @@ public abstract class J2WBaseFragment<T extends J2WIPresenter> extends Fragment 
 		L.i("Fragment-initDelayedData()");
 	}
 
-	@Override public void updateActionBar() {
+    @Override
+    public void onViewPagerFragmentRestart(int index) {
+        L.tag(initTag());
+        L.i("Fragment-onFragmentRestart()");
+    }
+
+    @Override public void updateActionBar() {
 		L.tag(initTag());
 		L.i("Fragment-updateActionBar()");
 	}

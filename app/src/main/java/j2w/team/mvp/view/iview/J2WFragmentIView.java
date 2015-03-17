@@ -15,6 +15,8 @@ public interface J2WFragmentIView extends J2WIView {
 
 	public void initDelayedData();
 
+    public void onViewPagerFragmentRestart(int index);
+
 	/** ViewPager切换 更新ActionBar **/
 	public void updateActionBar();
 
