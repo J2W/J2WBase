@@ -2,6 +2,7 @@ package j2w.team.common.utils;
 
 import android.app.ActivityManager;
 import android.content.Context;
+import android.location.LocationManager;
 import android.os.Debug;
 import android.os.Environment;
 import android.text.format.Formatter;
@@ -9,6 +10,8 @@ import android.text.format.Formatter;
 import java.util.List;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+
+import j2w.team.mvp.presenter.J2WHelper;
 
 /**
  * Created by sky on 15/1/29 程序工具包
@@ -105,5 +108,22 @@ public final class AppUtils {
 	public static boolean isSDCardState() {
 		final String state = Environment.getExternalStorageState();
 		return state.equals(Environment.MEDIA_MOUNTED);
+	}
+
+	/**
+	 * 判断GPS是否开启，GPS或者AGPS开启一个就认为是开启的
+	 * 
+	 * @return true 表示开启
+	 */
+	public static final boolean isOpenGps() {
+		LocationManager locationManager = (LocationManager) J2WHelper.getScreenHelper().currentActivity().getSystemService(Context.LOCATION_SERVICE);
+		// 通过GPS卫星定位，定位级别可以精确到街（通过24颗卫星定位，在室外和空旷的地方定位准确、速度快）
+		boolean gps = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+		// 通过WLAN或移动网络(3G/2G)确定的位置（也称作AGPS，辅助GPS定位。主要用于在室内或遮盖物（建筑群或茂密的深林等）密集的地方定位）
+		boolean network = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+		if (gps || network) {
+			return true;
+		}
+		return false;
 	}
 }
