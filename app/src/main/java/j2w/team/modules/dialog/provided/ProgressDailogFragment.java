@@ -46,6 +46,7 @@ public class ProgressDailogFragment extends J2WDialogFragment {
 		return initialBuilder;
 	}
 
+
 	/**
 	 * 进度条编辑类
 	 */
