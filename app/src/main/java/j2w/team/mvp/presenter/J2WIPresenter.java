@@ -1,5 +1,7 @@
 package j2w.team.mvp.presenter;
 
+import j2w.team.modules.http.J2WError;
+
 /**
  * Created by sky on 15/2/7. 业务
  */
@@ -21,7 +23,7 @@ public interface J2WIPresenter<T> {
 	public void methodError(String methodName, Throwable throwable);
 
 	/** 网络异常 **/
-	public void methodHttpError(String methodName, Throwable throwable);
+	public void methodHttpError(String methodName, J2WError j2WError);
 
 	/** 编码异常 **/
 	public void methodCodingError(String methodName, Throwable throwable);
