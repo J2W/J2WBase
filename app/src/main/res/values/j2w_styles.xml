@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <style name="None" />
 
@@ -64,5 +64,16 @@
     <style name="J2W.Layout.Viewpager">
         <item name="android:background">@android:color/white</item>
         <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="J2WRefreshSytle">
+        <item name="loading_color1">@color/j2w_pull_color1</item>
+        <item name="loading_color2">@color/j2w_pull_color2</item>
+        <item name="loading_color3">@color/j2w_pull_color3</item>
+        <item name="loading_color4">@color/j2w_pull_color4</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:background">@android:color/white</item>
     </style>
 </resources>

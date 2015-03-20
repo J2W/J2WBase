@@ -36,6 +36,7 @@ import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Transformation;
 import android.widget.AbsListView;
 
+import j2w.team.R;
 import j2w.team.mvp.view.iview.J2WPullListFragmentIView;
 
 
@@ -243,10 +244,23 @@ public class SwipeRefreshLayout extends ViewGroup {
         setWillNotDraw(false);
         mProgressBar = new SwipeProgressBar(this);
         mProgressBarBottom = new SwipeProgressBar(this);
+
+        TypedArray styledAttributes = context.obtainStyledAttributes(attrs, R.styleable.J2WRefreshSytle);
+
+        int color1 = styledAttributes.getInt(R.styleable.J2WRefreshSytle_loading_color1, 0xB3000000);
+        int color2 = styledAttributes.getInt(R.styleable.J2WRefreshSytle_loading_color2, 0x80000000);
+        int color3 = styledAttributes.getInt(R.styleable.J2WRefreshSytle_loading_color3, 0x4d000000);
+        int color4 = styledAttributes.getInt(R.styleable.J2WRefreshSytle_loading_color4, 0x1a000000);
+
+        mProgressBar.setColorScheme(color1,color2,color3,color4);
+        mProgressBarBottom.setColorScheme(color1,color2,color3,color4);
+
         final DisplayMetrics metrics = getResources().getDisplayMetrics();
         mProgressBarHeight = (int) (metrics.density * PROGRESS_BAR_HEIGHT);
         mDecelerateInterpolator = new DecelerateInterpolator(DECELERATE_INTERPOLATION_FACTOR);
         mAccelerateInterpolator = new AccelerateInterpolator(ACCELERATE_INTERPOLATION_FACTOR);
+
+
 
         final TypedArray a = context.obtainStyledAttributes(attrs, LAYOUT_ATTRS);
         setEnabled(a.getBoolean(0, true));
