@@ -80,6 +80,11 @@ public class SwipeRefreshLayout extends ViewGroup {
     private int mFrom;
     private boolean mRefreshing = false;
     private boolean mLoading = false;
+
+    private boolean notRefreshing = false;
+
+    private boolean notLoading = false;
+
     private int mTouchSlop;
     private float mDistanceToTriggerSync = -1;
     private int mMediumAnimationDuration;
@@ -335,6 +340,15 @@ public class SwipeRefreshLayout extends ViewGroup {
         }
     }
 
+    public void isNotLoading(){
+        notLoading = true;
+    }
+
+    public void isNotRefreshing(){
+        notRefreshing = true;
+
+    }
+
     /**
      * @deprecated Use {@link #setColorSchemeResources(int, int, int, int)}
      */
@@ -510,6 +524,7 @@ public class SwipeRefreshLayout extends ViewGroup {
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
 
+
         if(mRefreshing || mLoading){
             return false;
         }
@@ -572,6 +587,9 @@ public class SwipeRefreshLayout extends ViewGroup {
                 //下拉
                 if (yDiff > mTouchSlop)
                 {
+                    if(notRefreshing){
+                        return false;
+                    }
                 	//若当前子控件能向下滑动，或者上个手势为上拉，则返回
                 	if (canChildScrollUp() || mLastDirection == Mode.PULL_FROM_END)
 					{
@@ -587,6 +605,10 @@ public class SwipeRefreshLayout extends ViewGroup {
                 }
                 //上拉
                 else if (-yDiff > mTouchSlop) {
+
+                    if(notLoading){
+                        return false;
+                    }
                 	//若当前子控件能向上滑动，或者上个手势为下拉，则返回
                 	if (canChildScrollDown() || mLastDirection == Mode.PULL_FROM_START)
 					{

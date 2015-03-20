@@ -26,84 +26,89 @@ public abstract class J2WBasePullListFragment<T extends J2WIPresenter> extends J
 		return R.layout.j2w_pull_fragment_list;
 	}
 
-    @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        L.tag(initTag());
-        L.i("Fragment-onCreateView()");
-        setHasOptionsMenu(true);
-        mContentView = inflater.inflate(R.layout.j2w_fragment_main, container, false);
+	@Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		L.tag(initTag());
+		L.i("Fragment-onCreateView()");
+		setHasOptionsMenu(true);
+		mContentView = inflater.inflate(R.layout.j2w_fragment_main, container, false);
 
-        mViewAnimator = ButterKnife.findById(mContentView, android.R.id.home);
+		mViewAnimator = ButterKnife.findById(mContentView, android.R.id.home);
 
-        // 加载布局-初始化
-        mViewAnimator.addView(inflater.inflate(initLoadingLayout(), null, false));
+		// 加载布局-初始化
+		mViewAnimator.addView(inflater.inflate(initLoadingLayout(), null, false));
 
-        // 内容布局-初始化
-        View layoutView = inflater.inflate(layoutId(), null, false);
+		// 内容布局-初始化
+		View layoutView = inflater.inflate(layoutId(), null, false);
 
-        swipe_container = (SwipeRefreshLayout) layoutView.findViewById(R.id.swipe_container);
+		swipe_container = (SwipeRefreshLayout) layoutView.findViewById(R.id.swipe_container);
 
-        swipe_container.setJ2WPullListFragmentIView(this);
+		swipe_container.setJ2WPullListFragmentIView(this);
 
-        ListView listView = (ListView) layoutView.findViewById(android.R.id.list);
+		ListView listView = (ListView) layoutView.findViewById(android.R.id.list);
 
-        if (getHeaderLayout() != 0) {
-            View headerView = LayoutInflater.from(getActivity()).inflate(getHeaderLayout(), null, false);
-            listView.addHeaderView(headerView);
-        }
+		if (getHeaderLayout() != 0) {
+			View headerView = LayoutInflater.from(getActivity()).inflate(getHeaderLayout(), null, false);
+			listView.addHeaderView(headerView);
+		}
 
-        if (getFooterLayout() != 0) {
-            View footerView = LayoutInflater.from(getActivity()).inflate(getFooterLayout(), null, false);
-            listView.addFooterView(footerView);
-        }
-        // 设置点击事件
-        listView.setOnItemClickListener(this);
-        listView.setOnItemLongClickListener(this);
-        mViewAnimator.addView(layoutView);
-        // 内容布局-设置值
-        mListAdapter = new ListAdapter();
-        listView.setAdapter(mListAdapter);
-        // 空布局-初始化
-        mViewAnimator.addView(inflater.inflate(initEmptyLayout(), null, false));
-        // 错误布局-初始化
-        mViewAnimator.addView(inflater.inflate(initErrorLayout(), null, false));
+		if (getFooterLayout() != 0) {
+			View footerView = LayoutInflater.from(getActivity()).inflate(getFooterLayout(), null, false);
+			listView.addFooterView(footerView);
+		}
+		// 设置点击事件
+		listView.setOnItemClickListener(this);
+		listView.setOnItemLongClickListener(this);
+		mViewAnimator.addView(layoutView);
+		// 内容布局-设置值
+		mListAdapter = new ListAdapter();
+		listView.setAdapter(mListAdapter);
+		// 空布局-初始化
+		mViewAnimator.addView(inflater.inflate(initEmptyLayout(), null, false));
+		// 错误布局-初始化
+		mViewAnimator.addView(inflater.inflate(initErrorLayout(), null, false));
 
-        ButterKnife.inject(this, mContentView);
-        return mContentView;
-    }
+		ButterKnife.inject(this, mContentView);
+		return mContentView;
+	}
 
-    @Override
-    public void setRefreshing(boolean bool) {
-        swipe_container.setRefreshing(bool);
-    }
+	@Override public void setRefreshing(boolean bool) {
+		swipe_container.setRefreshing(bool);
+	}
 
-    @Override
-    public void setLoading(boolean bool) {
-        swipe_container.setLoading(bool);
-    }
+	@Override public void setLoading(boolean bool) {
+		swipe_container.setLoading(bool);
+	}
 
-    @Override public void setLoadingColor(int colorRes1, int colorRes2, int colorRes3, int colorRes4) {
+	@Override public void isNotRefreshing() {
+		swipe_container.isNotRefreshing();
+	}
+
+	@Override public void isNotLoading() {
+		swipe_container.isNotLoading();
+	}
+
+	@Override public void setLoadingColor(int colorRes1, int colorRes2, int colorRes3, int colorRes4) {
 		swipe_container.setColor(colorRes1, colorRes2, colorRes3, colorRes4);
 	}
 
-    /**
-     * 设置数据
-     *
-     * @param list
-     */
+	/**
+	 * 设置数据
+	 *
+	 * @param list
+	 */
 
-    @Override
-    public void setData(List list) {
-        super.setData(list);
-        swipe_container.setRefreshing(false);
-    }
+	@Override public void setData(List list) {
+		super.setData(list);
+		swipe_container.setRefreshing(false);
+	}
 
-    /**
-     * 追加数据
-     *
-     * @param list
-     */
-    public void addData(List list) {
-        super.addData(list);
-        swipe_container.setLoading(false);
-    }
+	/**
+	 * 追加数据
+	 *
+	 * @param list
+	 */
+	public void addData(List list) {
+		super.addData(list);
+		swipe_container.setLoading(false);
+	}
 }
