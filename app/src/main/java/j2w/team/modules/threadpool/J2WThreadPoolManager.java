@@ -16,34 +16,44 @@ public final class J2WThreadPoolManager {
 		return instance;
 	}
 
-	/** 线程服务-并行线程池 **/
-	private J2WExecutorService			j2WExecutorService;
+	/** 线程服务-网络线程池 **/
+	private J2WHttpExecutorService			j2WHttpExecutorService;
 
-	/** 线程服务-串行线程池 **/
-	private J2WSingleExecutorServiece	j2WSingleExecutorServiece;
+	/** 线程服务-并行工作线程池 **/
+	private J2WWorkExecutorService			j2WWorkExecutorService;
 
-	public synchronized ExecutorService getExecutorService() {
-		if (j2WExecutorService == null) {
-			j2WExecutorService = new J2WExecutorService();
+	/** 线程服务-串行工作线程池 **/
+	private J2WSingleWorkExecutorServiece	j2WSingleWorkExecutorServiece;
+
+	public synchronized ExecutorService getHttpExecutorService() {
+		if (j2WHttpExecutorService == null) {
+			j2WHttpExecutorService = new J2WHttpExecutorService();
 		}
-		return j2WExecutorService;
+		return j2WHttpExecutorService;
 	}
 
-	public synchronized ExecutorService getSingleExecutorService() {
-		if (j2WSingleExecutorServiece == null) {
-			j2WSingleExecutorServiece = new J2WSingleExecutorServiece();
+	public synchronized ExecutorService getSingleWorkExecutorService() {
+		if (j2WSingleWorkExecutorServiece == null) {
+			j2WSingleWorkExecutorServiece = new J2WSingleWorkExecutorServiece();
 		}
-		return j2WSingleExecutorServiece;
+		return j2WSingleWorkExecutorServiece;
+	}
+
+	public synchronized ExecutorService getWorkExecutorService() {
+		if (j2WWorkExecutorService == null) {
+			j2WWorkExecutorService = new J2WWorkExecutorService();
+		}
+		return j2WSingleWorkExecutorServiece;
 	}
 
 	public synchronized void finish() {
-		if (j2WExecutorService != null) {
-			j2WExecutorService.shutdown();
-			j2WExecutorService = null;
+		if (j2WHttpExecutorService != null) {
+			j2WHttpExecutorService.shutdown();
+			j2WHttpExecutorService = null;
 		}
-		if (j2WSingleExecutorServiece != null) {
-			j2WSingleExecutorServiece.shutdown();
-			j2WSingleExecutorServiece = null;
+		if (j2WSingleWorkExecutorServiece != null) {
+			j2WSingleWorkExecutorServiece.shutdown();
+			j2WSingleWorkExecutorServiece = null;
 		}
 	}
 }

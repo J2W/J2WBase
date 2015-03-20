@@ -12,5 +12,5 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 public @interface Background {
 
-	BackgroundType value() default BackgroundType.MULTI;
+	BackgroundType value() default BackgroundType.HTTP;
 }

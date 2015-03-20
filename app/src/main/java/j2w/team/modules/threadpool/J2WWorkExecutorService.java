@@ -5,13 +5,13 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Created by sky on 15/2/20. 服务线程
+ * Created by sky on 15/3/20.
  */
-class J2WExecutorService extends ThreadPoolExecutor {
+public class J2WWorkExecutorService extends ThreadPoolExecutor {
 
-	private static final int	DEFAULT_THREAD_COUNT	= 5;
+	private static final int	DEFAULT_THREAD_COUNT	= 3;
 
-	J2WExecutorService() {
+	J2WWorkExecutorService() {
 		super(DEFAULT_THREAD_COUNT, DEFAULT_THREAD_COUNT, 0, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>(), J2WThreadPoolUtils.threadFactory("J2W Dispatcher", true));
 	}
 }
