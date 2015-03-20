@@ -59,7 +59,7 @@ public abstract class J2WBaseListFragment<T extends J2WIPresenter> extends J2WBa
 		return 1;
 	}
 
-    /**
+	/**
 	 * 返回类型
 	 * 
 	 * @param position
@@ -76,10 +76,10 @@ public abstract class J2WBaseListFragment<T extends J2WIPresenter> extends J2WBa
 
 	@Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        L.tag(initTag());
+		L.tag(initTag());
 		L.i("Fragment-onCreateView()");
-        setHasOptionsMenu(true);
-        mContentView = inflater.inflate(R.layout.j2w_fragment_main, container, false);
+		setHasOptionsMenu(true);
+		mContentView = inflater.inflate(R.layout.j2w_fragment_main, container, false);
 
 		mViewAnimator = ButterKnife.findById(mContentView, android.R.id.home);
 
@@ -126,7 +126,7 @@ public abstract class J2WBaseListFragment<T extends J2WIPresenter> extends J2WBa
 	/**
 	 * ListView adapter
 	 */
-     ListAdapter	mListAdapter;
+	ListAdapter	mListAdapter;
 
 	/**
 	 * adapter是否为空
@@ -147,9 +147,9 @@ public abstract class J2WBaseListFragment<T extends J2WIPresenter> extends J2WBa
 	public void setData(List list) {
 		L.tag(initTag());
 		L.i("Fragment-setData(List)");
-        if(list == null || list.size() < 1){
-            return;
-        }
+		if (list == null) {
+			return;
+		}
 		if (isAdapterNotNull()) {
 			mListAdapter.setData(list);
 			updataList();
@@ -164,9 +164,9 @@ public abstract class J2WBaseListFragment<T extends J2WIPresenter> extends J2WBa
 	public void addData(List list) {
 		L.tag(initTag());
 		L.i("Fragment-addData(List)");
-        if(list == null || list.size() < 1){
-            return;
-        }
+		if (list == null || list.size() < 1) {
+			return;
+		}
 		if (isAdapterNotNull()) {
 			mListAdapter.addData(list);
 			updataList();
@@ -193,25 +193,25 @@ public abstract class J2WBaseListFragment<T extends J2WIPresenter> extends J2WBa
 		if (isAdapterNotNull()) {
 			int state = mViewAnimator.getDisplayedChild();
 			List list = getData();
-			if (state == 1 && list.isEmpty()) {
+			if ((state == 1 || state == 0) && list.isEmpty()) {
 				showEmpty();
 			} else if (state != 2 && !list.isEmpty()) {
-                showContent();
+				showContent();
 			}
-            mListAdapter.notifyDataSetChanged();
-        }
+			mListAdapter.notifyDataSetChanged();
+		}
 	}
 
 	/**
 	 * 内部类-列表适配器
 	 */
-     final class ListAdapter extends BaseAdapter {
+	final class ListAdapter extends BaseAdapter {
 
 		/** 数据集合 */
 		private List	mList;
 
 		/** 构造函数 **/
-        public ListAdapter() {
+		public ListAdapter() {
 			/** 初始化空数据源 **/
 			mList = new ArrayList();
 		}
@@ -275,7 +275,7 @@ public abstract class J2WBaseListFragment<T extends J2WIPresenter> extends J2WBa
 			// 获取item
 			item = item == null ? (J2WBaseAdapterItem) convertView.getTag() : item;
 			// 绑定数据
-			item.bindData(mList.get(position),position);
+			item.bindData(mList.get(position), position);
 			return convertView;
 		}
 	}
