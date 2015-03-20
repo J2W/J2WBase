@@ -17,9 +17,9 @@ public interface J2WPullListFragmentIView extends J2WListFragmentIView {
 
 	public void setLoading(boolean bool);
 
-	public void isNotRefreshing();
+	public void notRefreshing();
 
-	public void isNotLoading();
+	public void notLoading();
 
 	public void setLoadingColor(int colorRes1, int colorRes2, int colorRes3, int colorRes4);
 }

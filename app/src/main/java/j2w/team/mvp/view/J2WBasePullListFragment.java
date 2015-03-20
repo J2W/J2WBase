@@ -79,11 +79,11 @@ public abstract class J2WBasePullListFragment<T extends J2WIPresenter> extends J
 		swipe_container.setLoading(bool);
 	}
 
-	@Override public void isNotRefreshing() {
+	@Override public void notRefreshing() {
 		swipe_container.isNotRefreshing();
 	}
 
-	@Override public void isNotLoading() {
+	@Override public void notLoading() {
 		swipe_container.isNotLoading();
 	}
 
