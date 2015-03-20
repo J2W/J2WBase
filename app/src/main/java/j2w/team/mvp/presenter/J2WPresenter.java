@@ -1,25 +1,30 @@
 package j2w.team.mvp.presenter;
 
-import java.net.ConnectException;
-
-import j2w.team.R;
 import j2w.team.common.log.L;
 import j2w.team.common.utils.proxy.DynamicProxyUtils;
 import j2w.team.modules.http.J2WError;
-import j2w.team.modules.toast.J2WToast;
 
 /**
  * Created by sky on 15/2/1. 中央处理器
  */
 public abstract class J2WPresenter<T> {
 
-	private boolean	isCallBack;
+	private J2WICommonPresenter	j2WICommonPresenter;
 
-	private T		iView;
+	private boolean				isCallBack;
+
+	private T					iView;
 
 	/** 初始化 **/
 	void initPresenter(T iView) {
 		isCallBack = true;
+		this.iView = DynamicProxyUtils.newProxyPresenter(iView, this);// 动态代理-业务
+	}
+
+	/** 初始化 **/
+	void initPresenter(T iView, J2WICommonPresenter j2WICommonPresenter) {
+		isCallBack = true;
+		this.j2WICommonPresenter = j2WICommonPresenter;
 		this.iView = DynamicProxyUtils.newProxyPresenter(iView, this);// 动态代理-业务
 	}
 
@@ -61,7 +66,7 @@ public abstract class J2WPresenter<T> {
 	 * @param methodName
 	 * @param throwable
 	 */
-	public void methodError(String methodName, Throwable throwable) {
+	public final void methodError(String methodName, Throwable throwable) {
 		L.tag(initTag());
 		L.i("methodError() methodName : " + methodName);
 		if (throwable.getCause() instanceof J2WError) {
@@ -75,8 +80,18 @@ public abstract class J2WPresenter<T> {
 	public void methodHttpError(String methodName, J2WError j2WError) {
 		L.tag(initTag());
 		L.i("methodHttpError() methodName : " + methodName);
-		if (j2WError.getCause() instanceof ConnectException) {
-			J2WToast.show(J2WHelper.getScreenHelper().currentActivity().getString(R.string.http_error));
+		if (j2WError.getKind() == J2WError.Kind.NETWORK) { // 请求发送前，网络问题
+			L.tag(initTag());
+			L.i("J2WError.Kind.NETWORK");
+			j2WICommonPresenter.errorNetWork();
+		} else if (j2WError.getKind() == J2WError.Kind.HTTP) {// 请求响应后，网络错误
+			L.tag(initTag());
+			L.i("J2WError.Kind.HTTP");
+			j2WICommonPresenter.errorHttp();
+		} else if (j2WError.getKind() == J2WError.Kind.UNEXPECTED) {// 意外错误
+			L.tag(initTag());
+			L.i("J2WError.Kind.UNEXPECTED");
+			j2WICommonPresenter.errorUnexpected();
 		}
 	}
 
@@ -84,5 +99,6 @@ public abstract class J2WPresenter<T> {
 	public void methodCodingError(String methodName, Throwable throwable) {
 		L.tag(initTag());
 		L.i("methodCodingError() methodName : " + methodName);
+		j2WICommonPresenter.errorCodingError();
 	}
 }

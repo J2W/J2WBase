@@ -40,6 +40,7 @@ public class J2WSyncHandler<T> extends BaseHandler<T> {
 				} catch (IllegalAccessException e1) {
 					L.e(e1.toString());
 				} catch (InvocationTargetException e1) {
+                    e1.printStackTrace();
 					L.e("方法内部异常:" + e1.toString());
 				}
 			}
@@ -49,6 +50,7 @@ public class J2WSyncHandler<T> extends BaseHandler<T> {
 			case HTTP:
 				L.tag("J2W-Method");
 				L.i("网络线程池-并行执行: " + method.getName());
+
 				J2WHelper.getThreadPoolHelper().getHttpExecutorService().execute(new J2WAsyncCall(method.getName()) {
 
 					@Override protected void execute() {

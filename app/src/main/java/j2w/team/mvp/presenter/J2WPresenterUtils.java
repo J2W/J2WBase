@@ -38,9 +38,11 @@ public final class J2WPresenterUtils {
 		DynamicProxyUtils.validateServiceClass(interfaceClass);
 
 		Class clazz;
+        Class commonClazz;
 		try {
 			/** 加载类 **/
 			clazz = Class.forName(presenter.value().getName());
+
 			/** 打印信息 **/
 			StringBuilder stringBuilder = new StringBuilder();
 			stringBuilder.append("注入:");
@@ -57,7 +59,15 @@ public final class J2WPresenterUtils {
 			/** 创建类 **/
 			implPresenter = (D) clazz.newInstance();
 			/** 初始化业务类 **/
-			implPresenter.initPresenter(iView);
+            /** 获取注解 **/
+            CommonPresenter commonPresenter = (CommonPresenter) clazz.getAnnotation(CommonPresenter.class);
+            if(commonPresenter != null){
+                commonClazz = Class.forName(commonPresenter.value().getName());
+                J2WICommonPresenter j2WICommonPresenter = (J2WICommonPresenter) commonClazz.newInstance();
+                implPresenter.initPresenter(iView,j2WICommonPresenter);
+            }else{
+                implPresenter.initPresenter(iView);
+            }
 			/** 赋值给接口 **/
 			interfacePresenter = (T) implPresenter;
 			/** 动态代理 - 线程系统 **/

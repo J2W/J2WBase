@@ -37,14 +37,12 @@ public class J2WError extends RuntimeException {
 	}
 
 	public enum Kind {
-		/** An {@link IOException} occurred while communicating to the server. */
+		/** 链接服务器发生错误 */
 		NETWORK,
-		/** A non-200 HTTP status code was received from the server. */
+		/** 从服务器接收到了非200 HTTP状态代码 */
 		HTTP,
 		/**
-		 * An internal error occurred while attempting to execute a request. It
-		 * is best practice to re-throw this exception so your application
-		 * crashes.
+		 * 试图执行一个请求时发生内部错误。它 最好的做法是重新抛出此异常等应用程序 崩溃.
 		 */
 		UNEXPECTED
 	}

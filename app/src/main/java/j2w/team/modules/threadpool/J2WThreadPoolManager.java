@@ -43,7 +43,7 @@ public final class J2WThreadPoolManager {
 		if (j2WWorkExecutorService == null) {
 			j2WWorkExecutorService = new J2WWorkExecutorService();
 		}
-		return j2WSingleWorkExecutorServiece;
+		return j2WWorkExecutorService;
 	}
 
 	public synchronized void finish() {
@@ -55,5 +55,9 @@ public final class J2WThreadPoolManager {
 			j2WSingleWorkExecutorServiece.shutdown();
 			j2WSingleWorkExecutorServiece = null;
 		}
+        if(j2WWorkExecutorService != null){
+            j2WWorkExecutorService.shutdown();
+            j2WWorkExecutorService = null;
+        }
 	}
 }
