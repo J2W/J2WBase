@@ -77,7 +77,7 @@ public class GsonConverter implements J2WConverter {
 	@Override public RequestBody toBody(Object object, Type type) {
 		String json = gson.toJson(object, type);
 		L.tag("J2W-HTTP");
-		L.i("请求体:mediaType :" + mediaType + " json : " + json);
+		L.i("请求体:mediaType :" + mediaType + ", json : " + json);
 		return RequestBody.create(mediaType, json);
 	}
 }
