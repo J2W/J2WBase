@@ -17,5 +17,5 @@ public interface J2WICommonPresenter {
 	public void errorUnexpected(J2WError j2WError);
 
 	/** 编码异常 **/
-	public void errorCodingError();
+	public void errorCodingError(Throwable throwable);
 }

@@ -118,6 +118,6 @@ public abstract class J2WPresenter<T> {
 	public void methodCodingError(String methodName, Throwable throwable) {
 		L.tag(initTag());
 		L.i("methodCodingError() methodName : " + methodName);
-		j2WICommonPresenter.errorCodingError();
+		j2WICommonPresenter.errorCodingError(throwable);
 	}
 }
