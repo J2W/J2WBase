@@ -42,33 +42,32 @@ public class GsonConverter implements J2WConverter {
 	}
 
 	@Override public Object fromBody(ResponseBody body, Type type) throws IOException {
-        Charset charset = this.charset;
+		Charset charset = this.charset;
 		if (body.contentType() != null) {
 			charset = body.contentType().charset(charset);
 		}
 
-        L.tag("GsonConverter");
+		L.tag("GsonConverter");
 
 		InputStream is = body.byteStream();
 
-
-        InputStreamReader inputStreamReader = new InputStreamReader(is, charset);
-        BufferedReader bufferedReader = null;
-        try {
-            bufferedReader = new BufferedReader(inputStreamReader);
-            StringBuilder result = new StringBuilder();
-            String line = null;
-            while((line = bufferedReader.readLine()) != null){
-                result.append(line + "\n");
-            }
-            String json = result.toString();
-            L.i(result.toString());
-            return gson.fromJson(json, type);
+		InputStreamReader inputStreamReader = new InputStreamReader(is, charset);
+		BufferedReader bufferedReader = null;
+		try {
+			bufferedReader = new BufferedReader(inputStreamReader);
+			StringBuilder result = new StringBuilder();
+			String line = null;
+			while ((line = bufferedReader.readLine()) != null) {
+				result.append(line + "\n");
+			}
+			String json = result.toString();
+			L.i(result.toString());
+			return gson.fromJson(json, type);
 		} finally {
 			try {
-                inputStreamReader.close();
-                is.close();
-                bufferedReader.close();
+				inputStreamReader.close();
+				is.close();
+				bufferedReader.close();
 
 			} catch (IOException ignored) {
 			}
@@ -77,6 +76,8 @@ public class GsonConverter implements J2WConverter {
 
 	@Override public RequestBody toBody(Object object, Type type) {
 		String json = gson.toJson(object, type);
+		L.tag("J2W-HTTP");
+		L.i("请求体:mediaType :" + mediaType + " json : " + json);
 		return RequestBody.create(mediaType, json);
 	}
 }
