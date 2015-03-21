@@ -25,6 +25,12 @@ public interface J2WIPresenter<T> {
 	/** 网络异常 **/
 	public void methodHttpError(String methodName, J2WError j2WError);
 
+	public void errorNetWork(); // 发送请求前错误
+
+	public void errorHttp(); // 请求得到响应后错误
+
+	public void errorUnexpected();// 请求或者响应 意外错误
+
 	/** 编码异常 **/
 	public void methodCodingError(String methodName, Throwable throwable);
 }

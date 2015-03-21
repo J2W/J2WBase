@@ -77,7 +77,7 @@ public abstract class J2WPresenter<T> {
 	}
 
 	/** 网络异常 **/
-	public void methodHttpError(String methodName, J2WError j2WError) {
+	public final void methodHttpError(String methodName, J2WError j2WError) {
 		L.tag(initTag());
 		L.i("methodHttpError() methodName : " + methodName);
 		if (j2WError.getKind() == J2WError.Kind.NETWORK) { // 请求发送前，网络问题
@@ -86,20 +86,33 @@ public abstract class J2WPresenter<T> {
 			if (j2WICommonPresenter != null) {
 				j2WICommonPresenter.errorNetWork();
 			}
+			errorNetWork();
 		} else if (j2WError.getKind() == J2WError.Kind.HTTP) {// 请求响应后，网络错误
 			L.tag(initTag());
 			L.i("J2WError.Kind.HTTP");
 			if (j2WICommonPresenter != null) {
-				j2WICommonPresenter.errorHttp();
+				j2WICommonPresenter.errorHttp(j2WError);
 			}
+			errorHttp();
 		} else if (j2WError.getKind() == J2WError.Kind.UNEXPECTED) {// 意外错误
 			L.tag(initTag());
 			L.i("J2WError.Kind.UNEXPECTED");
 			if (j2WICommonPresenter != null) {
-				j2WICommonPresenter.errorUnexpected();
+				j2WICommonPresenter.errorUnexpected(j2WError);
 			}
+			errorUnexpected();
 		}
 	}
+
+	/** 发送请求前错误 **/
+	public void errorNetWork() {}
+
+	/** 请求得到响应后错误 **/
+	public void errorHttp() {}
+
+	/** 请求或者响应 意外错误 **/
+
+	public void errorUnexpected() {}
 
 	/** 编码异常 **/
 	public void methodCodingError(String methodName, Throwable throwable) {
