@@ -83,15 +83,21 @@ public abstract class J2WPresenter<T> {
 		if (j2WError.getKind() == J2WError.Kind.NETWORK) { // 请求发送前，网络问题
 			L.tag(initTag());
 			L.i("J2WError.Kind.NETWORK");
-			j2WICommonPresenter.errorNetWork();
+			if (j2WICommonPresenter != null) {
+				j2WICommonPresenter.errorNetWork();
+			}
 		} else if (j2WError.getKind() == J2WError.Kind.HTTP) {// 请求响应后，网络错误
 			L.tag(initTag());
 			L.i("J2WError.Kind.HTTP");
-			j2WICommonPresenter.errorHttp();
+			if (j2WICommonPresenter != null) {
+				j2WICommonPresenter.errorHttp();
+			}
 		} else if (j2WError.getKind() == J2WError.Kind.UNEXPECTED) {// 意外错误
 			L.tag(initTag());
 			L.i("J2WError.Kind.UNEXPECTED");
-			j2WICommonPresenter.errorUnexpected();
+			if (j2WICommonPresenter != null) {
+				j2WICommonPresenter.errorUnexpected();
+			}
 		}
 	}
 
