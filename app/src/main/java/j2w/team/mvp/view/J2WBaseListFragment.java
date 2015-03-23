@@ -181,11 +181,11 @@ public abstract class J2WBaseListFragment<T extends J2WIPresenter> extends J2WBa
 	public final List getData() {
 		L.tag(initTag());
 		L.i("Fragment-getData()");
-		return isAdapterNotNull() ? mListAdapter.mList : null;
+		return isAdapterNotNull() ? mListAdapter.getData() : null;
 	}
 
 	/**
-	 * 更新列表 0 显示 进度 1 显示 内容 2 显示 空 3 显示 错误
+	 * 更新列表 0 显示 进度, 1 显示 内容 2 显示 空 3 显示 错误,
 	 */
 	public final void updataList() {
 		L.tag(initTag());
@@ -193,9 +193,11 @@ public abstract class J2WBaseListFragment<T extends J2WIPresenter> extends J2WBa
 		if (isAdapterNotNull()) {
 			int state = mViewAnimator.getDisplayedChild();
 			List list = getData();
+            L.i("updataList() - state " + state);
+
 			if ((state == 1 || state == 0) && list.isEmpty()) {
 				showEmpty();
-			} else if (state != 2 && !list.isEmpty()) {
+			} else if (state != 1 && !list.isEmpty()) {
 				showContent();
 			}
 			mListAdapter.notifyDataSetChanged();
@@ -218,13 +220,23 @@ public abstract class J2WBaseListFragment<T extends J2WIPresenter> extends J2WBa
 
 		/** 设置数据源 **/
 		private void setData(List list) {
+			L.tag(initTag());
+			L.i("setData()" + list);
 			mList = list;
 		}
 
 		/** 追加数据源 **/
 		private void addData(List list) {
+            L.tag(initTag());
+            L.i("addData()" + list);
 			mList.addAll(list);
 		}
+
+        private List getData(){
+            L.tag(initTag());
+            L.i("adapter - getData()" + mList);
+            return mList;
+        }
 
 		/** 列表数量 **/
 		@Override public int getCount() {
