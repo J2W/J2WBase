@@ -9,26 +9,26 @@ import j2w.team.modules.http.J2WError;
  */
 public abstract class J2WPresenter<T> {
 
-	private J2WICommonPresenter	j2WICommonPresenter;
+	private boolean	isCallBack;
 
-	private boolean				isCallBack;
+	private T		iView;
 
-	private T					iView;
-
-	/** 初始化 **/
+	/**
+	 * 初始化 - 业务
+	 * 
+	 * @param iView
+	 *            view层引用
+	 */
 	void initPresenter(T iView) {
 		isCallBack = true;
 		this.iView = DynamicProxyUtils.newProxyPresenter(iView, this);// 动态代理-业务
 	}
 
-	/** 初始化 **/
-	void initPresenter(T iView, J2WICommonPresenter j2WICommonPresenter) {
-		isCallBack = true;
-		this.j2WICommonPresenter = j2WICommonPresenter;
-		this.iView = DynamicProxyUtils.newProxyPresenter(iView, this);// 动态代理-业务
-	}
-
-	/** 获取TAG标记 **/
+	/**
+	 * 获取TAG标记
+	 *
+	 * @return tag
+	 */
 	public String initTag() {
 		return getClass().getSimpleName();
 	}
@@ -83,23 +83,15 @@ public abstract class J2WPresenter<T> {
 		if (j2WError.getKind() == J2WError.Kind.NETWORK) { // 请求发送前，网络问题
 			L.tag(initTag());
 			L.i("J2WError.Kind.NETWORK");
-			if (j2WICommonPresenter != null) {
-				j2WICommonPresenter.errorNetWork();
-			}
 			errorNetWork();
 		} else if (j2WError.getKind() == J2WError.Kind.HTTP) {// 请求响应后，网络错误
 			L.tag(initTag());
 			L.i("J2WError.Kind.HTTP");
-			if (j2WICommonPresenter != null) {
-				j2WICommonPresenter.errorHttp(j2WError);
-			}
 			errorHttp();
 		} else if (j2WError.getKind() == J2WError.Kind.UNEXPECTED) {// 意外错误
 			L.tag(initTag());
 			L.i("J2WError.Kind.UNEXPECTED");
-			if (j2WICommonPresenter != null) {
-				j2WICommonPresenter.errorUnexpected(j2WError);
-			}
+
 			errorUnexpected();
 		}
 	}
@@ -111,13 +103,11 @@ public abstract class J2WPresenter<T> {
 	public void errorHttp() {}
 
 	/** 请求或者响应 意外错误 **/
-
 	public void errorUnexpected() {}
 
 	/** 编码异常 **/
 	public void methodCodingError(String methodName, Throwable throwable) {
 		L.tag(initTag());
 		L.i("methodCodingError() methodName : " + methodName);
-		j2WICommonPresenter.errorCodingError(throwable);
 	}
 }

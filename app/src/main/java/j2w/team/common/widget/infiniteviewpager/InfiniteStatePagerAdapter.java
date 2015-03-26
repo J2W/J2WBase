@@ -11,7 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import j2w.team.common.log.L;
-import j2w.team.mvp.view.J2WBaseFragment;
+import j2w.team.mvp.fragment.J2WFragment;
+import j2w.team.mvp.fragment.J2WVPFragment;
 
 /**
  * Created by sky on 15/1/22.
@@ -47,7 +48,9 @@ public class InfiniteStatePagerAdapter extends PagerAdapter {
 	}
 
 	public void addData(List<Fragment> fragments) {
-		this.fragments.add((Fragment) fragments);
+        for(Fragment fragment : fragments){
+            addData(fragment);
+        }
 	}
 
 	public void clearData() {
@@ -96,7 +99,7 @@ public class InfiniteStatePagerAdapter extends PagerAdapter {
 		// 调用切换前Fargment的onStop()
 		if (fragments.get(position).isAdded()) {
 			fragments.get(position).onResume(); // 调用切换后Fargment的onResume()
-			((J2WBaseFragment) fragments.get(position)).isDelayedData(); // 调用延迟加载
+			((J2WVPFragment) fragments.get(position)).isDelayedData(); // 调用延迟加载
 		}
 		currentPageIndex = position;
 	}

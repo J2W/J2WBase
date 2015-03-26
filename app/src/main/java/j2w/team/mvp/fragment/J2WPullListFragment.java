@@ -1,6 +1,5 @@
-package j2w.team.mvp.view;
+package j2w.team.mvp.fragment;
 
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,30 +11,40 @@ import butterknife.ButterKnife;
 import j2w.team.R;
 import j2w.team.common.log.L;
 import j2w.team.common.widget.swipeRefresh.SwipeRefreshLayout;
+import j2w.team.mvp.J2WIViewActivity;
 import j2w.team.mvp.presenter.J2WIPresenter;
-import j2w.team.mvp.view.iview.J2WPullListFragmentIView;
 
 /**
  * Created by sky on 15/3/13.
  */
-public abstract class J2WBasePullListFragment<T extends J2WIPresenter> extends J2WBaseListFragment<T> implements J2WPullListFragmentIView {
+public abstract class J2WPullListFragment<T extends J2WIPresenter> extends J2WListFragment<T> implements J2WIViewPullListFragment {
 
+	/**
+	 * 进度条控件
+	 */
 	private SwipeRefreshLayout	swipe_container;
 
+	/**
+	 * 获取布局ID
+	 *
+	 * @return 布局ID
+	 */
 	@Override public int layoutId() {
 		return R.layout.j2w_pull_fragment_list;
 	}
 
-	@Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+	@Override public void initLayout(LayoutInflater inflater, ViewGroup container) {
 		L.tag(initTag());
-		L.i("Fragment-onCreateView()");
-		setHasOptionsMenu(true);
+		L.i("Fragment-initLayout()");
+
 		mContentView = inflater.inflate(R.layout.j2w_fragment_main, container, false);
 
 		mViewAnimator = ButterKnife.findById(mContentView, android.R.id.home);
+		// 获取View层接口
+		J2WIViewActivity j2WIViewActivity = (J2WIViewActivity) getActivity();
 
 		// 加载布局-初始化
-		mViewAnimator.addView(inflater.inflate(initLoadingLayout(), null, false));
+		mViewAnimator.addView(inflater.inflate(j2WIViewActivity.fragmentLoadingLayout(), null, false));
 
 		// 内容布局-初始化
 		View layoutView = inflater.inflate(layoutId(), null, false);
@@ -63,32 +72,43 @@ public abstract class J2WBasePullListFragment<T extends J2WIPresenter> extends J
 		mListAdapter = new ListAdapter();
 		listView.setAdapter(mListAdapter);
 		// 空布局-初始化
-		mViewAnimator.addView(inflater.inflate(initEmptyLayout(), null, false));
+		mViewAnimator.addView(inflater.inflate(j2WIViewActivity.fragmentEmptyLayout(), null, false));
 		// 错误布局-初始化
-		mViewAnimator.addView(inflater.inflate(initErrorLayout(), null, false));
-
-		ButterKnife.inject(this, mContentView);
-		return mContentView;
+		mViewAnimator.addView(inflater.inflate(j2WIViewActivity.fragmentErrorLayout(), null, false));
 	}
 
+	/**
+	 * 设置头部进度条 - 显示和隐藏
+	 *
+	 * @param bool
+	 *            true 显示 false 隐藏
+	 */
 	@Override public void setRefreshing(boolean bool) {
 		swipe_container.setRefreshing(bool);
 	}
 
+	/**
+	 * 设置尾部进度条 - 显示和隐藏
+	 *
+	 * @param bool
+	 *            true 显示 false 隐藏
+	 */
 	@Override public void setLoading(boolean bool) {
 		swipe_container.setLoading(bool);
 	}
 
+	/**
+	 * 关闭头部进度条
+	 */
 	@Override public void notRefreshing() {
 		swipe_container.isNotRefreshing();
 	}
 
+	/**
+	 * 关闭尾部进度条
+	 */
 	@Override public void notLoading() {
 		swipe_container.isNotLoading();
-	}
-
-	@Override public void setLoadingColor(int colorRes1, int colorRes2, int colorRes3, int colorRes4) {
-		swipe_container.setColor(colorRes1, colorRes2, colorRes3, colorRes4);
 	}
 
 	/**
@@ -96,7 +116,6 @@ public abstract class J2WBasePullListFragment<T extends J2WIPresenter> extends J
 	 *
 	 * @param list
 	 */
-
 	@Override public void setData(List list) {
 		super.setData(list);
 		swipe_container.setRefreshing(false);

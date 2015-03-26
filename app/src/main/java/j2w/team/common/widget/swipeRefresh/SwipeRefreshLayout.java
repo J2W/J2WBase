@@ -37,7 +37,7 @@ import android.view.animation.Transformation;
 import android.widget.AbsListView;
 
 import j2w.team.R;
-import j2w.team.mvp.view.iview.J2WPullListFragmentIView;
+import j2w.team.mvp.fragment.J2WIViewPullListFragment;
 
 
 /**
@@ -75,7 +75,7 @@ public class SwipeRefreshLayout extends ViewGroup {
     private SwipeProgressBar mProgressBarBottom;
     private View mTarget; //the content that gets pulled down
     private int mOriginalOffsetTop;
-    private J2WPullListFragmentIView mJ2WPullListFragmentIView;
+    private J2WIViewPullListFragment mJ2WPullListFragmentIView;
 //    private OnRefreshListener mRefreshListener;
 //    private OnLoadListener mLoadListener;
     private int mFrom;
@@ -245,12 +245,12 @@ public class SwipeRefreshLayout extends ViewGroup {
         mProgressBar = new SwipeProgressBar(this);
         mProgressBarBottom = new SwipeProgressBar(this);
 
-        TypedArray styledAttributes = context.obtainStyledAttributes(attrs, R.styleable.J2WRefreshSytle);
+        TypedArray styledAttributes = context.obtainStyledAttributes(attrs, R.styleable.J2WRefreshStyle);
 
-        int color1 = styledAttributes.getInt(R.styleable.J2WRefreshSytle_loading_color1, 0xB3000000);
-        int color2 = styledAttributes.getInt(R.styleable.J2WRefreshSytle_loading_color2, 0x80000000);
-        int color3 = styledAttributes.getInt(R.styleable.J2WRefreshSytle_loading_color3, 0x4d000000);
-        int color4 = styledAttributes.getInt(R.styleable.J2WRefreshSytle_loading_color4, 0x1a000000);
+        int color1 = styledAttributes.getInt(R.styleable.J2WRefreshStyle_loading_color1, 0xB3000000);
+        int color2 = styledAttributes.getInt(R.styleable.J2WRefreshStyle_loading_color2, 0x80000000);
+        int color3 = styledAttributes.getInt(R.styleable.J2WRefreshStyle_loading_color3, 0x4d000000);
+        int color4 = styledAttributes.getInt(R.styleable.J2WRefreshStyle_loading_color4, 0x1a000000);
 
         mProgressBar.setColorScheme(color1,color2,color3,color4);
         mProgressBarBottom.setColorScheme(color1,color2,color3,color4);
@@ -295,7 +295,7 @@ public class SwipeRefreshLayout extends ViewGroup {
      * Set the listener to be notified when a refresh is triggered via the swipe
      * gesture.
      */
-    public void setJ2WPullListFragmentIView(J2WPullListFragmentIView listener){
+    public void setJ2WPullListFragmentIView(J2WIViewPullListFragment listener){
         this.mJ2WPullListFragmentIView = listener;
     }
 

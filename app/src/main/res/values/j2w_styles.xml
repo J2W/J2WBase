@@ -65,8 +65,8 @@
         <item name="android:background">@android:color/white</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
-
-    <style name="J2WRefreshSytle">
+    <!-- ListViewRefresh -->
+    <style name="J2WRefreshStyle">
         <item name="loading_color1">@color/j2w_pull_color1</item>
         <item name="loading_color2">@color/j2w_pull_color2</item>
         <item name="loading_color3">@color/j2w_pull_color3</item>
@@ -75,5 +75,21 @@
         <item name="android:layout_height">match_parent</item>
         <item name="android:orientation">vertical</item>
         <item name="android:background">@android:color/white</item>
+    </style>
+    <!-- ViewPagerTab -->
+    <style name="J2WPagerSlidingTabStripStyle">
+        <item name="pstsIndicatorColor">#51A3FF</item>
+        <item name="pstsIndicatorHeight">4dp</item>
+        <item name="pstsUnderlineColor">@android:color/transparent</item>
+        <item name="pstsUnderlineHeight">1dp</item>
+        <item name="pstsDividerColor">@android:color/transparent</item>
+        <item name="pstsDividerPadding">0dp</item>
+        <item name="pstsTabPaddingLeftRight">0dp</item>
+        <item name="pstsScrollOffset">0dp</item>
+        <item name="pstsTabBackground">@android:color/transparent</item>
+        <item name="pstsShouldExpand">true</item>
+        <item name="pstsTextAllCaps">true</item>
+        <item name="android:textSize">12sp</item>
+        <item name="pstsSelectedTextColor">#51A3FF</item>
     </style>
 </resources>

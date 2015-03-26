@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="J2WRefreshSytle">
+    <declare-styleable name="J2WRefreshStyle">
         <attr name="loading_color1" format="integer" />
         <attr name="loading_color2" format="integer" />
         <attr name="loading_color3" format="integer" />

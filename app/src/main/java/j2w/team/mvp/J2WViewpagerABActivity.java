@@ -1,4 +1,4 @@
-package j2w.team.mvp.view;
+package j2w.team.mvp;
 
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
@@ -20,15 +20,15 @@ import j2w.team.R;
 import j2w.team.common.log.L;
 import j2w.team.common.widget.J2WViewPager;
 import j2w.team.common.widget.PagerSlidingTabStrip;
-import j2w.team.mvp.model.ViewPagerModel;
+import j2w.team.mvp.fragment.J2WVPFragment;
+import j2w.team.mvp.model.ModelPager;
 import j2w.team.mvp.presenter.J2WHelper;
 import j2w.team.mvp.presenter.J2WIPresenter;
-import j2w.team.mvp.view.iview.J2WViewpagerIView;
 
 /**
  * Created by sky on 15/3/3.ViewPager
  */
-public abstract class J2WBaseViewPagerAcitvity<T extends J2WIPresenter> extends J2WBaseActoinBarActivity<T> implements J2WViewpagerIView {
+public abstract class J2WViewpagerABActivity<T extends J2WIPresenter> extends J2WABActivity<T> implements J2WIViewViewpagerABActivity {
 
 	/**
 	 * ViewPager 头部 *
@@ -45,16 +45,13 @@ public abstract class J2WBaseViewPagerAcitvity<T extends J2WIPresenter> extends 
 	 */
 	private PagerAdapter			adapter;
 
-	@Override public String initTag() {
-		return getClass().getSimpleName();
-	}
-
 	/**
-	 * 初始化视图 *
+	 * 获取布局ID
+	 *
+	 * @return 布局ID
 	 */
-	@Override public void initData(Bundle savedInstanceState) {
-		L.tag(initTag());
-		L.i("ViewPagerActivity-initData()");
+	@Override public int layoutId() {
+		return R.layout.j2w_activity_viewpager;
 	}
 
 	@Override public void onCreate(Bundle savedInstanceState) {
@@ -85,7 +82,10 @@ public abstract class J2WBaseViewPagerAcitvity<T extends J2WIPresenter> extends 
 
 	}
 
-	@Override public void initTabsValue() {
+	/**
+	 * 初始化 tabs样式
+	 */
+	@Override public final void initTabsValue() {
 		L.tag(initTag());
 		L.i("ViewPagerActivity-initTabsValue() tabs :" + tabs);
 		DisplayMetrics dm = getResources().getDisplayMetrics();
@@ -113,7 +113,10 @@ public abstract class J2WBaseViewPagerAcitvity<T extends J2WIPresenter> extends 
 		tabs.setBackgroundResource(getTabsBackgroundResource());
 	}
 
-	@Override public void initViewPager() {
+	/**
+	 * 初始化 viewpager - 设置适配器
+	 */
+	@Override public final void initViewPager() {
 		L.tag(initTag());
 		L.i("ViewPagerActivity-initViewPager()");
 		// 设置适配器
@@ -129,79 +132,152 @@ public abstract class J2WBaseViewPagerAcitvity<T extends J2WIPresenter> extends 
 		tabs.setViewPager(pager);
 	}
 
+	/**
+	 * 初始化 TabHost - item 样式
+	 *
+	 * @return　 布局ID
+	 */
 	@Override public int getViewPagerItemLayout() {
 		return 0;
 	}
 
-	@Override public void initTab(View view, ViewPagerModel viewPagerModel) {
+	/**
+	 * 初始化 TabHost - item 值
+	 *
+	 * @param view
+	 *            TabItem
+	 * @param modelPager
+	 *            Item对象
+	 */
+	@Override public void initTab(View view, ModelPager modelPager) {
 		L.tag(initTag());
 		L.i("ViewPagerActivity-initTabsItem()");
 	}
 
+	/**
+	 * 初始化 ViewPager - adapter
+	 *
+	 * @return 适配器
+	 */
 	@Override public PagerAdapter getPagerAdapter() {
 		return new DefaultPagerAdapter();
 	}
 
+	/**
+	 * 设置Item样式 -背景颜色
+	 */
 	@Override public int getTabsBackgroundResource() {
 		return android.R.color.transparent;
 	}
 
+	/**
+	 * 设置Item样式 -设置Tab是自动填充满屏幕的
+	 */
 	@Override public boolean getTabsShouldExpand() {
 		return true;
 	}
 
+	/**
+	 * 设置Item样式 -设置Tab的分割线是透明的
+	 */
 	@Override public int getTabsDividerColor() {
 		return Color.TRANSPARENT;
 	}
 
+	/**
+	 * 设置Item样式 -设置Tab的文字颜色
+	 */
 	@Override public int getTabsTitleColor() {
 		return Color.parseColor("#FF666666");
 	}
 
+	/**
+	 * 设置Item样式 -设置Tab标题文字的大小
+	 */
 	@Override public int getTabsTitleSize() {
 		return 12;
 	}
 
+	/**
+	 * 设置Item样式 -设置选中Tab文字的颜色
+	 */
 	@Override public int getTabsSelectedTitleColor() {
 		return Color.parseColor("#51A3FF");
 	}
 
+	/**
+	 * 设置Item样式 -设置Tab Indicator 指示灯的颜色
+	 */
 	@Override public int getTabsIndicatorColor() {
 		return Color.parseColor("#51A3FF");
 	}
 
+	/**
+	 * 设置Item样式 -设置点击颜色
+	 */
 	@Override public int getTabsOnClickTitleColor() {
 		return 0;
 	}
 
+	/**
+	 * 设置Item样式 -设置Tab底部线的颜色
+	 */
 	@Override public int getTabsUnderlineColor() {
 		return 0;
 	}
 
+	/**
+	 * 设置Item样式 -设置Tab底部线的高度
+	 */
 	@Override public int getTabsUnderlineHeight() {
 		return 1;
 	}
 
-	@Override public void replaceViewPageItem(ViewPagerModel... viewPagerModels) {
+	/**
+	 * 设置Item样式 -替换item
+	 */
+	@Override public void replaceViewPageItem(ModelPager... modelPagers) {
 		if (adapter instanceof DefaultPagerAdapter) {
-			((DefaultPagerAdapter) adapter).replaceViewPagerDatas(viewPagerModels);
+			((DefaultPagerAdapter) adapter).replaceViewPagerDatas(modelPagers);
 			adapter.notifyDataSetChanged();
 		}
 	}
 
+	/**
+	 * ViewPager 滑动事件 - 滑动过程
+	 *
+	 * @param i
+	 * @param v
+	 * @param i2
+	 */
 	@Override public void onExtraPageScrolled(int i, float v, int i2) {}
 
+	/**
+	 * ViewPager 滑动事件 - 滑动完成
+	 *
+	 * @param view
+	 * @param i
+	 */
 	@Override public void onExtraPageSelected(View view, int i) {
 		L.tag(initTag());
 		L.i("onExtraPageSelected()");
 	}
 
+	/**
+	 * ViewPager 滑动事件 - 滑动改变
+	 *
+	 * @param i
+	 */
 	@Override public void onExtraPageScrollStateChanged(int i) {}
 
-	@Override public int layoutId() {
-		return R.layout.j2w_activity_viewpager;
-	}
-
+	/**
+	 * 设置下标
+	 *
+	 * @param index
+	 *            位置
+	 * @param bool
+	 *            是否开启动画
+	 */
 	@Override public void setIndex(int index, boolean bool) {
 		int childCount = pager.getChildCount();
 		if (0 <= index && index < childCount) {
@@ -209,39 +285,35 @@ public abstract class J2WBaseViewPagerAcitvity<T extends J2WIPresenter> extends 
 		}
 	}
 
-	@Override public boolean isFixedVerticalScreen() {
-		return true;
-	}
-
 	/**
-	 * 默认是文字
+	 * 适配器 - 默认适配器
 	 */
 	protected class DefaultPagerAdapter<T extends J2WIPresenter> extends PagerAdapter implements ViewPager.OnPageChangeListener {
 
-		ViewPagerModel[]		viewPagerDatas;
+		ModelPager[]			viewPagerDatas;			// 数据类型
 
-		private FragmentManager	fragmentManager;
+		private FragmentManager	fragmentManager;			// 管理器
 
 		private int				currentPageIndex	= 0;	// 当前page索引（切换之前）
 
-		private int				replacePosition		= -1;
+		private int				replacePosition		= -1;	// 替换标识
 
 		public DefaultPagerAdapter() {
-			viewPagerDatas = getViewPagerModels();
+			viewPagerDatas = initModelPagers();
 			fragmentManager = getSupportFragmentManager();
 			tabs.setOnPageChangeListener(this);
 		}
 
 		ViewGroup	container;
 
-		public void replaceViewPagerDatas(ViewPagerModel... viewPagerModels) {
+		public void replaceViewPagerDatas(ModelPager... modelPagers) {
 			L.tag(initTag());
 			L.i("replaceViewPagerDatas() ");
 			replacePosition = pager.getCurrentItem();
-			for (ViewPagerModel viewPagerModel : viewPagerModels) {
-				int position = viewPagerModel.position;
+			for (ModelPager modelPager : modelPagers) {
+				int position = modelPager.position;
 				container.removeView(viewPagerDatas[position].fragment.getView());
-				viewPagerDatas[position] = viewPagerModel;
+				viewPagerDatas[position] = modelPager;
 			}
 
 		}
@@ -250,11 +322,11 @@ public abstract class J2WBaseViewPagerAcitvity<T extends J2WIPresenter> extends 
 			return POSITION_NONE;
 		}
 
-		public ViewPagerModel[] getViewPagerDatas() {
+		public ModelPager[] getViewPagerDatas() {
 			return viewPagerDatas;
 		}
 
-		public ViewPagerModel getData(int position) {
+		public ModelPager getData(int position) {
 			return viewPagerDatas[position];
 		}
 
@@ -292,7 +364,7 @@ public abstract class J2WBaseViewPagerAcitvity<T extends J2WIPresenter> extends 
 				 */
 				fragmentManager.executePendingTransactions();
 				if (replacePosition != -1) {
-					((J2WBaseFragment) viewPagerDatas[replacePosition].fragment).isDelayedData();
+					((J2WVPFragment) viewPagerDatas[replacePosition].fragment).isDelayedData();
 					replacePosition = -1;
 				}
 			}
@@ -318,12 +390,12 @@ public abstract class J2WBaseViewPagerAcitvity<T extends J2WIPresenter> extends 
 			if (viewPagerDatas[position].fragment.isAdded()) {
 				if (pager.getCurrentItem() == position) {
 					// 更新actionbar
-					((J2WBaseFragment) viewPagerDatas[position].fragment).updateActionBar();
+					((J2WVPFragment) viewPagerDatas[position].fragment).updateActionBar();
 				}
 
 				viewPagerDatas[position].fragment.onResume(); // 调用切换后Fargment的onResume()
 
-				((J2WBaseFragment) viewPagerDatas[position].fragment).isDelayedData(); // 调用延迟加载\
+				((J2WVPFragment) viewPagerDatas[position].fragment).isDelayedData(); // 调用延迟加载\
 			}
 
 			currentPageIndex = position;
@@ -341,8 +413,8 @@ public abstract class J2WBaseViewPagerAcitvity<T extends J2WIPresenter> extends 
 
 		if (adapter instanceof DefaultPagerAdapter) {
 			DefaultPagerAdapter defaultPagerAdapter = (DefaultPagerAdapter) adapter;
-			ViewPagerModel viewPagerModel = defaultPagerAdapter.getData(pager.getCurrentItem());
-			((J2WBaseFragment) viewPagerModel.fragment).onViewPagerFragmentRestart(viewPagerModel.position);
+			ModelPager modelPager = defaultPagerAdapter.getData(pager.getCurrentItem());
+			((J2WVPFragment) modelPager.fragment).onFragmentRestart(modelPager.position);
 		}
 	}
 
@@ -368,6 +440,15 @@ public abstract class J2WBaseViewPagerAcitvity<T extends J2WIPresenter> extends 
 			}
 			return count;
 		}
+
+		public void setTitleCount(int position, String count) {
+			if (adapter instanceof DefaultCountPagerAdapter) {
+				DefaultCountPagerAdapter defaultCountPagerAdapter = (DefaultCountPagerAdapter) adapter;
+				ModelPager modelPager = defaultCountPagerAdapter.getData(position);
+				modelPager.count = count;
+				tabs.notifyDataSetChanged();
+			}
+		}
 	}
 
 	/**
@@ -386,14 +467,4 @@ public abstract class J2WBaseViewPagerAcitvity<T extends J2WIPresenter> extends 
 			initTab(view, viewPagerDatas[position]);
 		}
 	}
-
-	@Override public void setTitleCount(int position, String count) {
-		if (adapter instanceof DefaultCountPagerAdapter) {
-			DefaultCountPagerAdapter defaultCountPagerAdapter = (DefaultCountPagerAdapter) adapter;
-			ViewPagerModel viewPagerModel = defaultCountPagerAdapter.getData(position);
-			viewPagerModel.count = count;
-			tabs.notifyDataSetChanged();
-		}
-	}
-
 }

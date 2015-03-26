@@ -1,6 +1,5 @@
-package j2w.team.mvp.view;
+package j2w.team.mvp.fragment;
 
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,79 +13,101 @@ import java.util.List;
 import butterknife.ButterKnife;
 import j2w.team.R;
 import j2w.team.common.log.L;
+import j2w.team.mvp.J2WIViewActivity;
+import j2w.team.mvp.adapter.J2WAdapterItem;
 import j2w.team.mvp.presenter.J2WIPresenter;
-import j2w.team.mvp.presenter.J2WPresenter;
-import j2w.team.mvp.view.iview.J2WListFragmentIView;
 
 /**
  * Created by sky on 15/2/6. ListFragment 视图
  */
-public abstract class J2WBaseListFragment<T extends J2WIPresenter> extends J2WBaseFragment<T> implements J2WListFragmentIView, AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
+public abstract class J2WListFragment<T extends J2WIPresenter> extends J2WFragment<T> implements J2WIViewListFragment, AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
 
 	/**
-	 * 设置布局ID 禁止重写
-	 * 
-	 * @return
+	 * ListView adapter
+	 */
+	protected ListAdapter	mListAdapter;
+
+	/**
+	 * 获取布局ID
+	 *
+	 * @return 布局ID
 	 */
 	@Override public int layoutId() {
 		return R.layout.j2w_fragment_list;
 	}
 
 	/**
-	 * 设置头布局
-	 * 
-	 * @return
+	 * 设置 - ListView 头布局
+	 *
+	 * @return 布局ID
 	 */
 	@Override public int getHeaderLayout() {
 		return 0;
 	}
 
 	/**
-	 * 设置尾布局
-	 * 
-	 * @return
+	 * 设置 - ListView 尾布局
+	 *
+	 * @return 布局ID
 	 */
 	@Override public int getFooterLayout() {
 		return 0;
 	}
 
 	/**
-	 * 设置类型数量
-	 * 
-	 * @return
+	 * 设置 - Item类型数量
+	 *
+	 * @return 类型数量
 	 */
 	@Override public int getJ2WViewTypeCount() {
 		return 1;
 	}
 
 	/**
-	 * 返回类型
-	 * 
+	 * 设置 - Item类型布局
+	 *
 	 * @param position
-	 *            当前坐标
-	 * @return
+	 *            下标
+	 * @return 布局ID
 	 */
 	@Override public int getJ2WViewType(int position) {
 		return 0;
 	}
 
-	@Override public J2WBaseAdapterItem getJ2WAdapterItem(int type) {
+	/**
+	 * 设置 - 设置陪
+	 *
+	 * @param type
+	 *            类型
+	 * @return 适配器
+	 */
+	@Override public J2WAdapterItem getJ2WAdapterItem(int type) {
 		return null;
 	}
 
-	@Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
+	/**
+	 * 初始化视图
+	 *
+	 * @param inflater
+	 *            布局加载器
+	 * @param container
+	 *            父容器
+	 */
+	@Override public void initLayout(LayoutInflater inflater, ViewGroup container) {
 		L.tag(initTag());
-		L.i("Fragment-onCreateView()");
-		setHasOptionsMenu(true);
+		L.i("Fragment-initLayout()");
 		mContentView = inflater.inflate(R.layout.j2w_fragment_main, container, false);
 
 		mViewAnimator = ButterKnife.findById(mContentView, android.R.id.home);
 
+		// 获取View层接口
+		J2WIViewActivity j2WIViewActivity = (J2WIViewActivity) getActivity();
+
 		// 加载布局-初始化
-		mViewAnimator.addView(inflater.inflate(initLoadingLayout(), null, false));
+		mViewAnimator.addView(inflater.inflate(j2WIViewActivity.fragmentLoadingLayout(), null, false));
 
 		// 内容布局-初始化
+
 		ListView listView = (ListView) inflater.inflate(layoutId(), null, false);
 
 		if (getHeaderLayout() != 0) {
@@ -102,16 +123,14 @@ public abstract class J2WBaseListFragment<T extends J2WIPresenter> extends J2WBa
 		listView.setOnItemClickListener(this);
 		listView.setOnItemLongClickListener(this);
 		mViewAnimator.addView(listView);
-		// 内容布局-设置值
+		/** 初始化适配器 **/
 		mListAdapter = new ListAdapter();
 		listView.setAdapter(mListAdapter);
 		// 空布局-初始化
-		mViewAnimator.addView(inflater.inflate(initEmptyLayout(), null, false));
+		mViewAnimator.addView(inflater.inflate(j2WIViewActivity.fragmentEmptyLayout(), null, false));
 		// 错误布局-初始化
-		mViewAnimator.addView(inflater.inflate(initErrorLayout(), null, false));
+		mViewAnimator.addView(inflater.inflate(j2WIViewActivity.fragmentErrorLayout(), null, false));
 
-		ButterKnife.inject(this, mContentView);
-		return mContentView;
 	}
 
 	@Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -124,14 +143,9 @@ public abstract class J2WBaseListFragment<T extends J2WIPresenter> extends J2WBa
 	}
 
 	/**
-	 * ListView adapter
-	 */
-	ListAdapter	mListAdapter;
-
-	/**
-	 * adapter是否为空
-	 * 
-	 * @return true 不为空 false 为空
+	 * 判断适配器是否为空
+	 *
+	 * @return true 空 false 不为空
 	 */
 	public final boolean isAdapterNotNull() {
 		L.tag(initTag());
@@ -141,35 +155,41 @@ public abstract class J2WBaseListFragment<T extends J2WIPresenter> extends J2WBa
 
 	/**
 	 * 设置数据
-	 * 
+	 *
 	 * @param list
+	 *            数据集合
 	 */
 	public void setData(List list) {
 		L.tag(initTag());
 		L.i("Fragment-setData(List)");
-		if (list == null) {
+		if (list == null || list.size() < 1) {
+			L.tag(initTag());
+			L.i("Fragment-setData(List) return null");
 			return;
 		}
 		if (isAdapterNotNull()) {
 			mListAdapter.setData(list);
-			updataList();
+			updateAdapter();
 		}
 	}
 
 	/**
 	 * 追加数据
-	 * 
+	 *
 	 * @param list
+	 *            数据集合
 	 */
 	public void addData(List list) {
 		L.tag(initTag());
 		L.i("Fragment-addData(List)");
 		if (list == null || list.size() < 1) {
+			L.tag(initTag());
+			L.i("Fragment-setData(List) return null");
 			return;
 		}
 		if (isAdapterNotNull()) {
 			mListAdapter.addData(list);
-			updataList();
+			updateAdapter();
 		}
 	}
 
@@ -185,16 +205,14 @@ public abstract class J2WBaseListFragment<T extends J2WIPresenter> extends J2WBa
 	}
 
 	/**
-	 * 更新列表 0 显示 进度, 1 显示 内容 2 显示 空 3 显示 错误,
+	 * 更新适配器 0 显示 进度, 1 显示 内容 2 显示 空 3 显示 错误,
 	 */
-	public final void updataList() {
+	@Override public void updateAdapter() {
 		L.tag(initTag());
-		L.i("Fragment-updataList()");
+		L.i("Fragment-updateAdapter()");
 		if (isAdapterNotNull()) {
 			int state = mViewAnimator.getDisplayedChild();
 			List list = getData();
-            L.i("updataList() - state " + state);
-
 			if ((state == 1 || state == 0) && list.isEmpty()) {
 				showEmpty();
 			} else if (state != 1 && !list.isEmpty()) {
@@ -221,22 +239,22 @@ public abstract class J2WBaseListFragment<T extends J2WIPresenter> extends J2WBa
 		/** 设置数据源 **/
 		private void setData(List list) {
 			L.tag(initTag());
-			L.i("setData()" + list);
+			L.i("ListAdapter.setData()" + list);
 			mList = list;
 		}
 
 		/** 追加数据源 **/
 		private void addData(List list) {
-            L.tag(initTag());
-            L.i("addData()" + list);
+			L.tag(initTag());
+			L.i("addData()" + list);
 			mList.addAll(list);
 		}
 
-        private List getData(){
-            L.tag(initTag());
-            L.i("adapter - getData()" + mList);
-            return mList;
-        }
+		private List getData() {
+			L.tag(initTag());
+			L.i("adapter - getData()" + mList);
+			return mList;
+		}
 
 		/** 列表数量 **/
 		@Override public int getCount() {
@@ -268,7 +286,7 @@ public abstract class J2WBaseListFragment<T extends J2WIPresenter> extends J2WBa
 
 		/** getView **/
 		@Override public View getView(int position, View convertView, ViewGroup parent) {
-			J2WBaseAdapterItem item = null;
+			J2WAdapterItem item = null;
 			if (convertView == null) {
 				int count = getViewTypeCount();// 获取类型数量
 				if (count != 1) {
@@ -285,7 +303,7 @@ public abstract class J2WBaseListFragment<T extends J2WIPresenter> extends J2WBa
 				convertView.setTag(item);
 			}
 			// 获取item
-			item = item == null ? (J2WBaseAdapterItem) convertView.getTag() : item;
+			item = item == null ? (J2WAdapterItem) convertView.getTag() : item;
 			// 绑定数据
 			item.bindData(mList.get(position), position);
 			return convertView;

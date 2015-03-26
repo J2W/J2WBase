@@ -1,10 +1,9 @@
-package j2w.team.mvp;
+package j2w.team;
 
 import android.app.Application;
 
-import j2w.team.modules.http.J2WRestAdapter;
-import j2w.team.mvp.presenter.J2WHelper;
 import j2w.team.common.log.L;
+import j2w.team.mvp.presenter.J2WHelper;
 
 /**
  * Created by sky on 15/1/26. 说明：使用架构必须继承

@@ -3,9 +3,9 @@ package j2w.team.mvp.model;
 import android.support.v4.app.Fragment;
 
 /**
- * Created by sky on 15/3/8.
+ * Created by sky on 15/3/8. ViewPager模型
  */
-public class ViewPagerModel {
+public class ModelPager {
 
 	// position
 	public int		position;

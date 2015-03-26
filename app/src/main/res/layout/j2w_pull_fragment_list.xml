@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <j2w.team.common.widget.swipeRefresh.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/swipe_container"
-    style="@style/J2WRefreshSytle">
-
+    style="@style/J2WRefreshStyle">
     <ListView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@android:id/list"
         style="@style/J2W.Layout.ListView" />

@@ -6,12 +6,12 @@ import android.os.Bundle;
 import com.squareup.picasso.PicassoTools;
 
 import de.greenrobot.event.EventBus;
+import j2w.team.J2WApplication;
 import j2w.team.common.utils.looper.SynchronousExecutor;
 import j2w.team.modules.http.J2WRestAdapter;
 import j2w.team.modules.screen.J2WIScreenManager;
 import j2w.team.modules.screen.J2WScreenManager;
 import j2w.team.modules.threadpool.J2WThreadPoolManager;
-import j2w.team.mvp.J2WApplication;
 
 /**
  * Created by sky on 15/1/28. helper 管理

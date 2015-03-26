@@ -44,7 +44,7 @@ Gradle依赖
 -----------------------------------
 App-build.gradle:<br />
 
-    compile 'j2w.team:base:1.0.2'
+    compile 'j2w.team:base:1.0.3'
 
 AndroidManifest 权限
 -----------------------------------
@@ -61,15 +61,12 @@ AndroidManifest 权限
 
 Wiki
 -----------------------------------
+###注意: View层改动 - 说明之后补上
 [1.View层用法](https://github.com/J2W/J2WBase/wiki/1.View%E5%B1%82%E7%94%A8%E6%B3%95)<br />
 [2.presenter用法](https://github.com/J2W/J2WBase/wiki/2.presenter%E7%94%A8%E6%B3%95)<br />
 [3.View层和Presenter层 用例](https://github.com/J2W/J2WBase/wiki/3.View%E5%B1%82%E5%92%8CPresenter%E5%B1%82-%E7%94%A8%E4%BE%8B)<br />
 [4.Modules 架构工具类](https://github.com/J2W/J2WBase/wiki/4.Modules-%E6%9E%B6%E6%9E%84%E5%B7%A5%E5%85%B7%E7%B1%BB)<br />
 [5.Common widget 控件](https://github.com/J2W/J2WBase/wiki/5.Common-widget-%E6%8E%A7%E4%BB%B6)<br />
-
-暂时不太稳定
-
-注意:MVP 层 正在大改动
 
 混淆过滤
 -----------------------------------
@@ -84,3 +81,4 @@ Wiki
 -keepattributes Signature<br />
 -keep class sun.misc.Unsafe { *; }<br />
 -keep class com.google.gson.examples.android.model.** { *; }<br />
+
