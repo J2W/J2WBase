@@ -68,6 +68,25 @@ Wiki
 [4.Modules 架构工具类](https://github.com/J2W/J2WBase/wiki/4.Modules-%E6%9E%B6%E6%9E%84%E5%B7%A5%E5%85%B7%E7%B1%BB)<br />
 [5.Common widget 控件](https://github.com/J2W/J2WBase/wiki/5.Common-widget-%E6%8E%A7%E4%BB%B6)<br />
 
+
+版本更新说明
+-----------------------------------
+###1.0.3 版本
+1.view层结构改版<br />
+2.common 增加点击效果组件<br />
+3.修复 代理BUG<br />
+
+###1.0.2 版本
+1.修复1.0.1MVPBUG<br />
+2.增加工具类<br />
+3.增加控件类<br />
+
+###1.0.1 版本
+1.新建整体包路径结构<br />
+2.新建各大组建<br />
+3.新建工具类<br />
+3.新建MVP模式<br />
+
 混淆过滤
 -----------------------------------
 #### Greendao
