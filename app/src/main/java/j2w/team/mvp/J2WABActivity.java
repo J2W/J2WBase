@@ -220,7 +220,7 @@ public abstract class J2WABActivity<T extends J2WIPresenter> extends ActionBarAc
 	/**
 	 * 初始化actionbar
 	 */
-	@Override public final void initActionBar() {
+	@Override public void initActionBar() {
 		L.tag(initTag());
 		L.i("initActionBar()");
 		actionBar = getSupportActionBar();
