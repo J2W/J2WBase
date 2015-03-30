@@ -1,6 +1,7 @@
 package j2w.team.mvp.fragment;
 
 import android.content.Context;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,4 +61,11 @@ public interface J2WIViewFragment extends J2WIView {
 	 * fragment 刷新标题栏
 	 */
 	public void onActionBar();
+
+	/**
+	 * 获取碎片管理器 - 内部管理器
+	 * 
+	 * @return
+	 */
+	public FragmentManager getChildFManager();
 }

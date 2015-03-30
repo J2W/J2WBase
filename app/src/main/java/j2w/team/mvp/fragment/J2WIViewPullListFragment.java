@@ -6,6 +6,16 @@ package j2w.team.mvp.fragment;
 public interface J2WIViewPullListFragment extends J2WIViewListFragment {
 
 	/**
+	 * 下拉刷新标识
+	 */
+	public static final int	PULL_ONREFRESH	= 0x0000001;
+
+	/**
+	 * 上拉加载标识
+	 */
+	public static final int	PULL_ONLOAD		= 0x0000002;
+
+	/**
 	 * 头部刷新
 	 */
 	public void onRefresh();

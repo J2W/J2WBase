@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 
 import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
@@ -130,6 +131,15 @@ public abstract class J2WActivity<T extends J2WIPresenter> extends FragmentActiv
 	 */
 	@Override public Context getContext() {
 		return this;
+	}
+
+	/**
+	 * 获取碎片管理器
+	 *
+	 * @return
+	 */
+	@Override public FragmentManager getFManager() {
+		return getSupportFragmentManager();
 	}
 
 	/**

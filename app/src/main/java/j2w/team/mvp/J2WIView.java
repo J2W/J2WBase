@@ -2,6 +2,7 @@ package j2w.team.mvp;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 
 /**
  * Created by sky on 15/2/1.MVP模式 VIEW 接口
@@ -90,6 +91,13 @@ public interface J2WIView<T> {
 	 * @return 上下文
 	 */
 	public Context getContext();
+
+	/**
+	 * 获取碎片管理器
+	 * 
+	 * @return
+	 */
+	public FragmentManager getFManager();
 
 	/**
 	 * 销毁当前页面

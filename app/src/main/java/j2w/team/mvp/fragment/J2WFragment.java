@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -142,6 +143,24 @@ public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment impl
 	 */
 	@Override public Context getContext() {
 		return getActivity();
+	}
+
+	/**
+	 * 获取碎片管理器
+	 *
+	 * @return
+	 */
+	@Override public FragmentManager getFManager() {
+		return getFragmentManager();
+	}
+
+	/**
+	 * 获取碎片管理器 - 内部管理器
+	 *
+	 * @return
+	 */
+	@Override public FragmentManager getChildFManager() {
+		return getChildFragmentManager();
 	}
 
 	/**

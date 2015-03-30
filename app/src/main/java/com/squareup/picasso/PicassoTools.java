@@ -131,7 +131,7 @@ public final class PicassoTools {
 		}
 	}
 
-	public static class Builder {
+    public static class Builder {
 
 		/**
 		 * 缓存路径 *

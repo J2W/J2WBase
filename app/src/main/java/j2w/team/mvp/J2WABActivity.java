@@ -3,6 +3,7 @@ package j2w.team.mvp;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 
@@ -134,6 +135,15 @@ public abstract class J2WABActivity<T extends J2WIPresenter> extends ActionBarAc
 	 */
 	@Override public Context getContext() {
 		return this;
+	}
+
+	/**
+	 * 获取碎片管理器
+	 *
+	 * @return
+	 */
+	@Override public FragmentManager getFManager() {
+		return getSupportFragmentManager();
 	}
 
 	/**
