@@ -164,6 +164,45 @@ public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment impl
 	}
 
 	/**
+	 * 提交fragment
+	 *
+	 * @param fragment
+	 *            实例
+	 * @param tag
+	 *            标记
+	 */
+	public final void commitFragment(Fragment fragment, String tag) {
+		L.tag(initTag());
+		L.i("commitFragment(Fragment fragment, String tag) - 不提供该方法");
+	}
+
+	/**
+	 * 提交fragment
+	 *
+	 * @param layoutId
+	 *            布局ID
+	 * @param fragment
+	 *            实例
+	 * @param tag
+	 *            标记
+	 */
+	public void commitFragment(int layoutId, Fragment fragment, String tag) {
+		L.tag(initTag());
+		L.i("commitFragment(int layoutId,Fragment fragment, String tag)");
+		if (layoutId == 0) {
+			L.tag(initTag());
+			L.i("layoutId 不能为空！");
+			return;
+		}
+		if (fragment != null && fragment.isAdded()) {
+			L.tag(initTag());
+			L.i("fragment 不能为空，或者已经被添加！");
+			return;
+		}
+		getFManager().beginTransaction().add(layoutId, fragment, tag).commitAllowingStateLoss();
+	}
+
+	/**
 	 * 销毁当前页面
 	 */
 	@Override public void activityFinish() {

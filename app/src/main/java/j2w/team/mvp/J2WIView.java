@@ -2,6 +2,7 @@ package j2w.team.mvp;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
 /**
@@ -98,6 +99,28 @@ public interface J2WIView<T> {
 	 * @return
 	 */
 	public FragmentManager getFManager();
+
+	/**
+	 * 提交fragment
+	 * 
+	 * @param fragment
+	 *            实例
+	 * @param tag
+	 *            标记
+	 */
+	public void commitFragment(Fragment fragment, String tag);
+
+	/**
+	 * 提交fragment
+	 * 
+	 * @param layoutId
+	 *            布局ID
+	 * @param fragment
+	 *            实例
+	 * @param tag
+	 *            标记
+	 */
+	public void commitFragment(int layoutId, Fragment fragment, String tag);
 
 	/**
 	 * 销毁当前页面

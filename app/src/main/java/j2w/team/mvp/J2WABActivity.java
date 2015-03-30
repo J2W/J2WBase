@@ -3,6 +3,7 @@ package j2w.team.mvp;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
@@ -33,6 +34,15 @@ public abstract class J2WABActivity<T extends J2WIPresenter> extends ActionBarAc
 	 */
 	@Override public String initTag() {
 		return getClass().getSimpleName();
+	}
+
+	/**
+	 * 获取布局ID
+	 *
+	 * @return 布局ID
+	 */
+	@Override public int layoutId() {
+		return R.layout.j2w_layout_default;
 	}
 
 	/**
@@ -144,6 +154,51 @@ public abstract class J2WABActivity<T extends J2WIPresenter> extends ActionBarAc
 	 */
 	@Override public FragmentManager getFManager() {
 		return getSupportFragmentManager();
+	}
+
+	/**
+	 * 提交fragment
+	 *
+	 * @param fragment
+	 *            实例
+	 * @param tag
+	 *            标记
+	 */
+	public void commitFragment(Fragment fragment, String tag) {
+		L.tag(initTag());
+		L.i("commitFragment(Fragment fragment, String tag)");
+		if (fragment != null && fragment.isAdded()) {
+			L.tag(initTag());
+			L.i("fragment 不能为空，或者已经被添加！");
+			return;
+		}
+		getFManager().beginTransaction().add(android.R.id.custom, fragment, tag).commitAllowingStateLoss();
+	}
+
+	/**
+	 * 提交fragment
+	 *
+	 * @param layoutId
+	 *            布局ID
+	 * @param fragment
+	 *            实例
+	 * @param tag
+	 *            标记
+	 */
+	public void commitFragment(int layoutId, Fragment fragment, String tag) {
+		L.tag(initTag());
+		L.i("commitFragment(int layoutId,Fragment fragment, String tag)");
+		if (layoutId == 0) {
+			L.tag(initTag());
+			L.i("layoutId 不能为空！");
+			return;
+		}
+		if (fragment != null && fragment.isAdded()) {
+			L.tag(initTag());
+			L.i("fragment 不能为空，或者已经被添加！");
+			return;
+		}
+		getFManager().beginTransaction().add(layoutId, fragment, tag).commitAllowingStateLoss();
 	}
 
 	/**
