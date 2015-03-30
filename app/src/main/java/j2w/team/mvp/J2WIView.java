@@ -1,5 +1,6 @@
 package j2w.team.mvp;
 
+import android.content.Context;
 import android.os.Bundle;
 
 /**
@@ -82,6 +83,13 @@ public interface J2WIView<T> {
 	 *            请求编号
 	 */
 	public void intent2Activity(Class clazz, Bundle bundle, int requestCode);
+
+	/**
+	 * 获取上下文
+	 * 
+	 * @return 上下文
+	 */
+	public Context getContext();
 
 	/**
 	 * 销毁当前页面

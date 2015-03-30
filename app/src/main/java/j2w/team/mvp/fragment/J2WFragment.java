@@ -1,6 +1,7 @@
 package j2w.team.mvp.fragment;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -132,6 +133,15 @@ public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment impl
 	 */
 	@Override public void intent2Activity(Class clazz, Bundle bundle, int requestCode) {
 		J2WHelper.intentTo(clazz, bundle, requestCode);
+	}
+
+	/**
+	 * 获取上下文
+	 *
+	 * @return 上下文
+	 */
+	@Override public Context getContext() {
+		return getActivity();
 	}
 
 	/**

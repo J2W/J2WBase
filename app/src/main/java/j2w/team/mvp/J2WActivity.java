@@ -1,5 +1,6 @@
 package j2w.team.mvp;
 
+import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -120,6 +121,15 @@ public abstract class J2WActivity<T extends J2WIPresenter> extends FragmentActiv
 		L.tag(initTag());
 		L.i("intent2Activity(clazz,bundle,requestCode) " + clazz.getSimpleName());
 		J2WHelper.intentTo(clazz, bundle, requestCode);
+	}
+
+	/**
+	 * 获取上下文
+	 *
+	 * @return 上下文
+	 */
+	@Override public Context getContext() {
+		return this;
 	}
 
 	/**
