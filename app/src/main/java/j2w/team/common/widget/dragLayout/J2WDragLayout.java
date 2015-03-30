@@ -1,4 +1,4 @@
-package j2w.team.common.widget;
+package j2w.team.common.widget.dragLayout;
 
 import android.content.Context;
 import android.graphics.Color;
