@@ -97,8 +97,8 @@ public abstract class J2WViewpagerABActivity<T extends J2WIPresenter> extends J2
 		tabs.setUnderlineHeight((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, getTabsUnderlineHeight(), dm));
 		// 设置Tab底部线的颜色
 		tabs.setUnderlineColor(getTabsUnderlineColor());
-		// 设置Tab Indicator的高度
-		tabs.setIndicatorHeight((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4, dm));
+		// 设置Tab 指示灯的高度
+		tabs.setIndicatorHeight((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, getTabsIndicatorSize(), dm));
 		// 设置Tab标题文字的大小
 		tabs.setTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, getTabsTitleSize(), dm));
 		// 设置Tab Indicator 指示灯的颜色
@@ -203,6 +203,13 @@ public abstract class J2WViewpagerABActivity<T extends J2WIPresenter> extends J2
 	 */
 	@Override public int getTabsSelectedTitleColor() {
 		return Color.parseColor("#51A3FF");
+	}
+
+	/**
+	 * 设置Item样式 -设置Tab Indicator 指示灯高度
+	 */
+	@Override public int getTabsIndicatorSize() {
+		return 2;
 	}
 
 	/**

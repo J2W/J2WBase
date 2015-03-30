@@ -66,6 +66,8 @@ public interface J2WIViewViewpagerABActivity extends J2WIViewABActivity {
 
 	public int getTabsSelectedTitleColor();// 设置选中Tab文字的颜色
 
+	public int getTabsIndicatorSize();// 设置Tab Indicator 指示灯高度
+
 	public int getTabsIndicatorColor();// 设置Tab Indicator 指示灯的颜色
 
 	public int getTabsOnClickTitleColor();// 设置点击颜色

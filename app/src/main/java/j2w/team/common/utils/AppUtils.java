@@ -8,6 +8,7 @@ import android.net.NetworkInfo;
 import android.os.Debug;
 import android.os.Environment;
 import android.text.format.Formatter;
+import android.util.DisplayMetrics;
 
 import java.util.List;
 import java.lang.reflect.ParameterizedType;
@@ -162,5 +163,16 @@ public final class AppUtils {
 		NetworkInfo mMobileNetworkInfo = mConnectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
 		return mMobileNetworkInfo == null ? false : mMobileNetworkInfo.isAvailable();
 
+	}
+
+	/**
+	 * 获取手机屏幕宽高
+	 * 
+	 * @return 显示器信息实体类
+	 */
+	public static final DisplayMetrics getWindowsSize() {
+		DisplayMetrics dm = new DisplayMetrics();
+		J2WHelper.getScreenHelper().currentActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
+		return dm;
 	}
 }
