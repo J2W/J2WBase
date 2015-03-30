@@ -1,4 +1,4 @@
-package j2w.team.common.widget.dragLayout;
+package j2w.team.common.widget;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -16,6 +16,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.nineoldandroids.view.ViewHelper;
+
+import j2w.team.common.widget.dragLayout.J2WRelativeLayout;
 
 
 /**
