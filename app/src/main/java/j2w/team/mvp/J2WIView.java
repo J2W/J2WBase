@@ -123,6 +123,28 @@ public interface J2WIView<T> {
 	public void commitFragment(int layoutId, Fragment fragment, String tag);
 
 	/**
+	 * 提交fragment - 压栈
+	 *
+	 * @param fragment
+	 *            实例
+	 * @param tag
+	 *            标记
+	 */
+	public void commitBackStackFragment(Fragment fragment, String tag);
+
+	/**
+	 * 提交fragment - 压栈
+	 *
+	 * @param layoutId
+	 *            布局ID
+	 * @param fragment
+	 *            实例
+	 * @param tag
+	 *            标记
+	 */
+	public void commitBackStackFragment(int layoutId, Fragment fragment, String tag);
+
+	/**
 	 * 销毁当前页面
 	 */
 	public void activityFinish();

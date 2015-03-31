@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 
 import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
@@ -172,7 +173,7 @@ public abstract class J2WActivity<T extends J2WIPresenter> extends FragmentActiv
 			L.i("fragment 不能为空，或者已经被添加！");
 			return;
 		}
-		getFManager().beginTransaction().add(android.R.id.custom, fragment, tag).commitAllowingStateLoss();
+		getFManager().beginTransaction().add(android.R.id.custom, fragment, tag).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commitAllowingStateLoss();
 	}
 
 	/**
@@ -198,7 +199,52 @@ public abstract class J2WActivity<T extends J2WIPresenter> extends FragmentActiv
 			L.i("fragment 不能为空，或者已经被添加！");
 			return;
 		}
-		getFManager().beginTransaction().add(layoutId, fragment, tag).commitAllowingStateLoss();
+		getFManager().beginTransaction().add(layoutId, fragment, tag).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commitAllowingStateLoss();
+	}
+
+	/**
+	 * 提交fragment - 压栈
+	 *
+	 * @param fragment
+	 *            实例
+	 * @param tag
+	 *            标记
+	 */
+	@Override public void commitBackStackFragment(Fragment fragment, String tag) {
+        L.tag(initTag());
+        L.i("commitBackStackFragment(Fragment fragment, String tag)");
+        if (fragment != null && fragment.isAdded()) {
+            L.tag(initTag());
+            L.i("fragment 不能为空，或者已经被添加！");
+            return;
+        }
+        getFManager().beginTransaction().add(android.R.id.custom, fragment, tag).addToBackStack(null).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commitAllowingStateLoss();
+	}
+
+	/**
+	 * 提交fragment - 压栈
+	 *
+	 * @param layoutId
+	 *            布局ID
+	 * @param fragment
+	 *            实例
+	 * @param tag
+	 *            标记
+	 */
+	@Override public void commitBackStackFragment(int layoutId, Fragment fragment, String tag) {
+        L.tag(initTag());
+        L.i("commitBackStackFragment(int layoutId,Fragment fragment, String tag)");
+        if (layoutId == 0) {
+            L.tag(initTag());
+            L.i("layoutId 不能为空！");
+            return;
+        }
+        if (fragment != null && fragment.isAdded()) {
+            L.tag(initTag());
+            L.i("fragment 不能为空，或者已经被添加！");
+            return;
+        }
+        getFManager().beginTransaction().add(layoutId, fragment, tag).addToBackStack(null).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commitAllowingStateLoss();
 	}
 
 	/**
