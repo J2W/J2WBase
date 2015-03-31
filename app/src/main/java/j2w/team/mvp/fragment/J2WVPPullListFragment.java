@@ -70,7 +70,7 @@ public abstract class J2WVPPullListFragment<T extends J2WIPresenter> extends J2W
 		listView.setOnItemLongClickListener(this);
 		mViewAnimator.addView(layoutView);
 		// 内容布局-设置值
-		mListAdapter = new J2WVPListFragment.ListAdapter();
+		mListAdapter = new ListAdapter();
 		listView.setAdapter(mListAdapter);
 		// 空布局-初始化
 		mViewAnimator.addView(inflater.inflate(j2WIViewActivity.fragmentEmptyLayout(), null, false));
@@ -111,6 +111,7 @@ public abstract class J2WVPPullListFragment<T extends J2WIPresenter> extends J2W
 	@Override public void notLoading() {
 		swipe_container.isNotLoading();
 	}
+
 
 	@Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		super.onItemClick(parent, view, position, id);

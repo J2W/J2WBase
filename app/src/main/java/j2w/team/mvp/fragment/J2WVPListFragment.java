@@ -75,7 +75,7 @@ public abstract class J2WVPListFragment<T extends J2WIPresenter> extends J2WVPFr
 	}
 
 	/**
-	 * 设置 - 设置陪
+	 * 设置 - 适配器
 	 *
 	 * @param type
 	 *            类型
@@ -225,7 +225,7 @@ public abstract class J2WVPListFragment<T extends J2WIPresenter> extends J2WVPFr
 	/**
 	 * 内部类-列表适配器
 	 */
-	final class ListAdapter extends BaseAdapter {
+	protected final class ListAdapter extends BaseAdapter {
 
 		/** 数据集合 */
 		private List	mList;
