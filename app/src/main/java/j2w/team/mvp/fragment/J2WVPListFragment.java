@@ -23,9 +23,23 @@ import j2w.team.mvp.presenter.J2WIPresenter;
 public abstract class J2WVPListFragment<T extends J2WIPresenter> extends J2WVPFragment<T> implements J2WIViewListFragment, AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
 
 	/**
+	 * 列表
+	 */
+	ListView				listView;
+
+	/**
 	 * ListView adapter
 	 */
 	protected ListAdapter	mListAdapter;
+
+	/**
+	 * 获取ListView
+	 *
+	 * @return 获取列表控件
+	 */
+	@Override public ListView getListView() {
+		return listView;
+	}
 
 	/**
 	 * 获取布局ID
@@ -107,8 +121,12 @@ public abstract class J2WVPListFragment<T extends J2WIPresenter> extends J2WVPFr
 		mViewAnimator.addView(inflater.inflate(j2WIViewActivity.fragmentLoadingLayout(), null, false));
 
 		// 内容布局-初始化
-
-		ListView listView = (ListView) inflater.inflate(layoutId(), null, false);
+        View view = inflater.inflate(layoutId(), null, false);
+        if (view instanceof ListView) {
+            listView = (ListView) view;
+        } else {
+            listView = (ListView) view.findViewById(android.R.id.list);
+        }
 
 		if (getHeaderLayout() != 0) {
 			View headerView = LayoutInflater.from(getActivity()).inflate(getHeaderLayout(), null, false);
@@ -122,7 +140,7 @@ public abstract class J2WVPListFragment<T extends J2WIPresenter> extends J2WVPFr
 		// 设置点击事件
 		listView.setOnItemClickListener(this);
 		listView.setOnItemLongClickListener(this);
-		mViewAnimator.addView(listView);
+		mViewAnimator.addView(view);
 		/** 初始化适配器 **/
 		mListAdapter = new ListAdapter();
 		listView.setAdapter(mListAdapter);

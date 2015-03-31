@@ -1,5 +1,7 @@
 package j2w.team.mvp.fragment;
 
+import android.widget.ListView;
+
 import java.util.List;
 
 import j2w.team.mvp.adapter.J2WAdapterItem;
@@ -8,6 +10,13 @@ import j2w.team.mvp.adapter.J2WAdapterItem;
  * Created by sky on 15/2/6. listfragment 视图接口
  */
 public interface J2WIViewListFragment extends J2WIViewFragment {
+
+	/**
+	 * 获取ListView
+	 * 
+	 * @return 获取列表控件
+	 */
+	public ListView getListView();
 
 	/**
 	 * 设置 - ListView 头布局
@@ -85,7 +94,7 @@ public interface J2WIViewListFragment extends J2WIViewFragment {
 	 */
 	public List getData();
 
-    /**
+	/**
 	 * 更新适配器 0 显示 进度, 1 显示 内容 2 显示 空 3 显示 错误,
 	 */
 	public void updateAdapter();
