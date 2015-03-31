@@ -173,14 +173,14 @@ public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment impl
 	 *            标记
 	 */
 	public final void commitFragment(Fragment fragment, String tag) {
-        L.tag(initTag());
-        L.i("commitFragment(Fragment fragment, String tag)");
-        if (fragment != null && fragment.isAdded()) {
-            L.tag(initTag());
-            L.i("fragment 不能为空，或者已经被添加！");
-            return;
-        }
-        getFManager().beginTransaction().add(android.R.id.custom, fragment, tag).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commitAllowingStateLoss();
+		L.tag(initTag());
+		L.i("commitFragment(Fragment fragment, String tag)");
+		if (fragment != null && fragment.isAdded()) {
+			L.tag(initTag());
+			L.i("fragment 不能为空，或者已经被添加！");
+			return;
+		}
+		getFManager().beginTransaction().add(android.R.id.custom, fragment, tag).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commitAllowingStateLoss();
 	}
 
 	/**
@@ -275,7 +275,7 @@ public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment impl
 		L.tag(initTag());
 		L.i("Fragment-initLayout()");
 		mContentView = inflater.inflate(R.layout.j2w_fragment_main, container, false);
-
+		mContentView.setOnTouchListener(this);// 设置点击事件
 		mViewAnimator = ButterKnife.findById(mContentView, android.R.id.home);
 
 		// 获取View层接口
@@ -348,6 +348,9 @@ public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment impl
 		initLayout(inflater, container);
 		/** 初始化所有组建 **/
 		ButterKnife.inject(this, mContentView);
+		/** 初始化点击事件 **/
+		mContentView.setOnTouchListener(this);// 设置点击事件
+
 		return mContentView;
 	}
 

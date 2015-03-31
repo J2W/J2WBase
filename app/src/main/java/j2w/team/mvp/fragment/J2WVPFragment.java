@@ -80,8 +80,8 @@ public abstract class J2WVPFragment<T extends J2WIPresenter> extends J2WFragment
 	@Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		L.tag(initTag());
 		L.i("Fragment-onCreateView()");
-        /** 打开开关触发菜单项 **/
-        setHasOptionsMenu(true);
+		/** 打开开关触发菜单项 **/
+		setHasOptionsMenu(true);
 		/** 初始化视图 **/
 		if (isAddFragmentState()) {
 			initLayout(inflater, container);
@@ -90,19 +90,22 @@ public abstract class J2WVPFragment<T extends J2WIPresenter> extends J2WFragment
 		}
 		/** 初始化所有组建 **/
 		ButterKnife.inject(this, mContentView);
+		/** 初始化点击事件 **/
+		mContentView.setOnTouchListener(this);// 设置点击事件
+
 		return mContentView;
 	}
 
-    /**
-     * 防止事件穿透
-     *
-     * @param v
-     *            View
-     * @param event
-     *            事件
-     * @return true 拦截 false 不拦截
-     */
-    @Override public boolean onTouch(View v, MotionEvent event) {
-        return isTouch();
-    }
+	/**
+	 * 防止事件穿透
+	 *
+	 * @param v
+	 *            View
+	 * @param event
+	 *            事件
+	 * @return true 拦截 false 不拦截
+	 */
+	@Override public boolean onTouch(View v, MotionEvent event) {
+		return isTouch();
+	}
 }
