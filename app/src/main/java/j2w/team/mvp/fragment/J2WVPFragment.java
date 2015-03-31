@@ -2,6 +2,7 @@ package j2w.team.mvp.fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -79,6 +80,8 @@ public abstract class J2WVPFragment<T extends J2WIPresenter> extends J2WFragment
 	@Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		L.tag(initTag());
 		L.i("Fragment-onCreateView()");
+        /** 打开开关触发菜单项 **/
+        setHasOptionsMenu(true);
 		/** 初始化视图 **/
 		if (isAddFragmentState()) {
 			initLayout(inflater, container);
@@ -89,4 +92,17 @@ public abstract class J2WVPFragment<T extends J2WIPresenter> extends J2WFragment
 		ButterKnife.inject(this, mContentView);
 		return mContentView;
 	}
+
+    /**
+     * 防止事件穿透
+     *
+     * @param v
+     *            View
+     * @param event
+     *            事件
+     * @return true 拦截 false 不拦截
+     */
+    @Override public boolean onTouch(View v, MotionEvent event) {
+        return isTouch();
+    }
 }
