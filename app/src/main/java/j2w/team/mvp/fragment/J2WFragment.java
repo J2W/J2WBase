@@ -292,6 +292,15 @@ public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment impl
 	}
 
 	/**
+	 * 是否添加Fragment状态布局
+	 *
+	 * @return true 打开 false 关闭
+	 */
+	public boolean fragmentState() {
+		return true;
+	}
+
+	/**
 	 * 获取主视图
 	 *
 	 * @return
@@ -345,7 +354,11 @@ public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment impl
 		/** 打开开关触发菜单项 **/
 		setHasOptionsMenu(true);
 		/** 初始化视图 **/
-		initLayout(inflater, container);
+		if (fragmentState()) {
+			initLayout(inflater, container);
+		} else {
+			mContentView = inflater.inflate(layoutId(), container, false);
+		}
 		/** 初始化所有组建 **/
 		ButterKnife.inject(this, mContentView);
 		/** 初始化点击事件 **/
@@ -471,6 +484,11 @@ public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment impl
 	private final void show(int showState) {
 		L.tag(initTag());
 		L.i("show() mViewAnimator :" + mViewAnimator);
+		if (!fragmentState()) {
+			L.tag(initTag());
+			L.i("当前fragment没有打开状态模式! fragmentState() = false");
+			return;
+		}
 		if (mViewAnimator == null) {
 			return;
 		}

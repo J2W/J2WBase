@@ -121,12 +121,12 @@ public abstract class J2WVPListFragment<T extends J2WIPresenter> extends J2WVPFr
 		mViewAnimator.addView(inflater.inflate(j2WIViewActivity.fragmentLoadingLayout(), null, false));
 
 		// 内容布局-初始化
-        View view = inflater.inflate(layoutId(), null, false);
-        if (view instanceof ListView) {
-            listView = (ListView) view;
-        } else {
-            listView = (ListView) view.findViewById(android.R.id.list);
-        }
+		View view = inflater.inflate(layoutId(), null, false);
+		if (view instanceof ListView) {
+			listView = (ListView) view;
+		} else {
+			listView = (ListView) view.findViewById(android.R.id.list);
+		}
 
 		if (getHeaderLayout() != 0) {
 			View headerView = LayoutInflater.from(getActivity()).inflate(getHeaderLayout(), null, false);
@@ -149,6 +149,15 @@ public abstract class J2WVPListFragment<T extends J2WIPresenter> extends J2WVPFr
 		// 错误布局-初始化
 		mViewAnimator.addView(inflater.inflate(j2WIViewActivity.fragmentErrorLayout(), null, false));
 
+	}
+
+	/**
+	 * 是否添加Fragment状态布局
+	 *
+	 * @return true 打开 false 关闭
+	 */
+	@Override public final boolean fragmentState() {
+		return true;
 	}
 
 	@Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

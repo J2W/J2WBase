@@ -122,17 +122,15 @@ public abstract class J2WPullListFragment<T extends J2WIPresenter> extends J2WLi
 		swipe_container.setRefreshing(false);
 	}
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        super.onItemClick(parent, view, position, id);
-    }
+	@Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+		super.onItemClick(parent, view, position, id);
+	}
 
-    @Override
-    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-        return super.onItemLongClick(parent, view, position, id);
-    }
+	@Override public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+		return super.onItemLongClick(parent, view, position, id);
+	}
 
-    /**
+	/**
 	 * 追加数据
 	 *
 	 * @param list

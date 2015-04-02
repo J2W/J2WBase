@@ -18,15 +18,6 @@ public abstract class J2WVPFragment<T extends J2WIPresenter> extends J2WFragment
 	private boolean	isDelayedData	= false;
 
 	/**
-	 * 是否添加Fragment状态布局
-	 *
-	 * @return true 打开 false 关闭
-	 */
-	@Override public boolean isAddFragmentState() {
-		return true;
-	}
-
-	/**
 	 * ViewPager切换 是否调用延迟加载
 	 */
 	@Override public final void isDelayedData() {
@@ -37,6 +28,7 @@ public abstract class J2WVPFragment<T extends J2WIPresenter> extends J2WFragment
 		}
 		// 为了只初始化一次
 		isDelayedData = true;
+		// 延迟加载数据
 		initDelayedData();
 		// 更新actionbar
 		updateActionBar();
@@ -75,25 +67,6 @@ public abstract class J2WVPFragment<T extends J2WIPresenter> extends J2WFragment
 	@Override public final void onActionBar() {
 		L.tag(initTag());
 		L.i("Fragment-onActionBar()");
-	}
-
-	@Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		L.tag(initTag());
-		L.i("Fragment-onCreateView()");
-		/** 打开开关触发菜单项 **/
-		setHasOptionsMenu(true);
-		/** 初始化视图 **/
-		if (isAddFragmentState()) {
-			initLayout(inflater, container);
-		} else {
-			mContentView = inflater.inflate(layoutId(), container, false);
-		}
-		/** 初始化所有组建 **/
-		ButterKnife.inject(this, mContentView);
-		/** 初始化点击事件 **/
-		mContentView.setOnTouchListener(this);// 设置点击事件
-
-		return mContentView;
 	}
 
 	/**

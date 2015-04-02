@@ -112,7 +112,6 @@ public abstract class J2WVPPullListFragment<T extends J2WIPresenter> extends J2W
 		swipe_container.isNotLoading();
 	}
 
-
 	@Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		super.onItemClick(parent, view, position, id);
 	}

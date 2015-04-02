@@ -23,6 +23,13 @@ public interface J2WIViewFragment extends J2WIView {
 	public void initLayout(LayoutInflater inflater, ViewGroup container);
 
 	/**
+	 * 是否添加Fragment状态布局
+	 *
+	 * @return true 打开 false 关闭
+	 */
+	public boolean fragmentState();
+
+	/**
 	 * 获取主视图
 	 * 
 	 * @return

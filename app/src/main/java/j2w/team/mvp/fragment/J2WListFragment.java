@@ -151,6 +151,15 @@ public abstract class J2WListFragment<T extends J2WIPresenter> extends J2WFragme
 
 	}
 
+	/**
+	 * 是否添加Fragment状态布局
+	 *
+	 * @return true 打开 false 关闭
+	 */
+	@Override public final boolean fragmentState() {
+		return true;
+	}
+
 	@Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		L.tag(initTag());
 		L.i("Fragment-onItemClick() position: " + position);
