@@ -46,6 +46,8 @@ public abstract class J2WActivity<T extends J2WIPresenter> extends FragmentActiv
 	 * 初始化视图
 	 */
 	@Override public void initLayout() {
+        L.tag(initTag());
+        L.i("initLayout()");
 		setContentView(layoutId());
 	}
 
