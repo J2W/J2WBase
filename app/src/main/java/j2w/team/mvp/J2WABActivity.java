@@ -50,6 +50,8 @@ public abstract class J2WABActivity<T extends J2WIPresenter> extends ActionBarAc
 	 * 初始化视图
 	 */
 	@Override public void initLayout() {
+        L.tag(initTag());
+        L.i("initLayout()");
 		setContentView(layoutId());
 	}
 
