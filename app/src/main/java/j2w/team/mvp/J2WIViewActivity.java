@@ -6,6 +6,11 @@ package j2w.team.mvp;
 public interface J2WIViewActivity extends J2WIView {
 
 	/**
+	 * 初始化视图
+	 */
+	public void initLayout();
+
+	/**
 	 * 是否固定竖屏
 	 */
 	public boolean isFixedVerticalScreen();

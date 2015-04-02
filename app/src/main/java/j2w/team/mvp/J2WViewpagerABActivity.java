@@ -54,32 +54,17 @@ public abstract class J2WViewpagerABActivity<T extends J2WIPresenter> extends J2
 		return R.layout.j2w_activity_viewpager;
 	}
 
-	@Override public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-
-		/** 是否固定竖屏 **/
-		if (isFixedVerticalScreen()) {
-			/** 竖屏显示 **/
-			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-		}
-		L.tag(initTag());
-		L.i("ViewPagerActivity-onCreate()");
-		setContentView(layoutId());
-		/** 初始化标题栏 **/
-		initActionBar();
+	/**
+	 * 初始化视图
+	 */
+	@Override public void initLayout() {
+		super.initLayout();
 		tabs = (PagerSlidingTabStrip) findViewById(android.R.id.tabs);
 		pager = (J2WViewPager) findViewById(R.id.pager);
 		// 设置Viewpager内部
 		initViewPager();
 		// 设置Viewpager头部
 		initTabsValue();
-		/** 初始化所有组建 **/
-		ButterKnife.inject(this);
-		/** 添加到堆栈 **/
-		J2WHelper.getScreenHelper().pushActivity(this);
-		// 设置数据
-		initData(savedInstanceState);
-
 	}
 
 	/**

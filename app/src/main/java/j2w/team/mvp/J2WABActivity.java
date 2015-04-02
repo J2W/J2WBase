@@ -47,6 +47,13 @@ public abstract class J2WABActivity<T extends J2WIPresenter> extends ActionBarAc
 	}
 
 	/**
+	 * 初始化视图
+	 */
+	@Override public void initLayout() {
+		setContentView(layoutId());
+	}
+
+	/**
 	 * 初始化数据
 	 *
 	 * @param savedInstanceState
@@ -273,7 +280,7 @@ public abstract class J2WABActivity<T extends J2WIPresenter> extends ActionBarAc
 		L.tag(initTag());
 		L.i("onCreate()");
 		/** 初始化视图 **/
-		setContentView(layoutId());
+		initLayout();
 		/** 初始化标题栏 **/
 		initActionBar();
 		/** 初始化所有组建 **/
