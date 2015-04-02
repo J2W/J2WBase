@@ -84,19 +84,32 @@ public interface J2WIViewViewpagerABActivity extends J2WIViewABActivity {
 	/**
 	 * ViewPager 滑动事件 - 滑动过程
 	 * 
-	 * @param i
+	 * @param current
+	 *            当前
+	 * @param old
+	 *            过去
+	 * @param currentPosition
+	 *            当前坐标
+	 * @param oldPosition
+	 *            过去坐标
 	 * @param v
 	 * @param i2
 	 */
-	public void onExtraPageScrolled(int i, float v, int i2);
+	public void onExtraPageScrolled(View current, View old, int currentPosition, int oldPosition, float v, int i2);
 
 	/**
 	 * ViewPager 滑动事件 - 滑动完成
 	 * 
-	 * @param view
-	 * @param i
+	 * @param current
+	 *            当前
+	 * @param old
+	 *            过去
+	 * @param currentPosition
+	 *            当前坐标
+	 * @param oldPosition
+	 *            过去坐标
 	 */
-	public void onExtraPageSelected(View view, int i);
+	public void onExtraPageSelected(View current, View old, int currentPosition, int oldPosition);
 
 	/**
 	 * ViewPager 滑动事件 - 滑动改变

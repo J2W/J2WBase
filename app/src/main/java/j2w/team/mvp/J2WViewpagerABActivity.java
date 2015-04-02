@@ -46,6 +46,16 @@ public abstract class J2WViewpagerABActivity<T extends J2WIPresenter> extends J2
 	private PagerAdapter			adapter;
 
 	/**
+	 * 记录Viewpager Item
+	 */
+	private View					oldView		= null;
+
+	/**
+	 * 就Viewpager 坐标
+	 */
+	private int						oldPosition	= -1;
+
+	/**
 	 * 获取布局ID
 	 *
 	 * @return 布局ID
@@ -238,19 +248,32 @@ public abstract class J2WViewpagerABActivity<T extends J2WIPresenter> extends J2
 	/**
 	 * ViewPager 滑动事件 - 滑动过程
 	 *
-	 * @param i
+	 * @param current
+	 *            当前
+	 * @param old
+	 *            过去
+	 * @param currentPosition
+	 *            当前坐标
+	 * @param oldPosition
+	 *            过去坐标
 	 * @param v
 	 * @param i2
 	 */
-	@Override public void onExtraPageScrolled(int i, float v, int i2) {}
+	@Override public void onExtraPageScrolled(View current, View old, int currentPosition, int oldPosition, float v, int i2) {}
 
 	/**
 	 * ViewPager 滑动事件 - 滑动完成
 	 *
-	 * @param view
-	 * @param i
+	 * @param current
+	 *            当前
+	 * @param old
+	 *            过去
+	 * @param currentPosition
+	 *            当前坐标
+	 * @param oldPosition
+	 *            过去坐标
 	 */
-	@Override public void onExtraPageSelected(View view, int i) {
+	@Override public void onExtraPageSelected(View current, View old, int currentPosition, int oldPosition) {
 		L.tag(initTag());
 		L.i("onExtraPageSelected()");
 	}
@@ -371,7 +394,7 @@ public abstract class J2WViewpagerABActivity<T extends J2WIPresenter> extends J2
 		}
 
 		@Override public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-			onExtraPageScrolled(position, positionOffset, positionOffsetPixels);
+			onExtraPageScrolled(tabs.tabsContainer.getChildAt(position),oldView,position,oldPosition, positionOffset, positionOffsetPixels);
 		}
 
 		@Override public void onPageSelected(int position) {
@@ -392,7 +415,9 @@ public abstract class J2WViewpagerABActivity<T extends J2WIPresenter> extends J2
 
 			currentPageIndex = position;
 
-			onExtraPageSelected(tabs.tabsContainer.getChildAt(position), position);
+			onExtraPageSelected(tabs.tabsContainer.getChildAt(position), oldView, position, oldPosition);
+			oldView = tabs.tabsContainer.getChildAt(position);// 缓存视图
+			oldPosition = position; // 缓存坐标
 		}
 
 		@Override public void onPageScrollStateChanged(int state) {
