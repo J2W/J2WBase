@@ -7,12 +7,16 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Debug;
 import android.os.Environment;
+import android.text.format.DateUtils;
 import android.text.format.Formatter;
 import android.util.DisplayMetrics;
+
+import com.squareup.okhttp.OkHttpClient;
 
 import java.util.List;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.concurrent.TimeUnit;
 
 import j2w.team.mvp.presenter.J2WHelper;
 
@@ -175,4 +179,5 @@ public final class AppUtils {
 		J2WHelper.getScreenHelper().currentActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
 		return dm;
 	}
+
 }

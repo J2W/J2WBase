@@ -8,6 +8,7 @@ import com.squareup.picasso.PicassoTools;
 import de.greenrobot.event.EventBus;
 import j2w.team.J2WApplication;
 import j2w.team.common.utils.looper.SynchronousExecutor;
+import j2w.team.modules.download.J2WDownloadManager;
 import j2w.team.modules.http.J2WRestAdapter;
 import j2w.team.modules.screen.J2WIScreenManager;
 import j2w.team.modules.screen.J2WScreenManager;
@@ -84,6 +85,15 @@ public class J2WHelper {
 	 */
 	public static final SynchronousExecutor getMainLooper() {
 		return SynchronousExecutor.getInstance();
+	}
+
+	/**
+	 * 下载器工具
+	 * 
+	 * @return
+	 */
+	public static final J2WDownloadManager getDownloader() {
+		return J2WDownloadManager.getInstance();
 	}
 
 	/**
