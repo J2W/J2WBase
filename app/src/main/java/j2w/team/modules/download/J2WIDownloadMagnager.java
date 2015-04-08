@@ -2,6 +2,9 @@ package j2w.team.modules.download;
 
 import android.net.Uri;
 
+import java.io.File;
+import java.util.List;
+
 /**
  * @创建人 sky
  * @创建时间 15/4/3 上午11:52
@@ -154,4 +157,77 @@ public interface J2WIDownloadMagnager {
 	 */
 	public int download(Uri downloadUri, Uri destinationUri, J2WDownloadListener j2WDownloadListener);
 
+	/**
+	 * 上传
+	 *
+	 * @param uploadUri
+	 *            上传地址
+	 * @param j2WUploadHeader
+	 * @param j2WUploadBody
+	 *            请求体
+	 * @param j2WUploadListener
+	 *            上传事件
+	 * @return
+	 */
+	public int upload(Uri uploadUri, J2WUploadHeader j2WUploadHeader, J2WUploadBody j2WUploadBody, J2WUploadListener j2WUploadListener);
+
+	/**
+	 * 上传
+	 *
+	 * @param uploadUri
+	 *            上传地址
+	 * @param j2WUploadHeaders
+	 *            上传头信息
+	 * @param j2WUploadBody
+	 *            上传体
+	 * @param j2WContentType
+	 *            类型
+	 * @param j2WUploadListener
+	 *            事件
+	 * @return
+	 */
+	public int upload(Uri uploadUri, List<J2WUploadHeader> j2WUploadHeaders, J2WUploadBody j2WUploadBody, J2WContentType j2WContentType, J2WUploadListener j2WUploadListener);
+
+	/**
+	 * 上传
+	 *
+	 * @param uploadUri
+	 *            上传地址
+	 * @param file
+	 *            文件
+	 * @param j2WUploadListener
+	 *            事件
+	 * @return
+	 */
+	public int upload(String uploadUri, File file, J2WUploadListener j2WUploadListener);
+
+	/**
+	 * 上传
+	 *
+	 * @param uploadUri
+	 *            上传地址
+	 * @param file
+	 *            文件
+	 * @param j2WUploadHeader
+	 *            请求头信息
+	 * @param j2WUploadListener
+	 *            事件
+	 * @return
+	 */
+	public int upload(String uploadUri, File file, J2WUploadHeader j2WUploadHeader, J2WUploadListener j2WUploadListener);
+
+	/**
+	 * 上传
+	 *
+	 * @param uploadUri
+	 *            上传地址
+	 * @param j2WUploadHeaders
+	 *            请求头信息 数组
+	 * @param file
+	 *            文件
+	 * @param j2WUploadListener
+	 *            事件
+	 * @return
+	 */
+	public int upload(String uploadUri, List<J2WUploadHeader> j2WUploadHeaders, File file, J2WUploadListener j2WUploadListener);
 }

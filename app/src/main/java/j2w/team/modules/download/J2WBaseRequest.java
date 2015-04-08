@@ -1,5 +1,6 @@
 package j2w.team.modules.download;
 
+
 import j2w.team.common.log.L;
 
 /**
@@ -77,7 +78,7 @@ public class J2WBaseRequest implements Comparable<J2WBaseRequest> {
 
 	/**
 	 * 获取请求TAG
-	 * 
+	 *
 	 * @return
 	 */
 	public final String getRequestTag() {
@@ -86,7 +87,7 @@ public class J2WBaseRequest implements Comparable<J2WBaseRequest> {
 
 	/**
 	 * 设置请求TAG
-	 * 
+	 *
 	 * @param requestTag
 	 */
 	final void setRequestTag(String requestTag) {
@@ -118,7 +119,7 @@ public class J2WBaseRequest implements Comparable<J2WBaseRequest> {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public boolean isCanceled() {

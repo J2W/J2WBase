@@ -1,23 +1,27 @@
 package j2w.team.modules.download;
 
+import com.squareup.okhttp.Response;
+
 /**
  * @创建人 sky
- * @创建时间 15/4/3 下午2:13
- * @类描述 进度回调接口
+ * @创建时间 15/4/7 上午9:59
+ * @类描述 上传事件回调
  */
-public interface J2WDownloadListener {
+public interface J2WUploadListener {
 
 	/**
 	 * 成功
-	 * 
+	 *
 	 * @param id
 	 *            请求ID
+	 * @param response
+	 *            响应结果
 	 */
-	void onDownloadComplete(int id);
+	void onUploadComplete(int id, Response response);
 
 	/**
 	 * 失败
-	 * 
+	 *
 	 * @param id
 	 *            请求ID
 	 * @param errorCode
@@ -25,11 +29,11 @@ public interface J2WDownloadListener {
 	 * @param errorMessage
 	 *            错误信息
 	 */
-	void onDownloadFailed(int id, int errorCode, String errorMessage);
+	void onUploadFailed(int id, int errorCode, String errorMessage);
 
 	/**
 	 * 进度回调
-	 * 
+	 *
 	 * @param id
 	 *            请求ID
 	 * @param totalBytes
@@ -39,5 +43,5 @@ public interface J2WDownloadListener {
 	 * @param progress
 	 *            进度
 	 */
-	void onDownloadProgress(int id, long totalBytes, long downloadedBytes, int progress);
+	void onUploadProgress(int id, long totalBytes, long downloadedBytes, int progress);
 }

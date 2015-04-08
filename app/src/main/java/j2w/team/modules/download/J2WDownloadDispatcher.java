@@ -93,7 +93,11 @@ public class J2WDownloadDispatcher extends Thread {
 					j2WDownloadRequest.setDownloadState(J2WDownloadManager.STATUS_STARTED);// 设置状态
 					executeDownload(j2WDownloadRequest, j2WDownloadRequest.getDownloadUrl().toString());
 				} else if (mRequest instanceof J2WUploadRequest) { // 上传请求
-
+					J2WUploadRequest j2WUploadRequest = (J2WUploadRequest) mRequest;
+					mRedirectionCount = 0; // 重定向清零
+					L.i("请求ID = " + j2WUploadRequest.getRequestId());
+					j2WUploadRequest.setDownloadState(J2WDownloadManager.STATUS_STARTED);// 设置状态
+					executeUpload(j2WUploadRequest, j2WUploadRequest.getUploadUrl().toString());
 				} else {
 					L.i("未知指令");
 				}
@@ -105,6 +109,9 @@ public class J2WDownloadDispatcher extends Thread {
 						j2WDownloadRequest.finish();
 						updateDownloadFailed(j2WDownloadRequest, J2WDownloadManager.ERROR_DOWNLOAD_CANCELLED, "取消下载");
 					} else if (mRequest instanceof J2WUploadRequest) { // 上传请求
+						J2WUploadRequest j2WUploadRequest = (J2WUploadRequest) mRequest;
+						j2WUploadRequest.finish();
+						updateUploadFailed(j2WUploadRequest, J2WDownloadManager.ERROR_DOWNLOAD_CANCELLED, "取消上传");
 
 					} else {
 						L.i("未知指令");
@@ -114,6 +121,147 @@ public class J2WDownloadDispatcher extends Thread {
 				continue;
 			}
 		}
+	}
+
+	/**
+	 * *******************************上传****************************************
+	 */
+
+	/**
+	 * 执行上传
+	 *
+	 * @param j2WUploadRequest
+	 *            下载请求
+	 * @param uploadUrl
+	 *            请求url
+     */
+	private void executeUpload(J2WUploadRequest j2WUploadRequest, String uploadUrl) {
+		URL url = null;
+		try {
+			url = new URL(uploadUrl);
+		} catch (MalformedURLException e) {
+			updateUploadFailed(j2WUploadRequest, J2WDownloadManager.ERROR_MALFORMED_URI, "异常 : 不正确的地址");
+			return;
+		}
+		updateUploadState(j2WUploadRequest, J2WDownloadManager.STATUS_CONNECTING);
+		// 创建文件体
+		J2WOkUploadBody j2WOkUploadBody = new J2WOkUploadBody(j2WUploadRequest, j2WUploadRequest.getJ2WUploadListener());
+		// 请求
+		Request request = new Request.Builder().tag(j2WUploadRequest.getRequestTag()).url(url).headers(j2WUploadRequest.getHeaders()).post(j2WOkUploadBody.build()).build();// 创建请求
+		try {
+			updateUploadState(j2WUploadRequest, J2WDownloadManager.STATUS_RUNNING);
+			Response response = okHttpClient.newCall(request).execute();
+			final int responseCode = response.code();
+
+			L.i("请求编号:" + j2WUploadRequest.getRequestId() + ", 响应编号 : " + responseCode);
+
+			switch (responseCode) {
+				case HTTP_OK:
+					if (j2WUploadRequest.isCanceled()) {
+						j2WUploadRequest.finish();
+						updateUploadFailed(j2WUploadRequest, J2WDownloadManager.ERROR_DOWNLOAD_CANCELLED, "取消下载");
+						return;
+					}
+					if (!response.isSuccessful()) {
+						updateUploadFailed(j2WUploadRequest, J2WDownloadManager.ERROR_HTTP_DATA_ERROR, "成功响应,但上传失败！");
+						return;
+					}
+					shouldAllowRedirects = false;
+					postUploadComplete(j2WUploadRequest, response);// 上传成功
+					return;
+				case HTTP_MOVED_PERM:
+				case HTTP_MOVED_TEMP:
+				case HTTP_SEE_OTHER:
+				case HTTP_TEMP_REDIRECT:
+					while (mRedirectionCount++ < MAX_REDIRECTS && shouldAllowRedirects) {
+						L.i("重定向 Id " + j2WUploadRequest.getRequestId());
+						final String location = response.header("Location");
+						executeUpload(j2WUploadRequest, location); // 执行下载
+						continue;
+					}
+
+					if (mRedirectionCount > MAX_REDIRECTS) {
+						updateUploadFailed(j2WUploadRequest, J2WDownloadManager.ERROR_TOO_MANY_REDIRECTS, "重定向太多，导致下载失败,默认最多 5次重定向！");
+						return;
+					}
+					break;
+				case HTTP_REQUESTED_RANGE_NOT_SATISFIABLE:
+					updateUploadFailed(j2WUploadRequest, HTTP_REQUESTED_RANGE_NOT_SATISFIABLE, response.message());
+					break;
+				case HTTP_UNAVAILABLE:
+					updateUploadFailed(j2WUploadRequest, HTTP_UNAVAILABLE, response.message());
+					break;
+				case HTTP_INTERNAL_ERROR:
+					updateUploadFailed(j2WUploadRequest, HTTP_INTERNAL_ERROR, response.message());
+					break;
+				default:
+					updateUploadFailed(j2WUploadRequest, J2WDownloadManager.ERROR_UNHANDLED_HTTP_CODE, "未处理的响应:" + responseCode + " 信息:" + response.message());
+					break;
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+			updateUploadFailed(j2WUploadRequest, J2WDownloadManager.ERROR_HTTP_DATA_ERROR, "故障");
+		}
+	}
+
+	/**
+	 * 更新状态 - 上传失败
+	 *
+	 * @param j2WUploadRequest
+	 * @param errorCode
+	 * @param errorMsg
+	 */
+	public void updateUploadFailed(J2WUploadRequest j2WUploadRequest, int errorCode, String errorMsg) {
+		shouldAllowRedirects = false;
+		j2WUploadRequest.setDownloadState(J2WDownloadManager.STATUS_FAILED);
+		if (j2WUploadRequest.getJ2WUploadListener() != null) {
+			postUploadFailed(j2WUploadRequest, errorCode, errorMsg);
+			j2WUploadRequest.finish();
+		}
+	}
+
+	/**
+	 * 更新状态 - 链接
+	 *
+	 * @param j2WUploadRequest
+	 * @param state
+	 */
+	public void updateUploadState(J2WUploadRequest j2WUploadRequest, int state) {
+		j2WUploadRequest.setDownloadState(state);
+	}
+
+	/**
+	 * 上传失败
+	 *
+	 * @param request
+	 *            请求
+	 * @param errorCode
+	 *            错误编号
+	 * @param errorMsg
+	 *            错误信息
+	 */
+	public void postUploadFailed(final J2WUploadRequest request, final int errorCode, final String errorMsg) {
+		J2WHelper.getMainLooper().execute(new Runnable() {
+
+			@Override public void run() {
+				request.getJ2WUploadListener().onUploadFailed(request.getRequestId(), errorCode, errorMsg);
+			}
+		});
+	}
+
+	/**
+	 * 上传成功
+	 *
+	 * @param request
+	 *            请求
+	 */
+	public void postUploadComplete(final J2WUploadRequest request, final Response response) {
+		J2WHelper.getMainLooper().execute(new Runnable() {
+
+			@Override public void run() {
+				request.getJ2WUploadListener().onUploadComplete(request.getRequestId(), response);
+			}
+		});
 	}
 
 	/**
@@ -138,7 +286,6 @@ public class J2WDownloadDispatcher extends Thread {
 		}
 
 		Request request = new Request.Builder().tag(j2WDownloadRequest.getRequestTag()).url(url).build();// 创建请求
-
 		try {
 			Response response = okHttpClient.newCall(request).execute();
 
@@ -468,7 +615,7 @@ public class J2WDownloadDispatcher extends Thread {
 		J2WHelper.getMainLooper().execute(new Runnable() {
 
 			@Override public void run() {
-				request.getJ2WDownloadListener().onProgress(request.getRequestId(), totalBytes, downloadedBytes, progress);
+				request.getJ2WDownloadListener().onDownloadProgress(request.getRequestId(), totalBytes, downloadedBytes, progress);
 			}
 		});
 	}
