@@ -11,6 +11,8 @@ import android.support.v4.app.FragmentTransaction;
 import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
 import j2w.team.R;
+import j2w.team.modules.dialog.iface.IDialogListener;
+import j2w.team.mvp.model.J2WConstants;
 import j2w.team.mvp.presenter.J2WHelper;
 import j2w.team.common.log.L;
 import j2w.team.mvp.presenter.J2WIPresenter;
@@ -19,7 +21,7 @@ import j2w.team.mvp.presenter.J2WPresenterUtils;
 /**
  * Created by sky on 15/1/26. activity 视图
  */
-public abstract class J2WActivity<T extends J2WIPresenter> extends FragmentActivity implements J2WIViewActivity {
+public abstract class J2WActivity<T extends J2WIPresenter> extends FragmentActivity implements J2WIViewActivity, IDialogListener {
 
 	/** 业务逻辑对象 **/
 	private T	presenter	= null;
@@ -46,8 +48,8 @@ public abstract class J2WActivity<T extends J2WIPresenter> extends FragmentActiv
 	 * 初始化视图
 	 */
 	@Override public void initLayout() {
-        L.tag(initTag());
-        L.i("initLayout()");
+		L.tag(initTag());
+		L.i("initLayout()");
 		setContentView(layoutId());
 	}
 
@@ -370,5 +372,47 @@ public abstract class J2WActivity<T extends J2WIPresenter> extends FragmentActiv
 	 */
 	@Override public boolean isFixedVerticalScreen() {
 		return true;
+	}
+
+	/**
+	 * 弹框
+	 * 
+	 * @param requestCode
+	 *            请求编号
+	 */
+	@Override public void onPositiveButtonClicked(int requestCode) {
+		switch (requestCode) {
+			case J2WConstants.J2W_ERROR_CODE:
+				onBackPressed();
+				break;
+		}
+	}
+
+	/**
+	 * 弹框
+	 * 
+	 * @param requestCode
+	 *            请求编号
+	 */
+	@Override public void onNeutralButtonClicked(int requestCode) {
+		switch (requestCode) {
+			case J2WConstants.J2W_ERROR_CODE:
+				onBackPressed();
+				break;
+		}
+	}
+
+	/**
+	 * 弹框
+	 * 
+	 * @param requestCode
+	 *            请求编号
+	 */
+	@Override public void onNegativeButtonClicked(int requestCode) {
+		switch (requestCode) {
+			case J2WConstants.J2W_ERROR_CODE:
+				onBackPressed();
+				break;
+		}
 	}
 }

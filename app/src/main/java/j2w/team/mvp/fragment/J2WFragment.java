@@ -18,7 +18,10 @@ import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
 import j2w.team.R;
 import j2w.team.common.log.L;
+import j2w.team.modules.dialog.iface.IDialogListener;
+import j2w.team.modules.dialog.iface.IPositiveButtonDialogListener;
 import j2w.team.mvp.J2WIViewActivity;
+import j2w.team.mvp.model.J2WConstants;
 import j2w.team.mvp.presenter.J2WHelper;
 import j2w.team.mvp.presenter.J2WIPresenter;
 import j2w.team.mvp.presenter.J2WPresenterUtils;
@@ -26,7 +29,7 @@ import j2w.team.mvp.presenter.J2WPresenterUtils;
 /**
  * Created by sky on 15/2/1. fragment 视图
  */
-public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment implements J2WIViewFragment, View.OnTouchListener {
+public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment implements J2WIViewFragment, View.OnTouchListener, IDialogListener {
 
 	/**
 	 * view *
@@ -499,4 +502,45 @@ public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment impl
 		mViewAnimator.setDisplayedChild(showState);
 	}
 
+	/**
+	 * 弹框
+	 * 
+	 * @param requestCode
+	 *            请求编号
+	 */
+	@Override public void onPositiveButtonClicked(int requestCode) {
+		switch (requestCode) {
+			case J2WConstants.J2W_ERROR_CODE:
+				getActivity().onBackPressed();
+				break;
+		}
+	}
+
+	/**
+	 * 弹框
+	 * 
+	 * @param requestCode
+	 *            请求编号
+	 */
+	@Override public void onNeutralButtonClicked(int requestCode) {
+		switch (requestCode) {
+			case J2WConstants.J2W_ERROR_CODE:
+				getActivity().onBackPressed();
+				break;
+		}
+	}
+
+	/**
+	 * 弹框
+	 * 
+	 * @param requestCode
+	 *            请求编号
+	 */
+	@Override public void onNegativeButtonClicked(int requestCode) {
+		switch (requestCode) {
+			case J2WConstants.J2W_ERROR_CODE:
+				getActivity().onBackPressed();
+				break;
+		}
+	}
 }
