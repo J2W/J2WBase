@@ -43,6 +43,18 @@ public abstract class J2WPresenter<T> {
 	}
 
 	/**
+	 * 获取公用接口
+	 * 
+	 * @param <I>
+	 * @return
+	 */
+	public final <I> I getCommonView() {
+		L.tag("J2WPresenter");
+		L.i("getCommonView()");
+		return (I) DynamicProxyUtils.newProxyPresenter(iView, this);
+	}
+
+	/**
 	 * 是否回调视图层方法
 	 * 
 	 * @return
