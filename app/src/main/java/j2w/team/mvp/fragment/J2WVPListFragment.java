@@ -192,7 +192,8 @@ public abstract class J2WVPListFragment<T extends J2WIPresenter> extends J2WVPFr
 		if (list == null || list.size() < 1) {
 			L.tag(initTag());
 			L.i("Fragment-setData(List) return null");
-			return;
+            showEmpty();
+            return;
 		}
 		if (isAdapterNotNull()) {
 			mListAdapter.setData(list);

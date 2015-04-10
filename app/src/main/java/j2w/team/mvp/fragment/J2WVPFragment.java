@@ -1,12 +1,8 @@
 package j2w.team.mvp.fragment;
 
-import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 
-import butterknife.ButterKnife;
 import j2w.team.common.log.L;
 import j2w.team.mvp.presenter.J2WIPresenter;
 
