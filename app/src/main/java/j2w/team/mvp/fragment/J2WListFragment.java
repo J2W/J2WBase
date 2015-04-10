@@ -192,6 +192,7 @@ public abstract class J2WListFragment<T extends J2WIPresenter> extends J2WFragme
 		if (list == null || list.size() < 1) {
 			L.tag(initTag());
 			L.i("Fragment-setData(List) return null");
+            showEmpty();
 			return;
 		}
 		if (isAdapterNotNull()) {
