@@ -159,6 +159,16 @@ public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment impl
 	}
 
 	/**
+	 * 提交fragment
+	 *
+	 * @param fragment
+	 *            实例
+	 */
+	@Override public void commitFragment(Fragment fragment) {
+		commitFragment(fragment, fragment.getClass().getSimpleName());
+	}
+
+	/**
 	 * 获取碎片管理器 - 内部管理器
 	 *
 	 * @return
@@ -171,10 +181,10 @@ public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment impl
 	 * 设置Acitvity标题栏
 	 */
 	@Override public void setActivityTitle(Object object) {
-        if(getActivity() instanceof J2WIViewABActivity){
-            J2WIViewABActivity j2WIViewABActivity = (J2WIViewABActivity) getActivity();
-            j2WIViewABActivity.setTitle(object);
-        }
+		if (getActivity() instanceof J2WIViewABActivity) {
+			J2WIViewABActivity j2WIViewABActivity = (J2WIViewABActivity) getActivity();
+			j2WIViewABActivity.setTitle(object);
+		}
 	}
 
 	/**
@@ -194,6 +204,19 @@ public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment impl
 			return;
 		}
 		getFManager().beginTransaction().add(android.R.id.custom, fragment, tag).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commitAllowingStateLoss();
+	}
+
+	/**
+	 * 提交fragment
+	 *
+	 * @param layoutId
+	 *            布局ID
+	 * @param fragment
+	 *            实例
+	 */
+	@Override public void commitFragment(int layoutId, Fragment fragment) {
+		commitFragment(layoutId, fragment, fragment.getClass().getSimpleName());
+
 	}
 
 	/**
@@ -223,6 +246,16 @@ public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment impl
 	}
 
 	/**
+	 * 提交fragment
+	 *
+	 * @param fragment
+	 *            实例
+	 */
+	@Override public void commitBackStackFragment(Fragment fragment) {
+		commitBackStackFragment(fragment, fragment.getClass().getSimpleName());
+	}
+
+	/**
 	 * 提交fragment - 压栈
 	 *
 	 * @param fragment
@@ -239,6 +272,18 @@ public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment impl
 			return;
 		}
 		getFManager().beginTransaction().add(android.R.id.custom, fragment, tag).addToBackStack(null).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commitAllowingStateLoss();
+	}
+
+	/**
+	 * 提交fragment - 压栈
+	 *
+	 * @param layoutId
+	 *            布局ID
+	 * @param fragment
+	 *            实例
+	 */
+	@Override public void commitBackStackFragment(int layoutId, Fragment fragment) {
+        commitBackStackFragment(layoutId,fragment, fragment.getClass().getSimpleName());
 	}
 
 	/**

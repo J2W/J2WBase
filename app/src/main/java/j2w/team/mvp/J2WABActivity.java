@@ -173,6 +173,16 @@ public abstract class J2WABActivity<T extends J2WIPresenter> extends ActionBarAc
 	 *
 	 * @param fragment
 	 *            实例
+	 */
+	@Override public void commitFragment(Fragment fragment) {
+		commitFragment(fragment, fragment.getClass().getSimpleName());
+	}
+
+	/**
+	 * 提交fragment
+	 *
+	 * @param fragment
+	 *            实例
 	 * @param tag
 	 *            标记
 	 */
@@ -185,6 +195,18 @@ public abstract class J2WABActivity<T extends J2WIPresenter> extends ActionBarAc
 			return;
 		}
 		getFManager().beginTransaction().add(android.R.id.custom, fragment, tag).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commitAllowingStateLoss();
+	}
+
+	/**
+	 * 提交fragment
+	 *
+	 * @param layoutId
+	 *            布局ID
+	 * @param fragment
+	 *            实例
+	 */
+	@Override public void commitFragment(int layoutId, Fragment fragment) {
+		commitFragment(layoutId, fragment, fragment.getClass().getSimpleName());
 	}
 
 	/**
@@ -218,6 +240,16 @@ public abstract class J2WABActivity<T extends J2WIPresenter> extends ActionBarAc
 	 *
 	 * @param fragment
 	 *            实例
+	 */
+	@Override public void commitBackStackFragment(Fragment fragment) {
+        commitBackStackFragment(fragment, fragment.getClass().getSimpleName());
+	}
+
+	/**
+	 * 提交fragment - 压栈
+	 *
+	 * @param fragment
+	 *            实例
 	 * @param tag
 	 *            标记
 	 */
@@ -230,6 +262,19 @@ public abstract class J2WABActivity<T extends J2WIPresenter> extends ActionBarAc
 			return;
 		}
 		getFManager().beginTransaction().add(android.R.id.custom, fragment, tag).addToBackStack(null).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commitAllowingStateLoss();
+	}
+
+	/**
+	 * 提交fragment - 压栈
+	 *
+	 * @param layoutId
+	 *            布局ID
+	 * @param fragment
+	 *            实例
+	 */
+	@Override public void commitBackStackFragment(int layoutId, Fragment fragment) {
+        commitBackStackFragment(layoutId, fragment, fragment.getClass().getSimpleName());
+
 	}
 
 	/**

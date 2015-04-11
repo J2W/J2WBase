@@ -102,6 +102,14 @@ public interface J2WIView<T> {
 
 	/**
 	 * 提交fragment
+	 *
+	 * @param fragment
+	 *            实例
+	 */
+	public void commitFragment(Fragment fragment);
+
+	/**
+	 * 提交fragment
 	 * 
 	 * @param fragment
 	 *            实例
@@ -109,6 +117,16 @@ public interface J2WIView<T> {
 	 *            标记
 	 */
 	public void commitFragment(Fragment fragment, String tag);
+
+	/**
+	 * 提交fragment
+	 *
+	 * @param layoutId
+	 *            布局ID
+	 * @param fragment
+	 *            实例
+	 */
+	public void commitFragment(int layoutId, Fragment fragment);
 
 	/**
 	 * 提交fragment
@@ -127,10 +145,28 @@ public interface J2WIView<T> {
 	 *
 	 * @param fragment
 	 *            实例
+	 */
+	public void commitBackStackFragment(Fragment fragment);
+
+	/**
+	 * 提交fragment - 压栈
+	 *
+	 * @param fragment
+	 *            实例
 	 * @param tag
 	 *            标记
 	 */
 	public void commitBackStackFragment(Fragment fragment, String tag);
+
+	/**
+	 * 提交fragment - 压栈
+	 *
+	 * @param layoutId
+	 *            布局ID
+	 * @param fragment
+	 *            实例
+	 */
+	public void commitBackStackFragment(int layoutId, Fragment fragment);
 
 	/**
 	 * 提交fragment - 压栈
