@@ -1,5 +1,7 @@
 package j2w.team.mvp.presenter;
 
+import android.os.Bundle;
+
 import j2w.team.common.log.L;
 import j2w.team.common.utils.proxy.DynamicProxyUtils;
 import j2w.team.modules.http.J2WError;
@@ -121,5 +123,15 @@ public abstract class J2WPresenter<T> {
 	public void methodCodingError(String methodName, Throwable throwable) {
 		L.tag(initTag());
 		L.i("methodCodingError() methodName : " + methodName);
+	}
+
+	/**
+	 * 读数据
+	 * 
+	 * @param bundle
+	 */
+	public void readData(Bundle bundle) {
+		L.tag(initTag());
+		L.i("readData(bundle)");
 	}
 }

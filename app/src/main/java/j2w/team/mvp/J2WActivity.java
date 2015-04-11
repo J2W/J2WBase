@@ -322,7 +322,7 @@ public abstract class J2WActivity<T extends J2WIPresenter> extends FragmentActiv
 		L.i("onStop()");
 	}
 
-	@Override protected void onDestroy() {
+    @Override protected void onDestroy() {
 		super.onDestroy();
 		L.tag(initTag());
 		L.i("onDestroy()");

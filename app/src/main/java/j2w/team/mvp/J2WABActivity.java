@@ -364,6 +364,14 @@ public abstract class J2WABActivity<T extends J2WIPresenter> extends ActionBarAc
 	}
 
 	/**
+	 * 设置标题栏
+	 */
+	@Override public void setTitle(Object value) {
+		L.tag(initTag());
+		L.i("setTitle() " + value);
+	}
+
+	/**
 	 * 初始化fragment状态布局 - 进度
 	 *
 	 * @return

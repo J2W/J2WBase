@@ -1,5 +1,7 @@
 package j2w.team.mvp.presenter;
 
+import android.os.Bundle;
+
 import j2w.team.modules.http.J2WError;
 
 /**
@@ -69,4 +71,11 @@ public interface J2WIPresenter<T> {
 	 *            异常
 	 */
 	public void methodCodingError(String methodName, Throwable throwable);
+
+	/**
+	 * 读数据
+	 * 
+	 * @param bundle
+	 */
+	public void readData(Bundle bundle);
 }

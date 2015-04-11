@@ -19,7 +19,7 @@ import de.greenrobot.event.EventBus;
 import j2w.team.R;
 import j2w.team.common.log.L;
 import j2w.team.modules.dialog.iface.IDialogListener;
-import j2w.team.modules.dialog.iface.IPositiveButtonDialogListener;
+import j2w.team.mvp.J2WIViewABActivity;
 import j2w.team.mvp.J2WIViewActivity;
 import j2w.team.mvp.model.J2WConstants;
 import j2w.team.mvp.presenter.J2WHelper;
@@ -165,6 +165,16 @@ public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment impl
 	 */
 	@Override public FragmentManager getChildFManager() {
 		return getChildFragmentManager();
+	}
+
+	/**
+	 * 设置Acitvity标题栏
+	 */
+	@Override public void setActivityTitle(Object object) {
+        if(getActivity() instanceof J2WIViewABActivity){
+            J2WIViewABActivity j2WIViewABActivity = (J2WIViewABActivity) getActivity();
+            j2WIViewABActivity.setTitle(object);
+        }
 	}
 
 	/**

@@ -1,6 +1,5 @@
 package j2w.team.mvp;
 
-
 /**
  * Created by sky on 15/2/5. actionbar
  */
@@ -17,4 +16,9 @@ public interface J2WIViewABActivity extends J2WIViewActivity {
 	 * @return 布局ID
 	 */
 	public int actionBarLayoutID();
+
+	/**
+	 * 设置标题栏
+	 */
+	public void setTitle(Object value);
 }

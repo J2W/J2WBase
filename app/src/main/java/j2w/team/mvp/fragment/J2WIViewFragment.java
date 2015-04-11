@@ -74,4 +74,9 @@ public interface J2WIViewFragment extends J2WIView {
 	 * @return
 	 */
 	public FragmentManager getChildFManager();
+
+	/**
+	 * 设置Acitvity标题栏
+	 */
+	public void setActivityTitle(Object value);
 }
