@@ -2,11 +2,15 @@ package j2w.team.mvp.presenter;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 
 import com.squareup.picasso.PicassoTools;
 
 import de.greenrobot.event.EventBus;
 import j2w.team.J2WApplication;
+import j2w.team.common.log.L;
 import j2w.team.common.utils.looper.SynchronousExecutor;
 import j2w.team.modules.download.J2WDownloadManager;
 import j2w.team.modules.http.J2WRestAdapter;
@@ -115,7 +119,7 @@ public class J2WHelper {
 	}
 
 	/**
-	 * 跳转工具
+	 * Activity 跳转工具
 	 * 
 	 * @param clazz
 	 */
@@ -144,4 +148,45 @@ public class J2WHelper {
 		intent.putExtras(bundle);
 		J2WHelper.getScreenHelper().currentActivity().startActivityForResult(intent, requestCode);
 	}
+
+	/**
+	 * Fragment 跳转工具
+	 *
+	 */
+	public static final void commitFragment(Fragment fragment) {
+		commitFragment(fragment, fragment.getClass().getSimpleName());
+	}
+
+	public static final void commitFragment(Fragment fragment, String tag) {
+		FragmentManager fragmentManager = J2WHelper.getScreenHelper().currentActivity().getSupportFragmentManager();
+		fragmentManager.beginTransaction().add(android.R.id.custom, fragment, tag).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commitAllowingStateLoss();
+	}
+
+	public static final void commitFragment(int layoutId, Fragment fragment) {
+		commitFragment(layoutId, fragment, fragment.getClass().getSimpleName());
+	}
+
+	public static final void commitFragment(int layoutId, Fragment fragment, String tag) {
+		FragmentManager fragmentManager = J2WHelper.getScreenHelper().currentActivity().getSupportFragmentManager();
+		fragmentManager.beginTransaction().add(layoutId, fragment, tag).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commitAllowingStateLoss();
+	}
+
+	public static final void commitBackStackFragment(Fragment fragment) {
+		commitBackStackFragment(fragment, fragment.getClass().getSimpleName());
+	}
+
+	public static final void commitBackStackFragment(Fragment fragment, String tag) {
+		FragmentManager fragmentManager = J2WHelper.getScreenHelper().currentActivity().getSupportFragmentManager();
+		fragmentManager.beginTransaction().add(android.R.id.custom, fragment, tag).addToBackStack(null).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commitAllowingStateLoss();
+	}
+
+	public static final void commitBackStackFragment(int layoutId, Fragment fragment) {
+		commitBackStackFragment(layoutId, fragment, fragment.getClass().getSimpleName());
+	}
+
+	public static final void commitBackStackFragment(int layoutId, Fragment fragment, String tag) {
+		FragmentManager fragmentManager = J2WHelper.getScreenHelper().currentActivity().getSupportFragmentManager();
+		fragmentManager.beginTransaction().add(layoutId, fragment, tag).addToBackStack(null).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commitAllowingStateLoss();
+	}
+
 }
