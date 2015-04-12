@@ -78,5 +78,10 @@ public interface J2WIViewFragment extends J2WIView {
 	/**
 	 * 设置Acitvity标题栏
 	 */
-	public void setActivityTitle(Object value);
+	public void setActivityTitle(Object value,int code);
+
+    /**
+     * 设置Acitvity标题栏
+     */
+    public void setActivityTitle(Object value);
 }

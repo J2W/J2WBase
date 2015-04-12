@@ -19,6 +19,11 @@ public interface J2WIViewABActivity extends J2WIViewActivity {
 
 	/**
 	 * 设置标题栏
+	 * 
+	 * @param value
+	 *            数据
+	 * @param code
+	 *            标记
 	 */
-	public void setTitle(Object value);
+	public void setActionbarTitle(Object value, int code);
 }

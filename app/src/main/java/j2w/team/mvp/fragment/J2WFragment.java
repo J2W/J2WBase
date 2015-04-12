@@ -180,11 +180,18 @@ public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment impl
 	/**
 	 * 设置Acitvity标题栏
 	 */
-	@Override public void setActivityTitle(Object object) {
+	@Override public void setActivityTitle(Object object, int code) {
 		if (getActivity() instanceof J2WIViewABActivity) {
 			J2WIViewABActivity j2WIViewABActivity = (J2WIViewABActivity) getActivity();
-			j2WIViewABActivity.setTitle(object);
+			j2WIViewABActivity.setActionbarTitle(object, code);
 		}
+	}
+
+	/**
+	 * 设置Acitvity标题栏
+	 */
+	@Override public void setActivityTitle(Object value) {
+		setActivityTitle(value, 0);
 	}
 
 	/**
@@ -283,7 +290,7 @@ public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment impl
 	 *            实例
 	 */
 	@Override public void commitBackStackFragment(int layoutId, Fragment fragment) {
-        commitBackStackFragment(layoutId,fragment, fragment.getClass().getSimpleName());
+		commitBackStackFragment(layoutId, fragment, fragment.getClass().getSimpleName());
 	}
 
 	/**

@@ -242,7 +242,7 @@ public abstract class J2WABActivity<T extends J2WIPresenter> extends ActionBarAc
 	 *            实例
 	 */
 	@Override public void commitBackStackFragment(Fragment fragment) {
-        commitBackStackFragment(fragment, fragment.getClass().getSimpleName());
+		commitBackStackFragment(fragment, fragment.getClass().getSimpleName());
 	}
 
 	/**
@@ -273,7 +273,7 @@ public abstract class J2WABActivity<T extends J2WIPresenter> extends ActionBarAc
 	 *            实例
 	 */
 	@Override public void commitBackStackFragment(int layoutId, Fragment fragment) {
-        commitBackStackFragment(layoutId, fragment, fragment.getClass().getSimpleName());
+		commitBackStackFragment(layoutId, fragment, fragment.getClass().getSimpleName());
 
 	}
 
@@ -410,10 +410,15 @@ public abstract class J2WABActivity<T extends J2WIPresenter> extends ActionBarAc
 
 	/**
 	 * 设置标题栏
+	 *
+	 * @param value
+	 *            数据
+	 * @param code
+	 *            标记
 	 */
-	@Override public void setTitle(Object value) {
+	@Override public void setActionbarTitle(Object value, int code) {
 		L.tag(initTag());
-		L.i("setTitle() " + value);
+		L.i("setActionbarTitle() " + value + " code " + code);
 	}
 
 	/**
