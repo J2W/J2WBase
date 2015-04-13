@@ -88,6 +88,18 @@ public interface J2WIViewListFragment extends J2WIViewFragment {
 	public void addData(List list);
 
 	/**
+	 * 删除
+	 * 
+	 * @param position
+	 */
+	public void delete(int position);
+
+	/**
+	 * 删除所有
+	 */
+	public void deleteAll();
+
+	/**
 	 * 获取数据
 	 * 
 	 * @return 数据集合

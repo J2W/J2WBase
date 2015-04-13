@@ -22,6 +22,9 @@ import j2w.team.mvp.presenter.J2WIPresenter;
  */
 public abstract class J2WListFragment<T extends J2WIPresenter> extends J2WFragment<T> implements J2WIViewListFragment, AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
 
+	/** 数据集合 */
+	private List			mList;
+
 	/**
 	 * 列表
 	 */
@@ -200,7 +203,7 @@ public abstract class J2WListFragment<T extends J2WIPresenter> extends J2WFragme
 			return;
 		}
 		if (isAdapterNotNull()) {
-			mListAdapter.setData(list);
+			mList = list;
 			updateAdapter();
 		}
 	}
@@ -220,9 +223,31 @@ public abstract class J2WListFragment<T extends J2WIPresenter> extends J2WFragme
 			return;
 		}
 		if (isAdapterNotNull()) {
-			mListAdapter.addData(list);
+			mList.add(list);
 			updateAdapter();
 		}
+	}
+
+	/**
+	 * 删除
+	 *
+	 * @param position
+	 */
+	public void delete(int position) {
+        L.tag(initTag());
+        L.i("Fragment-delete(position)");
+        mList.remove(position);
+        updateAdapter();
+    }
+
+	/**
+	 * 删除所有
+	 */
+	public void deleteAll() {
+        L.tag(initTag());
+        L.i("Fragment-deleteAll()");
+		mList.clear();
+        updateAdapter();
 	}
 
 	/**
@@ -233,7 +258,7 @@ public abstract class J2WListFragment<T extends J2WIPresenter> extends J2WFragme
 	public final List getData() {
 		L.tag(initTag());
 		L.i("Fragment-getData()");
-		return isAdapterNotNull() ? mListAdapter.getData() : null;
+		return isAdapterNotNull() ? mList : null;
 	}
 
 	/**
@@ -268,33 +293,10 @@ public abstract class J2WListFragment<T extends J2WIPresenter> extends J2WFragme
 	 */
 	final class ListAdapter extends BaseAdapter {
 
-		/** 数据集合 */
-		private List	mList;
-
 		/** 构造函数 **/
 		public ListAdapter() {
 			/** 初始化空数据源 **/
 			mList = new ArrayList();
-		}
-
-		/** 设置数据源 **/
-		private void setData(List list) {
-			L.tag(initTag());
-			L.i("ListAdapter.setData()" + list);
-			mList = list;
-		}
-
-		/** 追加数据源 **/
-		private void addData(List list) {
-			L.tag(initTag());
-			L.i("addData()" + list);
-			mList.addAll(list);
-		}
-
-		private List getData() {
-			L.tag(initTag());
-			L.i("adapter - getData()" + mList);
-			return mList;
 		}
 
 		/** 列表数量 **/
