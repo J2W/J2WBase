@@ -98,4 +98,11 @@ public interface J2WIViewListFragment extends J2WIViewFragment {
 	 * 更新适配器 0 显示 进度, 1 显示 内容 2 显示 空 3 显示 错误,
 	 */
 	public void updateAdapter();
+
+	/**
+	 * 取消滑动
+	 * 
+	 * @return true 不滑动 false 滑动
+	 */
+	public boolean notScroll();
 }

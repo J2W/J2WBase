@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<j2w.team.common.widget.J2WNoScrollGridView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/grid"
+    style="@style/J2W.Layout.ListView" />

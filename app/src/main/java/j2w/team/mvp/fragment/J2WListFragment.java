@@ -38,7 +38,11 @@ public abstract class J2WListFragment<T extends J2WIPresenter> extends J2WFragme
 	 * @return 布局ID
 	 */
 	@Override public int layoutId() {
-		return R.layout.j2w_fragment_list;
+		if (notScroll()) {
+			return R.layout.j2w_fragment_noscroll_list;
+		} else {
+			return R.layout.j2w_fragment_list;
+		}
 	}
 
 	/**
@@ -192,7 +196,7 @@ public abstract class J2WListFragment<T extends J2WIPresenter> extends J2WFragme
 		if (list == null || list.size() < 1) {
 			L.tag(initTag());
 			L.i("Fragment-setData(List) return null");
-            showEmpty();
+			showEmpty();
 			return;
 		}
 		if (isAdapterNotNull()) {
@@ -248,6 +252,15 @@ public abstract class J2WListFragment<T extends J2WIPresenter> extends J2WFragme
 			}
 			mListAdapter.notifyDataSetChanged();
 		}
+	}
+
+	/**
+	 * 取消滑动
+	 *
+	 * @return true 不滑动 false 滑动
+	 */
+	@Override public boolean notScroll() {
+		return false;
 	}
 
 	/**

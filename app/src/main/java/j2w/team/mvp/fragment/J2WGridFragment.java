@@ -29,7 +29,11 @@ public abstract class J2WGridFragment<T extends J2WIPresenter> extends J2WListFr
      */
     @Override
     public int layoutId() {
-        return R.layout.j2w_fragment_grid;
+        if(notScroll()){
+            return R.layout.j2w_fragment_noscroll_grid;
+        }else {
+            return R.layout.j2w_fragment_grid;
+        }
     }
 
     /**

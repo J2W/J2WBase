@@ -47,7 +47,11 @@ public abstract class J2WVPListFragment<T extends J2WIPresenter> extends J2WVPFr
 	 * @return 布局ID
 	 */
 	@Override public int layoutId() {
-		return R.layout.j2w_fragment_list;
+        if (notScroll()) {
+            return R.layout.j2w_fragment_noscroll_list;
+        } else {
+            return R.layout.j2w_fragment_list;
+        }
 	}
 
 	/**
@@ -192,8 +196,8 @@ public abstract class J2WVPListFragment<T extends J2WIPresenter> extends J2WVPFr
 		if (list == null || list.size() < 1) {
 			L.tag(initTag());
 			L.i("Fragment-setData(List) return null");
-            showEmpty();
-            return;
+			showEmpty();
+			return;
 		}
 		if (isAdapterNotNull()) {
 			mListAdapter.setData(list);
@@ -248,6 +252,15 @@ public abstract class J2WVPListFragment<T extends J2WIPresenter> extends J2WVPFr
 			}
 			mListAdapter.notifyDataSetChanged();
 		}
+	}
+
+	/**
+	 * 取消滑动
+	 *
+	 * @return true 不滑动 false 滑动
+	 */
+	@Override public boolean notScroll() {
+		return false;
 	}
 
 	/**
