@@ -13,6 +13,7 @@ import android.support.v7.app.ActionBarActivity;
 import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
 import j2w.team.R;
+import j2w.team.modules.dialog.iface.IDialogCancelListener;
 import j2w.team.modules.dialog.iface.IDialogListener;
 import j2w.team.modules.dialog.provided.ProgressDailogFragment;
 import j2w.team.mvp.model.J2WConstants;
@@ -494,24 +495,42 @@ public abstract class J2WABActivity<T extends J2WIPresenter> extends ActionBarAc
 				break;
 		}
 	}
+    /**
+     * 弹框进度条
+     */
+    @Override public void loading() {
+        loading(false);
+    }
 
-	/**
-	 * 弹框进度条
-	 */
-	@Override public void loading() {
-		dialogFragment = ProgressDailogFragment.createBuilder().setMessage("正在加载...")// 设置内容
-				.showAllowingStateLoss();// 显示
-	}
+    /**
+     * 弹框进度条
+     *
+     * @param cancel
+     */
+    @Override public void loading(boolean cancel) {
+        dialogFragment = ProgressDailogFragment.createBuilder().setCancelable(cancel).setMessage("正在加载...")// 设置内容
+                .showAllowingStateLoss();// 显示
+    }
 
-	/**
-	 * 弹框进度条
-	 *
-	 * @param value
-	 */
-	@Override public void loading(String value) {
-		dialogFragment = ProgressDailogFragment.createBuilder().setMessage(value)// 设置内容
-				.showAllowingStateLoss();// 显示
-	}
+    /**
+     * 弹框进度条
+     *
+     * @param value
+     */
+    @Override public void loading(String value) {
+        loading(value, false);
+    }
+
+    /**
+     * 弹框进度条
+     *
+     * @param value
+     * @param cancel
+     */
+    @Override public void loading(String value, boolean cancel) {
+        dialogFragment = ProgressDailogFragment.createBuilder().setCancelable(cancel).setMessage(value)// 设置内容
+                .showAllowingStateLoss();// 显示
+    }
 
 	/**
 	 * 弹框进度条
@@ -519,4 +538,5 @@ public abstract class J2WABActivity<T extends J2WIPresenter> extends ActionBarAc
 	@Override public void loadingClose() {
 		dialogFragment.dismissAllowingStateLoss();
 	}
+
 }

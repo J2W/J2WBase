@@ -188,15 +188,30 @@ public interface J2WIView<T> {
 	/**
 	 * 弹框进度条
 	 * 
+	 * @param cancel
+	 */
+	public void loading(boolean cancel);
+
+	/**
+	 * 弹框进度条
+	 * 
 	 * @param value
 	 */
 	public void loading(String value);
 
 	/**
 	 * 弹框进度条
+	 * 
+	 * @param value
+	 * @param cancel
+	 */
+	public void loading(String value, boolean cancel);
+
+	/**
+	 * 弹框进度条
 	 */
 	public void loadingClose();
-    
+
 	/**
 	 * 销毁当前页面
 	 */
