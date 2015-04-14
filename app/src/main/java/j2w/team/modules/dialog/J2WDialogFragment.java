@@ -43,7 +43,7 @@ public abstract class J2WDialogFragment extends DialogFragment implements Dialog
 		// 获取参数
 		Bundle args = getArguments();
 		// 创建对话框
-		Dialog dialog = new Dialog(getActivity(), R.style.J2W_Dialog);
+		Dialog dialog = new Dialog(getActivity(), getJ2WStyle());
 		// 获取参数-设置是否可取消
 		if (args != null) {
 			dialog.setCanceledOnTouchOutside(args.getBoolean(J2WDialogBuilder.ARG_CANCELABLE_ON_TOUCH_OUTSIDE));
@@ -52,6 +52,10 @@ public abstract class J2WDialogFragment extends DialogFragment implements Dialog
 		dialog.setOnShowListener(this);
 		return dialog;
 	}
+
+    public int getJ2WStyle(){
+        return R.style.J2W_Dialog;
+    }
 
 	@Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		L.tag("J2WDialogFragment");
