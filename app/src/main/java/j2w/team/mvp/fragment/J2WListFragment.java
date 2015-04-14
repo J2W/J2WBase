@@ -223,7 +223,7 @@ public abstract class J2WListFragment<T extends J2WIPresenter> extends J2WFragme
 			return;
 		}
 		if (isAdapterNotNull()) {
-			mList.add(list);
+			mList.addAll(list);
 			updateAdapter();
 		}
 	}
@@ -348,7 +348,7 @@ public abstract class J2WListFragment<T extends J2WIPresenter> extends J2WFragme
 			// 获取item
 			item = item == null ? (J2WAdapterItem) convertView.getTag() : item;
 			// 绑定数据
-			item.bindData(mList.get(position), position);
+			item.bindData(getItem(position), position);
 			return convertView;
 		}
 	}
