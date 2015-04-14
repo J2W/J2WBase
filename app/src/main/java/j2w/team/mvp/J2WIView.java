@@ -181,6 +181,23 @@ public interface J2WIView<T> {
 	public void commitBackStackFragment(int layoutId, Fragment fragment, String tag);
 
 	/**
+	 * 弹框进度条
+	 */
+	public void loading();
+
+	/**
+	 * 弹框进度条
+	 * 
+	 * @param value
+	 */
+	public void loading(String value);
+
+	/**
+	 * 弹框进度条
+	 */
+	public void loadingClose();
+    
+	/**
 	 * 销毁当前页面
 	 */
 	public void activityFinish();

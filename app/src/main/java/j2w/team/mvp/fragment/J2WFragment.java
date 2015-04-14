@@ -3,6 +3,7 @@ package j2w.team.mvp.fragment;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -19,6 +20,7 @@ import de.greenrobot.event.EventBus;
 import j2w.team.R;
 import j2w.team.common.log.L;
 import j2w.team.modules.dialog.iface.IDialogListener;
+import j2w.team.modules.dialog.provided.ProgressDailogFragment;
 import j2w.team.mvp.J2WIViewABActivity;
 import j2w.team.mvp.J2WIViewActivity;
 import j2w.team.mvp.model.J2WConstants;
@@ -30,6 +32,9 @@ import j2w.team.mvp.presenter.J2WPresenterUtils;
  * Created by sky on 15/2/1. fragment 视图
  */
 public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment implements J2WIViewFragment, View.OnTouchListener, IDialogListener {
+
+	/** 默认进度条 **/
+	DialogFragment	dialogFragment;	// 交互弹窗
 
 	/**
 	 * view *
@@ -604,5 +609,30 @@ public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment impl
 				getActivity().onBackPressed();
 				break;
 		}
+	}
+
+	/**
+	 * 弹框进度条
+	 */
+	@Override public void loading() {
+		dialogFragment = ProgressDailogFragment.createBuilder().setMessage("正在加载...")// 设置内容
+				.showAllowingStateLoss();// 显示
+	}
+
+	/**
+	 * 弹框进度条
+	 *
+	 * @param value
+	 */
+	@Override public void loading(String value) {
+		dialogFragment = ProgressDailogFragment.createBuilder().setMessage(value)// 设置内容
+				.showAllowingStateLoss();// 显示
+	}
+
+	/**
+	 * 弹框进度条
+	 */
+	@Override public void loadingClose() {
+		dialogFragment.dismissAllowingStateLoss();
 	}
 }

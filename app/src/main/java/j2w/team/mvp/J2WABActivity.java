@@ -3,6 +3,7 @@ package j2w.team.mvp;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -13,6 +14,7 @@ import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
 import j2w.team.R;
 import j2w.team.modules.dialog.iface.IDialogListener;
+import j2w.team.modules.dialog.provided.ProgressDailogFragment;
 import j2w.team.mvp.model.J2WConstants;
 import j2w.team.mvp.presenter.J2WHelper;
 import j2w.team.common.log.L;
@@ -24,11 +26,14 @@ import j2w.team.mvp.presenter.J2WPresenterUtils;
  */
 public abstract class J2WABActivity<T extends J2WIPresenter> extends ActionBarActivity implements J2WIViewABActivity, IDialogListener {
 
+	/** 默认进度条 **/
+	DialogFragment	dialogFragment;	// 交互弹窗
+
 	/** 标题栏 **/
-	ActionBar	actionBar;
+	ActionBar		actionBar;
 
 	/** 业务逻辑对象 **/
-	private T	presenter	= null;
+	private T		presenter	= null;
 
 	/**
 	 * 获取TAG标记
@@ -488,5 +493,30 @@ public abstract class J2WABActivity<T extends J2WIPresenter> extends ActionBarAc
 				onBackPressed();
 				break;
 		}
+	}
+
+	/**
+	 * 弹框进度条
+	 */
+	@Override public void loading() {
+		dialogFragment = ProgressDailogFragment.createBuilder().setMessage("正在加载...")// 设置内容
+				.showAllowingStateLoss();// 显示
+	}
+
+	/**
+	 * 弹框进度条
+	 *
+	 * @param value
+	 */
+	@Override public void loading(String value) {
+		dialogFragment = ProgressDailogFragment.createBuilder().setMessage(value)// 设置内容
+				.showAllowingStateLoss();// 显示
+	}
+
+	/**
+	 * 弹框进度条
+	 */
+	@Override public void loadingClose() {
+		dialogFragment.dismissAllowingStateLoss();
 	}
 }
