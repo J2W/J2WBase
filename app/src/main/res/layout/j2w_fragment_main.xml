@@ -2,5 +2,6 @@
 <ViewAnimator xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@android:id/home"
     style="@style/J2W.Layout"
+    android:background="@android:color/white"
     android:inAnimation="@anim/abc_fade_in"
     android:outAnimation="@anim/abc_fade_out" />
