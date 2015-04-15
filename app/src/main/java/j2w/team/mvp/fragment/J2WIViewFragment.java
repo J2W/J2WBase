@@ -37,26 +37,6 @@ public interface J2WIViewFragment extends J2WIView {
 	public View getContentView();
 
 	/**
-	 * 布局 - 进度条
-	 */
-	public void showLoading();
-
-	/**
-	 * 布局 - 内容
-	 */
-	public void showContent();
-
-	/**
-	 * 布局 - 空
-	 */
-	public void showEmpty();
-
-	/**
-	 * 布局 - 错误
-	 */
-	public void showError();
-
-	/**
 	 * fragment防止事件穿透
 	 * 
 	 * @return true 禁止 false 开房

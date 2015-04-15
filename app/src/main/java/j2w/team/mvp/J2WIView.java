@@ -223,4 +223,24 @@ public interface J2WIView<T> {
 	 * 销毁当前页面
 	 */
 	public void activityFinish();
+
+    /**
+     * 布局 - 进度条
+     */
+    public void showLoading();
+
+    /**
+     * 布局 - 内容
+     */
+    public void showContent();
+
+    /**
+     * 布局 - 空
+     */
+    public void showEmpty();
+
+    /**
+     * 布局 - 错误
+     */
+    public void showError();
 }

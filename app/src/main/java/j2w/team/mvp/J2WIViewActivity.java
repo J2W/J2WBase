@@ -35,4 +35,11 @@ public interface J2WIViewActivity extends J2WIView {
 	 * @return
 	 */
 	public int fragmentErrorLayout();
+
+    /**
+     * 是否添加Activity状态布局
+     *
+     * @return true 打开 false 关闭
+     */
+    public boolean activityState();
 }

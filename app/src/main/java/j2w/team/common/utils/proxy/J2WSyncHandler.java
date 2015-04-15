@@ -8,6 +8,7 @@ import j2w.team.common.log.L;
 import j2w.team.modules.threadpool.BackgroundType;
 import j2w.team.modules.threadpool.Background;
 import j2w.team.modules.threadpool.J2WAsyncCall;
+import j2w.team.modules.threadpool.J2WStack;
 import j2w.team.mvp.presenter.J2WHelper;
 
 /**
@@ -31,28 +32,34 @@ public class J2WSyncHandler<T> extends BaseHandler<T> {
 		final Method methodError = aClass.getMethod("methodError", new Class[] { String.class, Throwable.class });
 
 		Method oldMethod = aClass.getMethod(method.getName(), method.getParameterTypes());
-		// 获得注解数组
-		Background background = oldMethod.getAnnotation(Background.class);
 
+		// 获得注解数组
+		final J2WStack j2WStack = oldMethod.getAnnotation(J2WStack.class);
+		Background background = oldMethod.getAnnotation(Background.class);
 		if (background == null) {
 			L.tag("J2W-Method");
 			L.i("主线程执行: " + method.getName());
 			try {
-				String key = getMethodString(method, method.getParameterTypes());
-				// 搜索
-				if (stack.search(key) != -1) {// 如果存在什么都不做
+				if (j2WStack == null || !j2WStack.value()) { // 拦截
+					String key = getMethodString(method, method.getParameterTypes());
+					// 搜索
+					if (stack.search(key) != -1) {// 如果存在什么都不做
+						L.tag("J2W-Method");
+						L.i("正在执行该方法 : " + key);
+						return returnObject;
+					}
 					L.tag("J2W-Method");
-					L.i("正在执行该方法 : " + key);
+					L.i("Stack  入栈 : " + key);
+					stack.push(key); // 入栈
+					returnObject = method.invoke(t, args);// 执行
+					L.tag("J2W-Method");
+					L.i("Stack  出栈 : " + key);
+					stack.remove(key);// 出栈
 					return returnObject;
+				} else {
+					return method.invoke(t, args);
 				}
-				L.tag("J2W-Method");
-				L.i("Stack  入栈 : " + key);
-				stack.push(key); // 入栈
-				returnObject = method.invoke(t, args);// 执行
-				L.tag("J2W-Method");
-				L.i("Stack  出栈 : " + key);
-				stack.remove(key);// 出栈
-				return returnObject;
+
 			} catch (Throwable throwable) {
 				try {
 					return methodError.invoke(t, new Object[] { method.getName(), throwable });
@@ -67,10 +74,12 @@ public class J2WSyncHandler<T> extends BaseHandler<T> {
 		BackgroundType backgroundType = background.value();
 		final String key = getMethodString(method, method.getParameterTypes());
 		// 搜索
-		if (stack.search(key) != -1) { // 如果存在什么都不做
-			L.tag("J2W-Method");
-            L.i("正在执行该方法 : " + key);
-            return returnObject;
+		if (j2WStack == null || !j2WStack.value()) { // 拦截
+			if (stack.search(key) != -1) { // 如果存在什么都不做
+				L.tag("J2W-Method");
+				L.i("正在执行该方法 : " + key);
+				return returnObject;
+			}
 		}
 		// 打印
 		L.tag("J2W-Method");
@@ -84,11 +93,15 @@ public class J2WSyncHandler<T> extends BaseHandler<T> {
 
 					@Override protected void execute() {
 						try {
-							stack.push(key); // 入栈
-							method.invoke(t, args);// 执行
-							L.tag("J2W-Method");
-							L.i("Stack  出栈 : " + key);
-							stack.remove(key);// 出栈
+							if (j2WStack == null || !j2WStack.value()) { // 拦截
+								stack.push(key); // 入栈
+								method.invoke(t, args);// 执行
+								L.tag("J2W-Method");
+								L.i("Stack  出栈 : " + key);
+								stack.remove(key);// 出栈
+							} else {
+								method.invoke(t, args);// 执行
+							}
 						} catch (Throwable e) {
 							try {
 								L.tag("J2W-Method");
@@ -111,15 +124,19 @@ public class J2WSyncHandler<T> extends BaseHandler<T> {
 
 					@Override protected void execute() {
 						try {
-							stack.push(key); // 入栈
-							method.invoke(t, args);// 执行
-                            L.tag("J2W-Method");
-                            L.i("Stack  出栈 : " + key);
-							stack.remove(key);// 出栈
-						} catch (Throwable e) {
-							try {
+                            if (j2WStack == null || !j2WStack.value()) { // 拦截
+                                stack.push(key); // 入栈
+                                method.invoke(t, args);// 执行
                                 L.tag("J2W-Method");
                                 L.i("Stack  出栈 : " + key);
+                                stack.remove(key);// 出栈
+                            } else {
+                                method.invoke(t, args);// 执行
+                            }
+						} catch (Throwable e) {
+							try {
+								L.tag("J2W-Method");
+								L.i("Stack  出栈 : " + key);
 								stack.remove(key);// 出栈
 								methodError.invoke(t, new Object[] { method.getName(), e });
 							} catch (IllegalAccessException e1) {
@@ -138,15 +155,19 @@ public class J2WSyncHandler<T> extends BaseHandler<T> {
 
 					@Override protected void execute() {
 						try {
-							stack.push(key); // 入栈
-							method.invoke(t, args);// 执行
-                            L.tag("J2W-Method");
-                            L.i("Stack  出栈 : " + key);
-							stack.remove(key);// 出栈
-						} catch (Throwable e) {
-							try {
+                            if (j2WStack == null || !j2WStack.value()) { // 拦截
+                                stack.push(key); // 入栈
+                                method.invoke(t, args);// 执行
                                 L.tag("J2W-Method");
                                 L.i("Stack  出栈 : " + key);
+                                stack.remove(key);// 出栈
+                            } else {
+                                method.invoke(t, args);// 执行
+                            }
+						} catch (Throwable e) {
+							try {
+								L.tag("J2W-Method");
+								L.i("Stack  出栈 : " + key);
 								stack.remove(key);// 出栈
 								methodError.invoke(t, new Object[] { method.getName(), e });
 							} catch (IllegalAccessException e1) {
@@ -168,14 +189,18 @@ public class J2WSyncHandler<T> extends BaseHandler<T> {
 	 * @return
 	 */
 	private String getMethodString(Method method, Class[] classes) {
+		boolean bool = false;
 		StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(method.getName());
+		stringBuilder.append(method.getName());
 		stringBuilder.append("(");
 		for (Class clazz : classes) {
 			stringBuilder.append(clazz.getSimpleName());
 			stringBuilder.append(",");
+			bool = true;
 		}
-		stringBuilder = stringBuilder.delete(stringBuilder.length() - 1, stringBuilder.length());
+		if (bool) {
+			stringBuilder = stringBuilder.delete(stringBuilder.length() - 1, stringBuilder.length());
+		}
 		stringBuilder.append(")");
 		return stringBuilder.toString();
 	}

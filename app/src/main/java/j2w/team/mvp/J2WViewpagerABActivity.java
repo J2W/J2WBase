@@ -76,6 +76,14 @@ public abstract class J2WViewpagerABActivity<T extends J2WIPresenter> extends J2
 		// 设置Viewpager头部
 		initTabsValue();
 	}
+    /**
+     * 是否添加Activity状态布局
+     *
+     * @return true 打开 false 关闭
+     */
+	@Override public final boolean activityState() {
+		return super.activityState();
+	}
 
 	/**
 	 * 初始化 tabs样式
@@ -394,7 +402,7 @@ public abstract class J2WViewpagerABActivity<T extends J2WIPresenter> extends J2
 		}
 
 		@Override public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-			onExtraPageScrolled(tabs.tabsContainer.getChildAt(position),oldView,position,oldPosition, positionOffset, positionOffsetPixels);
+			onExtraPageScrolled(tabs.tabsContainer.getChildAt(position), oldView, position, oldPosition, positionOffset, positionOffsetPixels);
 		}
 
 		@Override public void onPageSelected(int position) {

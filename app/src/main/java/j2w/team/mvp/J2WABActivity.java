@@ -9,6 +9,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.ViewAnimator;
 
 import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
@@ -31,10 +34,20 @@ public abstract class J2WABActivity<T extends J2WIPresenter> extends ActionBarAc
 	ProgressDailogFragment	dialogFragment;	// 交互弹窗
 
 	/** 标题栏 **/
-	ActionBar		actionBar;
+	ActionBar				actionBar;
 
 	/** 业务逻辑对象 **/
-	private T		presenter	= null;
+	private T				presenter	= null;
+
+	/**
+	 * view *
+	 */
+	ViewAnimator			mViewAnimator;
+
+	/**
+	 * view *
+	 */
+	View					mContentView;
 
 	/**
 	 * 获取TAG标记
@@ -60,7 +73,22 @@ public abstract class J2WABActivity<T extends J2WIPresenter> extends ActionBarAc
 	@Override public void initLayout() {
 		L.tag(initTag());
 		L.i("initLayout()");
-		setContentView(layoutId());
+        if (activityState()) {
+            LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            mContentView = inflater.inflate(R.layout.j2w_fragment_main, null, false);
+            mViewAnimator = ButterKnife.findById(mContentView, android.R.id.home);
+            // 加载布局-初始化
+            mViewAnimator.addView(inflater.inflate(fragmentLoadingLayout(), null, false));
+            // 内容布局-初始化
+            mViewAnimator.addView(inflater.inflate(layoutId(), null, false));
+            // 空布局-初始化
+            mViewAnimator.addView(inflater.inflate(fragmentEmptyLayout(), null, false));
+            // 错误布局-初始化
+            mViewAnimator.addView(inflater.inflate(fragmentErrorLayout(), null, false));
+            setContentView(mContentView);
+        }else{
+            setContentView(layoutId());
+        }
 	}
 
 	/**
@@ -336,6 +364,7 @@ public abstract class J2WABActivity<T extends J2WIPresenter> extends ActionBarAc
 		L.i("onCreate()");
 		/** 初始化视图 **/
 		initLayout();
+
 		/** 初始化标题栏 **/
 		initActionBar();
 		/** 初始化所有组建 **/
@@ -495,59 +524,115 @@ public abstract class J2WABActivity<T extends J2WIPresenter> extends ActionBarAc
 				break;
 		}
 	}
-    /**
-     * 弹框进度条
-     */
-    @Override public void loading() {
-        loading(false);
-    }
 
-    /**
-     * 弹框进度条
-     *
-     * @param cancel
-     */
-    @Override public void loading(boolean cancel) {
-        dialogFragment = (ProgressDailogFragment) ProgressDailogFragment.createBuilder().setRequestCode(J2WConstants.J2W_DIALOG_CODE).setCancelable(cancel).setMessage("正在加载...")// 设置内容
-                .showAllowingStateLoss();// 显示
-    }
+	/**
+	 * 弹框进度条
+	 */
+	@Override public void loading() {
+		loading(false);
+	}
 
-    /**
-     * 弹框进度条
-     *
-     * @param value
-     */
-    @Override public void loading(String value) {
-        loading(value, false);
-    }
+	/**
+	 * 弹框进度条
+	 *
+	 * @param cancel
+	 */
+	@Override public void loading(boolean cancel) {
+		dialogFragment = (ProgressDailogFragment) ProgressDailogFragment.createBuilder().setRequestCode(J2WConstants.J2W_DIALOG_CODE).setCancelable(cancel).setMessage("正在加载...")// 设置内容
+				.showAllowingStateLoss();// 显示
+	}
 
-    /**
-     * 弹框进度条
-     *
-     * @param value
-     * @param cancel
-     */
-    @Override public void loading(String value, boolean cancel) {
-        dialogFragment = (ProgressDailogFragment) ProgressDailogFragment.createBuilder().setRequestCode(J2WConstants.J2W_DIALOG_CODE).setCancelable(cancel).setMessage(value)// 设置内容
-                .showAllowingStateLoss();// 显示
-    }
-    /**
-     * 替换进度条文案
-     *
-     * @param value
-     */
-    public void replaceLoading(String value){
-        if(dialogFragment != null){
-            dialogFragment.setArgMessage(value);
-        }
-    }
+	/**
+	 * 弹框进度条
+	 *
+	 * @param value
+	 */
+	@Override public void loading(String value) {
+		loading(value, false);
+	}
+
+	/**
+	 * 弹框进度条
+	 *
+	 * @param value
+	 * @param cancel
+	 */
+	@Override public void loading(String value, boolean cancel) {
+		dialogFragment = (ProgressDailogFragment) ProgressDailogFragment.createBuilder().setRequestCode(J2WConstants.J2W_DIALOG_CODE).setCancelable(cancel).setMessage(value)// 设置内容
+				.showAllowingStateLoss();// 显示
+	}
+
+	/**
+	 * 替换进度条文案
+	 *
+	 * @param value
+	 */
+	public void replaceLoading(String value) {
+		if (dialogFragment != null) {
+			dialogFragment.setArgMessage(value);
+		}
+	}
+
 	/**
 	 * 弹框进度条
 	 */
 	@Override public void loadingClose() {
-        if(dialogFragment != null){
-            dialogFragment.dismissAllowingStateLoss();
-        }
+		if (dialogFragment != null) {
+			dialogFragment.dismissAllowingStateLoss();
+		}
 	}
 
+	/**
+	 * 是否添加Activity状态布局
+	 *
+	 * @return true 打开 false 关闭
+	 */
+	@Override public boolean activityState() {
+		return false;
+	}
+
+	@Override public void showLoading() {
+		L.tag(initTag());
+		L.i("Fragment-loading()");
+		show(0);
+	}
+
+	@Override public void showContent() {
+		L.tag(initTag());
+		L.i("Fragment-content()");
+		show(1);
+	}
+
+	@Override public void showEmpty() {
+		L.tag(initTag());
+		L.i("Fragment-empty()");
+		show(2);
+	}
+
+	@Override public void showError() {
+		L.tag(initTag());
+		L.i("Fragment-error()");
+		show(3);
+	}
+
+	/**
+	 * 显示 * @param showState 0，1，2，3
+	 */
+	private final void show(int showState) {
+		L.tag(initTag());
+		L.i("show() mViewAnimator :" + mViewAnimator);
+		if (!activityState()) {
+			L.tag(initTag());
+			L.i("当前activity没有打开状态模式! activityState() = false");
+			return;
+		}
+		if (mViewAnimator == null) {
+			return;
+		}
+		int displayedChild = mViewAnimator.getDisplayedChild();
+		if (displayedChild == showState) {
+			return;
+		}
+		mViewAnimator.setDisplayedChild(showState);
+	}
 }
