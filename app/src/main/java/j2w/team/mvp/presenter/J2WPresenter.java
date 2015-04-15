@@ -107,19 +107,27 @@ public abstract class J2WPresenter<T> {
 		} else if (j2WError.getKind() == J2WError.Kind.UNEXPECTED) {// 意外错误
 			L.tag(initTag());
 			L.i("J2WError.Kind.UNEXPECTED");
-
 			errorUnexpected();
 		}
 	}
 
 	/** 发送请求前错误 **/
-	public void errorNetWork() {}
+	public void errorNetWork() {
+        L.tag(initTag());
+        L.i("errorNetWork()");
+    }
 
 	/** 请求得到响应后错误 **/
-	public void errorHttp() {}
+	public void errorHttp() {
+        L.tag(initTag());
+        L.i("errorHttp()");
+    }
 
 	/** 请求或者响应 意外错误 **/
-	public void errorUnexpected() {}
+	public void errorUnexpected() {
+        L.tag(initTag());
+        L.i("errorUnexpected()");
+    }
 
 	/** 编码异常 **/
 	public void methodCodingError(String methodName, Throwable throwable) {
