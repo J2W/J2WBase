@@ -25,7 +25,6 @@ public abstract class J2WPresenter<T> {
 	 *            view层引用
 	 */
 	void initPresenter(T iView) {
-		L.i("initPresenter : " + iView);
 		this.isCallBack = true;
 		this.iView = DynamicProxyUtils.newProxyPresenter(iView, this);// 动态代理-业务
 	}
@@ -45,7 +44,6 @@ public abstract class J2WPresenter<T> {
 	 * @return 视图接口
 	 */
 	public final T getView() {
-		L.i("J2WPresenter : " + iView);
 		return this.iView;
 	}
 
