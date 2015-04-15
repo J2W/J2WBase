@@ -624,7 +624,7 @@ public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment impl
 	 * @param cancel
 	 */
 	@Override public void loading(boolean cancel) {
-		dialogFragment = ProgressDailogFragment.createBuilder().setCancelable(cancel).setMessage("正在加载...")// 设置内容
+		dialogFragment = ProgressDailogFragment.createBuilder().setTargetFragment(this,J2WConstants.J2W_DIALOG_CODE).setCancelable(cancel).setMessage("正在加载...")// 设置内容
 				.showAllowingStateLoss();// 显示
 	}
 
@@ -644,7 +644,7 @@ public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment impl
 	 * @param cancel
 	 */
 	@Override public void loading(String value, boolean cancel) {
-		dialogFragment = ProgressDailogFragment.createBuilder().setCancelable(cancel).setMessage(value)// 设置内容
+		dialogFragment = ProgressDailogFragment.createBuilder().setTargetFragment(this,J2WConstants.J2W_DIALOG_CODE).setCancelable(cancel).setMessage(value)// 设置内容
 				.showAllowingStateLoss();// 显示
 	}
 
