@@ -26,7 +26,7 @@ import j2w.team.mvp.presenter.J2WPresenterUtils;
 public abstract class J2WActivity<T extends J2WIPresenter> extends FragmentActivity implements J2WIViewActivity, IDialogListener {
 
 	/** 默认进度条 **/
-	DialogFragment	dialogFragment;	// 交互弹窗
+	ProgressDailogFragment	dialogFragment;	// 交互弹窗
 
 	/** 业务逻辑对象 **/
 	private T		presenter	= null;
@@ -478,7 +478,7 @@ public abstract class J2WActivity<T extends J2WIPresenter> extends FragmentActiv
 	 * @param cancel
 	 */
 	@Override public void loading(boolean cancel) {
-		dialogFragment = ProgressDailogFragment.createBuilder().setRequestCode(J2WConstants.J2W_DIALOG_CODE).setCancelable(cancel).setMessage("正在加载...")// 设置内容
+		dialogFragment = (ProgressDailogFragment) ProgressDailogFragment.createBuilder().setRequestCode(J2WConstants.J2W_DIALOG_CODE).setCancelable(cancel).setMessage("正在加载...")// 设置内容
 				.showAllowingStateLoss();// 显示
 	}
 
@@ -498,10 +498,19 @@ public abstract class J2WActivity<T extends J2WIPresenter> extends FragmentActiv
 	 * @param cancel
 	 */
 	@Override public void loading(String value, boolean cancel) {
-		dialogFragment = ProgressDailogFragment.createBuilder().setRequestCode(J2WConstants.J2W_DIALOG_CODE).setCancelable(cancel).setMessage(value)// 设置内容
+		dialogFragment = (ProgressDailogFragment) ProgressDailogFragment.createBuilder().setRequestCode(J2WConstants.J2W_DIALOG_CODE).setCancelable(cancel).setMessage(value)// 设置内容
 				.showAllowingStateLoss();// 显示
 	}
-
+    /**
+     * 替换进度条文案
+     *
+     * @param value
+     */
+    public void replaceLoading(String value){
+        if(dialogFragment != null){
+            dialogFragment.setArgMessage(value);
+        }
+    }
 	/**
 	 * 弹框进度条
 	 */

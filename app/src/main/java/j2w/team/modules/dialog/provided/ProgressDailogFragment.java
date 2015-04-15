@@ -1,8 +1,6 @@
 package j2w.team.modules.dialog.provided;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -21,6 +19,8 @@ public class ProgressDailogFragment extends J2WDialogFragment {
 
 	protected final static String	ARG_TITLE	= "title";
 
+	TextView						tvMessage;
+
 	/**
 	 * 创建进度条
 	 * 
@@ -35,7 +35,7 @@ public class ProgressDailogFragment extends J2WDialogFragment {
 
 		final LayoutInflater inflater = initialBuilder.getLayoutInflater();
 		final View view = inflater.inflate(R.layout.j2w_dialog_progress, null, false);
-		final TextView tvMessage = (TextView) view.findViewById(R.id.j2w_message);
+		tvMessage = (TextView) view.findViewById(R.id.j2w_message);
 
 		tvMessage.setText(getArguments().getString(ARG_MESSAGE));
 
@@ -46,6 +46,18 @@ public class ProgressDailogFragment extends J2WDialogFragment {
 		return initialBuilder;
 	}
 
+	/**
+	 * 设置文本
+	 */
+	public void setArgMessage(String value) {
+		if (this.isAdded() || tvMessage != null) {
+			tvMessage.setText(value);
+		}else{
+            Bundle bundle = getArguments();
+            bundle.putString(SimpleDialogFragment.ARG_MESSAGE, value);
+            this.setArguments(bundle);
+        }
+	}
 
 	/**
 	 * 进度条编辑类

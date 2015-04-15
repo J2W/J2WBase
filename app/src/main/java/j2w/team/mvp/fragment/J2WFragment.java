@@ -34,22 +34,22 @@ import j2w.team.mvp.presenter.J2WPresenterUtils;
 public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment implements J2WIViewFragment, View.OnTouchListener, IDialogListener {
 
 	/** 默认进度条 **/
-	DialogFragment	dialogFragment;	// 交互弹窗
+	ProgressDailogFragment	dialogFragment;	// 交互弹窗
 
 	/**
 	 * view *
 	 */
-	View			mContentView;
+	View					mContentView;
 
 	/**
 	 * view *
 	 */
-	ViewAnimator	mViewAnimator;
+	ViewAnimator			mViewAnimator;
 
 	/**
 	 * 业务逻辑对象 *
 	 */
-	private T		presenter	= null;
+	private T				presenter	= null;
 
 	/**
 	 * 获取TAG标记
@@ -624,7 +624,7 @@ public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment impl
 	 * @param cancel
 	 */
 	@Override public void loading(boolean cancel) {
-		dialogFragment = ProgressDailogFragment.createBuilder().setTargetFragment(this,J2WConstants.J2W_DIALOG_CODE).setCancelable(cancel).setMessage("正在加载...")// 设置内容
+		dialogFragment = (ProgressDailogFragment) ProgressDailogFragment.createBuilder().setTargetFragment(this, J2WConstants.J2W_DIALOG_CODE).setCancelable(cancel).setMessage("正在加载...")// 设置内容
 				.showAllowingStateLoss();// 显示
 	}
 
@@ -644,16 +644,26 @@ public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment impl
 	 * @param cancel
 	 */
 	@Override public void loading(String value, boolean cancel) {
-		dialogFragment = ProgressDailogFragment.createBuilder().setTargetFragment(this,J2WConstants.J2W_DIALOG_CODE).setCancelable(cancel).setMessage(value)// 设置内容
+		dialogFragment = (ProgressDailogFragment) ProgressDailogFragment.createBuilder().setTargetFragment(this, J2WConstants.J2W_DIALOG_CODE).setCancelable(cancel).setMessage(value)// 设置内容
 				.showAllowingStateLoss();// 显示
 	}
 
+    /**
+     * 替换进度条文案
+     *
+     * @param value
+     */
+    public void replaceLoading(String value){
+        if(dialogFragment != null){
+            dialogFragment.setArgMessage(value);
+        }
+    }
 	/**
 	 * 弹框进度条
 	 */
 	@Override public void loadingClose() {
-        if(dialogFragment != null){
-            dialogFragment.dismissAllowingStateLoss();
-        }
+		if (dialogFragment != null) {
+			dialogFragment.dismissAllowingStateLoss();
+		}
 	}
 }

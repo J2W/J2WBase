@@ -208,6 +208,13 @@ public interface J2WIView<T> {
 	public void loading(String value, boolean cancel);
 
 	/**
+	 * 替换进度条文案
+	 * 
+	 * @param value
+	 */
+	public void replaceLoading(String value);
+
+	/**
 	 * 弹框进度条
 	 */
 	public void loadingClose();
