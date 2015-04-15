@@ -652,6 +652,8 @@ public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment impl
 	 * 弹框进度条
 	 */
 	@Override public void loadingClose() {
-		dialogFragment.dismissAllowingStateLoss();
+        if(dialogFragment != null){
+            dialogFragment.dismissAllowingStateLoss();
+        }
 	}
 }

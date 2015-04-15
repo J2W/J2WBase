@@ -536,7 +536,9 @@ public abstract class J2WABActivity<T extends J2WIPresenter> extends ActionBarAc
 	 * 弹框进度条
 	 */
 	@Override public void loadingClose() {
-		dialogFragment.dismissAllowingStateLoss();
+        if(dialogFragment != null){
+            dialogFragment.dismissAllowingStateLoss();
+        }
 	}
 
 }
