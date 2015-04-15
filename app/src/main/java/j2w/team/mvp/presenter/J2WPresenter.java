@@ -3,6 +3,8 @@ package j2w.team.mvp.presenter;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 
+import java.util.Stack;
+
 import j2w.team.common.log.L;
 import j2w.team.common.utils.proxy.DynamicProxyUtils;
 import j2w.team.modules.http.J2WError;
@@ -12,9 +14,9 @@ import j2w.team.modules.http.J2WError;
  */
 public abstract class J2WPresenter<T> {
 
-	private boolean	isCallBack;
+	private boolean	isCallBack; // 是否回调
 
-	private T		iView;
+	private T		iView;		// View代理
 
 	/**
 	 * 初始化 - 业务
@@ -24,7 +26,7 @@ public abstract class J2WPresenter<T> {
 	 */
 	void initPresenter(T iView) {
 		L.i("initPresenter : " + iView);
-		isCallBack = true;
+		this.isCallBack = true;
 		this.iView = DynamicProxyUtils.newProxyPresenter(iView, this);// 动态代理-业务
 	}
 
@@ -146,10 +148,11 @@ public abstract class J2WPresenter<T> {
 		L.i("readData(bundle)");
 	}
 
-    /**
-     * 获取碎片管理器
-     * @return
-     */
+	/**
+	 * 获取碎片管理器
+	 * 
+	 * @return
+	 */
 	public FragmentManager getFManager() {
 		return J2WHelper.getScreenHelper().currentActivity().getSupportFragmentManager();
 	}
