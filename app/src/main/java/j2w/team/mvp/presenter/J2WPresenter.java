@@ -1,6 +1,7 @@
 package j2w.team.mvp.presenter;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 
 import j2w.team.common.log.L;
 import j2w.team.common.utils.proxy.DynamicProxyUtils;
@@ -22,7 +23,7 @@ public abstract class J2WPresenter<T> {
 	 *            view层引用
 	 */
 	void initPresenter(T iView) {
-        L.i("initPresenter : "+ iView);
+		L.i("initPresenter : " + iView);
 		isCallBack = true;
 		this.iView = DynamicProxyUtils.newProxyPresenter(iView, this);// 动态代理-业务
 	}
@@ -42,7 +43,7 @@ public abstract class J2WPresenter<T> {
 	 * @return 视图接口
 	 */
 	public final T getView() {
-        L.i("J2WPresenter : "+ iView);
+		L.i("J2WPresenter : " + iView);
 		return this.iView;
 	}
 
@@ -113,21 +114,21 @@ public abstract class J2WPresenter<T> {
 
 	/** 发送请求前错误 **/
 	public void errorNetWork() {
-        L.tag(initTag());
-        L.i("errorNetWork()");
-    }
+		L.tag(initTag());
+		L.i("errorNetWork()");
+	}
 
 	/** 请求得到响应后错误 **/
 	public void errorHttp() {
-        L.tag(initTag());
-        L.i("errorHttp()");
-    }
+		L.tag(initTag());
+		L.i("errorHttp()");
+	}
 
 	/** 请求或者响应 意外错误 **/
 	public void errorUnexpected() {
-        L.tag(initTag());
-        L.i("errorUnexpected()");
-    }
+		L.tag(initTag());
+		L.i("errorUnexpected()");
+	}
 
 	/** 编码异常 **/
 	public void methodCodingError(String methodName, Throwable throwable) {
@@ -143,5 +144,13 @@ public abstract class J2WPresenter<T> {
 	public void readData(Bundle bundle) {
 		L.tag(initTag());
 		L.i("readData(bundle)");
+	}
+
+    /**
+     * 获取碎片管理器
+     * @return
+     */
+	public FragmentManager getFManager() {
+		return J2WHelper.getScreenHelper().currentActivity().getSupportFragmentManager();
 	}
 }
