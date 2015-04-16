@@ -117,4 +117,14 @@ public interface J2WIViewListFragment extends J2WIViewFragment {
 	 * @return true 不滑动 false 滑动
 	 */
 	public boolean notScroll();
+
+	/**
+	 * 添加底部布局
+	 */
+	public void addFooterItem();
+
+	/**
+	 * 删除底部布局
+	 */
+	public void removeFooterItem();
 }

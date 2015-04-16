@@ -36,6 +36,11 @@ public abstract class J2WVPListFragment<T extends J2WIPresenter> extends J2WVPFr
 	protected ListAdapter	mListAdapter;
 
 	/**
+	 * 底部布局
+	 */
+	View					mFooterView;
+
+	/**
 	 * 获取ListView
 	 *
 	 * @return 获取列表控件
@@ -141,8 +146,8 @@ public abstract class J2WVPListFragment<T extends J2WIPresenter> extends J2WVPFr
 		}
 
 		if (getFooterLayout() != 0) {
-			View footerView = LayoutInflater.from(getActivity()).inflate(getFooterLayout(), null, false);
-			listView.addFooterView(footerView);
+			mFooterView = LayoutInflater.from(getActivity()).inflate(getFooterLayout(), null, false);
+			listView.addFooterView(mFooterView);
 		}
 		// 设置点击事件
 		listView.setOnItemClickListener(this);
@@ -276,6 +281,25 @@ public abstract class J2WVPListFragment<T extends J2WIPresenter> extends J2WVPFr
 				showContent();
 			}
 			mListAdapter.notifyDataSetChanged();
+		}
+	}
+
+	/**
+	 * 添加底部布局
+	 */
+	public void addFooterItem() {
+		if (mFooterView != null) {
+			listView.removeFooterView(mFooterView);
+			listView.addFooterView(mFooterView);
+		}
+	}
+
+	/**
+	 * 删除底部布局
+	 */
+	public void removeFooterItem() {
+		if (mFooterView != null) {
+			listView.removeFooterView(mFooterView);
 		}
 	}
 
