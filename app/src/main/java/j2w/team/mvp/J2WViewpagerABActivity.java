@@ -76,11 +76,12 @@ public abstract class J2WViewpagerABActivity<T extends J2WIPresenter> extends J2
 		// 设置Viewpager头部
 		initTabsValue();
 	}
-    /**
-     * 是否添加Activity状态布局
-     *
-     * @return true 打开 false 关闭
-     */
+
+	/**
+	 * 是否添加Activity状态布局
+	 *
+	 * @return true 打开 false 关闭
+	 */
 	@Override public final boolean activityState() {
 		return super.activityState();
 	}
@@ -419,6 +420,18 @@ public abstract class J2WViewpagerABActivity<T extends J2WIPresenter> extends J2
 				viewPagerDatas[position].fragment.onResume(); // 调用切换后Fargment的onResume()
 
 				((J2WVPFragment) viewPagerDatas[position].fragment).isDelayedData(); // 调用延迟加载\
+			} else {
+				FragmentTransaction ft = fragmentManager.beginTransaction();
+				ft.setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out, android.R.animator.fade_in, android.R.animator.fade_out);
+				ft.add(viewPagerDatas[currentPageIndex].fragment, viewPagerDatas[currentPageIndex].fragment.getClass().getSimpleName() + position);
+				ft.commitAllowingStateLoss();
+				/**
+				 * 在用FragmentTransaction.commit()方法提交FragmentTransaction对象后
+				 * 会在进程的主线程中，用异步的方式来执行。 如果想要立即执行这个等待中的操作，就要调用这个方法（只能在主线程中调用）。
+				 * 要注意的是，所有的回调和相关的行为都会在这个调用中被执行完成，因此要仔细确认这个方法的调用位置。
+				 */
+				fragmentManager.executePendingTransactions();
+				((J2WVPFragment) viewPagerDatas[replacePosition].fragment).isDelayedData();
 			}
 
 			currentPageIndex = position;

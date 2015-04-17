@@ -7,7 +7,7 @@ import android.widget.RelativeLayout;
 /**
  * @创建人 sky
  * @创建时间 15/4/11 下午10:01
- * @类描述 长方形
+ * @类描述 长方形 16 : 9
  */
 public class J2WRectangleLayout extends RelativeLayout {
 
@@ -31,7 +31,7 @@ public class J2WRectangleLayout extends RelativeLayout {
 		int childHeightSize = getMeasuredHeight();
 		heightMeasureSpec = widthMeasureSpec = MeasureSpec.makeMeasureSpec(childWidthSize, MeasureSpec.EXACTLY);
 
-		int height = childWidthSize / 4;
+		int height = (childWidthSize / 16) * 9;
 		super.onMeasure(widthMeasureSpec, heightMeasureSpec - height);
 	}
 }
