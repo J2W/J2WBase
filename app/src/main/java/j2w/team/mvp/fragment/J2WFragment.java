@@ -352,13 +352,13 @@ public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment impl
 		J2WIViewActivity j2WIViewActivity = (J2WIViewActivity) getActivity();
 
 		// 加载布局-初始化
-		mViewAnimator.addView(inflater.inflate(j2WIViewActivity.fragmentLoadingLayout(), null, false));
+		inflater.inflate(j2WIViewActivity.fragmentLoadingLayout(), mViewAnimator, true);
 		// 内容布局-初始化
-		mViewAnimator.addView(inflater.inflate(layoutId(), null, false));
+		inflater.inflate(layoutId(), mViewAnimator, true);
 		// 空布局-初始化
-		mViewAnimator.addView(inflater.inflate(j2WIViewActivity.fragmentEmptyLayout(), null, false));
+		inflater.inflate(j2WIViewActivity.fragmentEmptyLayout(), mViewAnimator, true);
 		// 错误布局-初始化
-		mViewAnimator.addView(inflater.inflate(j2WIViewActivity.fragmentErrorLayout(), null, false));
+		inflater.inflate(j2WIViewActivity.fragmentErrorLayout(), mViewAnimator, true);
 	}
 
 	/**

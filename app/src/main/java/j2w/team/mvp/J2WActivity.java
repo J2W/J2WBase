@@ -71,14 +71,14 @@ public abstract class J2WActivity<T extends J2WIPresenter> extends FragmentActiv
 			LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			mContentView = inflater.inflate(R.layout.j2w_fragment_main, null, false);
 			mViewAnimator = ButterKnife.findById(mContentView, android.R.id.home);
-			// 加载布局-初始化
-			mViewAnimator.addView(inflater.inflate(fragmentLoadingLayout(), null, false));
-			// 内容布局-初始化
-			mViewAnimator.addView(inflater.inflate(layoutId(), null, false));
-			// 空布局-初始化
-			mViewAnimator.addView(inflater.inflate(fragmentEmptyLayout(), null, false));
-			// 错误布局-初始化
-			mViewAnimator.addView(inflater.inflate(fragmentErrorLayout(), null, false));
+            // 加载布局-初始化
+            inflater.inflate(fragmentLoadingLayout(), mViewAnimator, true);
+            // 内容布局-初始化
+            inflater.inflate(layoutId(), mViewAnimator, true);
+            // 空布局-初始化
+            inflater.inflate(fragmentEmptyLayout(), mViewAnimator, true);
+            // 错误布局-初始化
+            inflater.inflate(fragmentErrorLayout(), mViewAnimator, true);
 			setContentView(mContentView);
 		} else {
 			setContentView(layoutId());

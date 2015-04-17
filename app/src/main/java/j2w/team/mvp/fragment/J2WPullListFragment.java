@@ -45,10 +45,10 @@ public abstract class J2WPullListFragment<T extends J2WIPresenter> extends J2WLi
 		J2WIViewActivity j2WIViewActivity = (J2WIViewActivity) getActivity();
 
 		// 加载布局-初始化
-		mViewAnimator.addView(inflater.inflate(j2WIViewActivity.fragmentLoadingLayout(), null, false));
+        inflater.inflate(j2WIViewActivity.fragmentLoadingLayout(), mViewAnimator, true);
 
 		// 内容布局-初始化
-		View layoutView = inflater.inflate(layoutId(), null, false);
+        View layoutView = inflater.inflate(layoutId(), mViewAnimator, true);
 
 		swipe_container = (SwipeRefreshLayout) layoutView.findViewById(R.id.swipe_container);
 
@@ -68,14 +68,13 @@ public abstract class J2WPullListFragment<T extends J2WIPresenter> extends J2WLi
 		// 设置点击事件
 		listView.setOnItemClickListener(this);
 		listView.setOnItemLongClickListener(this);
-		mViewAnimator.addView(layoutView);
 		// 内容布局-设置值
 		mListAdapter = new ListAdapter();
 		listView.setAdapter(mListAdapter);
 		// 空布局-初始化
-		mViewAnimator.addView(inflater.inflate(j2WIViewActivity.fragmentEmptyLayout(), null, false));
+        inflater.inflate(j2WIViewActivity.fragmentEmptyLayout(), mViewAnimator, true);
 		// 错误布局-初始化
-		mViewAnimator.addView(inflater.inflate(j2WIViewActivity.fragmentErrorLayout(), null, false));
+        inflater.inflate(j2WIViewActivity.fragmentErrorLayout(), mViewAnimator, true);
 	}
 
 	/**

@@ -130,10 +130,10 @@ public abstract class J2WListFragment<T extends J2WIPresenter> extends J2WFragme
 		J2WIViewActivity j2WIViewActivity = (J2WIViewActivity) getActivity();
 
 		// 加载布局-初始化
-		mViewAnimator.addView(inflater.inflate(j2WIViewActivity.fragmentLoadingLayout(), null, false));
+        inflater.inflate(j2WIViewActivity.fragmentLoadingLayout(), mViewAnimator, true);
 
 		// 内容布局-初始化
-		View view = inflater.inflate(layoutId(), null, false);
+        View view = inflater.inflate(layoutId(), mViewAnimator, true);
 		if (view instanceof ListView) {
 			listView = (ListView) view;
 		} else {
@@ -152,15 +152,13 @@ public abstract class J2WListFragment<T extends J2WIPresenter> extends J2WFragme
 		// 设置点击事件
 		listView.setOnItemClickListener(this);
 		listView.setOnItemLongClickListener(this);
-		mViewAnimator.addView(view);
 		/** 初始化适配器 **/
 		mListAdapter = new ListAdapter();
 		listView.setAdapter(mListAdapter);
 		// 空布局-初始化
-		mViewAnimator.addView(inflater.inflate(j2WIViewActivity.fragmentEmptyLayout(), null, false));
+        inflater.inflate(j2WIViewActivity.fragmentEmptyLayout(), mViewAnimator, true);
 		// 错误布局-初始化
-		mViewAnimator.addView(inflater.inflate(j2WIViewActivity.fragmentErrorLayout(), null, false));
-
+        inflater.inflate(j2WIViewActivity.fragmentErrorLayout(), mViewAnimator, true);
 	}
 
 	/**

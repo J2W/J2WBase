@@ -78,13 +78,13 @@ public abstract class J2WABActivity<T extends J2WIPresenter> extends ActionBarAc
             mContentView = inflater.inflate(R.layout.j2w_fragment_main, null, false);
             mViewAnimator = ButterKnife.findById(mContentView, android.R.id.home);
             // 加载布局-初始化
-            mViewAnimator.addView(inflater.inflate(fragmentLoadingLayout(), null, false));
+            inflater.inflate(fragmentLoadingLayout(), mViewAnimator, true);
             // 内容布局-初始化
-            mViewAnimator.addView(inflater.inflate(layoutId(), null, false));
+            inflater.inflate(layoutId(), mViewAnimator, true);
             // 空布局-初始化
-            mViewAnimator.addView(inflater.inflate(fragmentEmptyLayout(), null, false));
+            inflater.inflate(fragmentEmptyLayout(), mViewAnimator, true);
             // 错误布局-初始化
-            mViewAnimator.addView(inflater.inflate(fragmentErrorLayout(), null, false));
+            inflater.inflate(fragmentErrorLayout(), mViewAnimator, true);
             setContentView(mContentView);
         }else{
             setContentView(layoutId());
