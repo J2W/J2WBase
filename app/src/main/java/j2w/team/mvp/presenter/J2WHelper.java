@@ -10,7 +10,6 @@ import com.squareup.picasso.PicassoTools;
 
 import de.greenrobot.event.EventBus;
 import j2w.team.J2WApplication;
-import j2w.team.common.log.L;
 import j2w.team.common.utils.looper.SynchronousExecutor;
 import j2w.team.modules.download.J2WDownloadManager;
 import j2w.team.modules.http.J2WRestAdapter;

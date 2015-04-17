@@ -615,7 +615,7 @@ public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment impl
 	 * 弹框进度条
 	 */
 	@Override public void loading() {
-		loading(false);
+		loading(true);
 	}
 
 	/**
@@ -634,7 +634,7 @@ public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment impl
 	 * @param value
 	 */
 	@Override public void loading(String value) {
-		loading(value, false);
+		loading(value, true);
 	}
 
 	/**
