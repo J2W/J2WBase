@@ -1,5 +1,7 @@
 package j2w.team.modules.http;
 
+import android.support.v4.app.FragmentManager;
+
 import com.squareup.okhttp.Headers;
 import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.Request;
@@ -13,12 +15,15 @@ import java.net.URLEncoder;
 import java.util.Map;
 
 import j2w.team.common.log.L;
+import j2w.team.modules.dialog.provided.ProgressDailogFragment;
 import j2w.team.modules.http.annotations.Body;
 import j2w.team.modules.http.annotations.Header;
 import j2w.team.modules.http.annotations.Path;
 import j2w.team.modules.http.annotations.Query;
 import j2w.team.modules.http.annotations.QueryMap;
 import j2w.team.modules.http.converter.J2WConverter;
+import j2w.team.mvp.model.J2WConstants;
+import j2w.team.mvp.presenter.J2WHelper;
 import okio.BufferedSink;
 
 /**
@@ -59,6 +64,9 @@ final class J2WRequestBuilder implements J2WRequestInterceptor.RequestFacade {
 	/** 请求参数 **/
 	private StringBuilder			queryParams;
 
+	/** 方法名 **/
+	private final String			methodName;
+
 	J2WRequestBuilder(String apiUrl, J2WMethodInfo methodInfo, J2WConverter converter) {
 		/**
 		 * 初始化
@@ -69,6 +77,7 @@ final class J2WRequestBuilder implements J2WRequestInterceptor.RequestFacade {
 		requestMethod = methodInfo.requestMethod;// 请求方法
 		contentTypeHeader = methodInfo.contentTypeHeader;// 头信息内容类型
 		relativeUrl = methodInfo.requestUrl;// 请求相对路径
+		methodName = isDialogShow(methodInfo.method.getName());// 方法名
 		/** 初始化-头信息 */
 		if (methodInfo.headers != null) {
 			headers = methodInfo.headers.newBuilder();
@@ -300,6 +309,19 @@ final class J2WRequestBuilder implements J2WRequestInterceptor.RequestFacade {
 	}
 
 	/**
+	 * 判断是否有进度条
+	 */
+	private String isDialogShow(String methodName) {
+		FragmentManager fragmentManager = J2WHelper.getScreenHelper().currentActivity().getSupportFragmentManager();
+		ProgressDailogFragment progressDailogFragment = (ProgressDailogFragment) fragmentManager.findFragmentByTag(J2WConstants.J2W_DIALOG_PROGRESS);
+        if(progressDailogFragment == null || !progressDailogFragment.isAdded()){
+            return methodName;
+        }else{
+            return String.valueOf(progressDailogFragment.getRequestCode());
+        }
+	}
+
+	/**
 	 * 编辑-okhttp 请求
 	 * 
 	 * @return
@@ -337,11 +359,13 @@ final class J2WRequestBuilder implements J2WRequestInterceptor.RequestFacade {
 				headerBuilder.add("Content-Type", contentTypeHeader);
 			}
 		}
-
+		// 打印完整路径
+		L.tag("J2W-HTTP");
+		L.i("请求TAG:" + methodName);
 		// 设置头信息
 		Headers headers = headerBuilder != null ? headerBuilder.build() : NO_HEADERS;
 
-		return new Request.Builder().url(url.toString()).method(requestMethod, body).headers(headers).build();
+		return new Request.Builder().tag(methodName).url(url.toString()).method(requestMethod, body).headers(headers).build();
 	}
 
 	/**

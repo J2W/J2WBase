@@ -75,8 +75,71 @@ public class J2WRestAdapter {
 		DynamicProxyUtils.validateInterfaceServiceClass(service);
 		// 创建动态代理-网络层
 		J2WRestHandler j2WRestHandler = new J2WRestHandler(this, getMethodInfoCache(service));
+
 		// 创建代理类并返回
 		return DynamicProxyUtils.newProxyInstance(service.getClassLoader(), new Class<?>[] { service }, j2WRestHandler);
+	}
+
+	/**
+	 * 取消请求
+	 * 
+	 * @param requestCode
+	 */
+	public void cancel(int requestCode) {
+		cancel(String.valueOf(requestCode));
+	}
+
+	/**
+	 * 取消请求
+	 * 
+	 * @param requestCode
+	 */
+	public void cancel(String requestCode) {
+		client.cancel(String.valueOf(requestCode));
+	}
+
+	/**
+	 * 取消请求
+	 * 
+	 * @param service
+	 *            接口
+	 * @param methodName
+	 *            方法名称
+	 * @param <T>
+	 *            泛型
+	 */
+	public <T> void cancel(Class<T> service, String methodName) {
+		Method[] methods = service.getMethods();
+		for (Method method : methods) {
+			if (method.getName().equals(methodName)) {
+				client.cancel(method.getName());
+			}
+		}
+	}
+
+	/**
+	 * 取消该接口下的所有请求
+	 * 
+	 * @param service
+	 *            接口
+	 * @param <T>
+	 */
+	public <T> void cancel(Class<T> service) {
+		Method[] methods = service.getMethods();
+
+		for (Method method : methods) {
+			client.cancel(method);
+		}
+
+	}
+
+	/**
+	 * 取消所有请求
+	 */
+	public void cancelAll() {
+		for (Class<?> clazz : serviceMethodInfoCache.keySet()) {
+			cancel(clazz);
+		}
 	}
 
 	/**
@@ -124,6 +187,7 @@ public class J2WRestAdapter {
 				}
 			}
 		});
+
 	}
 
 	/**

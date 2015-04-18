@@ -53,9 +53,9 @@ public abstract class J2WDialogFragment extends DialogFragment implements Dialog
 		return dialog;
 	}
 
-    public int getJ2WStyle(){
-        return R.style.J2W_Dialog;
-    }
+	public int getJ2WStyle() {
+		return R.style.J2W_Dialog;
+	}
 
 	@Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		L.tag("J2WDialogFragment");
@@ -79,6 +79,10 @@ public abstract class J2WDialogFragment extends DialogFragment implements Dialog
 				mRequestCode = args.getInt(J2WDialogBuilder.ARG_REQUEST_CODE, 0);
 			}
 		}
+	}
+
+	public int getRequestCode() {
+		return mRequestCode;
 	}
 
 	@Override public void onDestroyView() {
@@ -460,9 +464,11 @@ public abstract class J2WDialogFragment extends DialogFragment implements Dialog
 			ListView vList = ButterKnife.findById(content, R.id.j2w_list);
 
 			// 设置标题样式
-//			vTitle.setTextAppearance(mContext, R.style.J2W_TextView_Title_Dark);
+			// vTitle.setTextAppearance(mContext,
+			// R.style.J2W_TextView_Title_Dark);
 			// 设置内容样式
-//			vMessage.setTextAppearance(mContext, R.style.J2W_TextView_Message_Dark);
+			// vMessage.setTextAppearance(mContext,
+			// R.style.J2W_TextView_Message_Dark);
 			// 设置标题值
 			set(vTitle, mTitle);
 			// 设置内容值

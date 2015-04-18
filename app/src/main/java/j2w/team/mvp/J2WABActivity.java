@@ -3,7 +3,6 @@ package j2w.team.mvp;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -605,7 +604,8 @@ public abstract class J2WABActivity<T extends J2WIPresenter> extends ActionBarAc
 	 * @param cancel
 	 */
 	@Override public void loading(boolean cancel) {
-		dialogFragment = (ProgressDailogFragment) ProgressDailogFragment.createBuilder().setRequestCode(J2WConstants.J2W_DIALOG_CODE).setCancelable(cancel).setMessage(R.string.progress_dialog_value)// 设置内容
+		dialogFragment = (ProgressDailogFragment) ProgressDailogFragment.createBuilder().setTag(J2WConstants.J2W_DIALOG_PROGRESS).setRequestCode(J2WConstants.J2W_DIALOG_CODE)
+				.setCancelable(cancel).setMessage(R.string.progress_dialog_value)// 设置内容
 				.showAllowingStateLoss();// 显示
 	}
 
@@ -625,7 +625,7 @@ public abstract class J2WABActivity<T extends J2WIPresenter> extends ActionBarAc
 	 * @param cancel
 	 */
 	@Override public void loading(String value, boolean cancel) {
-		dialogFragment = (ProgressDailogFragment) ProgressDailogFragment.createBuilder().setRequestCode(J2WConstants.J2W_DIALOG_CODE).setCancelable(cancel).setMessage(value)// 设置内容
+		dialogFragment = (ProgressDailogFragment) ProgressDailogFragment.createBuilder().setTag(J2WConstants.J2W_DIALOG_PROGRESS).setRequestCode(J2WConstants.J2W_DIALOG_CODE).setCancelable(cancel).setMessage(value)// 设置内容
 				.showAllowingStateLoss();// 显示
 	}
 

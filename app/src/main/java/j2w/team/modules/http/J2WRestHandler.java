@@ -1,6 +1,5 @@
 package j2w.team.modules.http;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Map;
 
@@ -37,6 +36,7 @@ public class J2WRestHandler extends BaseHandler {
 		J2WMethodInfo methodInfo = J2WRestAdapter.getMethodInfo(methodDetailsCache, method);
 		// 创建请求
 		Request request = j2WRestAdapter.createRequest(methodInfo, args);
+
 		switch (methodInfo.executionType) {
 			case SYNC:
 				return j2WRestAdapter.invokeSync(methodInfo, request);

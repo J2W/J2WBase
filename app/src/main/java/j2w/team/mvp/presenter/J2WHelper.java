@@ -52,6 +52,36 @@ public class J2WHelper {
 		}
 	}
 
+	/**
+	 * 单例模式-握有 网络适配器
+	 */
+	private volatile static J2WRestAdapter	mJ2WRestAdapter;
+
+	/**
+	 * 获取 网络适配器
+	 * 
+	 * @return
+	 */
+	public static J2WRestAdapter initRestAdapter() {
+		return mJ2WRestAdapter;
+	}
+
+	/**
+	 * 单例模式-初始化网络适配器
+	 *
+	 * @param j2WRestAdapter
+	 *            网络适配器
+	 */
+	public static void createRestAdapter(J2WRestAdapter j2WRestAdapter) {
+		if (mJ2WRestAdapter == null) {
+			synchronized (J2WHelper.class) {
+				if (mJ2WRestAdapter == null) {
+					mJ2WRestAdapter = j2WRestAdapter;
+				}
+			}
+		}
+	}
+
 	/** 生成器 **/
 	private static final J2WRestAdapter.Builder	j2WRestAdapterBuilder	= new J2WRestAdapter.Builder();
 
