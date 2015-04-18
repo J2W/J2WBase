@@ -219,14 +219,7 @@ public abstract class J2WABActivity<T extends J2WIPresenter> extends ActionBarAc
 	 *            标记
 	 */
 	@Override public void commitFragment(Fragment fragment, String tag) {
-		L.tag(initTag());
-		L.i("commitFragment(Fragment fragment, String tag)");
-		if (fragment != null && fragment.isAdded()) {
-			L.tag(initTag());
-			L.i("fragment 不能为空，或者已经被添加！");
-			return;
-		}
-		getFManager().beginTransaction().add(android.R.id.custom, fragment, tag).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commitAllowingStateLoss();
+		commitFragment(android.R.id.custom, fragment, tag);
 	}
 
 	/**
@@ -252,7 +245,15 @@ public abstract class J2WABActivity<T extends J2WIPresenter> extends ActionBarAc
 	 *            标记
 	 */
 	@Override public void commitFragment(int layoutId, Fragment fragment, String tag) {
-		commitFragment(null, layoutId, fragment, tag);
+		L.tag(initTag());
+		L.i("commitFragment(Fragment fragment, String tag)");
+		if (fragment != null && fragment.isAdded()) {
+			L.tag(initTag());
+			L.i("fragment 不能为空，或者已经被添加！");
+			return;
+		}
+		getFManager().beginTransaction().add(layoutId, fragment, tag).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commitAllowingStateLoss();
+
 	}
 
 	/**
@@ -604,8 +605,8 @@ public abstract class J2WABActivity<T extends J2WIPresenter> extends ActionBarAc
 	 * @param cancel
 	 */
 	@Override public void loading(boolean cancel) {
-		dialogFragment = (ProgressDailogFragment) ProgressDailogFragment.createBuilder().setTag(J2WConstants.J2W_DIALOG_PROGRESS).setRequestCode(J2WConstants.J2W_DIALOG_CODE)
-				.setCancelable(cancel).setMessage(R.string.progress_dialog_value)// 设置内容
+		dialogFragment = (ProgressDailogFragment) ProgressDailogFragment.createBuilder().setTag(J2WConstants.J2W_DIALOG_PROGRESS).setRequestCode(J2WConstants.J2W_DIALOG_CODE).setCancelable(cancel)
+				.setMessage(R.string.progress_dialog_value)// 设置内容
 				.showAllowingStateLoss();// 显示
 	}
 
@@ -625,7 +626,8 @@ public abstract class J2WABActivity<T extends J2WIPresenter> extends ActionBarAc
 	 * @param cancel
 	 */
 	@Override public void loading(String value, boolean cancel) {
-		dialogFragment = (ProgressDailogFragment) ProgressDailogFragment.createBuilder().setTag(J2WConstants.J2W_DIALOG_PROGRESS).setRequestCode(J2WConstants.J2W_DIALOG_CODE).setCancelable(cancel).setMessage(value)// 设置内容
+		dialogFragment = (ProgressDailogFragment) ProgressDailogFragment.createBuilder().setTag(J2WConstants.J2W_DIALOG_PROGRESS).setRequestCode(J2WConstants.J2W_DIALOG_CODE).setCancelable(cancel)
+				.setMessage(value)// 设置内容
 				.showAllowingStateLoss();// 显示
 	}
 

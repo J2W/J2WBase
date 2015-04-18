@@ -7,6 +7,8 @@ import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
 
+import org.apache.commons.lang.StringUtils;
+
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.lang.annotation.Annotation;
@@ -77,7 +79,7 @@ final class J2WRequestBuilder implements J2WRequestInterceptor.RequestFacade {
 		requestMethod = methodInfo.requestMethod;// 请求方法
 		contentTypeHeader = methodInfo.contentTypeHeader;// 头信息内容类型
 		relativeUrl = methodInfo.requestUrl;// 请求相对路径
-		methodName = isDialogShow(methodInfo.method.getName());// 方法名
+		methodName = StringUtils.isEmpty(methodInfo.requestTag) ? methodInfo.method.getName() : methodInfo.requestTag;// 方法名
 		/** 初始化-头信息 */
 		if (methodInfo.headers != null) {
 			headers = methodInfo.headers.newBuilder();
@@ -308,18 +310,6 @@ final class J2WRequestBuilder implements J2WRequestInterceptor.RequestFacade {
 		}
 	}
 
-	/**
-	 * 判断是否有进度条
-	 */
-	private String isDialogShow(String methodName) {
-		FragmentManager fragmentManager = J2WHelper.getScreenHelper().currentActivity().getSupportFragmentManager();
-		ProgressDailogFragment progressDailogFragment = (ProgressDailogFragment) fragmentManager.findFragmentByTag(J2WConstants.J2W_DIALOG_PROGRESS);
-        if(progressDailogFragment == null || !progressDailogFragment.isAdded()){
-            return methodName;
-        }else{
-            return String.valueOf(progressDailogFragment.getRequestCode());
-        }
-	}
 
 	/**
 	 * 编辑-okhttp 请求

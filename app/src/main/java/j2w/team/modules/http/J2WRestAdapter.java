@@ -17,6 +17,7 @@ import j2w.team.common.log.L;
 import j2w.team.common.utils.proxy.DynamicProxyUtils;
 import j2w.team.modules.http.converter.GsonConverter;
 import j2w.team.modules.http.converter.J2WConverter;
+import j2w.team.mvp.model.J2WConstants;
 import j2w.team.mvp.presenter.J2WHelper;
 
 /**
@@ -69,15 +70,37 @@ public class J2WRestAdapter {
 	 * @return
 	 */
 	public <T> T create(Class<T> service) {
+		return create(service, null);
+	}
+
+	/**
+	 * 创建代理
+	 *
+	 * @param service
+	 * @param <T>
+	 * @return
+	 */
+	public <T> T create(Class<T> service, String tag) {
 		// 验证是否是接口
 		DynamicProxyUtils.validateServiceClass(service);
 		// 验证是否继承其他接口
 		DynamicProxyUtils.validateInterfaceServiceClass(service);
 		// 创建动态代理-网络层
-		J2WRestHandler j2WRestHandler = new J2WRestHandler(this, getMethodInfoCache(service));
+		J2WRestHandler j2WRestHandler = new J2WRestHandler(this, getMethodInfoCache(service), tag);
 
 		// 创建代理类并返回
 		return DynamicProxyUtils.newProxyInstance(service.getClassLoader(), new Class<?>[] { service }, j2WRestHandler);
+	}
+
+	/**
+	 * 创建代理
+	 *
+	 * @param service
+	 * @param <T>
+	 * @return
+	 */
+	public <T> T createBindDialog(Class<T> service) {
+		return create(service, J2WConstants.J2W_DIALOG_PROGRESS);
 	}
 
 	/**

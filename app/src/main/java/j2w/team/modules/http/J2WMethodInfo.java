@@ -77,6 +77,8 @@ public final class J2WMethodInfo {
 
 	Type							requestObjectType;
 
+	public String					requestTag;
+
 	J2WMethodInfo(Method method) {
 		this.method = method;
 		// 拿到返回类型
