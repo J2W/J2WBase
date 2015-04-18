@@ -130,7 +130,7 @@ public interface J2WIView<T> {
 
 	/**
 	 * 提交fragment
-	 * 
+	 *
 	 * @param layoutId
 	 *            布局ID
 	 * @param fragment
@@ -139,6 +139,54 @@ public interface J2WIView<T> {
 	 *            标记
 	 */
 	public void commitFragment(int layoutId, Fragment fragment, String tag);
+
+	/**
+	 * 提交fragment
+	 *
+	 * @param old
+	 *            需要销毁的fragment
+	 * @param fragment
+	 *            实例
+	 */
+	public void commitFragment(Fragment old, Fragment fragment);
+
+	/**
+	 * 提交fragment
+	 *
+	 * @param old
+	 *            需要销毁的fragment
+	 * @param fragment
+	 *            实例
+	 * @param tag
+	 *            标记
+	 */
+	public void commitFragment(Fragment old, Fragment fragment, String tag);
+
+	/**
+	 * 提交fragment
+	 * 
+	 * @param old
+	 *            需要销毁的fragment
+	 * @param layoutId
+	 *            布局ID
+	 * @param fragment
+	 *            实例
+	 */
+	public void commitFragment(Fragment old, int layoutId, Fragment fragment);
+
+	/**
+	 * 提交fragment
+	 *
+	 * @param old
+	 *            需要销毁的fragment
+	 * @param layoutId
+	 *            布局ID
+	 * @param fragment
+	 *            实例
+	 * @param tag
+	 *            标记
+	 */
+	public void commitFragment(Fragment old, int layoutId, Fragment fragment, String tag);
 
 	/**
 	 * 提交fragment - 压栈
@@ -224,23 +272,23 @@ public interface J2WIView<T> {
 	 */
 	public void activityFinish();
 
-    /**
-     * 布局 - 进度条
-     */
-    public void showLoading();
+	/**
+	 * 布局 - 进度条
+	 */
+	public void showLoading();
 
-    /**
-     * 布局 - 内容
-     */
-    public void showContent();
+	/**
+	 * 布局 - 内容
+	 */
+	public void showContent();
 
-    /**
-     * 布局 - 空
-     */
-    public void showEmpty();
+	/**
+	 * 布局 - 空
+	 */
+	public void showEmpty();
 
-    /**
-     * 布局 - 错误
-     */
-    public void showError();
+	/**
+	 * 布局 - 错误
+	 */
+	public void showError();
 }

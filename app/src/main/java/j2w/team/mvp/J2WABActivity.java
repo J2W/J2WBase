@@ -16,7 +16,6 @@ import android.widget.ViewAnimator;
 import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
 import j2w.team.R;
-import j2w.team.modules.dialog.iface.IDialogCancelListener;
 import j2w.team.modules.dialog.iface.IDialogListener;
 import j2w.team.modules.dialog.provided.ProgressDailogFragment;
 import j2w.team.mvp.model.J2WConstants;
@@ -73,22 +72,22 @@ public abstract class J2WABActivity<T extends J2WIPresenter> extends ActionBarAc
 	@Override public void initLayout() {
 		L.tag(initTag());
 		L.i("initLayout()");
-        if (activityState()) {
-            LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            mContentView = inflater.inflate(R.layout.j2w_fragment_main, null, false);
-            mViewAnimator = ButterKnife.findById(mContentView, android.R.id.home);
-            // 加载布局-初始化
-            inflater.inflate(fragmentLoadingLayout(), mViewAnimator, true);
-            // 内容布局-初始化
-            inflater.inflate(layoutId(), mViewAnimator, true);
-            // 空布局-初始化
-            inflater.inflate(fragmentEmptyLayout(), mViewAnimator, true);
-            // 错误布局-初始化
-            inflater.inflate(fragmentErrorLayout(), mViewAnimator, true);
-            setContentView(mContentView);
-        }else{
-            setContentView(layoutId());
-        }
+		if (activityState()) {
+			LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			mContentView = inflater.inflate(R.layout.j2w_fragment_main, null, false);
+			mViewAnimator = ButterKnife.findById(mContentView, android.R.id.home);
+			// 加载布局-初始化
+			inflater.inflate(fragmentLoadingLayout(), mViewAnimator, true);
+			// 内容布局-初始化
+			inflater.inflate(layoutId(), mViewAnimator, true);
+			// 空布局-初始化
+			inflater.inflate(fragmentEmptyLayout(), mViewAnimator, true);
+			// 错误布局-初始化
+			inflater.inflate(fragmentErrorLayout(), mViewAnimator, true);
+			setContentView(mContentView);
+		} else {
+			setContentView(layoutId());
+		}
 	}
 
 	/**
@@ -220,7 +219,7 @@ public abstract class J2WABActivity<T extends J2WIPresenter> extends ActionBarAc
 	 * @param tag
 	 *            标记
 	 */
-	public void commitFragment(Fragment fragment, String tag) {
+	@Override public void commitFragment(Fragment fragment, String tag) {
 		L.tag(initTag());
 		L.i("commitFragment(Fragment fragment, String tag)");
 		if (fragment != null && fragment.isAdded()) {
@@ -253,9 +252,60 @@ public abstract class J2WABActivity<T extends J2WIPresenter> extends ActionBarAc
 	 * @param tag
 	 *            标记
 	 */
-	public void commitFragment(int layoutId, Fragment fragment, String tag) {
+	@Override public void commitFragment(int layoutId, Fragment fragment, String tag) {
+		commitFragment(null, layoutId, fragment, tag);
+	}
+
+	/**
+	 * 提交fragment
+	 *
+	 * @param old
+	 *            需要销毁的fragment
+	 * @param fragment
+	 *            新碎片
+	 */
+	@Override public void commitFragment(Fragment old, Fragment fragment) {
+		commitFragment(old, fragment, fragment.getClass().getSimpleName());
+	}
+
+	/**
+	 * 提交fragment
+	 *
+	 * @param old
+	 *            需要销毁的fragment
+	 * @param fragment
+	 *            实例
+	 * @param tag
+	 */
+	@Override public void commitFragment(Fragment old, Fragment fragment, String tag) {
+		commitFragment(old, android.R.id.custom, fragment, tag);
+	}
+
+	/**
+	 * @param old
+	 *            需要销毁的fragment
+	 * @param layoutId
+	 *            布局ID
+	 * @param fragment
+	 */
+	@Override public void commitFragment(Fragment old, int layoutId, Fragment fragment) {
+		commitFragment(old, layoutId, fragment, fragment.getClass().getSimpleName());
+	}
+
+	/**
+	 * 提交fragment
+	 *
+	 * @param old
+	 *            需要销毁的fragment
+	 * @param layoutId
+	 *            布局ID
+	 * @param fragment
+	 *            实例
+	 * @param tag
+	 */
+	@Override public void commitFragment(Fragment old, int layoutId, Fragment fragment, String tag) {
 		L.tag(initTag());
-		L.i("commitFragment(int layoutId,Fragment fragment, String tag)");
+		L.i("commitFragment(Fragment old,int layoutId,Fragment fragment, String tag)");
 		if (layoutId == 0) {
 			L.tag(initTag());
 			L.i("layoutId 不能为空！");
@@ -266,7 +316,11 @@ public abstract class J2WABActivity<T extends J2WIPresenter> extends ActionBarAc
 			L.i("fragment 不能为空，或者已经被添加！");
 			return;
 		}
-		getFManager().beginTransaction().add(layoutId, fragment, tag).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commitAllowingStateLoss();
+		FragmentTransaction fragmentTransaction = getFManager().beginTransaction();
+		if (old != null) {
+			fragmentTransaction.detach(old);
+		}
+		fragmentTransaction.add(layoutId, fragment, tag).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commitAllowingStateLoss();
 	}
 
 	/**
@@ -526,6 +580,19 @@ public abstract class J2WABActivity<T extends J2WIPresenter> extends ActionBarAc
 	}
 
 	/**
+	 * 进度条取消
+	 *
+	 * @param requestCode
+	 */
+	@Override public void onCancelled(int requestCode) {
+		switch (requestCode) {
+			case J2WConstants.J2W_ERROR_CODE:
+				J2WHelper.initRestAdapter().cancel(requestCode);
+				break;
+		}
+	}
+
+	/**
 	 * 弹框进度条
 	 */
 	@Override public void loading() {
@@ -538,7 +605,7 @@ public abstract class J2WABActivity<T extends J2WIPresenter> extends ActionBarAc
 	 * @param cancel
 	 */
 	@Override public void loading(boolean cancel) {
-		dialogFragment = (ProgressDailogFragment) ProgressDailogFragment.createBuilder().setRequestCode(J2WConstants.J2W_DIALOG_CODE).setCancelable(cancel).setMessage("正在加载...")// 设置内容
+		dialogFragment = (ProgressDailogFragment) ProgressDailogFragment.createBuilder().setRequestCode(J2WConstants.J2W_DIALOG_CODE).setCancelable(cancel).setMessage(R.string.progress_dialog_value)// 设置内容
 				.showAllowingStateLoss();// 显示
 	}
 
