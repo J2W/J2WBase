@@ -354,11 +354,8 @@ public abstract class J2WProperties {
 	 */
 	private void setFieldDefaultValue(Field field, String propertiesName) {
 		Object value = getPropertyDefaultValue(field.getType());
-		if (value == null) {
-			return;
-		}
 		try {
-			field.set(this, value);
+			field.set(this, value == null ? "" : value);
 		} catch (Exception e) {
 			L.tag(initTag());
 			L.e("setFieldValue失败 ， 属性名 %s 文件名 %s", field.getName(), propertiesName);
