@@ -11,7 +11,6 @@ import org.apache.commons.lang.StringUtils;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -47,9 +46,6 @@ public class J2WRestAdapter {
 
 	// 接口缓存
 	private Class											mService;
-
-	// 运行缓存
-	private final Map<String, Call>							runningCalls			= new HashMap<>();
 
 	/**
 	 * 构造器
@@ -107,11 +103,7 @@ public class J2WRestAdapter {
 	 * @param requestCode
 	 */
 	public void cancel(String requestCode) {
-		Call call = runningCalls.get(requestCode);
-		if (call != null) {
-			call.cancel();
-			runningCalls.remove(requestCode);
-		}
+		client.cancel(requestCode);
 	}
 
 	/**
@@ -133,14 +125,11 @@ public class J2WRestAdapter {
 		Method[] methods = service.getMethods();
 
 		for (Method method : methods) {
+			L.tag("J2WRestAdapter");
 			L.i("取消 cancel(Class<T> service) 方法名 :" + method.getName());
 			if (method.getName().equals(methodName)) {
-				Call call = runningCalls.get(method.getName());
-				if (call != null) {
-					call.cancel();
-					runningCalls.remove(method.getName());
-				}
-			}
+                client.cancel(J2WMethodInfo.getMethodString(method,method.getParameterTypes()));
+            }
 		}
 		mService = null;
 	}
@@ -161,12 +150,9 @@ public class J2WRestAdapter {
 		Method[] methods = service.getMethods();
 
 		for (Method method : methods) {
+			L.tag("J2WRestAdapter");
 			L.i("取消 cancel(Class<T> service) 方法名 :" + method.getName());
-			Call call = runningCalls.get(method.getName());
-			if (call != null) {
-				call.cancel();
-				runningCalls.remove(method.getName());
-			}
+			client.cancel(J2WMethodInfo.getMethodString(method,method.getParameterTypes()));
 		}
 		mService = null;
 	}
@@ -178,7 +164,6 @@ public class J2WRestAdapter {
 		for (Class<?> clazz : serviceMethodInfoCache.keySet()) {
 			cancel(clazz);
 		}
-		runningCalls.clear();
 	}
 
 	/**
@@ -200,13 +185,16 @@ public class J2WRestAdapter {
 	 */
 	Object invokeSync(J2WMethodInfo methodInfo, Request request) throws Throwable {
 		try {
+
 			Call call = client.newCall(request);
 			// 缓存
-			runningCalls.put(methodInfo.requestTag, call);
+			L.tag("J2WRestAdapter");
+			L.i("J2WMethodInfo requestTag 开始 请求方法名 : " + methodInfo.requestTag);
 			// 发送请求
 			Response response = call.execute();
 			// 删除
-			runningCalls.remove(methodInfo.requestTag);
+			L.tag("J2WRestAdapter");
+			L.i("J2WMethodInfo requestTag 结束 请求方法名 : " + methodInfo.requestTag);
 			// 拿到结果调用结果处理方法
 			return createResult(methodInfo, response);
 		} catch (IOException e) {

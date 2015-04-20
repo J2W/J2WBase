@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Array;
+import java.lang.reflect.Method;
 import java.net.URLEncoder;
 import java.util.Map;
 
@@ -79,7 +80,7 @@ final class J2WRequestBuilder implements J2WRequestInterceptor.RequestFacade {
 		requestMethod = methodInfo.requestMethod;// 请求方法
 		contentTypeHeader = methodInfo.contentTypeHeader;// 头信息内容类型
 		relativeUrl = methodInfo.requestUrl;// 请求相对路径
-		methodName = StringUtils.isEmpty(methodInfo.requestTag) ? methodInfo.method.getName() : methodInfo.requestTag;// 方法名
+		methodInfo.requestTag = methodName = StringUtils.isEmpty(methodInfo.requestTag) ? J2WMethodInfo.getMethodString(methodInfo.method,methodInfo.method.getParameterTypes()) : methodInfo.requestTag;// 方法名
 		/** 初始化-头信息 */
 		if (methodInfo.headers != null) {
 			headers = methodInfo.headers.newBuilder();
@@ -310,7 +311,6 @@ final class J2WRequestBuilder implements J2WRequestInterceptor.RequestFacade {
 		}
 	}
 
-
 	/**
 	 * 编辑-okhttp 请求
 	 * 
@@ -357,6 +357,7 @@ final class J2WRequestBuilder implements J2WRequestInterceptor.RequestFacade {
 
 		return new Request.Builder().tag(methodName).url(url.toString()).method(requestMethod, body).headers(headers).build();
 	}
+
 
 	/**
 	 * 媒体类型重写请求正文
