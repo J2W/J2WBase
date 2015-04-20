@@ -431,7 +431,7 @@ public abstract class J2WViewpagerABActivity<T extends J2WIPresenter> extends J2
 				 * 要注意的是，所有的回调和相关的行为都会在这个调用中被执行完成，因此要仔细确认这个方法的调用位置。
 				 */
 				fragmentManager.executePendingTransactions();
-				((J2WVPFragment) viewPagerDatas[replacePosition].fragment).isDelayedData();
+				((J2WVPFragment) viewPagerDatas[position].fragment).isDelayedData();
 			}
 
 			currentPageIndex = position;

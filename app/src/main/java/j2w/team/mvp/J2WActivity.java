@@ -16,6 +16,7 @@ import de.greenrobot.event.EventBus;
 import j2w.team.R;
 import j2w.team.modules.dialog.iface.IDialogListener;
 import j2w.team.modules.dialog.provided.ProgressDailogFragment;
+import j2w.team.modules.http.J2WRestAdapter;
 import j2w.team.mvp.model.J2WConstants;
 import j2w.team.mvp.presenter.J2WHelper;
 import j2w.team.common.log.L;
@@ -219,8 +220,8 @@ public abstract class J2WActivity<T extends J2WIPresenter> extends FragmentActiv
 	 *            标记
 	 */
 	@Override public void commitFragment(Fragment fragment, String tag) {
-        commitFragment(android.R.id.custom,fragment,tag);
-    }
+		commitFragment(android.R.id.custom, fragment, tag);
+	}
 
 	/**
 	 * 提交fragment
@@ -245,16 +246,16 @@ public abstract class J2WActivity<T extends J2WIPresenter> extends FragmentActiv
 	 *            标记
 	 */
 	@Override public void commitFragment(int layoutId, Fragment fragment, String tag) {
-        L.tag(initTag());
-        L.i("commitFragment(Fragment fragment, String tag)");
-        if (fragment != null && fragment.isAdded()) {
-            L.tag(initTag());
-            L.i("fragment 不能为空，或者已经被添加！");
-            return;
-        }
-        getFManager().beginTransaction().add(layoutId, fragment, tag).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commitAllowingStateLoss();
+		L.tag(initTag());
+		L.i("commitFragment(Fragment fragment, String tag)");
+		if (fragment != null && fragment.isAdded()) {
+			L.tag(initTag());
+			L.i("fragment 不能为空，或者已经被添加！");
+			return;
+		}
+		getFManager().beginTransaction().add(layoutId, fragment, tag).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commitAllowingStateLoss();
 
-    }
+	}
 
 	/**
 	 * 提交fragment
@@ -513,6 +514,8 @@ public abstract class J2WActivity<T extends J2WIPresenter> extends FragmentActiv
 	 *            请求编号
 	 */
 	@Override public void onPositiveButtonClicked(int requestCode) {
+		L.tag(initTag());
+		L.i("onPositiveButtonClicked() requestCode : " + requestCode);
 		switch (requestCode) {
 			case J2WConstants.J2W_ERROR_CODE:
 				onBackPressed();
@@ -527,6 +530,8 @@ public abstract class J2WActivity<T extends J2WIPresenter> extends FragmentActiv
 	 *            请求编号
 	 */
 	@Override public void onNeutralButtonClicked(int requestCode) {
+        L.tag(initTag());
+        L.i("onNeutralButtonClicked() requestCode : " + requestCode);
 		switch (requestCode) {
 			case J2WConstants.J2W_ERROR_CODE:
 				onBackPressed();
@@ -541,6 +546,8 @@ public abstract class J2WActivity<T extends J2WIPresenter> extends FragmentActiv
 	 *            请求编号
 	 */
 	@Override public void onNegativeButtonClicked(int requestCode) {
+        L.tag(initTag());
+        L.i("onNegativeButtonClicked() requestCode : " + requestCode);
 		switch (requestCode) {
 			case J2WConstants.J2W_ERROR_CODE:
 				onBackPressed();
@@ -554,9 +561,12 @@ public abstract class J2WActivity<T extends J2WIPresenter> extends FragmentActiv
 	 * @param requestCode
 	 */
 	@Override public void onCancelled(int requestCode) {
+        L.tag(initTag());
+        L.i("onCancelled() requestCode : " + requestCode);
 		switch (requestCode) {
-			case J2WConstants.J2W_ERROR_CODE:
-				J2WHelper.initRestAdapter().cancel(requestCode);
+			case J2WConstants.J2W_DIALOG_CODE:
+				J2WRestAdapter j2WRestAdapter = J2WHelper.initRestAdapter();
+				J2WHelper.initRestAdapter().cancel(j2WRestAdapter.getService());
 				break;
 		}
 	}
@@ -595,7 +605,8 @@ public abstract class J2WActivity<T extends J2WIPresenter> extends FragmentActiv
 	 * @param cancel
 	 */
 	@Override public void loading(String value, boolean cancel) {
-		dialogFragment = (ProgressDailogFragment) ProgressDailogFragment.createBuilder().setTag(J2WConstants.J2W_DIALOG_PROGRESS).setRequestCode(J2WConstants.J2W_DIALOG_CODE).setCancelable(cancel).setMessage(value)// 设置内容
+		dialogFragment = (ProgressDailogFragment) ProgressDailogFragment.createBuilder().setTag(J2WConstants.J2W_DIALOG_PROGRESS).setRequestCode(J2WConstants.J2W_DIALOG_CODE).setCancelable(cancel)
+				.setMessage(value)// 设置内容
 				.showAllowingStateLoss();// 显示
 	}
 

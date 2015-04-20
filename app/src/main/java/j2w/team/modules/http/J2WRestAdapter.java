@@ -6,9 +6,12 @@ import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 import com.squareup.okhttp.ResponseBody;
 
+import org.apache.commons.lang.StringUtils;
+
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -17,7 +20,6 @@ import j2w.team.common.log.L;
 import j2w.team.common.utils.proxy.DynamicProxyUtils;
 import j2w.team.modules.http.converter.GsonConverter;
 import j2w.team.modules.http.converter.J2WConverter;
-import j2w.team.mvp.model.J2WConstants;
 import j2w.team.mvp.presenter.J2WHelper;
 
 /**
@@ -42,6 +44,12 @@ public class J2WRestAdapter {
 
 	// 错误
 	private J2WErrorHandler									errorHandler;
+
+	// 接口缓存
+	private Class											mService;
+
+	// 运行缓存
+	private final Map<String, Call>							runningCalls			= new HashMap<>();
 
 	/**
 	 * 构造器
@@ -87,29 +95,10 @@ public class J2WRestAdapter {
 		DynamicProxyUtils.validateInterfaceServiceClass(service);
 		// 创建动态代理-网络层
 		J2WRestHandler j2WRestHandler = new J2WRestHandler(this, getMethodInfoCache(service), tag);
-
+		// 缓存当前接口
+		mService = StringUtils.isEmpty(tag) ? service : null;
 		// 创建代理类并返回
 		return DynamicProxyUtils.newProxyInstance(service.getClassLoader(), new Class<?>[] { service }, j2WRestHandler);
-	}
-
-	/**
-	 * 创建代理
-	 *
-	 * @param service
-	 * @param <T>
-	 * @return
-	 */
-	public <T> T createBindDialog(Class<T> service) {
-		return create(service, J2WConstants.J2W_DIALOG_PROGRESS);
-	}
-
-	/**
-	 * 取消请求
-	 * 
-	 * @param requestCode
-	 */
-	public void cancel(int requestCode) {
-		cancel(String.valueOf(requestCode));
 	}
 
 	/**
@@ -118,7 +107,11 @@ public class J2WRestAdapter {
 	 * @param requestCode
 	 */
 	public void cancel(String requestCode) {
-		client.cancel(String.valueOf(requestCode));
+		Call call = runningCalls.get(requestCode);
+		if (call != null) {
+			call.cancel();
+			runningCalls.remove(requestCode);
+		}
 	}
 
 	/**
@@ -132,12 +125,24 @@ public class J2WRestAdapter {
 	 *            泛型
 	 */
 	public <T> void cancel(Class<T> service, String methodName) {
+		if (service == null) {
+			return;
+		}
+		L.tag("J2WRestAdapter");
+		L.i("取消 cancel(Class<T> service) 接口名 :" + service.getSimpleName());
 		Method[] methods = service.getMethods();
+
 		for (Method method : methods) {
+			L.i("取消 cancel(Class<T> service) 方法名 :" + method.getName());
 			if (method.getName().equals(methodName)) {
-				client.cancel(method.getName());
+				Call call = runningCalls.get(method.getName());
+				if (call != null) {
+					call.cancel();
+					runningCalls.remove(method.getName());
+				}
 			}
 		}
+		mService = null;
 	}
 
 	/**
@@ -148,12 +153,22 @@ public class J2WRestAdapter {
 	 * @param <T>
 	 */
 	public <T> void cancel(Class<T> service) {
+		if (service == null) {
+			return;
+		}
+		L.tag("J2WRestAdapter");
+		L.i("取消 cancel(Class<T> service) 接口名 :" + service.getSimpleName());
 		Method[] methods = service.getMethods();
 
 		for (Method method : methods) {
-			client.cancel(method);
+			L.i("取消 cancel(Class<T> service) 方法名 :" + method.getName());
+			Call call = runningCalls.get(method.getName());
+			if (call != null) {
+				call.cancel();
+				runningCalls.remove(method.getName());
+			}
 		}
-
+		mService = null;
 	}
 
 	/**
@@ -163,6 +178,16 @@ public class J2WRestAdapter {
 		for (Class<?> clazz : serviceMethodInfoCache.keySet()) {
 			cancel(clazz);
 		}
+		runningCalls.clear();
+	}
+
+	/**
+	 * 接口
+	 * 
+	 * @return
+	 */
+	public Class getService() {
+		return mService;
 	}
 
 	/**
@@ -175,8 +200,13 @@ public class J2WRestAdapter {
 	 */
 	Object invokeSync(J2WMethodInfo methodInfo, Request request) throws Throwable {
 		try {
+			Call call = client.newCall(request);
+			// 缓存
+			runningCalls.put(methodInfo.requestTag, call);
 			// 发送请求
-			Response response = client.newCall(request).execute();
+			Response response = call.execute();
+			// 删除
+			runningCalls.remove(methodInfo.requestTag);
 			// 拿到结果调用结果处理方法
 			return createResult(methodInfo, response);
 		} catch (IOException e) {

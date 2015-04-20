@@ -17,6 +17,7 @@ import de.greenrobot.event.EventBus;
 import j2w.team.R;
 import j2w.team.modules.dialog.iface.IDialogListener;
 import j2w.team.modules.dialog.provided.ProgressDailogFragment;
+import j2w.team.modules.http.J2WRestAdapter;
 import j2w.team.mvp.model.J2WConstants;
 import j2w.team.mvp.presenter.J2WHelper;
 import j2w.team.common.log.L;
@@ -537,60 +538,69 @@ public abstract class J2WABActivity<T extends J2WIPresenter> extends ActionBarAc
 		return R.layout.j2w_fragment_error;
 	}
 
-	/**
-	 * 弹框
-	 * 
-	 * @param requestCode
-	 *            请求编号
-	 */
-	@Override public void onPositiveButtonClicked(int requestCode) {
-		switch (requestCode) {
-			case J2WConstants.J2W_ERROR_CODE:
-				onBackPressed();
-				break;
-		}
-	}
+    /**
+     * 弹框
+     *
+     * @param requestCode
+     *            请求编号
+     */
+    @Override public void onPositiveButtonClicked(int requestCode) {
+        L.tag(initTag());
+        L.i("onPositiveButtonClicked() requestCode : " + requestCode);
+        switch (requestCode) {
+            case J2WConstants.J2W_ERROR_CODE:
+                onBackPressed();
+                break;
+        }
+    }
 
-	/**
-	 * 弹框
-	 * 
-	 * @param requestCode
-	 *            请求编号
-	 */
-	@Override public void onNeutralButtonClicked(int requestCode) {
-		switch (requestCode) {
-			case J2WConstants.J2W_ERROR_CODE:
-				onBackPressed();
-				break;
-		}
-	}
+    /**
+     * 弹框
+     *
+     * @param requestCode
+     *            请求编号
+     */
+    @Override public void onNeutralButtonClicked(int requestCode) {
+        L.tag(initTag());
+        L.i("onNeutralButtonClicked() requestCode : " + requestCode);
+        switch (requestCode) {
+            case J2WConstants.J2W_ERROR_CODE:
+                onBackPressed();
+                break;
+        }
+    }
 
-	/**
-	 * 弹框
-	 * 
-	 * @param requestCode
-	 *            请求编号
-	 */
-	@Override public void onNegativeButtonClicked(int requestCode) {
-		switch (requestCode) {
-			case J2WConstants.J2W_ERROR_CODE:
-				onBackPressed();
-				break;
-		}
-	}
+    /**
+     * 弹框
+     *
+     * @param requestCode
+     *            请求编号
+     */
+    @Override public void onNegativeButtonClicked(int requestCode) {
+        L.tag(initTag());
+        L.i("onNegativeButtonClicked() requestCode : " + requestCode);
+        switch (requestCode) {
+            case J2WConstants.J2W_ERROR_CODE:
+                onBackPressed();
+                break;
+        }
+    }
 
-	/**
-	 * 进度条取消
-	 *
-	 * @param requestCode
-	 */
-	@Override public void onCancelled(int requestCode) {
-		switch (requestCode) {
-			case J2WConstants.J2W_ERROR_CODE:
-				J2WHelper.initRestAdapter().cancel(requestCode);
-				break;
-		}
-	}
+    /**
+     * 进度条取消
+     *
+     * @param requestCode
+     */
+    @Override public void onCancelled(int requestCode) {
+        L.tag(initTag());
+        L.i("onCancelled() requestCode : " + requestCode);
+        switch (requestCode) {
+            case J2WConstants.J2W_DIALOG_CODE:
+                J2WRestAdapter j2WRestAdapter = J2WHelper.initRestAdapter();
+                J2WHelper.initRestAdapter().cancel(j2WRestAdapter.getService());
+                break;
+        }
+    }
 
 	/**
 	 * 弹框进度条

@@ -20,6 +20,7 @@ import j2w.team.R;
 import j2w.team.common.log.L;
 import j2w.team.modules.dialog.iface.IDialogListener;
 import j2w.team.modules.dialog.provided.ProgressDailogFragment;
+import j2w.team.modules.http.J2WRestAdapter;
 import j2w.team.mvp.J2WIViewABActivity;
 import j2w.team.mvp.J2WIViewActivity;
 import j2w.team.mvp.model.J2WConstants;
@@ -235,7 +236,7 @@ public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment impl
 	 */
 	public void commitFragment(int layoutId, Fragment fragment, String tag) {
         L.tag(initTag());
-        L.i("commitFragment(Fragment fragment, String tag)");
+        L.i("commitFragment(int layoutId, Fragment fragment, String tag)");
         if (fragment != null && fragment.isAdded()) {
             L.tag(initTag());
             L.i("fragment 不能为空，或者已经被添加！");
@@ -623,60 +624,69 @@ public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment impl
 		mViewAnimator.setDisplayedChild(showState);
 	}
 
-	/**
-	 * 弹框
-	 * 
-	 * @param requestCode
-	 *            请求编号
-	 */
-	@Override public void onPositiveButtonClicked(int requestCode) {
-		switch (requestCode) {
-			case J2WConstants.J2W_ERROR_CODE:
-				getActivity().onBackPressed();
-				break;
-		}
-	}
+    /**
+     * 弹框
+     *
+     * @param requestCode
+     *            请求编号
+     */
+    @Override public void onPositiveButtonClicked(int requestCode) {
+        L.tag(initTag());
+        L.i("onPositiveButtonClicked() requestCode : " + requestCode);
+        switch (requestCode) {
+            case J2WConstants.J2W_ERROR_CODE:
+                getActivity().onBackPressed();
+                break;
+        }
+    }
 
-	/**
-	 * 弹框
-	 * 
-	 * @param requestCode
-	 *            请求编号
-	 */
-	@Override public void onNeutralButtonClicked(int requestCode) {
-		switch (requestCode) {
-			case J2WConstants.J2W_ERROR_CODE:
-				getActivity().onBackPressed();
-				break;
-		}
-	}
+    /**
+     * 弹框
+     *
+     * @param requestCode
+     *            请求编号
+     */
+    @Override public void onNeutralButtonClicked(int requestCode) {
+        L.tag(initTag());
+        L.i("onNeutralButtonClicked() requestCode : " + requestCode);
+        switch (requestCode) {
+            case J2WConstants.J2W_ERROR_CODE:
+                getActivity().onBackPressed();
+                break;
+        }
+    }
 
-	/**
-	 * 弹框
-	 * 
-	 * @param requestCode
-	 *            请求编号
-	 */
-	@Override public void onNegativeButtonClicked(int requestCode) {
-		switch (requestCode) {
-			case J2WConstants.J2W_ERROR_CODE:
-				getActivity().onBackPressed();
-				break;
-		}
-	}
+    /**
+     * 弹框
+     *
+     * @param requestCode
+     *            请求编号
+     */
+    @Override public void onNegativeButtonClicked(int requestCode) {
+        L.tag(initTag());
+        L.i("onNegativeButtonClicked() requestCode : " + requestCode);
+        switch (requestCode) {
+            case J2WConstants.J2W_ERROR_CODE:
+                getActivity().onBackPressed();
+                break;
+        }
+    }
 
-	/**
-	 * 进度条取消
-	 *
-	 * @param requestCode
-	 */
-	@Override public void onCancelled(int requestCode) {
-		switch (requestCode) {
-			case J2WConstants.J2W_ERROR_CODE:
-				J2WHelper.initRestAdapter().cancel(requestCode);
-				break;
-		}
-	}
+    /**
+     * 进度条取消
+     *
+     * @param requestCode
+     */
+    @Override public void onCancelled(int requestCode) {
+        L.tag(initTag());
+        L.i("onCancelled() requestCode : " + requestCode);
+        switch (requestCode) {
+            case J2WConstants.J2W_DIALOG_FRAGMENT_CODE:
+                J2WRestAdapter j2WRestAdapter = J2WHelper.initRestAdapter();
+                J2WHelper.initRestAdapter().cancel(j2WRestAdapter.getService());
+                break;
+        }
+    }
 
 	/**
 	 * 弹框进度条
@@ -691,7 +701,7 @@ public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment impl
 	 * @param cancel
 	 */
 	@Override public void loading(boolean cancel) {
-		dialogFragment = (ProgressDailogFragment) ProgressDailogFragment.createBuilder().setTag(J2WConstants.J2W_DIALOG_PROGRESS).setTargetFragment(this, J2WConstants.J2W_DIALOG_CODE)
+		dialogFragment = (ProgressDailogFragment) ProgressDailogFragment.createBuilder().setTag(J2WConstants.J2W_DIALOG_PROGRESS).setTargetFragment(this, J2WConstants.J2W_DIALOG_FRAGMENT_CODE)
 				.setCancelable(cancel).setMessage(R.string.progress_dialog_value)// 设置内容
 				.showAllowingStateLoss();// 显示
 	}
@@ -712,7 +722,7 @@ public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment impl
 	 * @param cancel
 	 */
 	@Override public void loading(String value, boolean cancel) {
-		dialogFragment = (ProgressDailogFragment) ProgressDailogFragment.createBuilder().setTag(J2WConstants.J2W_DIALOG_PROGRESS).setTargetFragment(this, J2WConstants.J2W_DIALOG_CODE)
+		dialogFragment = (ProgressDailogFragment) ProgressDailogFragment.createBuilder().setTag(J2WConstants.J2W_DIALOG_PROGRESS).setTargetFragment(this, J2WConstants.J2W_DIALOG_FRAGMENT_CODE)
 				.setCancelable(cancel).setMessage(value)// 设置内容
 				.showAllowingStateLoss();// 显示
 	}

@@ -8,14 +8,17 @@ package j2w.team.mvp.model;
 public class J2WConstants {
 
 	// 错误回调
-	public static final int		J2W_ERROR_CODE		= 9999 << 1;
+	public static final int		J2W_ERROR_CODE				= 9999 << 1;
 
-	// 进度条默认回调CODE
-	public static final int		J2W_DIALOG_CODE		= 8888 << 1;
+	// 进度条默认回调CODE - activity
+	public static final int		J2W_DIALOG_CODE				= 8888 << 1;
+
+	// 进度条默认回调CODE - fragment
+	public static final int		J2W_DIALOG_FRAGMENT_CODE	= 7777 << 1;
 
 	/**
 	 * 进度条默认TAG
 	 */
-	public static final String	J2W_DIALOG_PROGRESS	= "J2W_DIALOG_PROGRESS";
+	public static final String	J2W_DIALOG_PROGRESS			= "J2W_DIALOG_PROGRESS";
 
 }
