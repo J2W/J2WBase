@@ -81,7 +81,7 @@ public abstract class J2WProperties {
 	}
 
 	public J2WProperties(String propertiesFileName) {
-		propertyFilePath = J2WHelper.getInstance().getApplicationContext().getExternalCacheDir();
+		propertyFilePath = J2WHelper.getInstance().getApplicationContext().getCacheDir();
 		mPropertiesFileName = propertiesFileName;
 		switch (initType()) {
 			case OPEN_TYPE_ASSETS:
