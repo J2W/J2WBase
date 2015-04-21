@@ -302,8 +302,6 @@ public class SwipeRefreshLayout extends ViewGroup {
     //设置进度条的显示百分比
     private void setTriggerPercentage(float percent) {
         if (percent == 0f) {
-            // No-op. A null trigger means it's uninitialized, and setting it to zero-percent
-            // means we're trying to reset state, so there's nothing to reset in this case.
             mCurrPercentage = 0;
             return;
         }
@@ -332,6 +330,7 @@ public class SwipeRefreshLayout extends ViewGroup {
             mCurrPercentage = 0;
             mRefreshing = refreshing;
             if (mRefreshing) {
+                mProgressBarBottom.setTriggerPercentage(0);
                 mProgressBar.start();
             } else {
             	mLastDirection = Mode.DISABLED;
@@ -346,6 +345,7 @@ public class SwipeRefreshLayout extends ViewGroup {
             mCurrPercentage = 0;
             mLoading = loading;
             if (mLoading) {
+                mProgressBar.setTriggerPercentage(0);
                 mProgressBarBottom.start();
             } else {
             	mLastDirection = Mode.DISABLED;
@@ -742,16 +742,12 @@ public class SwipeRefreshLayout extends ViewGroup {
 						{
 							return true;
 						}
-						// Just track the user's movement
 						//根据手指移动距离设置进度条显示的百分比
                         setTriggerPercentage(
                                 mAccelerateInterpolator.getInterpolation(
                                         Math.abs(yDiff) / mDistanceToTriggerSync));
                         updateContentOffsetTop((int)yDiff);
                         if (mTarget.getTop() == getPaddingTop()) {
-                            // If the user puts the view back at the top, we
-                            // don't need to. This shouldn't be considered
-                            // cancelling the gesture as the user can restart from the top.
                             removeCallbacks(mCancel);
                             mLastDirection = Mode.DISABLED;
                         } else {
