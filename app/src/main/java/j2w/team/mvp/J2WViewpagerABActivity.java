@@ -423,7 +423,7 @@ public abstract class J2WViewpagerABActivity<T extends J2WIPresenter> extends J2
 			} else {
 				FragmentTransaction ft = fragmentManager.beginTransaction();
 				ft.setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out, android.R.animator.fade_in, android.R.animator.fade_out);
-				ft.add(viewPagerDatas[currentPageIndex].fragment, viewPagerDatas[currentPageIndex].fragment.getClass().getSimpleName() + position);
+				ft.add(viewPagerDatas[position].fragment, viewPagerDatas[position].fragment.getClass().getSimpleName() + position);
 				ft.commitAllowingStateLoss();
 				/**
 				 * 在用FragmentTransaction.commit()方法提交FragmentTransaction对象后
