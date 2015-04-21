@@ -592,7 +592,7 @@ public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment impl
 
 	/**
 	 * 防止事件穿透
-	 * 
+	 *
 	 * @param v
 	 *            View
 	 * @param event
@@ -692,7 +692,7 @@ public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment impl
 	 * 弹框进度条
 	 */
 	@Override public void loading() {
-		loading(true);
+		loading(false);
 	}
 
 	/**
@@ -712,7 +712,7 @@ public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment impl
 	 * @param value
 	 */
 	@Override public void loading(String value) {
-		loading(value, true);
+		loading(value, false);
 	}
 
 	/**

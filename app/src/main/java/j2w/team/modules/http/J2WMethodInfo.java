@@ -77,8 +77,6 @@ public final class J2WMethodInfo {
 
 	Type							requestObjectType;
 
-	public String					requestTag;
-
 	J2WMethodInfo(Method method) {
 		this.method = method;
 		// 拿到返回类型
@@ -383,5 +381,27 @@ public final class J2WMethodInfo {
 				return buffer.clone();
 			}
 		}).build();
+	}
+
+	/**
+	 * 获取带参数的方法名
+	 *
+	 * @return
+	 */
+	public static final String getMethodString(Method method, Class[] classes) {
+		boolean bool = false;
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append(method.getName());
+		stringBuilder.append("(");
+		for (Class clazz : classes) {
+			stringBuilder.append(clazz.getSimpleName());
+			stringBuilder.append(",");
+			bool = true;
+		}
+		if (bool) {
+			stringBuilder = stringBuilder.delete(stringBuilder.length() - 1, stringBuilder.length());
+		}
+		stringBuilder.append(")");
+		return stringBuilder.toString();
 	}
 }

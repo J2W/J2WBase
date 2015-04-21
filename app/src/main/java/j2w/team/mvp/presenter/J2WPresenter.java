@@ -87,7 +87,11 @@ public abstract class J2WPresenter<T> {
 		L.tag(initTag());
 		L.i("methodError() methodName : " + methodName);
 		if (throwable.getCause() instanceof J2WError) {
-			methodHttpError(methodName, (J2WError) throwable.getCause());
+            if("Canceled".equals(throwable.getCause().getMessage())){
+                errorCancel();
+            }else{
+                methodHttpError(methodName, (J2WError) throwable.getCause());
+            }
 		} else {
 			methodCodingError(methodName, throwable.getCause());
 		}
@@ -110,6 +114,12 @@ public abstract class J2WPresenter<T> {
 			L.i("J2WError.Kind.UNEXPECTED");
 			errorUnexpected();
 		}
+	}
+
+	/** 发送请求前取消 **/
+	public void errorCancel() {
+        L.tag(initTag());
+        L.i("errorCancel()");
 	}
 
 	/** 发送请求前错误 **/

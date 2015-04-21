@@ -1,5 +1,7 @@
 package j2w.team.modules.http;
 
+import android.support.v4.app.FragmentManager;
+
 import com.squareup.okhttp.Call;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
@@ -13,12 +15,15 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Stack;
 import java.util.concurrent.TimeUnit;
 
 import j2w.team.common.log.L;
 import j2w.team.common.utils.proxy.DynamicProxyUtils;
+import j2w.team.modules.dialog.provided.ProgressDailogFragment;
 import j2w.team.modules.http.converter.GsonConverter;
 import j2w.team.modules.http.converter.J2WConverter;
+import j2w.team.mvp.model.J2WConstants;
 import j2w.team.mvp.presenter.J2WHelper;
 
 /**
@@ -99,7 +104,7 @@ public class J2WRestAdapter {
 
 	/**
 	 * 取消请求
-	 * 
+	 *
 	 * @param requestCode
 	 */
 	public void cancel(String requestCode) {
@@ -108,7 +113,7 @@ public class J2WRestAdapter {
 
 	/**
 	 * 取消请求
-	 * 
+	 *
 	 * @param service
 	 *            接口
 	 * @param methodName
@@ -125,18 +130,17 @@ public class J2WRestAdapter {
 		Method[] methods = service.getMethods();
 
 		for (Method method : methods) {
-			L.tag("J2WRestAdapter");
-			L.i("取消 cancel(Class<T> service) 方法名 :" + method.getName());
 			if (method.getName().equals(methodName)) {
-                client.cancel(J2WMethodInfo.getMethodString(method,method.getParameterTypes()));
-            }
+				String methodString = J2WMethodInfo.getMethodString(method, method.getParameterTypes());
+				client.cancel(methodString);
+			}
 		}
 		mService = null;
 	}
 
 	/**
 	 * 取消该接口下的所有请求
-	 * 
+	 *
 	 * @param service
 	 *            接口
 	 * @param <T>
@@ -150,9 +154,8 @@ public class J2WRestAdapter {
 		Method[] methods = service.getMethods();
 
 		for (Method method : methods) {
-			L.tag("J2WRestAdapter");
-			L.i("取消 cancel(Class<T> service) 方法名 :" + method.getName());
-			client.cancel(J2WMethodInfo.getMethodString(method,method.getParameterTypes()));
+			String methodString = J2WMethodInfo.getMethodString(method, method.getParameterTypes());
+			client.cancel(methodString);
 		}
 		mService = null;
 	}
@@ -168,7 +171,7 @@ public class J2WRestAdapter {
 
 	/**
 	 * 接口
-	 * 
+	 *
 	 * @return
 	 */
 	public Class getService() {
@@ -185,16 +188,26 @@ public class J2WRestAdapter {
 	 */
 	Object invokeSync(J2WMethodInfo methodInfo, Request request) throws Throwable {
 		try {
-
+			// 搜索dialog
+			FragmentManager fragmentManager = J2WHelper.getScreenHelper().currentActivity().getSupportFragmentManager();
+			ProgressDailogFragment dialogFragment;
 			Call call = client.newCall(request);
 			// 缓存
 			L.tag("J2WRestAdapter");
-			L.i("J2WMethodInfo requestTag 开始 请求方法名 : " + methodInfo.requestTag);
+			L.i("J2WMethodInfo requestTag 开始 请求方法名 : " + request.tag());
+			dialogFragment = (ProgressDailogFragment) fragmentManager.findFragmentByTag(J2WConstants.J2W_DIALOG_PROGRESS);
+			if (dialogFragment != null) {
+				dialogFragment.setCancelable(true);
+			}
 			// 发送请求
 			Response response = call.execute();
-			// 删除
+			// 查找dialog
+			dialogFragment = (ProgressDailogFragment) fragmentManager.findFragmentByTag(J2WConstants.J2W_DIALOG_PROGRESS);
+			if (dialogFragment != null) {
+				dialogFragment.setCancelable(false);
+			}
 			L.tag("J2WRestAdapter");
-			L.i("J2WMethodInfo requestTag 结束 请求方法名 : " + methodInfo.requestTag);
+			L.i("J2WMethodInfo requestTag 结束 请求方法名 : " + request.tag());
 			// 拿到结果调用结果处理方法
 			return createResult(methodInfo, response);
 		} catch (IOException e) {
@@ -293,6 +306,8 @@ public class J2WRestAdapter {
 	 * @return
 	 */
 	private Throwable handleError(J2WError error) {
+		L.tag("J2W-Method");
+		L.i("handleError(error) :" + error.getCause().getMessage());
 		Throwable throwable = errorHandler.handleError(error);
 		if (throwable == null) {
 			return new IllegalStateException("错误处理程序返回空.", error);
@@ -371,7 +386,7 @@ public class J2WRestAdapter {
 	 *            参数
 	 * @return
 	 */
-	Request createRequest(J2WMethodInfo methodInfo, Object[] args) {
+	Request createRequest(J2WMethodInfo methodInfo, String requestTag, Object[] args) {
 		// 获取url
 		String serverUrl = j2WEndpoint.url();
 		// 编辑请求
@@ -381,7 +396,7 @@ public class J2WRestAdapter {
 		// 交给拦截器
 		requestInterceptor.intercept(requestBuilder);
 
-		return requestBuilder.build();
+		return requestBuilder.build(requestTag);
 	}
 
 	/**

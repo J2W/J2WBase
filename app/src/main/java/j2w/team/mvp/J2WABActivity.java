@@ -606,7 +606,7 @@ public abstract class J2WABActivity<T extends J2WIPresenter> extends ActionBarAc
 	 * 弹框进度条
 	 */
 	@Override public void loading() {
-		loading(true);
+		loading(false);
 	}
 
 	/**
@@ -626,7 +626,7 @@ public abstract class J2WABActivity<T extends J2WIPresenter> extends ActionBarAc
 	 * @param value
 	 */
 	@Override public void loading(String value) {
-		loading(value, true);
+		loading(value, false);
 	}
 
 	/**

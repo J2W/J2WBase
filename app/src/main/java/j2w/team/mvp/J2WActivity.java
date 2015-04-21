@@ -509,7 +509,7 @@ public abstract class J2WActivity<T extends J2WIPresenter> extends FragmentActiv
 
 	/**
 	 * 弹框
-	 * 
+	 *
 	 * @param requestCode
 	 *            请求编号
 	 */
@@ -525,7 +525,7 @@ public abstract class J2WActivity<T extends J2WIPresenter> extends FragmentActiv
 
 	/**
 	 * 弹框
-	 * 
+	 *
 	 * @param requestCode
 	 *            请求编号
 	 */
@@ -541,7 +541,7 @@ public abstract class J2WActivity<T extends J2WIPresenter> extends FragmentActiv
 
 	/**
 	 * 弹框
-	 * 
+	 *
 	 * @param requestCode
 	 *            请求编号
 	 */
@@ -557,7 +557,7 @@ public abstract class J2WActivity<T extends J2WIPresenter> extends FragmentActiv
 
 	/**
 	 * 进度条取消
-	 * 
+	 *
 	 * @param requestCode
 	 */
 	@Override public void onCancelled(int requestCode) {
@@ -575,7 +575,7 @@ public abstract class J2WActivity<T extends J2WIPresenter> extends FragmentActiv
 	 * 弹框进度条
 	 */
 	@Override public void loading() {
-		loading(true);
+		loading(false);
 	}
 
 	/**
@@ -595,7 +595,7 @@ public abstract class J2WActivity<T extends J2WIPresenter> extends FragmentActiv
 	 * @param value
 	 */
 	@Override public void loading(String value) {
-		loading(value, true);
+		loading(value, false);
 	}
 
 	/**

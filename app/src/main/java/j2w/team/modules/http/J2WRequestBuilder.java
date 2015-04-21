@@ -1,7 +1,5 @@
 package j2w.team.modules.http;
 
-import android.support.v4.app.FragmentManager;
-
 import com.squareup.okhttp.Headers;
 import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.Request;
@@ -13,20 +11,16 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Array;
-import java.lang.reflect.Method;
 import java.net.URLEncoder;
 import java.util.Map;
 
 import j2w.team.common.log.L;
-import j2w.team.modules.dialog.provided.ProgressDailogFragment;
 import j2w.team.modules.http.annotations.Body;
 import j2w.team.modules.http.annotations.Header;
 import j2w.team.modules.http.annotations.Path;
 import j2w.team.modules.http.annotations.Query;
 import j2w.team.modules.http.annotations.QueryMap;
 import j2w.team.modules.http.converter.J2WConverter;
-import j2w.team.mvp.model.J2WConstants;
-import j2w.team.mvp.presenter.J2WHelper;
 import okio.BufferedSink;
 
 /**
@@ -68,7 +62,7 @@ final class J2WRequestBuilder implements J2WRequestInterceptor.RequestFacade {
 	private StringBuilder			queryParams;
 
 	/** 方法名 **/
-	private final String			methodName;
+	private String			methodName;
 
 	J2WRequestBuilder(String apiUrl, J2WMethodInfo methodInfo, J2WConverter converter) {
 		/**
@@ -80,7 +74,7 @@ final class J2WRequestBuilder implements J2WRequestInterceptor.RequestFacade {
 		requestMethod = methodInfo.requestMethod;// 请求方法
 		contentTypeHeader = methodInfo.contentTypeHeader;// 头信息内容类型
 		relativeUrl = methodInfo.requestUrl;// 请求相对路径
-		methodInfo.requestTag = methodName = StringUtils.isEmpty(methodInfo.requestTag) ? J2WMethodInfo.getMethodString(methodInfo.method,methodInfo.method.getParameterTypes()) : methodInfo.requestTag;// 方法名
+		methodName = J2WMethodInfo.getMethodString(methodInfo.method, methodInfo.method.getParameterTypes());// 方法名
 		/** 初始化-头信息 */
 		if (methodInfo.headers != null) {
 			headers = methodInfo.headers.newBuilder();
@@ -316,7 +310,7 @@ final class J2WRequestBuilder implements J2WRequestInterceptor.RequestFacade {
 	 * 
 	 * @return
 	 */
-	Request build() {
+	Request build(String tag) {
 		/** 请求api **/
 		String apiUrl = this.apiUrl;
 		StringBuilder url = new StringBuilder(apiUrl);
@@ -349,6 +343,9 @@ final class J2WRequestBuilder implements J2WRequestInterceptor.RequestFacade {
 				headerBuilder.add("Content-Type", contentTypeHeader);
 			}
 		}
+		if (StringUtils.isNotEmpty(tag)) {
+			methodName = tag;
+		}
 		// 打印完整路径
 		L.tag("J2W-HTTP");
 		L.i("请求TAG:" + methodName);
@@ -357,7 +354,6 @@ final class J2WRequestBuilder implements J2WRequestInterceptor.RequestFacade {
 
 		return new Request.Builder().tag(methodName).url(url.toString()).method(requestMethod, body).headers(headers).build();
 	}
-
 
 	/**
 	 * 媒体类型重写请求正文

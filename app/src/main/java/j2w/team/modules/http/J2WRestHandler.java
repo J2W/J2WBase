@@ -37,14 +37,12 @@ public class J2WRestHandler extends BaseHandler {
 
 		// 获取方法
 		J2WMethodInfo methodInfo = J2WRestAdapter.getMethodInfo(methodDetailsCache, method);
-		// 设置tag标记
-		methodInfo.requestTag = tag;
 		// 创建请求
-		Request request = j2WRestAdapter.createRequest(methodInfo, args);
+		Request request = j2WRestAdapter.createRequest(methodInfo, tag, args);
 
 		switch (methodInfo.executionType) {
 			case SYNC:
-				return j2WRestAdapter.invokeSync(methodInfo, request);//执行
+				return j2WRestAdapter.invokeSync(methodInfo, request);// 执行
 			case ASYNC:
 				j2WRestAdapter.invokeAsync(methodInfo, request, (J2WCallback) args[args.length - 1]);
 				return null;

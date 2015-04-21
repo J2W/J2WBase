@@ -5,6 +5,7 @@ import java.lang.reflect.Method;
 import java.util.Stack;
 
 import j2w.team.common.log.L;
+import j2w.team.modules.http.J2WMethodInfo;
 import j2w.team.modules.threadpool.BackgroundType;
 import j2w.team.modules.threadpool.Background;
 import j2w.team.modules.threadpool.J2WAsyncCall;
@@ -41,7 +42,7 @@ public class J2WSyncHandler<T> extends BaseHandler<T> {
 			L.i("主线程执行: " + method.getName());
 			try {
 				if (j2WStack == null || !j2WStack.value()) { // 拦截
-					String key = getMethodString(method, method.getParameterTypes());
+					String key = J2WMethodInfo.getMethodString(method, method.getParameterTypes());
 					// 搜索
 					if (stack.search(key) != -1) {// 如果存在什么都不做
 						L.tag("J2W-Method");
@@ -72,7 +73,7 @@ public class J2WSyncHandler<T> extends BaseHandler<T> {
 			}
 		}
 		BackgroundType backgroundType = background.value();
-		final String key = getMethodString(method, method.getParameterTypes());
+		final String key = J2WMethodInfo.getMethodString(method, method.getParameterTypes());
 		// 搜索
 		if (j2WStack == null || !j2WStack.value()) { // 拦截
 			if (stack.search(key) != -1) { // 如果存在什么都不做
@@ -181,27 +182,5 @@ public class J2WSyncHandler<T> extends BaseHandler<T> {
 				break;
 		}
 		return null;
-	}
-
-	/**
-	 * 获取带参数的方法名
-	 * 
-	 * @return
-	 */
-	private String getMethodString(Method method, Class[] classes) {
-		boolean bool = false;
-		StringBuilder stringBuilder = new StringBuilder();
-		stringBuilder.append(method.getName());
-		stringBuilder.append("(");
-		for (Class clazz : classes) {
-			stringBuilder.append(clazz.getSimpleName());
-			stringBuilder.append(",");
-			bool = true;
-		}
-		if (bool) {
-			stringBuilder = stringBuilder.delete(stringBuilder.length() - 1, stringBuilder.length());
-		}
-		stringBuilder.append(")");
-		return stringBuilder.toString();
 	}
 }

@@ -44,7 +44,11 @@ public class J2WError extends RuntimeException {
 		/**
 		 * 试图执行一个请求时发生内部错误。它 最好的做法是重新抛出此异常等应用程序 崩溃.
 		 */
-		UNEXPECTED
+		UNEXPECTED,
+        /**
+         * 取消
+         */
+        CANCEL
 	}
 
 	private final String		url;

@@ -61,6 +61,8 @@ public interface J2WIPresenter<T> {
 
 	public void errorUnexpected();// 请求或者响应 意外错误
 
+	public void errorCancel();// 取消请求
+
 	/** 编码异常 **/
 	/**
 	 * 编码异常

@@ -79,7 +79,6 @@ public class J2WScreenManager implements J2WIScreenManager {
 			L.i("清空内存缓存-J2WHelper.getPicassoHelper().clearCache()");
 			J2WHelper.getPicassoHelper().clearCache();//缓存
             J2WHelper.getThreadPoolHelper().finish();//线程池
-            J2WHelper.initRestAdapter().cancelAll();//网络
 		}
 
 		L.m("出栈:" + activity.getClass().getSimpleName());
