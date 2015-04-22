@@ -37,6 +37,7 @@ import android.view.animation.Transformation;
 import android.widget.AbsListView;
 
 import j2w.team.R;
+import j2w.team.common.log.L;
 import j2w.team.mvp.fragment.J2WIViewPullListFragment;
 
 
@@ -329,8 +330,9 @@ public class SwipeRefreshLayout extends ViewGroup {
             ensureTarget();
             mCurrPercentage = 0;
             mRefreshing = refreshing;
+            mProgressBarBottom.setTriggerPercentage(0);
+            mProgressBar.setTriggerPercentage(0);
             if (mRefreshing) {
-                mProgressBarBottom.setTriggerPercentage(0);
                 mProgressBar.start();
             } else {
             	mLastDirection = Mode.DISABLED;
@@ -344,8 +346,9 @@ public class SwipeRefreshLayout extends ViewGroup {
             ensureTarget();
             mCurrPercentage = 0;
             mLoading = loading;
+            mProgressBarBottom.setTriggerPercentage(0);
+            mProgressBar.setTriggerPercentage(0);
             if (mLoading) {
-                mProgressBar.setTriggerPercentage(0);
                 mProgressBarBottom.start();
             } else {
             	mLastDirection = Mode.DISABLED;
@@ -540,6 +543,8 @@ public class SwipeRefreshLayout extends ViewGroup {
 
 
         if(mRefreshing || mLoading){
+            L.tag("SwipeRefreshLayout");
+            L.i("回退");
             return false;
         }
         ensureTarget();
@@ -551,7 +556,8 @@ public class SwipeRefreshLayout extends ViewGroup {
         }
 
         if (!isEnabled() || mReturningToStart) {
-            // Fail fast if we're not in a state where a swipe is possible
+            L.tag("SwipeRefreshLayout");
+            L.i("失败");
             return false;
         }
 
@@ -572,13 +578,15 @@ public class SwipeRefreshLayout extends ViewGroup {
 
             case MotionEvent.ACTION_MOVE:
                 if (mActivePointerId == INVALID_POINTER) {
-                    Log.e(LOG_TAG, "Got ACTION_MOVE event but don't have an active pointer id.");
+                    L.tag("SwipeRefreshLayout");
+                    L.i("没有ID");
                     return false;
                 }
 
                 final int pointerIndex = MotionEventCompat.findPointerIndex(ev, mActivePointerId);
                 if (pointerIndex < 0) {
-                    Log.e(LOG_TAG, "Got ACTION_MOVE event but have an invalid active pointer id.");
+                    L.tag("SwipeRefreshLayout");
+                    L.i("没有ID");
                     return false;
                 }
 
@@ -589,6 +597,8 @@ public class SwipeRefreshLayout extends ViewGroup {
                 if((mLastDirection == Mode.PULL_FROM_START && yDiff < 0) ||
                 		(mLastDirection == Mode.PULL_FROM_END && yDiff > 0))
                 {
+                    L.tag("SwipeRefreshLayout");
+                    L.i("方向不一致");
                 	return false;
                 }
                 //下拉或上拉时，子控件本身能够滑动时，记录当前手指位置，当其滑动到尽头时，
@@ -602,12 +612,16 @@ public class SwipeRefreshLayout extends ViewGroup {
                 if (yDiff > mTouchSlop)
                 {
                     if(notRefreshing){
+                        L.tag("SwipeRefreshLayout");
+                        L.i("notRefreshing");
                         return false;
                     }
                 	//若当前子控件能向下滑动，或者上个手势为上拉，则返回
                 	if (canChildScrollUp() || mLastDirection == Mode.PULL_FROM_END)
 					{
                 		mIsBeingDragged = false;
+                        L.tag("SwipeRefreshLayout");
+                        L.i("若当前子控件能向下滑动，或者上个手势为上拉，则返回");
                 		return false;
 					}
                 	if ((mMode == Mode.PULL_FROM_START) || (mMode == Mode.BOTH))
@@ -621,17 +635,23 @@ public class SwipeRefreshLayout extends ViewGroup {
                 else if (-yDiff > mTouchSlop) {
 
                     if(notLoading){
+                        L.tag("SwipeRefreshLayout");
+                        L.i("notLoading");
                         return false;
                     }
                 	//若当前子控件能向上滑动，或者上个手势为下拉，则返回
                 	if (canChildScrollDown() || mLastDirection == Mode.PULL_FROM_START)
 					{
+                        L.tag("SwipeRefreshLayout");
+                        L.i("若当前子控件能向上滑动，或者上个手势为下拉，则返回");
                 		mIsBeingDragged = false;
 						return false;
 					}
                 	//若子控件不能上下滑动，说明数据不足一屏，若不满屏不加载，返回
                 	if (!up && !down && !loadNoFull)
 					{
+                        L.tag("SwipeRefreshLayout");
+                        L.i("若子控件不能上下滑动，说明数据不足一屏，若不满屏不加载，返回");
                     		mIsBeingDragged = false;
     						return false;
 					}
@@ -674,7 +694,6 @@ public class SwipeRefreshLayout extends ViewGroup {
         }
 
         if (!isEnabled() || mReturningToStart) {
-            // Fail fast if we're not in a state where a swipe is possible
             return false;
         }
 
@@ -771,6 +790,8 @@ public class SwipeRefreshLayout extends ViewGroup {
                 break;
 
             case MotionEvent.ACTION_UP:
+                mProgressBarBottom.setTriggerPercentage(0);
+                mProgressBar.setTriggerPercentage(0);
             case MotionEvent.ACTION_CANCEL:
                 mIsBeingDragged = false;
                 mCurrPercentage = 0;
