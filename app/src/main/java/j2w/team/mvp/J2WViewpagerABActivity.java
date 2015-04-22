@@ -15,14 +15,12 @@ import android.view.ViewGroup;
 
 import org.apache.commons.lang.StringUtils;
 
-import butterknife.ButterKnife;
 import j2w.team.R;
 import j2w.team.common.log.L;
 import j2w.team.common.widget.J2WViewPager;
 import j2w.team.common.widget.PagerSlidingTabStrip;
 import j2w.team.mvp.fragment.J2WVPFragment;
 import j2w.team.mvp.model.ModelPager;
-import j2w.team.mvp.presenter.J2WHelper;
 import j2w.team.mvp.presenter.J2WIPresenter;
 
 /**
@@ -334,9 +332,12 @@ public abstract class J2WViewpagerABActivity<T extends J2WIPresenter> extends J2
 			L.tag(initTag());
 			L.i("replaceViewPagerDatas() ");
 			replacePosition = pager.getCurrentItem();
+
 			for (ModelPager modelPager : modelPagers) {
 				int position = modelPager.position;
 				container.removeView(viewPagerDatas[position].fragment.getView());
+                FragmentTransaction fragmentTransaction = getFManager().beginTransaction();
+                fragmentTransaction.detach(viewPagerDatas[position].fragment).commitAllowingStateLoss();
 				viewPagerDatas[position] = modelPager;
 			}
 
