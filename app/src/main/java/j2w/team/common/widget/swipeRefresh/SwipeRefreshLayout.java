@@ -620,8 +620,6 @@ public class SwipeRefreshLayout extends ViewGroup {
                 	if (canChildScrollUp() || mLastDirection == Mode.PULL_FROM_END)
 					{
                 		mIsBeingDragged = false;
-                        L.tag("SwipeRefreshLayout");
-                        L.i("若当前子控件能向下滑动，或者上个手势为上拉，则返回");
                 		return false;
 					}
                 	if ((mMode == Mode.PULL_FROM_START) || (mMode == Mode.BOTH))
@@ -642,16 +640,12 @@ public class SwipeRefreshLayout extends ViewGroup {
                 	//若当前子控件能向上滑动，或者上个手势为下拉，则返回
                 	if (canChildScrollDown() || mLastDirection == Mode.PULL_FROM_START)
 					{
-                        L.tag("SwipeRefreshLayout");
-                        L.i("若当前子控件能向上滑动，或者上个手势为下拉，则返回");
                 		mIsBeingDragged = false;
 						return false;
 					}
                 	//若子控件不能上下滑动，说明数据不足一屏，若不满屏不加载，返回
                 	if (!up && !down && !loadNoFull)
 					{
-                        L.tag("SwipeRefreshLayout");
-                        L.i("若子控件不能上下滑动，说明数据不足一屏，若不满屏不加载，返回");
                     		mIsBeingDragged = false;
     						return false;
 					}
