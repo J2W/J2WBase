@@ -22,15 +22,8 @@ android {
     }
 
 }
-// 1. test-plugin
-apply plugin: 'robolectric'
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    // 2. test-libs
-    androidTestCompile 'junit:junit:4.12'
-    //框架开发模式-需要测试
-    //    androidTestCompile 'com.squareup:fest-android:1.0.8'
-    androidTestCompile 'org.robolectric:robolectric:2.4'
     //外部依赖
     compile 'com.google.code.gson:gson:2.3.1'
     compile 'com.jakewharton:butterknife:6.1.0'
@@ -41,15 +34,6 @@ dependencies {
     compile 'com.squareup.okhttp:okhttp:2.2.0'
     compile 'com.nineoldandroids:library:2.4.0'
     compile 'de.greenrobot:eventbus:2.4.0'
-}
-// 3. test settings
-robolectric {
-    // configure the set of classes for JUnit tests
-    include '**/*Test.class'
-    exclude '**/espresso/**/*.class'
-
-    // configure max heap size of the test JVM
-    maxHeapSize = "2048m"
 }
 //打包
 apply from: 'maven-release-aar.gradle'
