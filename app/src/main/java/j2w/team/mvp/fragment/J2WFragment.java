@@ -742,8 +742,13 @@ public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment impl
 	 * 弹框进度条
 	 */
 	@Override public void loadingClose() {
-		if (dialogFragment != null) {
-			dialogFragment.dismissAllowingStateLoss();
-		}
+        if(dialogFragment == null){
+            dialogFragment = (ProgressDailogFragment) getFManager().findFragmentByTag(J2WConstants.J2W_DIALOG_PROGRESS);
+            dialogFragment.dismissAllowingStateLoss();
+            getFManager().executePendingTransactions();
+        }else{
+            dialogFragment.dismissAllowingStateLoss();
+            getFManager().executePendingTransactions();
+        }
 	}
 }
