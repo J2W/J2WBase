@@ -13,7 +13,7 @@ public abstract class J2WTabHostABActivity<T extends J2WIPresenter> extends J2WV
 	 *
 	 * @return 布局ID
 	 */
-	@Override public final int layoutId() {
+	@Override public int layoutId() {
 		return R.layout.j2w_acitvity_tabhost;
 	}
 
