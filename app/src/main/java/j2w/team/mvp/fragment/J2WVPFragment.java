@@ -60,7 +60,7 @@ public abstract class J2WVPFragment<T extends J2WIPresenter> extends J2WFragment
 	/**
 	 * fragment 刷新标题栏
 	 */
-	@Override public final void onActionBar() {
+	@Override public void onActionBar() {
 		L.tag(initTag());
 		L.i("Fragment-onActionBar()");
 	}
