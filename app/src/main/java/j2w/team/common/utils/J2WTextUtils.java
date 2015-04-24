@@ -26,7 +26,7 @@ public final class J2WTextUtils {
 	 *            结束
 	 * @return
 	 */
-	public SpannableStringBuilder changeTextColor(String value, int color, int startIndex, int endIndex) {
+	public static final SpannableStringBuilder changeTextColor(String value, int color, int startIndex, int endIndex) {
 		SpannableStringBuilder spannable = new SpannableStringBuilder(value);
 		spannable.setSpan(new ForegroundColorSpan(J2WHelper.getInstance().getResources().getColor(color)), startIndex, endIndex, Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
 		return spannable;
