@@ -1,6 +1,8 @@
 package j2w.team.mvp;
 
 import j2w.team.R;
+import j2w.team.mvp.adapter.J2WVPCustomPagerAdapter;
+import j2w.team.mvp.adapter.J2WVPDefaultPagerAdapter;
 import j2w.team.mvp.presenter.J2WIPresenter;
 
 /**
@@ -29,8 +31,8 @@ public abstract class J2WTabHostABActivity<T extends J2WIPresenter> extends J2WV
 	 *
 	 * @return 适配器
 	 */
-	@Override public final DefaultPagerAdapter getPagerAdapter() {
-		return new CustomPagerAdapter();
+	@Override public final J2WVPDefaultPagerAdapter getPagerAdapter() {
+		return new J2WVPCustomPagerAdapter(initTag(), getSupportFragmentManager(), tabs, pager, this);
 	}
 
 	/**
