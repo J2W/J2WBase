@@ -8,6 +8,8 @@ import java.util.Stack;
 import j2w.team.common.log.L;
 import j2w.team.common.utils.proxy.DynamicProxyUtils;
 import j2w.team.modules.http.J2WError;
+import j2w.team.mvp.J2WIView;
+import j2w.team.mvp.fragment.J2WIViewPullListFragment;
 
 /**
  * Created by sky on 15/2/1. 中央处理器
@@ -87,11 +89,11 @@ public abstract class J2WPresenter<T> {
 		L.tag(initTag());
 		L.i("methodError() methodName : " + methodName);
 		if (throwable.getCause() instanceof J2WError) {
-            if("Canceled".equals(throwable.getCause().getMessage())){
-                errorCancel();
-            }else{
-                methodHttpError(methodName, (J2WError) throwable.getCause());
-            }
+			if ("Canceled".equals(throwable.getCause().getMessage())) {
+				errorCancel();
+			} else {
+				methodHttpError(methodName, (J2WError) throwable.getCause());
+			}
 		} else {
 			methodCodingError(methodName, throwable.getCause());
 		}
@@ -101,6 +103,16 @@ public abstract class J2WPresenter<T> {
 	public final void methodHttpError(String methodName, J2WError j2WError) {
 		L.tag(initTag());
 		L.i("methodHttpError() methodName : " + methodName);
+
+		if (iView instanceof J2WIViewPullListFragment) { //如果是有上下拉刷新
+			((J2WIViewPullListFragment) iView).setRefreshing(false);
+			((J2WIViewPullListFragment) iView).setLoading(false);
+		}
+
+		if (iView instanceof J2WIView) {
+			((J2WIView) iView).loadingClose(); //如果有进度条
+		}
+
 		if (j2WError.getKind() == J2WError.Kind.NETWORK) { // 请求发送前，网络问题
 			L.tag(initTag());
 			L.i("J2WError.Kind.NETWORK");
@@ -118,8 +130,8 @@ public abstract class J2WPresenter<T> {
 
 	/** 发送请求前取消 **/
 	public void errorCancel() {
-        L.tag(initTag());
-        L.i("errorCancel()");
+		L.tag(initTag());
+		L.i("errorCancel()");
 	}
 
 	/** 发送请求前错误 **/
