@@ -115,6 +115,8 @@ public abstract class J2WViewpagerABActivity<T extends J2WIPresenter> extends J2
 		final int pageMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4, getResources().getDisplayMetrics());
 		// 设置距离
 		pager.setPageMargin(pageMargin);
+        //预留数量
+        pager.setOffscreenPageLimit(4);
 		// 设置给头部
 		tabs.setViewPager(pager);
 	}

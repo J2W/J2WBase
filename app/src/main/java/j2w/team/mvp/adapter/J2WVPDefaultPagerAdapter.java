@@ -185,7 +185,8 @@ public class J2WVPDefaultPagerAdapter<T extends J2WIPresenter> extends PagerAdap
 		this.container = container;
 		Fragment fragment = viewPagerDatas[position].fragment;
 		if (!fragment.isAdded()) { // 如果fragment还没有added
-			FragmentTransaction ft = fragmentManager.beginTransaction();
+            L.i("instantiateItem:commitAllowingStateLoss");
+            FragmentTransaction ft = fragmentManager.beginTransaction();
 			ft.setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out, android.R.animator.fade_in, android.R.animator.fade_out);
 			ft.add(fragment, fragment.getClass().getSimpleName() + position);
 			ft.commitAllowingStateLoss();
@@ -202,7 +203,8 @@ public class J2WVPDefaultPagerAdapter<T extends J2WIPresenter> extends PagerAdap
 		}
 
 		if (fragment.getView().getParent() == null) {
-			container.addView(fragment.getView()); // 为viewpager增加布局
+            L.i("container.addView(fragment.getView())");
+            container.addView(fragment.getView()); // 为viewpager增加布局
 		}
 
 		pager.setObjectForPosition(fragment.getView(), position);
@@ -240,20 +242,7 @@ public class J2WVPDefaultPagerAdapter<T extends J2WIPresenter> extends PagerAdap
 			viewPagerDatas[position].fragment.onResume(); // 调用切换后Fargment的onResume()
 
 			((J2WVPFragment) viewPagerDatas[position].fragment).isDelayedData(); // 调用延迟加载\
-		} else {
-			FragmentTransaction ft = fragmentManager.beginTransaction();
-			ft.setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out, android.R.animator.fade_in, android.R.animator.fade_out);
-			ft.add(viewPagerDatas[position].fragment, viewPagerDatas[position].fragment.getClass().getSimpleName() + position);
-			ft.commitAllowingStateLoss();
-			/**
-			 * 在用FragmentTransaction.commit()方法提交FragmentTransaction对象后
-			 * 会在进程的主线程中，用异步的方式来执行。 如果想要立即执行这个等待中的操作，就要调用这个方法（只能在主线程中调用）。
-			 * 要注意的是，所有的回调和相关的行为都会在这个调用中被执行完成，因此要仔细确认这个方法的调用位置。
-			 */
-			fragmentManager.executePendingTransactions();
-			((J2WVPFragment) viewPagerDatas[position].fragment).isDelayedData();
 		}
-
 		currentPageIndex = position;
 
 		j2WIViewViewpagerABActivity.onExtraPageSelected(tabs.tabsContainer.getChildAt(position), oldView, position, oldPosition);
