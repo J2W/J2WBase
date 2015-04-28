@@ -307,7 +307,7 @@ public class J2WRestAdapter {
 	 */
 	private Throwable handleError(J2WError error) {
 		L.tag("J2W-Method");
-		L.i("handleError(error) :" + error.getCause().getMessage());
+		L.i("handleError(error) :" + error.getCause() == null ? error.getMessage() : error.getCause().getMessage());
 		Throwable throwable = errorHandler.handleError(error);
 		if (throwable == null) {
 			return new IllegalStateException("错误处理程序返回空.", error);
