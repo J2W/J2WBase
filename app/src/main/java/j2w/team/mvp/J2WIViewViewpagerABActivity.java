@@ -119,6 +119,14 @@ public interface J2WIViewViewpagerABActivity extends J2WIView {
 	public void onExtraPageScrollStateChanged(int i);
 
 	/**
+	 * 获取TabsView
+	 * 
+	 * @param position
+	 *            下标
+	 */
+	public View getTabsView(int position);
+
+	/**
 	 * 设置下标
 	 * 
 	 * @param index

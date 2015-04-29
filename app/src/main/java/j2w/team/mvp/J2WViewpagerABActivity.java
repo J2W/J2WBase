@@ -31,7 +31,7 @@ public abstract class J2WViewpagerABActivity<T extends J2WIPresenter> extends J2
 	/**
 	 * Viewpager 内部*
 	 */
-    protected J2WViewPager			pager;
+	protected J2WViewPager			pager;
 
 	/**
 	 * 适配器
@@ -115,8 +115,8 @@ public abstract class J2WViewpagerABActivity<T extends J2WIPresenter> extends J2
 		final int pageMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4, getResources().getDisplayMetrics());
 		// 设置距离
 		pager.setPageMargin(pageMargin);
-        //预留数量
-        pager.setOffscreenPageLimit(4);
+		// 预留数量
+		pager.setOffscreenPageLimit(4);
 		// 设置给头部
 		tabs.setViewPager(pager);
 	}
@@ -278,6 +278,16 @@ public abstract class J2WViewpagerABActivity<T extends J2WIPresenter> extends J2
 	 * @param i
 	 */
 	@Override public void onExtraPageScrollStateChanged(int i) {}
+
+	/**
+	 * 获取TabsView
+	 *
+	 * @param position
+	 *            下标
+	 */
+	public View getTabsView(int position) {
+		return tabs.tabsContainer.getChildAt(position);
+	}
 
 	/**
 	 * 设置下标

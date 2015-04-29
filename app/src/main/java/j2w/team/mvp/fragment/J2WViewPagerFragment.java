@@ -284,6 +284,15 @@ public abstract class J2WViewPagerFragment<T extends J2WIPresenter> extends J2WV
 	 */
 	@Override public void onExtraPageScrollStateChanged(int i) {}
 
+    /**
+     * 获取TabsView
+     *
+     * @param position
+     *            下标
+     */
+    public View getTabsView(int position){
+        return tabs.tabsContainer.getChildAt(position);
+    }
 	/**
 	 * 设置下标
 	 *
