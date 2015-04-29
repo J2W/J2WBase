@@ -24,15 +24,13 @@ public final class J2WPresenterHandler<T> extends BaseHandler<T> {
 	public J2WPresenterHandler(T t, J2WPresenter j2WPresenter) {
 		super(t);
 		this.j2WPresenter = j2WPresenter;
-		this.countDownLatch = new CountDownLatch(1);
-
 	}
 
 	@Override public Object invoke(Object proxy, final Method method, final Object[] args) throws Throwable {
 		// 判断是否在主线程
 		boolean isMainLooper = Looper.getMainLooper().getThread() != Thread.currentThread();
 		if (isMainLooper) {
-
+			this.countDownLatch = new CountDownLatch(1);
 			J2WHelper.getMainLooper().execute(new Runnable() {
 
 				@Override public void run() {
@@ -43,7 +41,7 @@ public final class J2WPresenterHandler<T> extends BaseHandler<T> {
 						L.i("方法执行失败");
                         return;
 					}finally {
-                        countDownLatch.countDown();
+						countDownLatch.countDown();
                     }
                 }
 			});
