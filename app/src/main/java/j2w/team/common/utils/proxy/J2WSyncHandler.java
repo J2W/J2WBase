@@ -37,12 +37,12 @@ public class J2WSyncHandler<T> extends BaseHandler<T> {
 		// 获得注解数组
 		final J2WStack j2WStack = oldMethod.getAnnotation(J2WStack.class);
 		Background background = oldMethod.getAnnotation(Background.class);
-		if (background == null) {
+        final String key = J2WMethodInfo.getMethodString(method, method.getParameterTypes());
+        if (background == null) {
 			L.tag("J2W-Method");
 			L.i("主线程执行: " + method.getName());
-			try {
+            try {
 				if (j2WStack == null || !j2WStack.value()) { // 拦截
-					String key = J2WMethodInfo.getMethodString(method, method.getParameterTypes());
 					// 搜索
 					if (stack.search(key) != -1) {// 如果存在什么都不做
 						L.tag("J2W-Method");
@@ -62,18 +62,17 @@ public class J2WSyncHandler<T> extends BaseHandler<T> {
 				}
 
 			} catch (Throwable throwable) {
-				try {
+                stack.remove(key);// 出栈
+                try {
 					return methodError.invoke(t, new Object[] { method.getName(), throwable });
 				} catch (IllegalAccessException e1) {
 					L.e(e1.toString());
 				} catch (InvocationTargetException e1) {
-					e1.printStackTrace();
 					L.e("方法内部异常:" + e1.toString());
 				}
 			}
-		}
+        }
 		BackgroundType backgroundType = background.value();
-		final String key = J2WMethodInfo.getMethodString(method, method.getParameterTypes());
 		// 搜索
 		if (j2WStack == null || !j2WStack.value()) { // 拦截
 			if (stack.search(key) != -1) { // 如果存在什么都不做
