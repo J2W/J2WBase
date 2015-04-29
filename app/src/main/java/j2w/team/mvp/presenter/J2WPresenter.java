@@ -20,7 +20,7 @@ public abstract class J2WPresenter<T> {
 
 	private T		iView;		// View代理
 
-	private int		state;		// 状态
+	protected int		state;		// 状态
 
 	/**
 	 * 初始化 - 业务
