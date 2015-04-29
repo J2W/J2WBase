@@ -80,4 +80,9 @@ public interface J2WIPresenter<T> {
 	 * @param bundle
 	 */
 	public void readData(Bundle bundle);
+
+	/**
+	 * 获取状态
+	 */
+	public int getState();
 }

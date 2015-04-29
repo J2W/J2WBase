@@ -20,6 +20,8 @@ public abstract class J2WPresenter<T> {
 
 	private T		iView;		// View代理
 
+	private int		state;		// 状态
+
 	/**
 	 * 初始化 - 业务
 	 * 
@@ -104,13 +106,13 @@ public abstract class J2WPresenter<T> {
 		L.tag(initTag());
 		L.i("methodHttpError() methodName : " + methodName);
 
-		if (iView instanceof J2WIViewPullListFragment) { //如果是有上下拉刷新
+		if (iView instanceof J2WIViewPullListFragment) { // 如果是有上下拉刷新
 			((J2WIViewPullListFragment) iView).setRefreshing(false);
 			((J2WIViewPullListFragment) iView).setLoading(false);
 		}
 
 		if (iView instanceof J2WIView) {
-			((J2WIView) iView).loadingClose(); //如果有进度条
+			((J2WIView) iView).loadingClose(); // 如果有进度条
 		}
 
 		if (j2WError.getKind() == J2WError.Kind.NETWORK) { // 请求发送前，网络问题
@@ -166,6 +168,13 @@ public abstract class J2WPresenter<T> {
 	public void readData(Bundle bundle) {
 		L.tag(initTag());
 		L.i("readData(bundle)");
+	}
+
+	/**
+	 * 获取状态
+	 */
+	public int getState() {
+		return state;
 	}
 
 	/**
