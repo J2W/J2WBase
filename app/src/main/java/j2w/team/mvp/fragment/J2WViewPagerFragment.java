@@ -41,11 +41,6 @@ public abstract class J2WViewPagerFragment<T extends J2WIPresenter> extends J2WV
 	private PagerAdapter			adapter;
 
 	/**
-	 * 获取数据
-	 */
-	private ModelPager[]			viewPagerDatas;
-
-	/**
 	 * 获取布局ID
 	 *
 	 * @return 布局ID
@@ -160,8 +155,7 @@ public abstract class J2WViewPagerFragment<T extends J2WIPresenter> extends J2WV
 	 * @return 适配器
 	 */
 	@Override public PagerAdapter getPagerAdapter() {
-        viewPagerDatas = initModelPagers();
-        return new J2WVPDefaultPagerAdapter(initTag(), getChildFragmentManager(), tabs, pager, this,viewPagerDatas);
+        return new J2WVPDefaultPagerAdapter(initTag(), getChildFragmentManager(), tabs, pager, this);
 	}
 
 	/**
@@ -172,7 +166,7 @@ public abstract class J2WViewPagerFragment<T extends J2WIPresenter> extends J2WV
 	public Fragment getCurrentFragment() {
 		L.tag(initTag());
 		L.i("ViewPagerActivity-getCurrentFragment()");
-		return viewPagerDatas[pager.getCurrentItem()].fragment;
+		return ((J2WVPDefaultPagerAdapter)adapter).getViewPagerDatas()[pager.getCurrentItem()].fragment;
 	}
 
 	/**

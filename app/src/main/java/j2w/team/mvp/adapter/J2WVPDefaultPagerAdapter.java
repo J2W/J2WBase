@@ -68,12 +68,12 @@ public class J2WVPDefaultPagerAdapter<T extends J2WIPresenter> extends PagerAdap
 	 * @param j2WIViewViewpagerABActivity
 	 *            接口
 	 */
-	public J2WVPDefaultPagerAdapter(String tag, FragmentManager fragmentManager, PagerSlidingTabStrip tabs, J2WViewPager pager, J2WIViewViewpagerABActivity j2WIViewViewpagerABActivity, ModelPager[] viewPagerDatas) {
+	public J2WVPDefaultPagerAdapter(String tag, FragmentManager fragmentManager, PagerSlidingTabStrip tabs, J2WViewPager pager, J2WIViewViewpagerABActivity j2WIViewViewpagerABActivity) {
         L.tag(tag);
         L.i("J2WVPDefaultPagerAdapter()");
 		this.tag = tag;
 		this.j2WIViewViewpagerABActivity = j2WIViewViewpagerABActivity;
-		this.viewPagerDatas = viewPagerDatas;
+		this.viewPagerDatas = this.j2WIViewViewpagerABActivity.initModelPagers();
 		this.fragmentManager = fragmentManager;
 		this.tabs = tabs;
 		this.pager = pager;
