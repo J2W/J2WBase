@@ -1,6 +1,7 @@
 package j2w.team.mvp;
 
 import android.graphics.Color;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.PagerAdapter;
 import android.util.DisplayMetrics;
@@ -37,6 +38,11 @@ public abstract class J2WViewpagerABActivity<T extends J2WIPresenter> extends J2
 	 * 适配器
 	 */
 	private PagerAdapter			adapter;
+
+	/**
+	 * 获取数据
+	 */
+	private ModelPager[]			viewPagerDatas;
 
 	/**
 	 * 获取布局ID
@@ -149,7 +155,19 @@ public abstract class J2WViewpagerABActivity<T extends J2WIPresenter> extends J2
 	 * @return 适配器
 	 */
 	@Override public PagerAdapter getPagerAdapter() {
-		return new J2WVPDefaultPagerAdapter(initTag(), getSupportFragmentManager(), tabs, pager, this);
+		viewPagerDatas = initModelPagers();
+		return new J2WVPDefaultPagerAdapter(initTag(), getSupportFragmentManager(), tabs, pager, this, viewPagerDatas);
+	}
+
+	/**
+	 * 获取当前fragment
+	 *
+	 * @return
+	 */
+	public Fragment getCurrentFragment() {
+        L.tag(initTag());
+        L.i("ViewPagerActivity-getCurrentFragment()");
+		return viewPagerDatas[pager.getCurrentItem()].fragment;
 	}
 
 	/**
@@ -319,8 +337,9 @@ public abstract class J2WViewpagerABActivity<T extends J2WIPresenter> extends J2
 	 */
 	public final class DefaultIconPagerAdapter<T extends J2WIPresenter> extends J2WVPDefaultPagerAdapter implements PagerSlidingTabStrip.IconTabProvider {
 
-		public DefaultIconPagerAdapter(String tag, FragmentManager fragmentManager, PagerSlidingTabStrip tabs, J2WViewPager pager, J2WIViewViewpagerABActivity j2WIViewViewpagerABActivity) {
-			super(tag, fragmentManager, tabs, pager, j2WIViewViewpagerABActivity);
+		public DefaultIconPagerAdapter(String tag, FragmentManager fragmentManager, PagerSlidingTabStrip tabs, J2WViewPager pager, J2WIViewViewpagerABActivity j2WIViewViewpagerABActivity,
+				ModelPager[] viewPagerDatas) {
+			super(tag, fragmentManager, tabs, pager, j2WIViewViewpagerABActivity, viewPagerDatas);
 		}
 
 		@Override public int getPageIconResId(int position) {
@@ -333,8 +352,9 @@ public abstract class J2WViewpagerABActivity<T extends J2WIPresenter> extends J2
 	 */
 	public final class DefaultCountPagerAdapter<T extends J2WIPresenter> extends J2WVPDefaultPagerAdapter implements PagerSlidingTabStrip.TitleCountTabProvider {
 
-		public DefaultCountPagerAdapter(String tag, FragmentManager fragmentManager, PagerSlidingTabStrip tabs, J2WViewPager pager, J2WIViewViewpagerABActivity j2WIViewViewpagerABActivity) {
-			super(tag, fragmentManager, tabs, pager, j2WIViewViewpagerABActivity);
+		public DefaultCountPagerAdapter(String tag, FragmentManager fragmentManager, PagerSlidingTabStrip tabs, J2WViewPager pager, J2WIViewViewpagerABActivity j2WIViewViewpagerABActivity,
+				ModelPager[] viewPagerDatas) {
+			super(tag, fragmentManager, tabs, pager, j2WIViewViewpagerABActivity, viewPagerDatas);
 		}
 
 		@Override public String getPageCount(int position) {

@@ -1,5 +1,6 @@
 package j2w.team.mvp;
 
+import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.view.View;
 
@@ -33,6 +34,13 @@ public interface J2WIViewViewpagerABActivity extends J2WIView {
 	 * @return 适配器
 	 */
 	public PagerAdapter getPagerAdapter();
+
+	/**
+	 * 获取当前fragment
+	 * 
+	 * @return
+	 */
+	public Fragment getCurrentFragment();
 
 	/**
 	 * 初始化 TabHost - item 样式

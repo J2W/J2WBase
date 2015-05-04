@@ -1,6 +1,7 @@
 package j2w.team.mvp.fragment;
 
 import android.graphics.Color;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
@@ -38,6 +39,11 @@ public abstract class J2WViewPagerFragment<T extends J2WIPresenter> extends J2WV
 	 * 适配器
 	 */
 	private PagerAdapter			adapter;
+
+	/**
+	 * 获取数据
+	 */
+	private ModelPager[]			viewPagerDatas;
 
 	/**
 	 * 获取布局ID
@@ -154,7 +160,19 @@ public abstract class J2WViewPagerFragment<T extends J2WIPresenter> extends J2WV
 	 * @return 适配器
 	 */
 	@Override public PagerAdapter getPagerAdapter() {
-		return new J2WVPDefaultPagerAdapter(initTag(), getChildFragmentManager(), tabs, pager, this);
+        viewPagerDatas = initModelPagers();
+        return new J2WVPDefaultPagerAdapter(initTag(), getChildFragmentManager(), tabs, pager, this,viewPagerDatas);
+	}
+
+	/**
+	 * 获取当前fragment
+	 *
+	 * @return
+	 */
+	public Fragment getCurrentFragment() {
+		L.tag(initTag());
+		L.i("ViewPagerActivity-getCurrentFragment()");
+		return viewPagerDatas[pager.getCurrentItem()].fragment;
 	}
 
 	/**
@@ -284,15 +302,16 @@ public abstract class J2WViewPagerFragment<T extends J2WIPresenter> extends J2WV
 	 */
 	@Override public void onExtraPageScrollStateChanged(int i) {}
 
-    /**
-     * 获取TabsView
-     *
-     * @param position
-     *            下标
-     */
-    public View getTabsView(int position){
-        return tabs.tabsContainer.getChildAt(position);
-    }
+	/**
+	 * 获取TabsView
+	 *
+	 * @param position
+	 *            下标
+	 */
+	public View getTabsView(int position) {
+		return tabs.tabsContainer.getChildAt(position);
+	}
+
 	/**
 	 * 设置下标
 	 *
