@@ -208,7 +208,7 @@ public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment impl
 	 *            标记
 	 */
 	public final void commitFragment(Fragment fragment, String tag) {
-        commitFragment(android.R.id.custom,fragment,tag);
+		commitFragment(android.R.id.custom, fragment, tag);
 	}
 
 	/**
@@ -235,14 +235,14 @@ public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment impl
 	 *            标记
 	 */
 	public void commitFragment(int layoutId, Fragment fragment, String tag) {
-        L.tag(initTag());
-        L.i("commitFragment(int layoutId, Fragment fragment, String tag)");
-        if (fragment != null && fragment.isAdded()) {
-            L.tag(initTag());
-            L.i("fragment 不能为空，或者已经被添加！");
-            return;
-        }
-        getFManager().beginTransaction().add(layoutId, fragment, tag).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commitAllowingStateLoss();
+		L.tag(initTag());
+		L.i("commitFragment(int layoutId, Fragment fragment, String tag)");
+		if (fragment != null && fragment.isAdded()) {
+			L.tag(initTag());
+			L.i("fragment 不能为空，或者已经被添加！");
+			return;
+		}
+		getFManager().beginTransaction().add(layoutId, fragment, tag).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commitAllowingStateLoss();
 	}
 
 	/**
@@ -407,13 +407,13 @@ public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment impl
 		J2WIViewActivity j2WIViewActivity = (J2WIViewActivity) getActivity();
 
 		// 加载布局-初始化
-		inflater.inflate(j2WIViewActivity.fragmentLoadingLayout(), mViewAnimator, true);
+		inflater.inflate(fragmentLoadingLayout() == 0 ? j2WIViewActivity.fragmentLoadingLayout() : fragmentLoadingLayout(), mViewAnimator, true);
 		// 内容布局-初始化
 		inflater.inflate(layoutId(), mViewAnimator, true);
 		// 空布局-初始化
-		inflater.inflate(j2WIViewActivity.fragmentEmptyLayout(), mViewAnimator, true);
+		inflater.inflate(fragmentEmptyLayout() == 0 ? j2WIViewActivity.fragmentEmptyLayout() : fragmentEmptyLayout(), mViewAnimator, true);
 		// 错误布局-初始化
-		inflater.inflate(j2WIViewActivity.fragmentErrorLayout(), mViewAnimator, true);
+		inflater.inflate(fragmentErrorLayout() == 0 ? j2WIViewActivity.fragmentErrorLayout() : fragmentErrorLayout(), mViewAnimator, true);
 	}
 
 	/**
@@ -624,69 +624,69 @@ public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment impl
 		mViewAnimator.setDisplayedChild(showState);
 	}
 
-    /**
-     * 弹框
-     *
-     * @param requestCode
-     *            请求编号
-     */
-    @Override public void onPositiveButtonClicked(int requestCode) {
-        L.tag(initTag());
-        L.i("onPositiveButtonClicked() requestCode : " + requestCode);
-        switch (requestCode) {
-            case J2WConstants.J2W_ERROR_CODE:
-                getActivity().onBackPressed();
-                break;
-        }
-    }
+	/**
+	 * 弹框
+	 *
+	 * @param requestCode
+	 *            请求编号
+	 */
+	@Override public void onPositiveButtonClicked(int requestCode) {
+		L.tag(initTag());
+		L.i("onPositiveButtonClicked() requestCode : " + requestCode);
+		switch (requestCode) {
+			case J2WConstants.J2W_ERROR_CODE:
+				getActivity().onBackPressed();
+				break;
+		}
+	}
 
-    /**
-     * 弹框
-     *
-     * @param requestCode
-     *            请求编号
-     */
-    @Override public void onNeutralButtonClicked(int requestCode) {
-        L.tag(initTag());
-        L.i("onNeutralButtonClicked() requestCode : " + requestCode);
-        switch (requestCode) {
-            case J2WConstants.J2W_ERROR_CODE:
-                getActivity().onBackPressed();
-                break;
-        }
-    }
+	/**
+	 * 弹框
+	 *
+	 * @param requestCode
+	 *            请求编号
+	 */
+	@Override public void onNeutralButtonClicked(int requestCode) {
+		L.tag(initTag());
+		L.i("onNeutralButtonClicked() requestCode : " + requestCode);
+		switch (requestCode) {
+			case J2WConstants.J2W_ERROR_CODE:
+				getActivity().onBackPressed();
+				break;
+		}
+	}
 
-    /**
-     * 弹框
-     *
-     * @param requestCode
-     *            请求编号
-     */
-    @Override public void onNegativeButtonClicked(int requestCode) {
-        L.tag(initTag());
-        L.i("onNegativeButtonClicked() requestCode : " + requestCode);
-        switch (requestCode) {
-            case J2WConstants.J2W_ERROR_CODE:
-                getActivity().onBackPressed();
-                break;
-        }
-    }
+	/**
+	 * 弹框
+	 *
+	 * @param requestCode
+	 *            请求编号
+	 */
+	@Override public void onNegativeButtonClicked(int requestCode) {
+		L.tag(initTag());
+		L.i("onNegativeButtonClicked() requestCode : " + requestCode);
+		switch (requestCode) {
+			case J2WConstants.J2W_ERROR_CODE:
+				getActivity().onBackPressed();
+				break;
+		}
+	}
 
-    /**
-     * 进度条取消
-     *
-     * @param requestCode
-     */
-    @Override public void onCancelled(int requestCode) {
-        L.tag(initTag());
-        L.i("onCancelled() requestCode : " + requestCode);
-        switch (requestCode) {
-            case J2WConstants.J2W_DIALOG_FRAGMENT_CODE:
-                J2WRestAdapter j2WRestAdapter = J2WHelper.initRestAdapter();
-                J2WHelper.initRestAdapter().cancel(j2WRestAdapter.getService());
-                break;
-        }
-    }
+	/**
+	 * 进度条取消
+	 *
+	 * @param requestCode
+	 */
+	@Override public void onCancelled(int requestCode) {
+		L.tag(initTag());
+		L.i("onCancelled() requestCode : " + requestCode);
+		switch (requestCode) {
+			case J2WConstants.J2W_DIALOG_FRAGMENT_CODE:
+				J2WRestAdapter j2WRestAdapter = J2WHelper.initRestAdapter();
+				J2WHelper.initRestAdapter().cancel(j2WRestAdapter.getService());
+				break;
+		}
+	}
 
 	/**
 	 * 弹框进度条
@@ -742,13 +742,40 @@ public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment impl
 	 * 弹框进度条
 	 */
 	@Override public void loadingClose() {
-        if(dialogFragment == null){
-            dialogFragment = (ProgressDailogFragment) getFManager().findFragmentByTag(J2WConstants.J2W_DIALOG_PROGRESS);
-            dialogFragment.dismissAllowingStateLoss();
-            getFManager().executePendingTransactions();
-        }else{
-            dialogFragment.dismissAllowingStateLoss();
-            getFManager().executePendingTransactions();
-        }
+		if (dialogFragment == null) {
+			dialogFragment = (ProgressDailogFragment) getFManager().findFragmentByTag(J2WConstants.J2W_DIALOG_PROGRESS);
+			dialogFragment.dismissAllowingStateLoss();
+			getFManager().executePendingTransactions();
+		} else {
+			dialogFragment.dismissAllowingStateLoss();
+			getFManager().executePendingTransactions();
+		}
+	}
+
+	/**
+	 * 初始化fragment状态布局 - 进度
+	 *
+	 * @return
+	 */
+	public int fragmentLoadingLayout() {
+		return 0;
+	}
+
+	/**
+	 * 初始化fragment状态布局 - 空
+	 *
+	 * @return
+	 */
+	public int fragmentEmptyLayout() {
+		return 0;
+	}
+
+	/**
+	 * 初始化fragment状态布局 - 错误
+	 *
+	 * @return
+	 */
+	public int fragmentErrorLayout() {
+		return 0;
 	}
 }

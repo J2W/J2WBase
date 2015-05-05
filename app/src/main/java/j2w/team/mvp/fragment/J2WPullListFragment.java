@@ -45,10 +45,10 @@ public abstract class J2WPullListFragment<T extends J2WIPresenter> extends J2WLi
 		J2WIViewActivity j2WIViewActivity = (J2WIViewActivity) getActivity();
 
 		// 加载布局-初始化
-        inflater.inflate(j2WIViewActivity.fragmentLoadingLayout(), mViewAnimator, true);
+		inflater.inflate(fragmentLoadingLayout() == 0 ? j2WIViewActivity.fragmentLoadingLayout() : fragmentLoadingLayout(), mViewAnimator, true);
 
 		// 内容布局-初始化
-        View layoutView = inflater.inflate(layoutId(), mViewAnimator, true);
+		View layoutView = inflater.inflate(layoutId(), mViewAnimator, true);
 
 		swipe_container = (SwipeRefreshLayout) layoutView.findViewById(R.id.swipe_container);
 
@@ -72,9 +72,9 @@ public abstract class J2WPullListFragment<T extends J2WIPresenter> extends J2WLi
 		mListAdapter = new ListAdapter();
 		listView.setAdapter(mListAdapter);
 		// 空布局-初始化
-        inflater.inflate(j2WIViewActivity.fragmentEmptyLayout(), mViewAnimator, true);
+		inflater.inflate(fragmentEmptyLayout() == 0 ? j2WIViewActivity.fragmentEmptyLayout() : fragmentEmptyLayout(), mViewAnimator, true);
 		// 错误布局-初始化
-        inflater.inflate(j2WIViewActivity.fragmentErrorLayout(), mViewAnimator, true);
+		inflater.inflate(fragmentErrorLayout() == 0 ? j2WIViewActivity.fragmentErrorLayout() : fragmentErrorLayout(), mViewAnimator, true);
 	}
 
 	/**

@@ -64,4 +64,25 @@ public interface J2WIViewFragment extends J2WIView {
      * 设置Acitvity标题栏
      */
     public void setActivityTitle(Object value);
+
+    /**
+     * 初始化fragment状态布局 - 进度
+     *
+     * @return
+     */
+    public int fragmentLoadingLayout() ;
+
+    /**
+     * 初始化fragment状态布局 - 空
+     *
+     * @return
+     */
+    public int fragmentEmptyLayout();
+
+    /**
+     * 初始化fragment状态布局 - 错误
+     *
+     * @return
+     */
+    public int fragmentErrorLayout();
 }
