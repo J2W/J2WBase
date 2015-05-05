@@ -2,6 +2,7 @@ package j2w.team.mvp.presenter;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Looper;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -143,8 +144,19 @@ public class J2WHelper {
 	 * 
 	 * @param object
 	 */
-	public static void eventPost(Object object) {
-		EventBus.getDefault().post(object);
+	public static void eventPost(final Object object) {
+		boolean isMainLooper = Looper.getMainLooper().getThread() != Thread.currentThread();
+
+		if (isMainLooper) {
+            getMainLooper().execute(new Runnable() {
+                @Override public void run() {
+                    EventBus.getDefault().post(object);
+                }
+            });
+		} else {
+            EventBus.getDefault().post(object);
+		}
+
 	}
 
 	/**
