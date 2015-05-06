@@ -186,8 +186,6 @@ public abstract class J2WVPListFragment<T extends J2WIPresenter> extends J2WVPFr
 	 * @return true 空 false 不为空
 	 */
 	public final boolean isAdapterNotNull() {
-		L.tag(initTag());
-		L.i("Fragment-isAdapterNotNull()");
 		return mListAdapter != null ? true : false;
 	}
 
@@ -260,8 +258,6 @@ public abstract class J2WVPListFragment<T extends J2WIPresenter> extends J2WVPFr
 	 * @return
 	 */
 	public final List getData() {
-		L.tag(initTag());
-		L.i("Fragment-getData()");
 		return isAdapterNotNull() ? mList : null;
 	}
 
