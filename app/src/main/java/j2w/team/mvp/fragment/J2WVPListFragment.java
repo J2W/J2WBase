@@ -261,6 +261,14 @@ public abstract class J2WVPListFragment<T extends J2WIPresenter> extends J2WVPFr
 		return isAdapterNotNull() ? mList : null;
 	}
 
+    /**
+     * 重新创建适配器
+     */
+    public void resetAdapter(){
+        /** 初始化适配器 **/
+        mListAdapter = new ListAdapter();
+        listView.setAdapter(mListAdapter);
+    }
 	/**
 	 * 更新适配器 0 显示 进度, 1 显示 内容 2 显示 空 3 显示 错误,
 	 */

@@ -107,6 +107,11 @@ public interface J2WIViewListFragment extends J2WIViewFragment {
 	public List getData();
 
 	/**
+	 * 重新创建适配器
+	 */
+	public void resetAdapter();
+
+	/**
 	 * 更新适配器 0 显示 进度, 1 显示 内容 2 显示 空 3 显示 错误,
 	 */
 	public void updateAdapter();
