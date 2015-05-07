@@ -283,6 +283,11 @@ public interface J2WIView<T> {
 	void showContent();
 
 	/**
+	 * 判断是否显示内容
+	 */
+	boolean isShowContent();
+
+	/**
 	 * 布局 - 空
 	 */
 	void showEmpty();

@@ -34,7 +34,7 @@ import j2w.team.mvp.presenter.J2WPresenterUtils;
 public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment implements J2WIViewFragment, View.OnTouchListener, IDialogListener {
 
 	/** 默认进度条 **/
-	ProgressDailogFragment	dialogFragment;	// 交互弹窗
+	ProgressDailogFragment	dialogFragment;			// 交互弹窗
 
 	/**
 	 * view *
@@ -49,7 +49,12 @@ public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment impl
 	/**
 	 * 业务逻辑对象 *
 	 */
-	private T				presenter	= null;
+	private T				presenter		= null;
+
+	/**
+	 * 是否显示状态
+	 */
+	private boolean			isShowContent	= false;
 
 	/**
 	 * 获取TAG标记
@@ -570,24 +575,32 @@ public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment impl
 		L.tag(initTag());
 		L.i("Fragment-loading()");
 		show(0);
+		isShowContent = false;
 	}
 
 	@Override public void showContent() {
 		L.tag(initTag());
 		L.i("Fragment-content()");
 		show(1);
+		isShowContent = true;
+	}
+
+	public boolean isShowContent() {
+		return isShowContent;
 	}
 
 	@Override public void showEmpty() {
 		L.tag(initTag());
 		L.i("Fragment-empty()");
 		show(2);
+		isShowContent = false;
 	}
 
 	@Override public void showError() {
 		L.tag(initTag());
 		L.i("Fragment-error()");
 		show(3);
+		isShowContent = false;
 	}
 
 	/**

@@ -29,10 +29,10 @@ import j2w.team.mvp.presenter.J2WPresenterUtils;
 public abstract class J2WActivity<T extends J2WIPresenter> extends FragmentActivity implements J2WIViewActivity, IDialogListener {
 
 	/** 默认进度条 **/
-	ProgressDailogFragment	dialogFragment;	// 交互弹窗
+	ProgressDailogFragment	dialogFragment;			// 交互弹窗
 
 	/** 业务逻辑对象 **/
-	private T				presenter	= null;
+	private T				presenter		= null;
 
 	/**
 	 * view *
@@ -43,6 +43,11 @@ public abstract class J2WActivity<T extends J2WIPresenter> extends FragmentActiv
 	 * view *
 	 */
 	View					mContentView;
+
+	/**
+	 * 是否显示状态
+	 */
+	private boolean			isShowContent	= false;
 
 	/**
 	 * 获取TAG标记
@@ -530,8 +535,8 @@ public abstract class J2WActivity<T extends J2WIPresenter> extends FragmentActiv
 	 *            请求编号
 	 */
 	@Override public void onNeutralButtonClicked(int requestCode) {
-        L.tag(initTag());
-        L.i("onNeutralButtonClicked() requestCode : " + requestCode);
+		L.tag(initTag());
+		L.i("onNeutralButtonClicked() requestCode : " + requestCode);
 		switch (requestCode) {
 			case J2WConstants.J2W_ERROR_CODE:
 				onBackPressed();
@@ -546,8 +551,8 @@ public abstract class J2WActivity<T extends J2WIPresenter> extends FragmentActiv
 	 *            请求编号
 	 */
 	@Override public void onNegativeButtonClicked(int requestCode) {
-        L.tag(initTag());
-        L.i("onNegativeButtonClicked() requestCode : " + requestCode);
+		L.tag(initTag());
+		L.i("onNegativeButtonClicked() requestCode : " + requestCode);
 		switch (requestCode) {
 			case J2WConstants.J2W_ERROR_CODE:
 				onBackPressed();
@@ -561,8 +566,8 @@ public abstract class J2WActivity<T extends J2WIPresenter> extends FragmentActiv
 	 * @param requestCode
 	 */
 	@Override public void onCancelled(int requestCode) {
-        L.tag(initTag());
-        L.i("onCancelled() requestCode : " + requestCode);
+		L.tag(initTag());
+		L.i("onCancelled() requestCode : " + requestCode);
 		switch (requestCode) {
 			case J2WConstants.J2W_DIALOG_CODE:
 				J2WRestAdapter j2WRestAdapter = J2WHelper.initRestAdapter();
@@ -625,14 +630,14 @@ public abstract class J2WActivity<T extends J2WIPresenter> extends FragmentActiv
 	 * 弹框进度条
 	 */
 	@Override public void loadingClose() {
-        if(dialogFragment == null){
-            dialogFragment = (ProgressDailogFragment) getFManager().findFragmentByTag(J2WConstants.J2W_DIALOG_PROGRESS);
-            dialogFragment.dismissAllowingStateLoss();
-            getFManager().executePendingTransactions();
-        }else{
-            dialogFragment.dismissAllowingStateLoss();
-            getFManager().executePendingTransactions();
-        }
+		if (dialogFragment == null) {
+			dialogFragment = (ProgressDailogFragment) getFManager().findFragmentByTag(J2WConstants.J2W_DIALOG_PROGRESS);
+			dialogFragment.dismissAllowingStateLoss();
+			getFManager().executePendingTransactions();
+		} else {
+			dialogFragment.dismissAllowingStateLoss();
+			getFManager().executePendingTransactions();
+		}
 	}
 
 	/**
@@ -648,24 +653,35 @@ public abstract class J2WActivity<T extends J2WIPresenter> extends FragmentActiv
 		L.tag(initTag());
 		L.i("Fragment-loading()");
 		show(0);
+		isShowContent = false;
 	}
 
 	@Override public void showContent() {
 		L.tag(initTag());
 		L.i("Fragment-content()");
 		show(1);
+		isShowContent = true;
+	}
+
+	/**
+	 * 判断是否显示内容
+	 */
+	public boolean isShowContent() {
+		return isShowContent;
 	}
 
 	@Override public void showEmpty() {
 		L.tag(initTag());
 		L.i("Fragment-empty()");
 		show(2);
+		isShowContent = false;
 	}
 
 	@Override public void showError() {
 		L.tag(initTag());
 		L.i("Fragment-error()");
 		show(3);
+		isShowContent = false;
 	}
 
 	/**
