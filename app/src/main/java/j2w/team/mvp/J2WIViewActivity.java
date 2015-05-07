@@ -8,38 +8,38 @@ public interface J2WIViewActivity extends J2WIView {
 	/**
 	 * 初始化视图
 	 */
-	public void initLayout();
+	void initLayout();
 
 	/**
 	 * 是否固定竖屏
 	 */
-	public boolean isFixedVerticalScreen();
+	boolean isFixedVerticalScreen();
 
 	/**
 	 * 初始化fragment状态布局 - 进度
 	 *
 	 * @return
 	 */
-	public int fragmentLoadingLayout();
+	int fragmentLoadingLayout();
 
 	/**
 	 * 初始化fragment状态布局 - 空
 	 *
 	 * @return
 	 */
-	public int fragmentEmptyLayout();
+	int fragmentEmptyLayout();
 
 	/**
 	 * 初始化fragment状态布局 - 错误
 	 *
 	 * @return
 	 */
-	public int fragmentErrorLayout();
+	int fragmentErrorLayout();
 
-    /**
-     * 是否添加Activity状态布局
-     *
-     * @return true 打开 false 关闭
-     */
-    public boolean activityState();
+	/**
+	 * 是否添加Activity状态布局
+	 *
+	 * @return true 打开 false 关闭
+	 */
+	boolean activityState();
 }

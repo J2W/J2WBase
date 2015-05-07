@@ -5,5 +5,5 @@ package j2w.team.modules.dialog.iface;
  */
 public interface IMultiChoiceListDialogListener {
 
-    public void onListItemsSelected(String[] values, int[] selectedPositions, int requestCode);
+	void onListItemsSelected(String[] values, int[] selectedPositions, int requestCode);
 }

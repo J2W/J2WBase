@@ -21,5 +21,5 @@ package j2w.team.modules.dialog.iface;
  */
 public interface IDialogCancelListener {
 
-	public void onCancelled(int requestCode);
+	void onCancelled(int requestCode);
 }

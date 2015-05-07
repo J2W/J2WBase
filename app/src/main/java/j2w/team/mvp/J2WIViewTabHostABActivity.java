@@ -10,5 +10,5 @@ public interface J2WIViewTabHostABActivity extends J2WIViewViewpagerABActivity {
 	 * 
 	 * @return 布局ID
 	 */
-	public int getTabsContentLayout();
+	int getTabsContentLayout();
 }

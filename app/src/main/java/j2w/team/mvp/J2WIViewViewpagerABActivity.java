@@ -16,38 +16,38 @@ public interface J2WIViewViewpagerABActivity extends J2WIView {
 	 * 
 	 * @return Item集合
 	 */
-	public ModelPager[] initModelPagers();
+	ModelPager[] initModelPagers();
 
 	/**
 	 * 初始化 tabs样式
 	 */
-	public void initTabsValue();
+	void initTabsValue();
 
 	/**
 	 * 初始化 viewpager - 设置适配器
 	 */
-	public void initViewPager();
+	void initViewPager();
 
 	/**
 	 * 初始化 ViewPager - adapter
 	 *
 	 * @return 适配器
 	 */
-	public PagerAdapter getPagerAdapter();
+	PagerAdapter getPagerAdapter();
 
 	/**
 	 * 获取当前fragment
 	 * 
 	 * @return
 	 */
-	public Fragment getCurrentFragment();
+	Fragment getCurrentFragment();
 
 	/**
 	 * 初始化 TabHost - item 样式
 	 * 
 	 * @return　 布局ID
 	 */
-	public int getViewPagerItemLayout();
+	int getViewPagerItemLayout();
 
 	/**
 	 * 初始化 TabHost - item 值
@@ -57,37 +57,37 @@ public interface J2WIViewViewpagerABActivity extends J2WIView {
 	 * @param modelPager
 	 *            Item对象
 	 */
-	public void initTab(View view, ModelPager modelPager);
+	void initTab(View view, ModelPager modelPager);
 
 	/**
 	 * 设置Item样式
 	 */
-	public int getTabsBackgroundResource(); // 背景颜色
+	int getTabsBackgroundResource(); // 背景颜色
 
-	public boolean getTabsShouldExpand();// 设置Tab是自动填充满屏幕的
+	boolean getTabsShouldExpand();// 设置Tab是自动填充满屏幕的
 
-	public int getTabsDividerColor();// 设置Tab的分割线是透明的
+	int getTabsDividerColor();// 设置Tab的分割线是透明的
 
-	public int getTabsTitleColor(); // 设置Tab的文字颜色
+	int getTabsTitleColor(); // 设置Tab的文字颜色
 
-	public int getTabsTitleSize();// 设置Tab标题文字的大小
+	int getTabsTitleSize();// 设置Tab标题文字的大小
 
-	public int getTabsSelectedTitleColor();// 设置选中Tab文字的颜色
+	int getTabsSelectedTitleColor();// 设置选中Tab文字的颜色
 
-	public int getTabsIndicatorSize();// 设置Tab Indicator 指示灯高度
+	int getTabsIndicatorSize();// 设置Tab Indicator 指示灯高度
 
-	public int getTabsIndicatorColor();// 设置Tab Indicator 指示灯的颜色
+	int getTabsIndicatorColor();// 设置Tab Indicator 指示灯的颜色
 
-	public int getTabsOnClickTitleColor();// 设置点击颜色
+	int getTabsOnClickTitleColor();// 设置点击颜色
 
-	public int getTabsUnderlineColor();// 设置Tab底部线的颜色
+	int getTabsUnderlineColor();// 设置Tab底部线的颜色
 
-	public int getTabsUnderlineHeight();// 设置Tab底部线的高度
+	int getTabsUnderlineHeight();// 设置Tab底部线的高度
 
 	/**
 	 * 设置Item样式 -替换item
 	 */
-	public void replaceViewPageItem(ModelPager... modelPagers); // 替换item
+	void replaceViewPageItem(ModelPager... modelPagers); // 替换item
 
 	/**
 	 * ViewPager 滑动事件 - 滑动过程
@@ -103,7 +103,7 @@ public interface J2WIViewViewpagerABActivity extends J2WIView {
 	 * @param v
 	 * @param i2
 	 */
-	public void onExtraPageScrolled(View current, View old, int currentPosition, int oldPosition, float v, int i2);
+	void onExtraPageScrolled(View current, View old, int currentPosition, int oldPosition, float v, int i2);
 
 	/**
 	 * ViewPager 滑动事件 - 滑动完成
@@ -117,14 +117,14 @@ public interface J2WIViewViewpagerABActivity extends J2WIView {
 	 * @param oldPosition
 	 *            过去坐标
 	 */
-	public void onExtraPageSelected(View current, View old, int currentPosition, int oldPosition);
+	void onExtraPageSelected(View current, View old, int currentPosition, int oldPosition);
 
 	/**
 	 * ViewPager 滑动事件 - 滑动改变
 	 * 
 	 * @param i
 	 */
-	public void onExtraPageScrollStateChanged(int i);
+	void onExtraPageScrollStateChanged(int i);
 
 	/**
 	 * 获取TabsView
@@ -132,7 +132,7 @@ public interface J2WIViewViewpagerABActivity extends J2WIView {
 	 * @param position
 	 *            下标
 	 */
-	public View getTabsView(int position);
+	View getTabsView(int position);
 
 	/**
 	 * 设置下标
@@ -142,6 +142,6 @@ public interface J2WIViewViewpagerABActivity extends J2WIView {
 	 * @param bool
 	 *            是否开启动画
 	 */
-	public void setIndex(int index, boolean bool);
+	void setIndex(int index, boolean bool);
 
 }

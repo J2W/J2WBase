@@ -14,26 +14,26 @@ public interface J2WIPresenter<T> {
 	 *
 	 * @return tag
 	 */
-	public String initTag();
+	String initTag();
 
 	/**
 	 * 获取View层引用
 	 * 
 	 * @return view实例
 	 */
-	public T getView();
+	T getView();
 
 	/**
 	 * 判断View层需要不需要回调
 	 * 
 	 * @return true 需要 false 不需要
 	 */
-	public boolean isCallBack();
+	boolean isCallBack();
 
 	/**
 	 * 消除View层引用
 	 */
-	public void detach();
+	void detach();
 
 	/**
 	 * 异常捕捉
@@ -43,7 +43,7 @@ public interface J2WIPresenter<T> {
 	 * @param throwable
 	 *            异常
 	 */
-	public void methodError(String methodName, Throwable throwable);
+	void methodError(String methodName, Throwable throwable);
 
 	/**
 	 * 网络异常
@@ -53,15 +53,15 @@ public interface J2WIPresenter<T> {
 	 * @param j2WError
 	 *            网络异常
 	 */
-	public void methodHttpError(String methodName, J2WError j2WError);
+	void methodHttpError(String methodName, J2WError j2WError);
 
-	public void errorNetWork(); // 发送请求前错误
+	void errorNetWork(); // 发送请求前错误
 
-	public void errorHttp(); // 请求得到响应后错误
+	void errorHttp(); // 请求得到响应后错误
 
-	public void errorUnexpected();// 请求或者响应 意外错误
+	void errorUnexpected();// 请求或者响应 意外错误
 
-	public void errorCancel();// 取消请求
+	void errorCancel();// 取消请求
 
 	/** 编码异常 **/
 	/**
@@ -72,17 +72,17 @@ public interface J2WIPresenter<T> {
 	 * @param throwable
 	 *            异常
 	 */
-	public void methodCodingError(String methodName, Throwable throwable);
+	void methodCodingError(String methodName, Throwable throwable);
 
 	/**
 	 * 读数据
 	 * 
 	 * @param bundle
 	 */
-	public void readData(Bundle bundle);
+	void readData(Bundle bundle);
 
 	/**
 	 * 获取状态
 	 */
-	public int getState();
+	int getState();
 }

@@ -8,14 +8,14 @@ public interface J2WIViewABActivity extends J2WIViewActivity {
 	/**
 	 * 初始化actionbar
 	 */
-	public void initActionBar();
+	void initActionBar();
 
 	/**
 	 * 设置布局
 	 * 
 	 * @return 布局ID
 	 */
-	public int actionBarLayoutID();
+	int actionBarLayoutID();
 
 	/**
 	 * 设置标题栏
@@ -25,5 +25,5 @@ public interface J2WIViewABActivity extends J2WIViewActivity {
 	 * @param code
 	 *            标记
 	 */
-	public void setActionbarTitle(Object value, int code);
+	void setActionbarTitle(Object value, int code);
 }

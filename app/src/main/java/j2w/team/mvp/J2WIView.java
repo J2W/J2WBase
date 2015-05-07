@@ -15,14 +15,14 @@ public interface J2WIView<T> {
 	 * 
 	 * @return tag
 	 */
-	public String initTag();
+	String initTag();
 
 	/**
 	 * 获取布局ID
 	 * 
 	 * @return 布局ID
 	 */
-	public int layoutId();
+	int layoutId();
 
 	/**
 	 * 初始化数据
@@ -30,21 +30,21 @@ public interface J2WIView<T> {
 	 * @param savedInstanceState
 	 *            数据
 	 */
-	public void initData(Bundle savedInstanceState);
+	void initData(Bundle savedInstanceState);
 
 	/**
 	 * 获取Presenter
 	 * 
 	 * @return 业务
 	 */
-	public T getPresenter();
+	T getPresenter();
 
 	/**
 	 * 是否打开EventBus
 	 * 
 	 * @return true 打开 false 关闭
 	 */
-	public boolean isOpenEventBus();
+	boolean isOpenEventBus();
 
 	/**
 	 * 跳转
@@ -52,7 +52,7 @@ public interface J2WIView<T> {
 	 * @param clazz
 	 *            activity.class
 	 */
-	public void intent2Activity(Class clazz);
+	void intent2Activity(Class clazz);
 
 	/**
 	 * 跳转
@@ -62,7 +62,7 @@ public interface J2WIView<T> {
 	 * @param bundle
 	 *            数据
 	 */
-	public void intent2Activity(Class clazz, Bundle bundle);
+	void intent2Activity(Class clazz, Bundle bundle);
 
 	/**
 	 * 跳转
@@ -72,7 +72,7 @@ public interface J2WIView<T> {
 	 * @param requestCode
 	 *            请求编号
 	 */
-	public void intent2Activity(Class clazz, int requestCode);
+	void intent2Activity(Class clazz, int requestCode);
 
 	/**
 	 * 跳转
@@ -84,21 +84,21 @@ public interface J2WIView<T> {
 	 * @param requestCode
 	 *            请求编号
 	 */
-	public void intent2Activity(Class clazz, Bundle bundle, int requestCode);
+	void intent2Activity(Class clazz, Bundle bundle, int requestCode);
 
 	/**
 	 * 获取上下文
 	 * 
 	 * @return 上下文
 	 */
-	public Context getContext();
+	Context getContext();
 
 	/**
 	 * 获取碎片管理器
 	 * 
 	 * @return
 	 */
-	public FragmentManager getFManager();
+	FragmentManager getFManager();
 
 	/**
 	 * 提交fragment
@@ -106,65 +106,65 @@ public interface J2WIView<T> {
 	 * @param fragment
 	 *            实例
 	 */
-	public void commitFragment(Fragment fragment);
-
-	/**
-	 * 提交fragment
-	 * 
-	 * @param fragment
-	 *            实例
-	 * @param tag
-	 *            标记
-	 */
-	public void commitFragment(Fragment fragment, String tag);
-
-	/**
-	 * 提交fragment
-	 *
-	 * @param layoutId
-	 *            布局ID
-	 * @param fragment
-	 *            实例
-	 */
-	public void commitFragment(int layoutId, Fragment fragment);
-
-	/**
-	 * 提交fragment
-	 *
-	 * @param layoutId
-	 *            布局ID
-	 * @param fragment
-	 *            实例
-	 * @param tag
-	 *            标记
-	 */
-	public void commitFragment(int layoutId, Fragment fragment, String tag);
-
-	/**
-	 * 提交fragment
-	 *
-	 * @param old
-	 *            需要销毁的fragment
-	 * @param fragment
-	 *            实例
-	 */
-	public void commitFragment(Fragment old, Fragment fragment);
-
-	/**
-	 * 提交fragment
-	 *
-	 * @param old
-	 *            需要销毁的fragment
-	 * @param fragment
-	 *            实例
-	 * @param tag
-	 *            标记
-	 */
-	public void commitFragment(Fragment old, Fragment fragment, String tag);
+	void commitFragment(Fragment fragment);
 
 	/**
 	 * 提交fragment
 	 * 
+	 * @param fragment
+	 *            实例
+	 * @param tag
+	 *            标记
+	 */
+	void commitFragment(Fragment fragment, String tag);
+
+	/**
+	 * 提交fragment
+	 *
+	 * @param layoutId
+	 *            布局ID
+	 * @param fragment
+	 *            实例
+	 */
+	void commitFragment(int layoutId, Fragment fragment);
+
+	/**
+	 * 提交fragment
+	 *
+	 * @param layoutId
+	 *            布局ID
+	 * @param fragment
+	 *            实例
+	 * @param tag
+	 *            标记
+	 */
+	void commitFragment(int layoutId, Fragment fragment, String tag);
+
+	/**
+	 * 提交fragment
+	 *
+	 * @param old
+	 *            需要销毁的fragment
+	 * @param fragment
+	 *            实例
+	 */
+	void commitFragment(Fragment old, Fragment fragment);
+
+	/**
+	 * 提交fragment
+	 *
+	 * @param old
+	 *            需要销毁的fragment
+	 * @param fragment
+	 *            实例
+	 * @param tag
+	 *            标记
+	 */
+	void commitFragment(Fragment old, Fragment fragment, String tag);
+
+	/**
+	 * 提交fragment
+	 * 
 	 * @param old
 	 *            需要销毁的fragment
 	 * @param layoutId
@@ -172,7 +172,7 @@ public interface J2WIView<T> {
 	 * @param fragment
 	 *            实例
 	 */
-	public void commitFragment(Fragment old, int layoutId, Fragment fragment);
+	void commitFragment(Fragment old, int layoutId, Fragment fragment);
 
 	/**
 	 * 提交fragment
@@ -186,7 +186,7 @@ public interface J2WIView<T> {
 	 * @param tag
 	 *            标记
 	 */
-	public void commitFragment(Fragment old, int layoutId, Fragment fragment, String tag);
+	void commitFragment(Fragment old, int layoutId, Fragment fragment, String tag);
 
 	/**
 	 * 提交fragment - 压栈
@@ -194,7 +194,7 @@ public interface J2WIView<T> {
 	 * @param fragment
 	 *            实例
 	 */
-	public void commitBackStackFragment(Fragment fragment);
+	void commitBackStackFragment(Fragment fragment);
 
 	/**
 	 * 提交fragment - 压栈
@@ -204,7 +204,7 @@ public interface J2WIView<T> {
 	 * @param tag
 	 *            标记
 	 */
-	public void commitBackStackFragment(Fragment fragment, String tag);
+	void commitBackStackFragment(Fragment fragment, String tag);
 
 	/**
 	 * 提交fragment - 压栈
@@ -214,7 +214,7 @@ public interface J2WIView<T> {
 	 * @param fragment
 	 *            实例
 	 */
-	public void commitBackStackFragment(int layoutId, Fragment fragment);
+	void commitBackStackFragment(int layoutId, Fragment fragment);
 
 	/**
 	 * 提交fragment - 压栈
@@ -226,26 +226,26 @@ public interface J2WIView<T> {
 	 * @param tag
 	 *            标记
 	 */
-	public void commitBackStackFragment(int layoutId, Fragment fragment, String tag);
+	void commitBackStackFragment(int layoutId, Fragment fragment, String tag);
 
 	/**
 	 * 弹框进度条
 	 */
-	public void loading();
+	void loading();
 
 	/**
 	 * 弹框进度条
 	 * 
 	 * @param cancel
 	 */
-	public void loading(boolean cancel);
+	void loading(boolean cancel);
 
 	/**
 	 * 弹框进度条
 	 * 
 	 * @param value
 	 */
-	public void loading(String value);
+	void loading(String value);
 
 	/**
 	 * 弹框进度条
@@ -253,42 +253,42 @@ public interface J2WIView<T> {
 	 * @param value
 	 * @param cancel
 	 */
-	public void loading(String value, boolean cancel);
+	void loading(String value, boolean cancel);
 
 	/**
 	 * 替换进度条文案
 	 * 
 	 * @param value
 	 */
-	public void replaceLoading(String value);
+	void replaceLoading(String value);
 
 	/**
 	 * 弹框进度条
 	 */
-	public void loadingClose();
+	void loadingClose();
 
 	/**
 	 * 销毁当前页面
 	 */
-	public void activityFinish();
+	void activityFinish();
 
 	/**
 	 * 布局 - 进度条
 	 */
-	public void showLoading();
+	void showLoading();
 
 	/**
 	 * 布局 - 内容
 	 */
-	public void showContent();
+	void showContent();
 
 	/**
 	 * 布局 - 空
 	 */
-	public void showEmpty();
+	void showEmpty();
 
 	/**
 	 * 布局 - 错误
 	 */
-	public void showError();
+	void showError();
 }
