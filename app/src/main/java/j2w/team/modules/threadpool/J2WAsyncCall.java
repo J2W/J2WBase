@@ -5,7 +5,10 @@ package j2w.team.modules.threadpool;
  */
 public abstract class J2WAsyncCall extends J2WRunnable {
 
+	public String	mehtodName;
+
 	public J2WAsyncCall(String methodName) {
 		super("J2W Method Name %s", methodName);
+		this.mehtodName = methodName;
 	}
 }
