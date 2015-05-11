@@ -19,6 +19,7 @@ import java.util.regex.Pattern;
 import j2w.team.modules.http.annotations.Body;
 import j2w.team.modules.http.annotations.GET;
 import j2w.team.modules.http.annotations.HEAD;
+import j2w.team.modules.http.annotations.Header;
 import j2w.team.modules.http.annotations.Headers;
 import j2w.team.modules.http.annotations.Path;
 import j2w.team.modules.http.annotations.POST;
@@ -148,9 +149,9 @@ public final class J2WMethodInfo {
 					} else if (methodAnnotationType == Body.class) {
 						requestObjectType = methodParameterType;
 						gotBody = true;
-					}
-
-					else {
+					} else if (methodAnnotationType == Header.class) {
+						//  什么都不做
+					} else {
 						continue;
 					}
 					requestParamAnnotations[i] = methodParameterAnnotation;
