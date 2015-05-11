@@ -107,9 +107,9 @@ public final class J2WMethodInfo {
 				}
 				headers = parseHeaders(headersToParse);
 			}
-			if (requestMethod == null) {
-				throw methodError("给方法注解( @GET, @POST).");
-			}
+		}
+		if (requestMethod == null) {
+			throw methodError("给方法注解( @GET, @POST).");
 		}
 	}
 
@@ -239,6 +239,7 @@ public final class J2WMethodInfo {
 		requestUrl = url;
 		requestUrlParamNames = urlParams;
 		requestQuery = query;
+
 	}
 
 	/**
