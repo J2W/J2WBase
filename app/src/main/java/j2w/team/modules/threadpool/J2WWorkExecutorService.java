@@ -12,6 +12,6 @@ public class J2WWorkExecutorService extends ThreadPoolExecutor {
 	private static final int	DEFAULT_THREAD_COUNT	= 3;
 
 	J2WWorkExecutorService() {
-		super(DEFAULT_THREAD_COUNT, DEFAULT_THREAD_COUNT, 0, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>(), J2WThreadPoolUtils.threadFactory("J2W Dispatcher", true));
+		super(DEFAULT_THREAD_COUNT, DEFAULT_THREAD_COUNT, 0, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>(), J2WThreadPoolUtils.threadFactory("J2WWork Dispatcher", true));
 	}
 }
