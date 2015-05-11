@@ -9,7 +9,7 @@ import java.util.Map;
  * @创建时间 15/5/4 下午5:33
  * @类描述 联系人实体类
  */
-public class PhoneContact {
+public class PhoneContact implements Cloneable {
 
 	/**
 	 * 用户名称
@@ -40,4 +40,17 @@ public class PhoneContact {
 	 * 数据库-联系人ID
 	 */
 	public String				contactId;
+
+	/**
+	 * 克隆
+	 * 
+	 * @return
+	 */
+	public Object clone() {
+		try {
+			return super.clone();
+		} catch (CloneNotSupportedException e) {
+			return null;
+		}
+	}
 }
