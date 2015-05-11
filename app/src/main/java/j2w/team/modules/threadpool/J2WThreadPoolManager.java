@@ -52,20 +52,20 @@ public final class J2WThreadPoolManager {
 		L.tag("J2WThreadPoolManager");
 		L.i("finish()");
 		if (j2WHttpExecutorService != null) {
-            L.tag("J2WThreadPoolManager");
-            L.i("j2WHttpExecutorService.shutdown()");
+			L.tag("J2WThreadPoolManager");
+			L.i("j2WHttpExecutorService.shutdown()");
 			j2WHttpExecutorService.shutdown();
 			j2WHttpExecutorService = null;
 		}
 		if (j2WSingleWorkExecutorServiece != null) {
-            L.tag("J2WThreadPoolManager");
-            L.i("j2WSingleWorkExecutorServiece.shutdown()");
+			L.tag("J2WThreadPoolManager");
+			L.i("j2WSingleWorkExecutorServiece.shutdown()");
 			j2WSingleWorkExecutorServiece.shutdown();
 			j2WSingleWorkExecutorServiece = null;
 		}
 		if (j2WWorkExecutorService != null) {
-            L.tag("J2WThreadPoolManager");
-            L.i("j2WWorkExecutorService.shutdown()");
+			L.tag("J2WThreadPoolManager");
+			L.i("j2WWorkExecutorService.shutdown()");
 			j2WWorkExecutorService.shutdown();
 			j2WWorkExecutorService = null;
 		}

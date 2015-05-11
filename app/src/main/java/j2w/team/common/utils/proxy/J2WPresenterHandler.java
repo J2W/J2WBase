@@ -26,7 +26,7 @@ public final class J2WPresenterHandler<T> extends BaseHandler<T> {
 		this.j2WPresenter = j2WPresenter;
 	}
 
-	@Override public Object invoke(Object proxy, final Method method, final Object[] args) throws Throwable {
+	@Override public synchronized Object invoke(Object proxy, final Method method, final Object[] args) throws Throwable {
 		// 判断是否在主线程
 		boolean isMainLooper = Looper.getMainLooper().getThread() != Thread.currentThread();
 		if (isMainLooper) {
@@ -39,11 +39,10 @@ public final class J2WPresenterHandler<T> extends BaseHandler<T> {
 					} catch (Throwable throwable) {
 						L.tag("J2W-Method");
 						L.i("方法执行失败");
-                        return;
-					}finally {
+					} finally {
 						countDownLatch.countDown();
-                    }
-                }
+					}
+				}
 			});
 			countDownLatch.await();
 			return methodReturn;
@@ -63,7 +62,7 @@ public final class J2WPresenterHandler<T> extends BaseHandler<T> {
 			t = null;
 			return null;
 		} else {
-			stringBuffer.append("执行:");
+			stringBuffer.append("主线程执行:");
 			stringBuffer.append(method.getName());
 			L.i(stringBuffer.toString());
 			return method.invoke(t, args);
