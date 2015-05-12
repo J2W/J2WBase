@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -118,6 +119,19 @@ public abstract class J2WPullListFragment<T extends J2WIPresenter> extends J2WLi
 	 */
 	@Override public void setData(List list) {
 		super.setData(list);
+		swipe_container.setRefreshing(false);
+	}
+
+	/**
+	 * 设置数据
+	 *
+	 * @param list
+	 *            数据集合
+	 * @param bool
+	 *            是否展示空布局
+	 */
+	public void setData(List list, boolean bool) {
+		super.setData(list,bool);
 		swipe_container.setRefreshing(false);
 	}
 

@@ -80,6 +80,16 @@ public interface J2WIViewListFragment extends J2WIViewFragment {
 	void setData(List list);
 
 	/**
+	 * 设置数据
+	 *
+	 * @param list
+	 *            数据集合
+	 * @param bool
+	 *            是否展示空布局
+	 */
+	void setData(List list, boolean bool);
+
+	/**
 	 * 追加数据
 	 * 
 	 * @param list

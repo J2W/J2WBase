@@ -209,7 +209,34 @@ public abstract class J2WVPListFragment<T extends J2WIPresenter> extends J2WVPFr
 			updateAdapter();
 		}
 	}
+	/**
+	 * 设置数据
+	 *
+	 * @param list
+	 *            数据集合
+	 * @param bool
+	 *            是否展示空布局
+	 */
+	public void setData(List list, boolean bool) {
+		L.tag(initTag());
+		L.i("Fragment-setData(List)");
+		if (list == null || list.size() < 1) {
+			L.tag(initTag());
+			L.i("Fragment-setData(List) return null");
+			if (bool) {
+				showEmpty();
+			} else {
+				mList = new ArrayList();
+				showContent();
 
+			}
+			return;
+		}
+		if (isAdapterNotNull()) {
+			mList = list;
+			updateAdapter();
+		}
+	}
 	/**
 	 * 追加数据
 	 *

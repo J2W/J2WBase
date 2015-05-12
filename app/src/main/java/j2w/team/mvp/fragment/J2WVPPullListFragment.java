@@ -128,7 +128,18 @@ public abstract class J2WVPPullListFragment<T extends J2WIPresenter> extends J2W
 		super.setData(list);
 		swipe_container.setRefreshing(false);
 	}
-
+	/**
+	 * 设置数据
+	 *
+	 * @param list
+	 *            数据集合
+	 * @param bool
+	 *            是否展示空布局
+	 */
+	public void setData(List list, boolean bool) {
+		super.setData(list,bool);
+		swipe_container.setRefreshing(false);
+	}
 	/**
 	 * 追加数据
 	 *

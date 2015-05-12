@@ -210,6 +210,34 @@ public abstract class J2WListFragment<T extends J2WIPresenter> extends J2WFragme
 	}
 
 	/**
+	 * 设置数据
+	 *
+	 * @param list
+	 *            数据集合
+	 * @param bool
+	 *            是否展示空布局
+	 */
+	public void setData(List list, boolean bool) {
+		L.tag(initTag());
+		L.i("Fragment-setData(List)");
+		if (list == null || list.size() < 1) {
+			L.tag(initTag());
+			L.i("Fragment-setData(List) return null");
+			if (bool) {
+				showEmpty();
+			} else {
+				mList = new ArrayList();
+				showContent();
+			}
+			return;
+		}
+		if (isAdapterNotNull()) {
+			mList = list;
+			updateAdapter();
+		}
+	}
+
+	/**
 	 * 追加数据
 	 *
 	 * @param list
@@ -260,14 +288,14 @@ public abstract class J2WListFragment<T extends J2WIPresenter> extends J2WFragme
 		return isAdapterNotNull() ? mList : null;
 	}
 
-    /**
-     * 重新创建适配器
-     */
-    public void resetAdapter(){
-        /** 初始化适配器 **/
-        mListAdapter = new ListAdapter();
-        listView.setAdapter(mListAdapter);
-    }
+	/**
+	 * 重新创建适配器
+	 */
+	public void resetAdapter() {
+		/** 初始化适配器 **/
+		mListAdapter = new ListAdapter();
+		listView.setAdapter(mListAdapter);
+	}
 
 	/**
 	 * 更新适配器 0 显示 进度, 1 显示 内容 2 显示 空 3 显示 错误,
