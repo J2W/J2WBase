@@ -26,5 +26,9 @@
         <attr name="preference_show_divider" format="boolean" />
     </declare-styleable>
     <!-- 控件点击波纹效果 -->
-
+    <!-- 动态改变大小textview-->
+    <attr name="autoScaleTextViewStyle" format="reference" />
+    <declare-styleable name="AutoScaleTextView">
+        <attr name="minTextSize" format="dimension" />
+    </declare-styleable>
 </resources>
