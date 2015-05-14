@@ -36,432 +36,429 @@ import android.view.ViewConfiguration;
 
 import j2w.team.R;
 
-
 /**
  * others are only stroked.
  */
 public class InfiniteCirclePageIndicator extends View implements PageIndicator {
-    private static final int INVALID_POINTER = -1;
 
-    private float mRadius;
-    private final Paint mPaintPageFill = new Paint(ANTI_ALIAS_FLAG);
-    private final Paint mPaintStroke = new Paint(ANTI_ALIAS_FLAG);
-    private final Paint mPaintFill = new Paint(ANTI_ALIAS_FLAG);
-    private AutoScrollViewPager mViewPager;
-    private ViewPager.OnPageChangeListener mListener;
-    private int mCurrentPage;
-    private int mSnapPage;
-    private float mPageOffset;
-    private int mScrollState;
-    private int mOrientation;
-    private boolean mCentered;
-    private boolean mSnap;
+	private static final int				INVALID_POINTER	= -1;
 
+	private float							mRadius;
 
-    public InfiniteCirclePageIndicator(Context context) {
-        this(context, null);
-    }
+	private final Paint						mPaintPageFill	= new Paint(ANTI_ALIAS_FLAG);
 
-    public InfiniteCirclePageIndicator(Context context, AttributeSet attrs) {
-        this(context, attrs, R.attr.vpiCirclePageIndicatorStyle);
-    }
+	private final Paint						mPaintStroke	= new Paint(ANTI_ALIAS_FLAG);
 
-    public InfiniteCirclePageIndicator(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
-        if (isInEditMode()) return;
+	private final Paint						mPaintFill		= new Paint(ANTI_ALIAS_FLAG);
 
-        //Load defaults from resources
-        final Resources res = getResources();
-        final int defaultPageColor = res.getColor(R.color.default_circle_indicator_page_color);
-        final int defaultFillColor = res.getColor(R.color.default_circle_indicator_fill_color);
-        final int defaultOrientation = res.getInteger(R.integer.default_circle_indicator_orientation);
-        final int defaultStrokeColor = res.getColor(R.color.default_circle_indicator_stroke_color);
-        final float defaultStrokeWidth = res.getDimension(R.dimen.default_circle_indicator_stroke_width);
-        final float defaultRadius = res.getDimension(R.dimen.default_circle_indicator_radius);
-        final boolean defaultCentered = res.getBoolean(R.bool.default_circle_indicator_centered);
-        final boolean defaultSnap = res.getBoolean(R.bool.default_circle_indicator_snap);
+	private ViewPager						mViewPager;
 
-        //Retrieve styles attributes
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CirclePageIndicator, defStyle, 0);
+	private ViewPager.OnPageChangeListener	mListener;
 
-        mCentered = a.getBoolean(R.styleable.CirclePageIndicator_centered, defaultCentered);
-        mOrientation = a.getInt(R.styleable.CirclePageIndicator_android_orientation, defaultOrientation);
-        mPaintPageFill.setStyle(Style.FILL);
-        mPaintPageFill.setColor(a.getColor(R.styleable.CirclePageIndicator_pageColor, defaultPageColor));
-        mPaintStroke.setStyle(Style.STROKE);
-        mPaintStroke.setColor(a.getColor(R.styleable.CirclePageIndicator_strokeColor, defaultStrokeColor));
-        mPaintStroke.setStrokeWidth(a.getDimension(R.styleable.CirclePageIndicator_strokeWidth, defaultStrokeWidth));
-        mPaintFill.setStyle(Style.FILL);
-        mPaintFill.setColor(a.getColor(R.styleable.CirclePageIndicator_fillColor, defaultFillColor));
-        mRadius = a.getDimension(R.styleable.CirclePageIndicator_radius, defaultRadius);
-        mSnap = a.getBoolean(R.styleable.CirclePageIndicator_snap, defaultSnap);
+	private int								mCurrentPage;
 
-        Drawable background = a.getDrawable(R.styleable.CirclePageIndicator_android_background);
-        if (background != null) {
-          setBackgroundDrawable(background);
-        }
+	private int								mSnapPage;
 
-        a.recycle();
+	private float							mPageOffset;
 
-        final ViewConfiguration configuration = ViewConfiguration.get(context);
-//        mTouchSlop = ViewConfigurationCompat.getScaledPagingTouchSlop(configuration);
-    }
+	private int								mScrollState;
 
+	private int								mOrientation;
 
-    public void setCentered(boolean centered) {
-        mCentered = centered;
-        invalidate();
-    }
+	private boolean							mCentered;
 
-    public boolean isCentered() {
-        return mCentered;
-    }
+	private boolean							mSnap;
 
-    public void setPageColor(int pageColor) {
-        mPaintPageFill.setColor(pageColor);
-        invalidate();
-    }
+	public InfiniteCirclePageIndicator(Context context) {
+		this(context, null);
+	}
 
-    public int getPageColor() {
-        return mPaintPageFill.getColor();
-    }
+	public InfiniteCirclePageIndicator(Context context, AttributeSet attrs) {
+		this(context, attrs, R.attr.vpiCirclePageIndicatorStyle);
+	}
 
-    public void setFillColor(int fillColor) {
-        mPaintFill.setColor(fillColor);
-        invalidate();
-    }
+	public InfiniteCirclePageIndicator(Context context, AttributeSet attrs, int defStyle) {
+		super(context, attrs, defStyle);
+		if (isInEditMode()) return;
 
-    public int getFillColor() {
-        return mPaintFill.getColor();
-    }
+		// Load defaults from resources
+		final Resources res = getResources();
+		final int defaultPageColor = res.getColor(R.color.default_circle_indicator_page_color);
+		final int defaultFillColor = res.getColor(R.color.default_circle_indicator_fill_color);
+		final int defaultOrientation = res.getInteger(R.integer.default_circle_indicator_orientation);
+		final int defaultStrokeColor = res.getColor(R.color.default_circle_indicator_stroke_color);
+		final float defaultStrokeWidth = res.getDimension(R.dimen.default_circle_indicator_stroke_width);
+		final float defaultRadius = res.getDimension(R.dimen.default_circle_indicator_radius);
+		final boolean defaultCentered = res.getBoolean(R.bool.default_circle_indicator_centered);
+		final boolean defaultSnap = res.getBoolean(R.bool.default_circle_indicator_snap);
 
-    public void setOrientation(int orientation) {
-        switch (orientation) {
-            case HORIZONTAL:
-            case VERTICAL:
-                mOrientation = orientation;
-                requestLayout();
-                break;
+		// Retrieve styles attributes
+		TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CirclePageIndicator, defStyle, 0);
 
-            default:
-                throw new IllegalArgumentException("Orientation must be either HORIZONTAL or VERTICAL.");
-        }
-    }
+		mCentered = a.getBoolean(R.styleable.CirclePageIndicator_centered, defaultCentered);
+		mOrientation = a.getInt(R.styleable.CirclePageIndicator_android_orientation, defaultOrientation);
+		mPaintPageFill.setStyle(Style.FILL);
+		mPaintPageFill.setColor(a.getColor(R.styleable.CirclePageIndicator_pageColor, defaultPageColor));
+		mPaintStroke.setStyle(Style.STROKE);
+		mPaintStroke.setColor(a.getColor(R.styleable.CirclePageIndicator_strokeColor, defaultStrokeColor));
+		mPaintStroke.setStrokeWidth(a.getDimension(R.styleable.CirclePageIndicator_strokeWidth, defaultStrokeWidth));
+		mPaintFill.setStyle(Style.FILL);
+		mPaintFill.setColor(a.getColor(R.styleable.CirclePageIndicator_fillColor, defaultFillColor));
+		mRadius = a.getDimension(R.styleable.CirclePageIndicator_radius, defaultRadius);
+		mSnap = a.getBoolean(R.styleable.CirclePageIndicator_snap, defaultSnap);
 
-    public int getOrientation() {
-        return mOrientation;
-    }
+		Drawable background = a.getDrawable(R.styleable.CirclePageIndicator_android_background);
+		if (background != null) {
+			setBackgroundDrawable(background);
+		}
 
-    public void setStrokeColor(int strokeColor) {
-        mPaintStroke.setColor(strokeColor);
-        invalidate();
-    }
+		a.recycle();
 
-    public int getStrokeColor() {
-        return mPaintStroke.getColor();
-    }
+		final ViewConfiguration configuration = ViewConfiguration.get(context);
+		// mTouchSlop =
+		// ViewConfigurationCompat.getScaledPagingTouchSlop(configuration);
+	}
 
-    public void setStrokeWidth(float strokeWidth) {
-        mPaintStroke.setStrokeWidth(strokeWidth);
-        invalidate();
-    }
+	public void setCentered(boolean centered) {
+		mCentered = centered;
+		invalidate();
+	}
 
-    public float getStrokeWidth() {
-        return mPaintStroke.getStrokeWidth();
-    }
+	public boolean isCentered() {
+		return mCentered;
+	}
 
-    public void setRadius(float radius) {
-        mRadius = radius;
-        invalidate();
-    }
+	public void setPageColor(int pageColor) {
+		mPaintPageFill.setColor(pageColor);
+		invalidate();
+	}
 
-    public float getRadius() {
-        return mRadius;
-    }
+	public int getPageColor() {
+		return mPaintPageFill.getColor();
+	}
 
-    public void setSnap(boolean snap) {
-        mSnap = snap;
-        invalidate();
-    }
+	public void setFillColor(int fillColor) {
+		mPaintFill.setColor(fillColor);
+		invalidate();
+	}
 
-    public boolean isSnap() {
-        return mSnap;
-    }
+	public int getFillColor() {
+		return mPaintFill.getColor();
+	}
 
-    @Override
-    protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
+	public void setOrientation(int orientation) {
+		switch (orientation) {
+			case HORIZONTAL:
+			case VERTICAL:
+				mOrientation = orientation;
+				requestLayout();
+				break;
 
-        if (mViewPager == null) {
-            return;
-        }
-        final int count = ((InfinitePagerAdapter)mViewPager.getAdapter()).getRealCount();
-        if (count == 0) {
-            return;
-        }
+			default:
+				throw new IllegalArgumentException("Orientation must be either HORIZONTAL or VERTICAL.");
+		}
+	}
 
-        if (mCurrentPage >= count) {
-            setCurrentItem(count - 1);
-            return;
-        }
+	public int getOrientation() {
+		return mOrientation;
+	}
 
-        int longSize;
-        int longPaddingBefore;
-        int longPaddingAfter;
-        int shortPaddingBefore;
-        if (mOrientation == HORIZONTAL) {
-            longSize = getWidth();
-            longPaddingBefore = getPaddingLeft();
-            longPaddingAfter = getPaddingRight();
-            shortPaddingBefore = getPaddingTop();
-        } else {
-            longSize = getHeight();
-            longPaddingBefore = getPaddingTop();
-            longPaddingAfter = getPaddingBottom();
-            shortPaddingBefore = getPaddingLeft();
-        }
+	public void setStrokeColor(int strokeColor) {
+		mPaintStroke.setColor(strokeColor);
+		invalidate();
+	}
 
-        final float fiveRadius = mRadius * 5;
-        final float shortOffset = shortPaddingBefore + mRadius;
-        float longOffset = longPaddingBefore + mRadius;
-        if (mCentered) {
-            longOffset += ((longSize - longPaddingBefore - longPaddingAfter) / 2.0f) - ((count * fiveRadius) / 2.0f);
-        }
+	public int getStrokeColor() {
+		return mPaintStroke.getColor();
+	}
 
-        float dX;
-        float dY;
+	public void setStrokeWidth(float strokeWidth) {
+		mPaintStroke.setStrokeWidth(strokeWidth);
+		invalidate();
+	}
 
-        float pageFillRadius = mRadius;
-        if (mPaintStroke.getStrokeWidth() > 0) {
-            pageFillRadius -= mPaintStroke.getStrokeWidth() / 2.0f;
-        }
+	public float getStrokeWidth() {
+		return mPaintStroke.getStrokeWidth();
+	}
 
-        //Draw stroked circles
-        for (int iLoop = 0; iLoop < count; iLoop++) {
-            float drawLong = longOffset + (iLoop * fiveRadius);
-            if (mOrientation == HORIZONTAL) {
-                dX = drawLong;
-                dY = shortOffset;
-            } else {
-                dX = shortOffset;
-                dY = drawLong;
-            }
-            // Only paint fill if not completely transparent
-            if (mPaintPageFill.getAlpha() > 0) {
-                canvas.drawCircle(dX, dY, pageFillRadius, mPaintPageFill);
-            }
+	public void setRadius(float radius) {
+		mRadius = radius;
+		invalidate();
+	}
 
-            // Only paint stroke if a stroke width was non-zero
-            if (pageFillRadius != mRadius) {
-                canvas.drawCircle(dX, dY, mRadius, mPaintStroke);
-            }
-        }
+	public float getRadius() {
+		return mRadius;
+	}
 
-        //Draw the filled circle according to the current scroll
-        float cx = (mSnap ? mSnapPage : mCurrentPage) * fiveRadius;
-        if (!mSnap) {
-            cx += mPageOffset * fiveRadius;
-        }
-        if (mOrientation == HORIZONTAL) {
-            dX = longOffset + cx;
-            dY = shortOffset;
-        } else {
-            dX = shortOffset;
-            dY = longOffset + cx;
-        }
-        canvas.drawCircle(dX, dY, mRadius, mPaintFill);
-    }
+	public void setSnap(boolean snap) {
+		mSnap = snap;
+		invalidate();
+	}
 
-    @Override
-    public void setViewPager(ViewPager view) {
-        if (mViewPager == view) {
-            return;
-        }
-        if (mViewPager != null) {
-            mViewPager.setOnPageChangeListener(null);
-        }
-        if (view.getAdapter() == null) {
-            throw new IllegalStateException("ViewPager does not have adapter instance.");
-        }
-        mViewPager = (AutoScrollViewPager)view;
-        mViewPager.setOnPageChangeListener(this);
-        invalidate();
-    }
+	public boolean isSnap() {
+		return mSnap;
+	}
 
-    @Override
-    public void setViewPager(ViewPager view, int initialPosition) {
-        setViewPager(view);
-        setCurrentItem(initialPosition);
-    }
+	@Override protected void onDraw(Canvas canvas) {
+		super.onDraw(canvas);
 
-    @Override
-    public void setCurrentItem(int item) {
-        if (mViewPager == null) {
-            throw new IllegalStateException("ViewPager has not been bound.");
-        }
-        mViewPager.setCurrentItem(item);
-        mCurrentPage = item;
-        invalidate();
-    }
+		if (mViewPager == null) {
+			return;
+		}
+		final int count = ((InfinitePagerAdapter) mViewPager.getAdapter()).getRealCount();
+		if (count == 0) {
+			return;
+		}
 
-    @Override
-    public void notifyDataSetChanged() {
-        mViewPager.getAdapter().notifyDataSetChanged();
-        invalidate();
-    }
+		if (mCurrentPage >= count) {
+			setCurrentItem(count - 1);
+			return;
+		}
 
-    @Override
-    public void onPageScrollStateChanged(int state) {
-        mScrollState = state;
+		int longSize;
+		int longPaddingBefore;
+		int longPaddingAfter;
+		int shortPaddingBefore;
+		if (mOrientation == HORIZONTAL) {
+			longSize = getWidth();
+			longPaddingBefore = getPaddingLeft();
+			longPaddingAfter = getPaddingRight();
+			shortPaddingBefore = getPaddingTop();
+		} else {
+			longSize = getHeight();
+			longPaddingBefore = getPaddingTop();
+			longPaddingAfter = getPaddingBottom();
+			shortPaddingBefore = getPaddingLeft();
+		}
 
-        if (mListener != null) {
-            mListener.onPageScrollStateChanged(state);
-        }
-    }
+		final float fiveRadius = mRadius * 5;
+		final float shortOffset = shortPaddingBefore + mRadius;
+		float longOffset = longPaddingBefore + mRadius;
+		if (mCentered) {
+			longOffset += ((longSize - longPaddingBefore - longPaddingAfter) / 2.0f) - ((count * fiveRadius) / 2.0f);
+		}
 
-    @Override
-    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-    	mCurrentPage = ((InfinitePagerAdapter)mViewPager.getAdapter()).getVirtualPosition(position);
-        mPageOffset = positionOffset;
-        invalidate();
+		float dX;
+		float dY;
 
-        if (mListener != null) {
-            mListener.onPageScrolled(position, positionOffset, positionOffsetPixels);
-        }
-    }
+		float pageFillRadius = mRadius;
+		if (mPaintStroke.getStrokeWidth() > 0) {
+			pageFillRadius -= mPaintStroke.getStrokeWidth() / 2.0f;
+		}
 
-    @Override
-    public void onPageSelected(int position) {
-        if (mSnap || mScrollState == ViewPager.SCROLL_STATE_IDLE) {
-        	mCurrentPage = ((InfinitePagerAdapter)mViewPager.getAdapter()).getVirtualPosition(position);
-            mSnapPage = mCurrentPage;
-            invalidate();
-        }
+		// Draw stroked circles
+		for (int iLoop = 0; iLoop < count; iLoop++) {
+			float drawLong = longOffset + (iLoop * fiveRadius);
+			if (mOrientation == HORIZONTAL) {
+				dX = drawLong;
+				dY = shortOffset;
+			} else {
+				dX = shortOffset;
+				dY = drawLong;
+			}
+			// Only paint fill if not completely transparent
+			if (mPaintPageFill.getAlpha() > 0) {
+				canvas.drawCircle(dX, dY, pageFillRadius, mPaintPageFill);
+			}
 
-        if (mListener != null) {
-            mListener.onPageSelected(position);
-        }
-    }
+			// Only paint stroke if a stroke width was non-zero
+			if (pageFillRadius != mRadius) {
+				canvas.drawCircle(dX, dY, mRadius, mPaintStroke);
+			}
+		}
 
-    @Override
-    public void setOnPageChangeListener(ViewPager.OnPageChangeListener listener) {
-        mListener = listener;
-    }
+		// Draw the filled circle according to the current scroll
+		float cx = (mSnap ? mSnapPage : mCurrentPage) * fiveRadius;
+		if (!mSnap) {
+			cx += mPageOffset * fiveRadius;
+		}
+		if (mOrientation == HORIZONTAL) {
+			dX = longOffset + cx;
+			dY = shortOffset;
+		} else {
+			dX = shortOffset;
+			dY = longOffset + cx;
+		}
+		canvas.drawCircle(dX, dY, mRadius, mPaintFill);
+	}
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see android.view.View#onMeasure(int, int)
-     */
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        if (mOrientation == HORIZONTAL) {
-            setMeasuredDimension(measureLong(widthMeasureSpec), measureShort(heightMeasureSpec));
-        } else {
-            setMeasuredDimension(measureShort(widthMeasureSpec), measureLong(heightMeasureSpec));
-        }
-    }
+	@Override public void setViewPager(ViewPager view) {
+		if (mViewPager == view) {
+			return;
+		}
+		if (mViewPager != null) {
+			mViewPager.setOnPageChangeListener(null);
+		}
+		if (view.getAdapter() == null) {
+			throw new IllegalStateException("ViewPager does not have adapter instance.");
+		}
+		mViewPager = view;
+		mViewPager.setOnPageChangeListener(this);
+		invalidate();
+	}
 
-    /**
-     * Determines the width of this view
-     *
-     * @param measureSpec
-     *            A measureSpec packed into an int
-     * @return The width of the view, honoring constraints from measureSpec
-     */
-    private int measureLong(int measureSpec) {
-        int result;
-        int specMode = MeasureSpec.getMode(measureSpec);
-        int specSize = MeasureSpec.getSize(measureSpec);
+	@Override public void setViewPager(ViewPager view, int initialPosition) {
+		setViewPager(view);
+		setCurrentItem(initialPosition);
+	}
 
-        if ((specMode == MeasureSpec.EXACTLY) || (mViewPager == null)) {
-            //We were told how big to be
-            result = specSize;
-        } else {
-            //Calculate the width according the views count
-            final int count = ((InfinitePagerAdapter)mViewPager.getAdapter()).getRealCount();
-            result = (int)(getPaddingLeft() + getPaddingRight()
-                    + (count * 2 * mRadius) + (count - 1) * mRadius + 1);
-            //Respect AT_MOST value if that was what is called for by measureSpec
-            if (specMode == MeasureSpec.AT_MOST) {
-                result = Math.min(result, specSize);
-            }
-        }
-        return result;
-    }
+	@Override public void setCurrentItem(int item) {
+		if (mViewPager == null) {
+			throw new IllegalStateException("ViewPager has not been bound.");
+		}
+		mViewPager.setCurrentItem(item);
+		mCurrentPage = item;
+		invalidate();
+	}
 
-    /**
-     * Determines the height of this view
-     *
-     * @param measureSpec
-     *            A measureSpec packed into an int
-     * @return The height of the view, honoring constraints from measureSpec
-     */
-    private int measureShort(int measureSpec) {
-        int result;
-        int specMode = MeasureSpec.getMode(measureSpec);
-        int specSize = MeasureSpec.getSize(measureSpec);
+	@Override public void notifyDataSetChanged() {
+		mViewPager.getAdapter().notifyDataSetChanged();
+		invalidate();
+	}
 
-        if (specMode == MeasureSpec.EXACTLY) {
-            //We were told how big to be
-            result = specSize;
-        } else {
-            //Measure the height
-            result = (int)(2 * mRadius + getPaddingTop() + getPaddingBottom() + 1);
-            //Respect AT_MOST value if that was what is called for by measureSpec
-            if (specMode == MeasureSpec.AT_MOST) {
-                result = Math.min(result, specSize);
-            }
-        }
-        return result;
-    }
+	@Override public void onPageScrollStateChanged(int state) {
+		mScrollState = state;
 
-    @Override
-    public void onRestoreInstanceState(Parcelable state) {
-        SavedState savedState = (SavedState)state;
-        super.onRestoreInstanceState(savedState.getSuperState());
-        mCurrentPage = savedState.currentPage;
-        mSnapPage = savedState.currentPage;
-        requestLayout();
-    }
+		if (mListener != null) {
+			mListener.onPageScrollStateChanged(state);
+		}
+	}
 
-    @Override
-    public Parcelable onSaveInstanceState() {
-        Parcelable superState = super.onSaveInstanceState();
-        SavedState savedState = new SavedState(superState);
-        savedState.currentPage = mCurrentPage;
-        return savedState;
-    }
+	@Override public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+		mCurrentPage = ((InfinitePagerAdapter) mViewPager.getAdapter()).getVirtualPosition(position);
+		mPageOffset = positionOffset;
+		invalidate();
 
-    static class SavedState extends BaseSavedState {
-        int currentPage;
+		if (mListener != null) {
+			mListener.onPageScrolled(position, positionOffset, positionOffsetPixels);
+		}
+	}
 
-        public SavedState(Parcelable superState) {
-            super(superState);
-        }
+	@Override public void onPageSelected(int position) {
+		if (mSnap || mScrollState == ViewPager.SCROLL_STATE_IDLE) {
+			mCurrentPage = ((InfinitePagerAdapter) mViewPager.getAdapter()).getVirtualPosition(position);
+			mSnapPage = mCurrentPage;
+			invalidate();
+		}
 
-        private SavedState(Parcel in) {
-            super(in);
-            currentPage = in.readInt();
-        }
+		if (mListener != null) {
+			mListener.onPageSelected(position);
+		}
+	}
 
-        @Override
-        public void writeToParcel(Parcel dest, int flags) {
-            super.writeToParcel(dest, flags);
-            dest.writeInt(currentPage);
-        }
+	@Override public void setOnPageChangeListener(ViewPager.OnPageChangeListener listener) {
+		mListener = listener;
+	}
 
-        @SuppressWarnings("UnusedDeclaration")
-        public static final Creator<SavedState> CREATOR = new Creator<SavedState>() {
-            @Override
-            public SavedState createFromParcel(Parcel in) {
-                return new SavedState(in);
-            }
+	/*
+	 * (non-Javadoc)
+	 * @see android.view.View#onMeasure(int, int)
+	 */
+	@Override protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+		if (mOrientation == HORIZONTAL) {
+			setMeasuredDimension(measureLong(widthMeasureSpec), measureShort(heightMeasureSpec));
+		} else {
+			setMeasuredDimension(measureShort(widthMeasureSpec), measureLong(heightMeasureSpec));
+		}
+	}
 
-            @Override
-            public SavedState[] newArray(int size) {
-                return new SavedState[size];
-            }
-        };
-    }
+	/**
+	 * Determines the width of this view
+	 *
+	 * @param measureSpec
+	 *            A measureSpec packed into an int
+	 * @return The width of the view, honoring constraints from measureSpec
+	 */
+	private int measureLong(int measureSpec) {
+		int result;
+		int specMode = MeasureSpec.getMode(measureSpec);
+		int specSize = MeasureSpec.getSize(measureSpec);
+
+		if ((specMode == MeasureSpec.EXACTLY) || (mViewPager == null)) {
+			// We were told how big to be
+			result = specSize;
+		} else {
+			// Calculate the width according the views count
+			final int count = ((InfinitePagerAdapter) mViewPager.getAdapter()).getRealCount();
+			result = (int) (getPaddingLeft() + getPaddingRight() + (count * 2 * mRadius) + (count - 1) * mRadius + 1);
+			// Respect AT_MOST value if that was what is called for by
+			// measureSpec
+			if (specMode == MeasureSpec.AT_MOST) {
+				result = Math.min(result, specSize);
+			}
+		}
+		return result;
+	}
+
+	/**
+	 * Determines the height of this view
+	 *
+	 * @param measureSpec
+	 *            A measureSpec packed into an int
+	 * @return The height of the view, honoring constraints from measureSpec
+	 */
+	private int measureShort(int measureSpec) {
+		int result;
+		int specMode = MeasureSpec.getMode(measureSpec);
+		int specSize = MeasureSpec.getSize(measureSpec);
+
+		if (specMode == MeasureSpec.EXACTLY) {
+			// We were told how big to be
+			result = specSize;
+		} else {
+			// Measure the height
+			result = (int) (2 * mRadius + getPaddingTop() + getPaddingBottom() + 1);
+			// Respect AT_MOST value if that was what is called for by
+			// measureSpec
+			if (specMode == MeasureSpec.AT_MOST) {
+				result = Math.min(result, specSize);
+			}
+		}
+		return result;
+	}
+
+	@Override public void onRestoreInstanceState(Parcelable state) {
+		SavedState savedState = (SavedState) state;
+		super.onRestoreInstanceState(savedState.getSuperState());
+		mCurrentPage = savedState.currentPage;
+		mSnapPage = savedState.currentPage;
+		requestLayout();
+	}
+
+	@Override public Parcelable onSaveInstanceState() {
+		Parcelable superState = super.onSaveInstanceState();
+		SavedState savedState = new SavedState(superState);
+		savedState.currentPage = mCurrentPage;
+		return savedState;
+	}
+
+	static class SavedState extends BaseSavedState {
+
+		int	currentPage;
+
+		public SavedState(Parcelable superState) {
+			super(superState);
+		}
+
+		private SavedState(Parcel in) {
+			super(in);
+			currentPage = in.readInt();
+		}
+
+		@Override public void writeToParcel(Parcel dest, int flags) {
+			super.writeToParcel(dest, flags);
+			dest.writeInt(currentPage);
+		}
+
+		@SuppressWarnings("UnusedDeclaration") public static final Creator<SavedState>	CREATOR	= new Creator<SavedState>() {
+
+																									@Override public SavedState createFromParcel(Parcel in) {
+																										return new SavedState(in);
+																									}
+
+																									@Override public SavedState[] newArray(int size) {
+																										return new SavedState[size];
+																									}
+																								};
+	}
 }
