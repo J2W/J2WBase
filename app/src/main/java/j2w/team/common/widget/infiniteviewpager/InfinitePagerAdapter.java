@@ -55,7 +55,7 @@ public class InfinitePagerAdapter extends PagerAdapter implements ViewPager.OnPa
 		Log.i("destroyItem", "" + virtualPosition + ":" + position);
 
 		adapter.destroyItem(container, virtualPosition, object);
-		adapter.instantiateItem(container, virtualPosition);
+//		adapter.instantiateItem(container, virtualPosition);
 	}
 
 	@Override public void finishUpdate(ViewGroup container) {
