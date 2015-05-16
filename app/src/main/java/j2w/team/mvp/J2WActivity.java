@@ -8,12 +8,14 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ViewAnimator;
 
 import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
 import j2w.team.R;
+import j2w.team.common.utils.KeyboardUtils;
 import j2w.team.modules.dialog.iface.IDialogListener;
 import j2w.team.modules.dialog.provided.ProgressDailogFragment;
 import j2w.team.modules.http.J2WRestAdapter;
@@ -407,6 +409,7 @@ public abstract class J2WActivity<T extends J2WIPresenter> extends FragmentActiv
 
 	@Override protected final void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		J2WHelper.getInstance().onCreate(this, savedInstanceState);
 		/** 是否固定竖屏 **/
 		if (isFixedVerticalScreen()) {
 			/** 竖屏显示 **/
@@ -426,12 +429,14 @@ public abstract class J2WActivity<T extends J2WIPresenter> extends FragmentActiv
 
 	@Override protected void onStart() {
 		super.onStart();
+		J2WHelper.getInstance().onStart(this);
 		L.tag(initTag());
 		L.i("onStart()");
 	}
 
 	@Override protected void onResume() {
 		super.onResume();
+		J2WHelper.getInstance().onResume(this);
 		L.tag(initTag());
 		L.i("onResume()");
 		/** 判断EventBus 然后注册 **/
@@ -444,24 +449,28 @@ public abstract class J2WActivity<T extends J2WIPresenter> extends FragmentActiv
 
 	@Override protected void onPause() {
 		super.onPause();
+		J2WHelper.getInstance().onPause(this);
 		L.tag(initTag());
 		L.i("onPause()");
 	}
 
 	@Override protected void onRestart() {
 		super.onRestart();
+		J2WHelper.getInstance().onRestart(this);
 		L.tag(initTag());
 		L.i("onRestart()");
 	}
 
 	@Override protected void onStop() {
 		super.onStop();
+		J2WHelper.getInstance().onStop(this);
 		L.tag(initTag());
 		L.i("onStop()");
 	}
 
 	@Override protected void onDestroy() {
 		super.onDestroy();
+		J2WHelper.getInstance().onDestroy(this);
 		L.tag(initTag());
 		L.i("onDestroy()");
 		/** 切断关联 **/
@@ -484,7 +493,7 @@ public abstract class J2WActivity<T extends J2WIPresenter> extends FragmentActiv
 	 * @return
 	 */
 	@Override public int fragmentLoadingLayout() {
-		return R.layout.j2w_fragment_loading;
+		return J2WHelper.getInstance().fragmentLoadingLayout();
 	}
 
 	/**
@@ -493,7 +502,7 @@ public abstract class J2WActivity<T extends J2WIPresenter> extends FragmentActiv
 	 * @return
 	 */
 	@Override public int fragmentEmptyLayout() {
-		return R.layout.j2w_fragment_empty;
+		return J2WHelper.getInstance().fragmentEmptyLayout();
 	}
 
 	/**
@@ -502,7 +511,7 @@ public abstract class J2WActivity<T extends J2WIPresenter> extends FragmentActiv
 	 * @return
 	 */
 	@Override public int fragmentErrorLayout() {
-		return R.layout.j2w_fragment_error;
+		return J2WHelper.getInstance().fragmentErrorLayout();
 	}
 
 	/**
@@ -705,4 +714,20 @@ public abstract class J2WActivity<T extends J2WIPresenter> extends FragmentActiv
 		mViewAnimator.setDisplayedChild(showState);
 	}
 
+	/**
+	 * 屏幕点击事件 - 关闭键盘
+	 *
+	 * @param ev
+	 * @return
+	 */
+	@Override public boolean dispatchTouchEvent(MotionEvent ev) {
+		if (ev.getAction() == MotionEvent.ACTION_DOWN) {
+			// 获得当前得到焦点的View，一般情况下就是EditText（特殊情况就是轨迹求或者实体案件会移动焦点）
+			View v = getCurrentFocus();
+			if (KeyboardUtils.isShouldHideInput(v, ev)) {
+				KeyboardUtils.hideSoftInput(J2WHelper.getScreenHelper().currentActivity());
+			}
+		}
+		return super.dispatchTouchEvent(ev);
+	}
 }

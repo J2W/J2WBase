@@ -468,17 +468,20 @@ public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment impl
 
 	@Override public void onAttach(Activity activity) {
 		super.onAttach(activity);
+		J2WHelper.getInstance().onFragmentAttach(this);
 		L.tag(initTag());
 		L.i("Fragment-onAttach()");
 	}
 
 	@Override public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		J2WHelper.getInstance().onFragmentCreate(this,savedInstanceState);
 		L.tag(initTag());
 		L.i("Fragment-onCreate()");
 	}
 
 	@Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		J2WHelper.getInstance().onFragmentCreateView(this,inflater,container,savedInstanceState);
 		L.tag(initTag());
 		L.i("Fragment-onCreateView()");
 		/** 打开开关触发菜单项 **/
@@ -499,6 +502,7 @@ public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment impl
 
 	@Override public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
+		J2WHelper.getInstance().onFragmentActivityCreated(this,savedInstanceState);
 		L.tag(initTag());
 		L.i("Fragment-onActivityCreated()");
 		initData(savedInstanceState);
@@ -506,12 +510,14 @@ public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment impl
 
 	@Override public void onStart() {
 		super.onStart();
+		J2WHelper.getInstance().onFragmentStart(this);
 		L.tag(initTag());
 		L.i("Fragment-onStart()");
 	}
 
 	@Override public void onResume() {
 		super.onResume();
+		J2WHelper.getInstance().onFragmentResume(this);
 		L.tag(initTag());
 		L.i("Fragment-onResume()");
 		/** 判断EventBus 然后注册 **/
@@ -524,6 +530,7 @@ public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment impl
 
 	@Override public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
+		J2WHelper.getInstance().onSaveInstanceState(this,outState);
 		L.tag(initTag());
 		L.i("Fragment-onSaveInstanceState()");
 
@@ -531,18 +538,21 @@ public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment impl
 
 	@Override public void onPause() {
 		super.onPause();
+		J2WHelper.getInstance().onFragmentPause(this);
 		L.tag(initTag());
 		L.i("Fragment-onPause()");
 	}
 
 	@Override public void onStop() {
 		super.onStop();
+		J2WHelper.getInstance().onFragmentStop(this);
 		L.tag(initTag());
 		L.i("Fragment-onStop()");
 	}
 
 	@Override public void onDestroyView() {
 		super.onDestroyView();
+		J2WHelper.getInstance().onFragmentDestroyView(this);
 		L.tag(initTag());
 		L.m("Fragment-onDestroyView()");
 		/** 切断关联 **/
@@ -561,12 +571,14 @@ public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment impl
 
 	@Override public void onDestroy() {
 		super.onDestroy();
+		J2WHelper.getInstance().onFragmentDestroy(this);
 		L.tag(initTag());
 		L.i("Fragment-onDestroy()");
 	}
 
 	@Override public void onDetach() {
 		super.onDetach();
+		J2WHelper.getInstance().onFragmentDetach(this);
 		L.tag(initTag());
 		L.i("Fragment-onDetach()");
 	}
@@ -791,4 +803,5 @@ public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment impl
 	public int fragmentErrorLayout() {
 		return 0;
 	}
+
 }
