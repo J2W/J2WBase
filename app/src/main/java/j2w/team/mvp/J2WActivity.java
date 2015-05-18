@@ -261,6 +261,9 @@ public abstract class J2WActivity<T extends J2WIPresenter> extends FragmentActiv
 			return;
 		}
 		getFManager().beginTransaction().add(layoutId, fragment, tag).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commitAllowingStateLoss();
+		if (!activityState()) {
+			getFManager().executePendingTransactions();
+		}
 
 	}
 
@@ -329,6 +332,9 @@ public abstract class J2WActivity<T extends J2WIPresenter> extends FragmentActiv
 			fragmentTransaction.detach(old);
 		}
 		fragmentTransaction.add(layoutId, fragment, tag).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commitAllowingStateLoss();
+		if (!activityState()) {
+			getFManager().executePendingTransactions();
+		}
 	}
 
 	/**
@@ -358,6 +364,9 @@ public abstract class J2WActivity<T extends J2WIPresenter> extends FragmentActiv
 			return;
 		}
 		getFManager().beginTransaction().add(android.R.id.custom, fragment, tag).addToBackStack(null).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commitAllowingStateLoss();
+		if (!activityState()) {
+			getFManager().executePendingTransactions();
+		}
 	}
 
 	/**
@@ -396,6 +405,9 @@ public abstract class J2WActivity<T extends J2WIPresenter> extends FragmentActiv
 			return;
 		}
 		getFManager().beginTransaction().add(layoutId, fragment, tag).addToBackStack(null).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commitAllowingStateLoss();
+		if (!activityState()) {
+			getFManager().executePendingTransactions();
+		}
 	}
 
 	/**

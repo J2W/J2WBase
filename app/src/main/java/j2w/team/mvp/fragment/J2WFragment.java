@@ -248,6 +248,9 @@ public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment impl
 			return;
 		}
 		getFManager().beginTransaction().add(layoutId, fragment, tag).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commitAllowingStateLoss();
+		if (!fragmentState()) {
+			getFManager().executePendingTransactions();
+		}
 	}
 
 	/**
@@ -315,6 +318,9 @@ public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment impl
 			fragmentTransaction.detach(old);
 		}
 		fragmentTransaction.add(layoutId, fragment, tag).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commitAllowingStateLoss();
+		if (!fragmentState()) {
+			getFManager().executePendingTransactions();
+		}
 	}
 
 	/**
@@ -344,6 +350,9 @@ public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment impl
 			return;
 		}
 		getFManager().beginTransaction().add(android.R.id.custom, fragment, tag).addToBackStack(null).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commitAllowingStateLoss();
+		if (!fragmentState()) {
+			getFManager().executePendingTransactions();
+		}
 	}
 
 	/**
@@ -382,6 +391,9 @@ public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment impl
 			return;
 		}
 		getFManager().beginTransaction().add(layoutId, fragment, tag).addToBackStack(null).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commitAllowingStateLoss();
+		if (!fragmentState()) {
+			getFManager().executePendingTransactions();
+		}
 	}
 
 	/**
@@ -475,13 +487,13 @@ public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment impl
 
 	@Override public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		J2WHelper.getInstance().onFragmentCreate(this,savedInstanceState);
+		J2WHelper.getInstance().onFragmentCreate(this, savedInstanceState);
 		L.tag(initTag());
 		L.i("Fragment-onCreate()");
 	}
 
 	@Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		J2WHelper.getInstance().onFragmentCreateView(this,inflater,container,savedInstanceState);
+		J2WHelper.getInstance().onFragmentCreateView(this, inflater, container, savedInstanceState);
 		L.tag(initTag());
 		L.i("Fragment-onCreateView()");
 		/** 打开开关触发菜单项 **/
@@ -502,7 +514,7 @@ public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment impl
 
 	@Override public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		J2WHelper.getInstance().onFragmentActivityCreated(this,savedInstanceState);
+		J2WHelper.getInstance().onFragmentActivityCreated(this, savedInstanceState);
 		L.tag(initTag());
 		L.i("Fragment-onActivityCreated()");
 		initData(savedInstanceState);
@@ -530,7 +542,7 @@ public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment impl
 
 	@Override public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
-		J2WHelper.getInstance().onSaveInstanceState(this,outState);
+		J2WHelper.getInstance().onSaveInstanceState(this, outState);
 		L.tag(initTag());
 		L.i("Fragment-onSaveInstanceState()");
 
