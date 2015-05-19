@@ -21,4 +21,7 @@ public class ModelPager {
 
 	// 图标
 	public int		icon;
+
+	// 默认图标
+	public int		iconDefault;
 }
