@@ -91,19 +91,17 @@ public interface J2WIViewViewpagerABActivity extends J2WIView {
 
 	/**
 	 * ViewPager 滑动事件 - 滑动过程
-	 * 
-	 * @param current
-	 *            当前
-	 * @param old
-	 *            过去
-	 * @param currentPosition
-	 *            当前坐标
-	 * @param oldPosition
-	 *            过去坐标
+	 *
+	 * @param left
+	 *            左视图
+	 * @param right
+	 *            右视图
 	 * @param v
+	 *            数值
 	 * @param i2
+	 *            偏移量
 	 */
-	void onExtraPageScrolled(View current, View old, int currentPosition, int oldPosition, float v, int i2);
+	void onExtraPageScrolled(View left, View right, float v, int i2);
 
 	/**
 	 * ViewPager 滑动事件 - 滑动完成

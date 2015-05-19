@@ -155,7 +155,7 @@ public abstract class J2WViewPagerFragment<T extends J2WIPresenter> extends J2WV
 	 * @return 适配器
 	 */
 	@Override public PagerAdapter getPagerAdapter() {
-        return new J2WVPDefaultPagerAdapter(initTag(), getChildFragmentManager(), tabs, pager, this);
+		return new J2WVPDefaultPagerAdapter(initTag(), getChildFragmentManager(), tabs, pager, this);
 	}
 
 	/**
@@ -166,7 +166,7 @@ public abstract class J2WViewPagerFragment<T extends J2WIPresenter> extends J2WV
 	public Fragment getCurrentFragment() {
 		L.tag(initTag());
 		L.i("ViewPagerActivity-getCurrentFragment()");
-		return ((J2WVPDefaultPagerAdapter)adapter).getViewPagerDatas()[pager.getCurrentItem()].fragment;
+		return ((J2WVPDefaultPagerAdapter) adapter).getViewPagerDatas()[pager.getCurrentItem()].fragment;
 	}
 
 	/**
@@ -259,18 +259,16 @@ public abstract class J2WViewPagerFragment<T extends J2WIPresenter> extends J2WV
 	/**
 	 * ViewPager 滑动事件 - 滑动过程
 	 *
-	 * @param current
-	 *            当前
-	 * @param old
-	 *            过去
-	 * @param currentPosition
-	 *            当前坐标
-	 * @param oldPosition
-	 *            过去坐标
+	 * @param left
+	 *            左视图
+	 * @param right
+	 *            右视图
 	 * @param v
+	 *            数值
 	 * @param i2
+	 *            偏移量
 	 */
-	@Override public void onExtraPageScrolled(View current, View old, int currentPosition, int oldPosition, float v, int i2) {}
+	@Override public void onExtraPageScrolled(View left, View right, float v, int i2) {}
 
 	/**
 	 * ViewPager 滑动事件 - 滑动完成

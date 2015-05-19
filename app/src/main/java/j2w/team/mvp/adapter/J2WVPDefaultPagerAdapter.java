@@ -54,6 +54,12 @@ public class J2WVPDefaultPagerAdapter<T extends J2WIPresenter> extends PagerAdap
 	 */
 	ViewGroup								container;
 
+	private View							left;							// 滑动渐变
+																			// 左面视图
+
+	private View							right;							// 滑动渐变
+																			// 右面视图
+
 	/**
 	 * 初始化
 	 * 
@@ -69,8 +75,8 @@ public class J2WVPDefaultPagerAdapter<T extends J2WIPresenter> extends PagerAdap
 	 *            接口
 	 */
 	public J2WVPDefaultPagerAdapter(String tag, FragmentManager fragmentManager, PagerSlidingTabStrip tabs, J2WViewPager pager, J2WIViewViewpagerABActivity j2WIViewViewpagerABActivity) {
-        L.tag(tag);
-        L.i("J2WVPDefaultPagerAdapter()");
+		L.tag(tag);
+		L.i("J2WVPDefaultPagerAdapter()");
 		this.tag = tag;
 		this.j2WIViewViewpagerABActivity = j2WIViewViewpagerABActivity;
 		this.viewPagerDatas = this.j2WIViewViewpagerABActivity.initModelPagers();
@@ -185,8 +191,8 @@ public class J2WVPDefaultPagerAdapter<T extends J2WIPresenter> extends PagerAdap
 		this.container = container;
 		Fragment fragment = viewPagerDatas[position].fragment;
 		if (!fragment.isAdded()) { // 如果fragment还没有added
-            L.i("instantiateItem:commitAllowingStateLoss");
-            FragmentTransaction ft = fragmentManager.beginTransaction();
+			L.i("instantiateItem:commitAllowingStateLoss");
+			FragmentTransaction ft = fragmentManager.beginTransaction();
 			ft.setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out, android.R.animator.fade_in, android.R.animator.fade_out);
 			ft.add(fragment, fragment.getClass().getSimpleName() + position);
 			ft.commitAllowingStateLoss();
@@ -203,8 +209,8 @@ public class J2WVPDefaultPagerAdapter<T extends J2WIPresenter> extends PagerAdap
 		}
 
 		if (fragment.getView().getParent() == null) {
-            L.i("container.addView(fragment.getView())");
-            container.addView(fragment.getView()); // 为viewpager增加布局
+			L.i("container.addView(fragment.getView())");
+			container.addView(fragment.getView()); // 为viewpager增加布局
 		}
 
 		pager.setObjectForPosition(fragment.getView(), position);
@@ -220,7 +226,9 @@ public class J2WVPDefaultPagerAdapter<T extends J2WIPresenter> extends PagerAdap
 	 * @param positionOffsetPixels
 	 */
 	@Override public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-		j2WIViewViewpagerABActivity.onExtraPageScrolled(tabs.tabsContainer.getChildAt(position), oldView, position, oldPosition, positionOffset, positionOffsetPixels);
+		left = tabs.tabsContainer.getChildAt(position);
+		right = tabs.tabsContainer.getChildAt(position + 1);
+		j2WIViewViewpagerABActivity.onExtraPageScrolled(left, right, positionOffset, positionOffsetPixels);
 	}
 
 	/**
