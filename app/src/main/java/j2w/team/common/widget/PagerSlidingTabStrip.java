@@ -520,7 +520,6 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 
 	public void setShouldExpand(boolean shouldExpand) {
 		this.shouldExpand = shouldExpand;
-		notifyDataSetChanged();
 	}
 
 	public boolean getShouldExpand() {

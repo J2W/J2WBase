@@ -15,7 +15,7 @@ import j2w.team.common.log.L;
 import j2w.team.common.widget.J2WViewPager;
 import j2w.team.common.widget.PagerSlidingTabStrip;
 import j2w.team.mvp.adapter.J2WVPDefaultPagerAdapter;
-import j2w.team.mvp.fragment.J2WVPFragment;
+import j2w.team.mvp.fragment.J2WFragment;
 import j2w.team.mvp.model.ModelPager;
 import j2w.team.mvp.presenter.J2WIPresenter;
 
@@ -55,10 +55,10 @@ public abstract class J2WViewpagerABActivity<T extends J2WIPresenter> extends J2
 		super.initLayout();
 		tabs = (PagerSlidingTabStrip) findViewById(android.R.id.tabs);
 		pager = (J2WViewPager) findViewById(R.id.pager);
-		// 设置Viewpager内部
-		initViewPager();
 		// 设置Viewpager头部
 		initTabsValue();
+		// 设置Viewpager内部
+		initViewPager();
 	}
 
 	/**
@@ -320,7 +320,7 @@ public abstract class J2WViewpagerABActivity<T extends J2WIPresenter> extends J2
 		if (adapter instanceof J2WVPDefaultPagerAdapter) {
 			J2WVPDefaultPagerAdapter defaultPagerAdapter = (J2WVPDefaultPagerAdapter) adapter;
 			ModelPager modelPager = defaultPagerAdapter.getData(pager.getCurrentItem());
-			((J2WVPFragment) modelPager.fragment).onFragmentRestart(modelPager.position);
+			((J2WFragment) modelPager.fragment).onFragmentRestart(modelPager.position);
 		}
 	}
 

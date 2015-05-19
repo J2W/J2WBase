@@ -12,7 +12,7 @@ import j2w.team.common.log.L;
 import j2w.team.common.widget.J2WViewPager;
 import j2w.team.common.widget.PagerSlidingTabStrip;
 import j2w.team.mvp.J2WIViewViewpagerABActivity;
-import j2w.team.mvp.fragment.J2WVPFragment;
+import j2w.team.mvp.fragment.J2WFragment;
 import j2w.team.mvp.model.ModelPager;
 import j2w.team.mvp.presenter.J2WIPresenter;
 
@@ -202,8 +202,9 @@ public class J2WVPDefaultPagerAdapter<T extends J2WIPresenter> extends PagerAdap
 			 * 要注意的是，所有的回调和相关的行为都会在这个调用中被执行完成，因此要仔细确认这个方法的调用位置。
 			 */
 			fragmentManager.executePendingTransactions();
+			fragment.setHasOptionsMenu(false);//设置actionbar不执行
 			if (replacePosition != -1) {
-				((J2WVPFragment) viewPagerDatas[replacePosition].fragment).isDelayedData();
+				((J2WFragment) viewPagerDatas[replacePosition].fragment).isDelayedData();
 				replacePosition = -1;
 			}
 		}
@@ -242,14 +243,16 @@ public class J2WVPDefaultPagerAdapter<T extends J2WIPresenter> extends PagerAdap
 		viewPagerDatas[currentPageIndex].fragment.onPause(); // 调用切换前Fargment的onPause()
 		// 调用切换前Fargment的onStop()
 		if (viewPagerDatas[position].fragment.isAdded()) {
+
+			((J2WFragment) viewPagerDatas[position].fragment).isDelayedData(); // 调用延迟加载
+
 			if (pager.getCurrentItem() == position) {
 				// 更新actionbar
-				((J2WVPFragment) viewPagerDatas[position].fragment).updateActionBar();
+				((J2WFragment) viewPagerDatas[position].fragment).onActionBar();
 			}
 
 			viewPagerDatas[position].fragment.onResume(); // 调用切换后Fargment的onResume()
 
-			((J2WVPFragment) viewPagerDatas[position].fragment).isDelayedData(); // 调用延迟加载\
 		}
 
 		currentPageIndex = position;

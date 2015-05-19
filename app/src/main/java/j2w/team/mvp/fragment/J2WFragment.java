@@ -23,6 +23,8 @@ import j2w.team.modules.dialog.provided.ProgressDailogFragment;
 import j2w.team.modules.http.J2WRestAdapter;
 import j2w.team.mvp.J2WIViewABActivity;
 import j2w.team.mvp.J2WIViewActivity;
+import j2w.team.mvp.J2WTabHostABActivity;
+import j2w.team.mvp.J2WViewpagerABActivity;
 import j2w.team.mvp.model.J2WConstants;
 import j2w.team.mvp.presenter.J2WHelper;
 import j2w.team.mvp.presenter.J2WIPresenter;
@@ -55,6 +57,11 @@ public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment impl
 	 * 是否显示状态
 	 */
 	private boolean			isShowContent	= false;
+
+	/**
+	 * 延迟加载 标记
+	 */
+	private boolean			isDelayedData	= false;
 
 	/**
 	 * 获取TAG标记
@@ -816,4 +823,45 @@ public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment impl
 		return 0;
 	}
 
+	/**
+	 * ViewPager切换 是否调用延迟加载
+	 */
+	@Override public final void isDelayedData() {
+		L.tag(initTag());
+		L.i("Fragment-isDelayedData() return " + isDelayedData);
+		if (isDelayedData) {
+			return;
+		}
+		// 为了只初始化一次
+		isDelayedData = true;
+		// 延迟加载数据
+		initDelayedData();
+
+	}
+
+	/**
+	 * ViewPager切换 延迟数据初始化 - 执行一次
+	 */
+	@Override public void initDelayedData() {
+		L.tag(initTag());
+		L.i("Fragment-initDelayedData()");
+	}
+
+	/**
+	 * ViewPager 重新执行
+	 *
+	 * @param index
+	 *            下标
+	 */
+	@Override public void onFragmentRestart(int index) {
+		L.tag(initTag());
+		L.i("Fragment-onFragmentRestart()");
+	}
+
+	/**
+	 * 是否添加延迟加载
+	 */
+	@Override public boolean isAddDelayedData() {
+		return false;
+	}
 }

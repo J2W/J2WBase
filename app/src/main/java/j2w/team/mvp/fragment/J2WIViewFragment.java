@@ -85,4 +85,27 @@ public interface J2WIViewFragment extends J2WIView {
 	 * @return
 	 */
 	int fragmentErrorLayout();
+
+	/**
+	 * ViewPager切换 是否调用延迟加载
+	 */
+	void isDelayedData();
+
+	/**
+	 * ViewPager切换 延迟数据初始化 - 执行一次
+	 */
+	void initDelayedData();
+
+	/**
+	 * ViewPager 重新执行
+	 *
+	 * @param index
+	 *            下标
+	 */
+	void onFragmentRestart(int index);
+
+	/**
+	 * 是否添加延迟加载
+	 */
+	boolean isAddDelayedData();
 }

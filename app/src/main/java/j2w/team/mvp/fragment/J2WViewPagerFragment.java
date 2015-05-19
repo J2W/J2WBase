@@ -23,7 +23,7 @@ import j2w.team.mvp.presenter.J2WIPresenter;
  * @创建时间 15/4/24 下午3:53
  * @类描述 ViewPager
  */
-public abstract class J2WViewPagerFragment<T extends J2WIPresenter> extends J2WVPFragment<T> implements J2WIViewViewpagerABActivity {
+public abstract class J2WViewPagerFragment<T extends J2WIPresenter> extends J2WFragment<T> implements J2WIViewViewpagerABActivity {
 
 	/**
 	 * ViewPager 头部 *
@@ -62,10 +62,10 @@ public abstract class J2WViewPagerFragment<T extends J2WIPresenter> extends J2WV
 		mContentView = inflater.inflate(layoutId(), container, false);
 		tabs = (PagerSlidingTabStrip) mContentView.findViewById(android.R.id.tabs);
 		pager = (J2WViewPager) mContentView.findViewById(R.id.pager);
-		// 设置Viewpager内部
-		initViewPager();
 		// 设置Viewpager头部
 		initTabsValue();
+		// 设置Viewpager内部
+		initViewPager();
 	}
 
 	/**
