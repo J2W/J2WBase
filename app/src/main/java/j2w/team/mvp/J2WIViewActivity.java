@@ -11,11 +11,6 @@ public interface J2WIViewActivity extends J2WIView {
 	void initLayout();
 
 	/**
-	 * 是否固定竖屏
-	 */
-	boolean isFixedVerticalScreen();
-
-	/**
 	 * 初始化fragment状态布局 - 进度
 	 *
 	 * @return

@@ -422,11 +422,6 @@ public abstract class J2WActivity<T extends J2WIPresenter> extends FragmentActiv
 	@Override protected final void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		J2WHelper.getInstance().onCreate(this, savedInstanceState);
-		/** 是否固定竖屏 **/
-		if (isFixedVerticalScreen()) {
-			/** 竖屏显示 **/
-			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-		}
 		L.tag(initTag());
 		L.i("onCreate()");
 		/** 初始化视图 **/
@@ -524,13 +519,6 @@ public abstract class J2WActivity<T extends J2WIPresenter> extends FragmentActiv
 	 */
 	@Override public int fragmentErrorLayout() {
 		return J2WHelper.getInstance().fragmentErrorLayout();
-	}
-
-	/**
-	 * 是否固定竖屏
-	 */
-	@Override public boolean isFixedVerticalScreen() {
-		return true;
 	}
 
 	/**

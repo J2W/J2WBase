@@ -419,21 +419,9 @@ public abstract class J2WABActivity<T extends J2WIPresenter> extends ActionBarAc
 		finish();
 	}
 
-	/**
-	 * 是否固定竖屏
-	 */
-	@Override public boolean isFixedVerticalScreen() {
-		return true;
-	}
-
 	@Override protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		J2WHelper.getInstance().onCreate(this, savedInstanceState);
-		/** 是否固定竖屏 **/
-		if (isFixedVerticalScreen()) {
-			/** 竖屏显示 **/
-			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-		}
 		L.tag(initTag());
 		L.i("onCreate()");
 		/** 初始化视图 **/
