@@ -205,6 +205,8 @@ public class J2WVPDefaultPagerAdapter<T extends J2WIPresenter> extends PagerAdap
 			fragment.setHasOptionsMenu(false);//设置actionbar不执行
 			if (replacePosition != -1) {
 				((J2WFragment) viewPagerDatas[replacePosition].fragment).isDelayedData();
+				((J2WFragment) viewPagerDatas[replacePosition].fragment).onActionBar();
+				((J2WFragment) viewPagerDatas[replacePosition].fragment).onResume();
 				replacePosition = -1;
 			}
 		}
