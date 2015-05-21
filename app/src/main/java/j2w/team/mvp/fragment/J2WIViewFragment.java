@@ -30,6 +30,11 @@ public interface J2WIViewFragment extends J2WIView {
 	boolean fragmentState();
 
 	/**
+	 * 初始化视图 - 无状态
+	 */
+	void initNotState(LayoutInflater inflater, ViewGroup container);
+
+	/**
 	 * 获取主视图
 	 * 
 	 * @return

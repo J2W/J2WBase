@@ -6,7 +6,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -24,7 +23,7 @@ public abstract class J2WPullListFragment<T extends J2WIPresenter> extends J2WLi
 	/**
 	 * 进度条控件
 	 */
-	private SwipeRefreshLayout	swipe_container;
+	SwipeRefreshLayout	swipe_container;
 
 	/**
 	 * 获取布局ID
@@ -32,7 +31,11 @@ public abstract class J2WPullListFragment<T extends J2WIPresenter> extends J2WLi
 	 * @return 布局ID
 	 */
 	@Override public int layoutId() {
-		return R.layout.j2w_pull_fragment_list;
+		if (notScroll()) {
+			return R.layout.j2w_pull_fragment_noscroll_list;
+		} else {
+			return R.layout.j2w_pull_fragment_list;
+		}
 	}
 
 	@Override public void initLayout(LayoutInflater inflater, ViewGroup container) {
@@ -55,7 +58,7 @@ public abstract class J2WPullListFragment<T extends J2WIPresenter> extends J2WLi
 
 		swipe_container.setJ2WPullListFragmentIView(this);
 
-		ListView listView = (ListView) layoutView.findViewById(android.R.id.list);
+		listView = (ListView) layoutView.findViewById(android.R.id.list);
 
 		if (getHeaderLayout() != 0) {
 			View headerView = LayoutInflater.from(getActivity()).inflate(getHeaderLayout(), null, false);
@@ -76,6 +79,17 @@ public abstract class J2WPullListFragment<T extends J2WIPresenter> extends J2WLi
 		inflater.inflate(fragmentEmptyLayout() == 0 ? j2WIViewActivity.fragmentEmptyLayout() : fragmentEmptyLayout(), mViewAnimator, true);
 		// 错误布局-初始化
 		inflater.inflate(fragmentErrorLayout() == 0 ? j2WIViewActivity.fragmentErrorLayout() : fragmentErrorLayout(), mViewAnimator, true);
+	}
+
+	/**
+	 * 初始化视图 - 无状态
+	 *
+	 */
+	@Override public void initNotState(LayoutInflater inflater, ViewGroup container) {
+		super.initNotState(inflater, container);
+		// 内容布局-初始化
+		swipe_container = (SwipeRefreshLayout) mContentView.findViewById(R.id.swipe_container);
+		swipe_container.setJ2WPullListFragmentIView(this);
 	}
 
 	/**
@@ -131,7 +145,7 @@ public abstract class J2WPullListFragment<T extends J2WIPresenter> extends J2WLi
 	 *            是否展示空布局
 	 */
 	public void setData(List list, boolean bool) {
-		super.setData(list,bool);
+		super.setData(list, bool);
 		swipe_container.setRefreshing(false);
 	}
 

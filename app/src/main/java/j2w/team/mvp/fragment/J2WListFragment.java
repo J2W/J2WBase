@@ -162,11 +162,40 @@ public abstract class J2WListFragment<T extends J2WIPresenter> extends J2WFragme
 	}
 
 	/**
+	 * 初始化视图 - 无状态
+	 */
+	@Override public void initNotState(LayoutInflater inflater, ViewGroup container) {
+		super.initNotState(inflater,container);
+		// 内容布局-初始化
+		if (mContentView instanceof ListView) {
+			listView = (ListView) mContentView;
+		} else {
+			listView = (ListView) mContentView.findViewById(android.R.id.list);
+		}
+
+		if (getHeaderLayout() != 0) {
+			View headerView = LayoutInflater.from(getActivity()).inflate(getHeaderLayout(), null, false);
+			listView.addHeaderView(headerView);
+		}
+
+		if (getFooterLayout() != 0) {
+			mFooterView = LayoutInflater.from(getActivity()).inflate(getFooterLayout(), null, false);
+			listView.addFooterView(mFooterView);
+		}
+		// 设置点击事件
+		listView.setOnItemClickListener(this);
+		listView.setOnItemLongClickListener(this);
+		/** 初始化适配器 **/
+		mListAdapter = new ListAdapter();
+		listView.setAdapter(mListAdapter);
+	}
+
+	/**
 	 * 是否添加Fragment状态布局
 	 *
 	 * @return true 打开 false 关闭
 	 */
-	@Override public final boolean fragmentState() {
+	@Override public boolean fragmentState() {
 		return true;
 	}
 
@@ -304,12 +333,14 @@ public abstract class J2WListFragment<T extends J2WIPresenter> extends J2WFragme
 		L.tag(initTag());
 		L.i("Fragment-updateAdapter()");
 		if (isAdapterNotNull()) {
-			int state = mViewAnimator.getDisplayedChild();
 			List list = getData();
-			if ((state == 1 || state == 0) && list.isEmpty()) {
-				showEmpty();
-			} else if (state != 1 && !list.isEmpty()) {
-				showContent();
+			if(mViewAnimator != null){
+				int state = mViewAnimator.getDisplayedChild();
+				if ((state == 1 || state == 0) && list.isEmpty()) {
+					showEmpty();
+				} else if (state != 1 && !list.isEmpty()) {
+					showContent();
+				}
 			}
 			mListAdapter.notifyDataSetChanged();
 		}

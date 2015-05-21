@@ -14,18 +14,17 @@ import j2w.team.common.widget.materialWidget.style.IMaterial;
 import j2w.team.common.widget.materialWidget.style.MaterialStyle;
 
 /**
- * create by wangtao 2015.03.26
- * 自定义RelativeLayout，带点击波纹效果
+ * create by wangtao 2015.03.26 自定义RelativeLayout，带点击波纹效果
  */
 public class LRelativeLayout extends RelativeLayout implements IMaterial {
-	private MaterialStyle mMaterialStyle;
+
+	private MaterialStyle	mMaterialStyle;
 
 	public LRelativeLayout(Context context) {
 		this(context, null);
 	}
 
-	@SuppressLint("NewApi")
-	public LRelativeLayout(Context context, AttributeSet attrs) {
+	@SuppressLint("NewApi") public LRelativeLayout(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		mMaterialStyle = new MaterialStyle(this, attrs);
 	}
@@ -42,8 +41,7 @@ public class LRelativeLayout extends RelativeLayout implements IMaterial {
 		mMaterialStyle.setType(widgetType);
 	}
 
-	@Override
-	protected void onDraw(Canvas canvas) {
+	@Override protected void onDraw(Canvas canvas) {
 		if (!isEnabled()) {
 			super.onDraw(canvas);
 			return;
@@ -52,9 +50,7 @@ public class LRelativeLayout extends RelativeLayout implements IMaterial {
 		super.onDraw(canvas);
 	}
 
-	@SuppressLint("ClickableViewAccessibility")
-	@Override
-	public boolean performClick() {
+	@SuppressLint("ClickableViewAccessibility") @Override public boolean performClick() {
 		if (mMaterialStyle != null) {
 			mMaterialStyle.performClick();
 		} else {
@@ -63,26 +59,19 @@ public class LRelativeLayout extends RelativeLayout implements IMaterial {
 		return true;
 	}
 
-	@SuppressLint("ClickableViewAccessibility")
-	@Override
-	public boolean onTouchEvent(MotionEvent event) {
-		if (mMaterialStyle != null)
-			mMaterialStyle.onTouchEvent(event);
+	@SuppressLint("ClickableViewAccessibility") @Override public boolean onTouchEvent(MotionEvent event) {
+		if (mMaterialStyle != null) mMaterialStyle.onTouchEvent(event);
 		return super.onTouchEvent(event);
 	}
 
-	@Override
-	public void onWindowFocusChanged(boolean hasWindowFocus) {
+	@Override public void onWindowFocusChanged(boolean hasWindowFocus) {
 		super.onWindowFocusChanged(hasWindowFocus);
-		if (mMaterialStyle != null)
-			mMaterialStyle.onWindowFocusChanged(hasWindowFocus);
+		if (mMaterialStyle != null) mMaterialStyle.onWindowFocusChanged(hasWindowFocus);
 	}
 
-	@Override
-	protected void onVisibilityChanged(View changedView, int visibility) {
+	@Override protected void onVisibilityChanged(View changedView, int visibility) {
 		super.onVisibilityChanged(changedView, visibility);
-		if (mMaterialStyle != null)
-			mMaterialStyle.onVisibilityChanged(changedView, visibility);
+		if (mMaterialStyle != null) mMaterialStyle.onVisibilityChanged(changedView, visibility);
 	}
 
 	/**
@@ -94,36 +83,28 @@ public class LRelativeLayout extends RelativeLayout implements IMaterial {
 		mMaterialStyle.setDelayClick(delayClick);
 	}
 
-	@Override
-	public void setBackgroundResource(int resId) {
+	@Override public void setBackgroundResource(int resId) {
 		setBackground(this.getResources().getDrawable(resId));
 	}
 
-	@Override
-	public void setBackground(Drawable background) {
-		if (mMaterialStyle != null)
-			mMaterialStyle.setBackground(background);
+	@Override public void setBackground(Drawable background) {
+		if (mMaterialStyle != null) mMaterialStyle.setBackground(background);
 	}
 
-	@Override
-	public void setBackgroundColor(int color) {
-		if (mMaterialStyle != null)
-			mMaterialStyle.setBackgroundColor(color);
+	@Override public void setBackgroundColor(int color) {
+		if (mMaterialStyle != null) mMaterialStyle.setBackgroundColor(color);
 	}
 
-	@Override
-	@Deprecated
-	public void setBackgroundDrawable(Drawable background) {
+	@Override @Deprecated public void setBackgroundDrawable(Drawable background) {
 		// super.setBackgroundDrawable(background);
 		this.setBackground(background);
 	}
 
-	@Override
-	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+	@Override protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 		if (mMaterialStyle != null) {
 			if (mMaterialStyle.needBackgroundMeasure()) {
-				int[] size = mMaterialStyle.getMeasureSize(widthMeasureSpec,
-						heightMeasureSpec);
+				int[] size = mMaterialStyle.getMeasureSize(widthMeasureSpec, heightMeasureSpec);
+
 				setMeasuredDimension(size[0], size[1]);
 			} else {
 				super.onMeasure(widthMeasureSpec, heightMeasureSpec);
@@ -134,10 +115,8 @@ public class LRelativeLayout extends RelativeLayout implements IMaterial {
 
 	}
 
-	@Override
-	public boolean dispatchTouchEvent(MotionEvent event) {
-		if (!isEnabled())
-			return false;
+	@Override public boolean dispatchTouchEvent(MotionEvent event) {
+		if (!isEnabled()) return false;
 		return super.dispatchTouchEvent(event);
 	}
 

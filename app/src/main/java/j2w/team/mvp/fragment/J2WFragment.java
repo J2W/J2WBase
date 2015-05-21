@@ -424,7 +424,6 @@ public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment impl
 		L.tag(initTag());
 		L.i("Fragment-initLayout()");
 		mContentView = inflater.inflate(R.layout.j2w_fragment_main, container, false);
-		mContentView.setOnTouchListener(this);// 设置点击事件
 		mViewAnimator = ButterKnife.findById(mContentView, android.R.id.home);
 
 		// 获取View层接口
@@ -438,6 +437,17 @@ public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment impl
 		inflater.inflate(fragmentEmptyLayout() == 0 ? j2WIViewActivity.fragmentEmptyLayout() : fragmentEmptyLayout(), mViewAnimator, true);
 		// 错误布局-初始化
 		inflater.inflate(fragmentErrorLayout() == 0 ? j2WIViewActivity.fragmentErrorLayout() : fragmentErrorLayout(), mViewAnimator, true);
+	}
+
+	/**
+	 * 初始化视图 - 无状态
+	 */
+	@Override public void initNotState(LayoutInflater inflater, ViewGroup container) {
+		L.tag(initTag());
+		L.i("Fragment-initNotState()");
+		isShowContent = true;
+		mContentView = inflater.inflate(R.layout.j2w_layout_default, container, true);
+		inflater.inflate(layoutId(), (ViewGroup) mContentView,true);
 	}
 
 	/**
@@ -509,7 +519,7 @@ public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment impl
 		if (fragmentState()) {
 			initLayout(inflater, container);
 		} else {
-			mContentView = inflater.inflate(layoutId(), container, false);
+			initNotState(inflater,container);
 		}
 		/** 初始化所有组建 **/
 		ButterKnife.inject(this, mContentView);

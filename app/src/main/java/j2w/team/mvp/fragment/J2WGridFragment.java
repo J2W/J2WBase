@@ -66,7 +66,7 @@ public abstract class J2WGridFragment<T extends J2WIPresenter> extends J2WListFr
 		inflater.inflate(fragmentLoadingLayout() == 0 ? j2WIViewActivity.fragmentLoadingLayout() : fragmentLoadingLayout(), mViewAnimator, true);
 		// 内容布局-初始化
 		View view = inflater.inflate(layoutId(), mViewAnimator, true);
-		;
+
 		if (view instanceof GridView) {
 			gridView = (GridView) view;
 		} else {
@@ -82,6 +82,25 @@ public abstract class J2WGridFragment<T extends J2WIPresenter> extends J2WListFr
 		inflater.inflate(fragmentEmptyLayout() == 0 ? j2WIViewActivity.fragmentEmptyLayout() : fragmentEmptyLayout(), mViewAnimator, true);
 		// 错误布局-初始化
 		inflater.inflate(fragmentErrorLayout() == 0 ? j2WIViewActivity.fragmentErrorLayout() : fragmentErrorLayout(), mViewAnimator, true);
+	}
 
+	/**
+	 * 初始化视图 - 无状态
+	 *
+
+	 */
+	@Override public void initNotState(LayoutInflater inflater, ViewGroup container) {
+		super.initNotState(inflater,container);
+		if (mContentView instanceof GridView) {
+			gridView = (GridView) mContentView;
+		} else {
+			gridView = (GridView) mContentView.findViewById(R.id.grid);
+		}
+		// 设置点击事件
+		gridView.setOnItemClickListener(this);
+		gridView.setOnItemLongClickListener(this);
+		/** 初始化适配器 **/
+		mListAdapter = new ListAdapter();
+		gridView.setAdapter(mListAdapter);
 	}
 }
