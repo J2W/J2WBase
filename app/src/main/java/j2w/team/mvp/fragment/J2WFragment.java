@@ -446,7 +446,7 @@ public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment impl
 		L.tag(initTag());
 		L.i("Fragment-initNotState()");
 		isShowContent = true;
-		mContentView = inflater.inflate(R.layout.j2w_layout_default, container, true);
+		mContentView = inflater.inflate(R.layout.j2w_layout_default, container, false);
 		inflater.inflate(layoutId(), (ViewGroup) mContentView,true);
 	}
 
