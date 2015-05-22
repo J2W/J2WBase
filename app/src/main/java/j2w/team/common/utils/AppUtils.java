@@ -1,12 +1,16 @@
 package j2w.team.common.utils;
 
 import android.app.ActivityManager;
+import android.app.Service;
 import android.content.Context;
+import android.content.Intent;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Debug;
 import android.os.Environment;
+import android.provider.Settings;
+import android.telephony.TelephonyManager;
 import android.text.format.DateUtils;
 import android.text.format.Formatter;
 import android.util.DisplayMetrics;
@@ -180,4 +184,41 @@ public final class AppUtils {
 		return dm;
 	}
 
+	/**
+	 * 需要权限 <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
+	 * 设置手机飞行模式
+	 * 
+	 * @param context
+	 * @param enabling
+	 *            true:设置为飞行模式 false:取消飞行模式
+	 */
+	public static void setAirplaneModeOn(Context context, boolean enabling) {
+		Settings.System.putInt(context.getContentResolver(), Settings.System.AIRPLANE_MODE_ON, enabling ? 1 : 0);
+		Intent intent = new Intent(Intent.ACTION_AIRPLANE_MODE_CHANGED);
+		intent.putExtra("state", enabling);
+		context.sendBroadcast(intent);
+	}
+
+	/**
+	 * 判断手机是否是飞行模式
+	 * 
+	 * @param context
+	 * @return true 飞行模式 false 不是飞行模式
+	 */
+	public static boolean isAirplaneMode(Context context) {
+		int isAirplaneMode = Settings.System.getInt(context.getContentResolver(), Settings.System.AIRPLANE_MODE_ON, 0);
+		return (isAirplaneMode != 1) ? true : false;
+	}
+
+	/**
+	 * 检查Sim卡
+	 * 
+	 * @param context
+	 * @return true 无卡 false 有卡
+	 */
+	public static boolean isSimMode(Context context) {
+		TelephonyManager mTelephonyManager = (TelephonyManager) context.getSystemService(Service.TELEPHONY_SERVICE);
+		int state = mTelephonyManager.getSimState();
+		return state == TelephonyManager.SIM_STATE_ABSENT ? true : false;
+	}
 }
