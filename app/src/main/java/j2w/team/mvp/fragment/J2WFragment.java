@@ -447,7 +447,7 @@ public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment impl
 		L.i("Fragment-initNotState()");
 		isShowContent = true;
 		mContentView = inflater.inflate(R.layout.j2w_layout_default, container, false);
-		inflater.inflate(layoutId(), (ViewGroup) mContentView,true);
+		inflater.inflate(layoutId(), (ViewGroup) mContentView, true);
 	}
 
 	/**
@@ -519,7 +519,7 @@ public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment impl
 		if (fragmentState()) {
 			initLayout(inflater, container);
 		} else {
-			initNotState(inflater,container);
+			initNotState(inflater, container);
 		}
 		/** 初始化所有组建 **/
 		ButterKnife.inject(this, mContentView);
@@ -676,6 +676,16 @@ public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment impl
 			return;
 		}
 		mViewAnimator.setDisplayedChild(showState);
+
+		// 如果是错误页面可以点击
+		if (showState == 3) {
+			mViewAnimator.getCurrentView().setOnClickListener(new View.OnClickListener() {
+				@Override public void onClick(View v) {
+					showLoading();
+					initData(getArguments());
+				}
+			});
+		}
 	}
 
 	/**

@@ -712,6 +712,15 @@ public abstract class J2WActivity<T extends J2WIPresenter> extends FragmentActiv
 			return;
 		}
 		mViewAnimator.setDisplayedChild(showState);
+		// 如果是错误页面可以点击
+		if (showState == 3) {
+			mViewAnimator.getCurrentView().setOnClickListener(new View.OnClickListener() {
+				@Override public void onClick(View v) {
+					showLoading();
+					initData(getIntent().getExtras());
+				}
+			});
+		}
 	}
 
 	/**
