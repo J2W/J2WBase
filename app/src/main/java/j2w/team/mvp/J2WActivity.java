@@ -28,7 +28,7 @@ import j2w.team.mvp.presenter.J2WPresenterUtils;
 /**
  * Created by sky on 15/1/26. activity 视图
  */
-public abstract class J2WActivity<T extends J2WIPresenter> extends FragmentActivity implements J2WIViewActivity, IDialogListener {
+public abstract class J2WActivity<T extends J2WIPresenter> extends FragmentActivity implements J2WIViewActivity, IDialogListener, View.OnClickListener {
 
 	/** 默认进度条 **/
 	ProgressDailogFragment	dialogFragment;			// 交互弹窗
@@ -714,13 +714,18 @@ public abstract class J2WActivity<T extends J2WIPresenter> extends FragmentActiv
 		mViewAnimator.setDisplayedChild(showState);
 		// 如果是错误页面可以点击
 		if (showState == 3) {
-			mViewAnimator.getCurrentView().setOnClickListener(new View.OnClickListener() {
-				@Override public void onClick(View v) {
-					showLoading();
-					initData(getIntent().getExtras());
-				}
-			});
+			mViewAnimator.getCurrentView().setOnClickListener(this);
 		}
+	}
+
+	/**
+	 * 点击事件
+	 *
+	 * @param v
+	 */
+	@Override public void onClick(View v) {
+		showLoading();
+		initData(getIntent().getExtras());
 	}
 
 	/**

@@ -1,7 +1,6 @@
 package j2w.team.mvp;
 
 import android.content.Context;
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -16,20 +15,20 @@ import android.widget.ViewAnimator;
 import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
 import j2w.team.R;
+import j2w.team.common.log.L;
 import j2w.team.common.utils.KeyboardUtils;
 import j2w.team.modules.dialog.iface.IDialogListener;
 import j2w.team.modules.dialog.provided.ProgressDailogFragment;
 import j2w.team.modules.http.J2WRestAdapter;
 import j2w.team.mvp.model.J2WConstants;
 import j2w.team.mvp.presenter.J2WHelper;
-import j2w.team.common.log.L;
 import j2w.team.mvp.presenter.J2WIPresenter;
 import j2w.team.mvp.presenter.J2WPresenterUtils;
 
 /**
  * Created by sky on 15/2/5. actionbarActivity 视图
  */
-public abstract class J2WABActivity<T extends J2WIPresenter> extends ActionBarActivity implements J2WIViewABActivity, IDialogListener {
+public abstract class J2WABActivity<T extends J2WIPresenter> extends ActionBarActivity implements J2WIViewABActivity, IDialogListener, View.OnClickListener {
 
 	/** 默认进度条 **/
 	ProgressDailogFragment	dialogFragment;			// 交互弹窗
@@ -744,13 +743,18 @@ public abstract class J2WABActivity<T extends J2WIPresenter> extends ActionBarAc
 		mViewAnimator.setDisplayedChild(showState);
 		// 如果是错误页面可以点击
 		if (showState == 3) {
-			mViewAnimator.getCurrentView().setOnClickListener(new View.OnClickListener() {
-				@Override public void onClick(View v) {
-					showLoading();
-					initData(getIntent().getExtras());
-				}
-			});
+			mViewAnimator.getCurrentView().setOnClickListener(this);
 		}
+	}
+
+	/**
+	 * 点击事件
+	 * 
+	 * @param v
+	 */
+	@Override public void onClick(View v) {
+		showLoading();
+		initData(getIntent().getExtras());
 	}
 
 	/**

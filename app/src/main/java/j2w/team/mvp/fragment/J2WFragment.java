@@ -23,8 +23,6 @@ import j2w.team.modules.dialog.provided.ProgressDailogFragment;
 import j2w.team.modules.http.J2WRestAdapter;
 import j2w.team.mvp.J2WIViewABActivity;
 import j2w.team.mvp.J2WIViewActivity;
-import j2w.team.mvp.J2WTabHostABActivity;
-import j2w.team.mvp.J2WViewpagerABActivity;
 import j2w.team.mvp.model.J2WConstants;
 import j2w.team.mvp.presenter.J2WHelper;
 import j2w.team.mvp.presenter.J2WIPresenter;
@@ -33,7 +31,7 @@ import j2w.team.mvp.presenter.J2WPresenterUtils;
 /**
  * Created by sky on 15/2/1. fragment 视图
  */
-public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment implements J2WIViewFragment, View.OnTouchListener, IDialogListener {
+public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment implements J2WIViewFragment, View.OnTouchListener, IDialogListener, View.OnClickListener {
 
 	/** 默认进度条 **/
 	ProgressDailogFragment	dialogFragment;			// 交互弹窗
@@ -679,13 +677,17 @@ public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment impl
 
 		// 如果是错误页面可以点击
 		if (showState == 3) {
-			mViewAnimator.getCurrentView().setOnClickListener(new View.OnClickListener() {
-				@Override public void onClick(View v) {
-					showLoading();
-					initData(getArguments());
-				}
-			});
+			mViewAnimator.getCurrentView().setOnClickListener(this);
 		}
+	}
+
+	/**
+	 * 点击事件
+	 * @param v
+	 */
+	@Override public void onClick(View v) {
+		showLoading();
+		initData(getArguments());
 	}
 
 	/**
