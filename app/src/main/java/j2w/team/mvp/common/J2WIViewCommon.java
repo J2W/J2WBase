@@ -80,4 +80,11 @@ public interface J2WIViewCommon {
 	 * @return
 	 */
 	int fragmentErrorLayout();
+
+	/**
+	 * listFragment底部布局
+	 * 
+	 * @return
+	 */
+	int listFragmentFooterLayout();
 }

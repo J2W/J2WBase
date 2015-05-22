@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/error"
-    style="@style/J2W.Layout"
+    style="@style/J2W.Layout.Wrap"
+    android:layout_width="match_parent"
     android:background="@android:color/white">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:drawablePadding="5dp"
-        android:text="@string/fragment_error" />
+        android:padding="10dp"
+        android:text="@string/fragment_nomore" />
 </RelativeLayout>

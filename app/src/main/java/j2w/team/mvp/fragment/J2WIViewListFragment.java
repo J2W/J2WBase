@@ -142,4 +142,11 @@ public interface J2WIViewListFragment extends J2WIViewFragment {
 	 * 删除底部布局
 	 */
 	void removeFooterItem();
+
+	/**
+	 * listFragment底部布局
+	 *
+	 * @return
+	 */
+	int listFragmentFooterLayout();
 }

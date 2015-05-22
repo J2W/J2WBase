@@ -146,4 +146,12 @@ public abstract class J2WApplication extends Application implements J2WIViewComm
 		return R.layout.j2w_fragment_error;
 	}
 
+	/**
+	 * listFragment底部布局
+	 *
+	 * @return
+	 */
+	@Override public int listFragmentFooterLayout() {
+		return R.layout.j2w_fragment_nomore;
+	}
 }

@@ -15,6 +15,7 @@ import j2w.team.R;
 import j2w.team.common.log.L;
 import j2w.team.mvp.J2WIViewActivity;
 import j2w.team.mvp.adapter.J2WAdapterItem;
+import j2w.team.mvp.presenter.J2WHelper;
 import j2w.team.mvp.presenter.J2WIPresenter;
 
 /**
@@ -146,8 +147,8 @@ public abstract class J2WListFragment<T extends J2WIPresenter> extends J2WFragme
 		}
 
 		if (getFooterLayout() != 0) {
-			mFooterView = LayoutInflater.from(getActivity()).inflate(getFooterLayout(), null, false);
-			listView.addFooterView(mFooterView);
+			View footerView = LayoutInflater.from(getActivity()).inflate(getFooterLayout(), null, false);
+			listView.addFooterView(footerView);
 		}
 		// 设置点击事件
 		listView.setOnItemClickListener(this);
@@ -165,7 +166,7 @@ public abstract class J2WListFragment<T extends J2WIPresenter> extends J2WFragme
 	 * 初始化视图 - 无状态
 	 */
 	@Override public void initNotState(LayoutInflater inflater, ViewGroup container) {
-		super.initNotState(inflater,container);
+		super.initNotState(inflater, container);
 		// 内容布局-初始化
 		if (mContentView instanceof ListView) {
 			listView = (ListView) mContentView;
@@ -179,8 +180,8 @@ public abstract class J2WListFragment<T extends J2WIPresenter> extends J2WFragme
 		}
 
 		if (getFooterLayout() != 0) {
-			mFooterView = LayoutInflater.from(getActivity()).inflate(getFooterLayout(), null, false);
-			listView.addFooterView(mFooterView);
+			View footerView = LayoutInflater.from(getActivity()).inflate(getFooterLayout(), null, false);
+			listView.addFooterView(footerView);
 		}
 		// 设置点击事件
 		listView.setOnItemClickListener(this);
@@ -188,6 +189,15 @@ public abstract class J2WListFragment<T extends J2WIPresenter> extends J2WFragme
 		/** 初始化适配器 **/
 		mListAdapter = new ListAdapter();
 		listView.setAdapter(mListAdapter);
+	}
+
+	/**
+	 * listFragment底部布局
+	 *
+	 * @return
+	 */
+	@Override public int listFragmentFooterLayout() {
+		return 0;
 	}
 
 	/**
@@ -334,7 +344,7 @@ public abstract class J2WListFragment<T extends J2WIPresenter> extends J2WFragme
 		L.i("Fragment-updateAdapter()");
 		if (isAdapterNotNull()) {
 			List list = getData();
-			if(mViewAnimator != null){
+			if (mViewAnimator != null) {
 				int state = mViewAnimator.getDisplayedChild();
 				if ((state == 1 || state == 0) && list.isEmpty()) {
 					showEmpty();
@@ -350,10 +360,13 @@ public abstract class J2WListFragment<T extends J2WIPresenter> extends J2WFragme
 	 * 添加底部布局
 	 */
 	public void addFooterItem() {
-		if (mFooterView != null) {
-			listView.removeFooterView(mFooterView);
-			listView.addFooterView(mFooterView);
+		if (mFooterView == null) {
+			int layout = listFragmentFooterLayout() == 0 ? J2WHelper.getInstance().listFragmentFooterLayout() : listFragmentFooterLayout();
+			mFooterView = LayoutInflater.from(getActivity()).inflate(layout, null, false);
+
 		}
+		listView.removeFooterView(mFooterView);
+		listView.addFooterView(mFooterView);
 	}
 
 	/**
