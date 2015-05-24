@@ -219,6 +219,11 @@ public final class AppUtils {
 	public static boolean isSimMode(Context context) {
 		TelephonyManager mTelephonyManager = (TelephonyManager) context.getSystemService(Service.TELEPHONY_SERVICE);
 		int state = mTelephonyManager.getSimState();
-		return state == TelephonyManager.SIM_STATE_ABSENT ? true : false;
+		switch (state){
+			case TelephonyManager.SIM_STATE_UNKNOWN:
+			case TelephonyManager.SIM_STATE_ABSENT:
+				return true;
+		}
+		return false;
 	}
 }
