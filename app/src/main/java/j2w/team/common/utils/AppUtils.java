@@ -207,7 +207,7 @@ public final class AppUtils {
 	 */
 	public static boolean isAirplaneMode(Context context) {
 		int isAirplaneMode = Settings.System.getInt(context.getContentResolver(), Settings.System.AIRPLANE_MODE_ON, 0);
-		return (isAirplaneMode != 1) ? true : false;
+		return (isAirplaneMode == 1) ? true : false;
 	}
 
 	/**
