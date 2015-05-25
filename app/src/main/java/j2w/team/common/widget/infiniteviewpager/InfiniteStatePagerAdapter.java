@@ -87,16 +87,31 @@ public class InfiniteStatePagerAdapter extends PagerAdapter {
 		final ImageView view = new ImageView(J2WHelper.getInstance());
 		view.setScaleType(ImageView.ScaleType.CENTER);
 		view.setId(position);
-		J2WHelper.getPicassoHelper().load(fragments.get(position)).placeholder(placeholder).into(view, new Callback() {
+		if(placeholder == 0){
+			J2WHelper.getPicassoHelper().load(fragments.get(position)).into(view, new Callback() {
 
-			@Override public void onSuccess() {
-				view.setScaleType(ImageView.ScaleType.FIT_XY);
-			}
+				@Override public void onSuccess() {
+					view.setScaleType(ImageView.ScaleType.FIT_XY);
+				}
 
-			@Override public void onError() {
-				view.setScaleType(ImageView.ScaleType.CENTER);
-			}
-		});
+				@Override public void onError() {
+					view.setScaleType(ImageView.ScaleType.CENTER);
+				}
+			});
+		}else{
+			J2WHelper.getPicassoHelper().load(fragments.get(position)).placeholder(placeholder).into(view, new Callback() {
+
+				@Override public void onSuccess() {
+					view.setScaleType(ImageView.ScaleType.FIT_XY);
+				}
+
+				@Override public void onError() {
+					view.setScaleType(ImageView.ScaleType.CENTER);
+				}
+			});
+		}
+
+
 		view.setOnClickListener(new View.OnClickListener() {
 
 			@Override public void onClick(View v) {
