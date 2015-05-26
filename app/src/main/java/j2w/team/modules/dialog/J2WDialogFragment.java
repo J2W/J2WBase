@@ -208,7 +208,9 @@ public abstract class J2WDialogFragment extends DialogFragment implements Dialog
 		private final LayoutInflater			mInflater;
 
 		/** 标题值 **/
-		private CharSequence					mTitle	= null;
+		private CharSequence					mTitle		= null;
+
+		private int								mTitleColor	= 0;
 
 		/** 正面-按钮值 **/
 		private CharSequence					mPositiveButtonText;
@@ -279,6 +281,17 @@ public abstract class J2WDialogFragment extends DialogFragment implements Dialog
 		 */
 		public Builder setTitle(int titleId) {
 			this.mTitle = mContext.getText(titleId);
+			return this;
+		}
+
+		/**
+		 * 设置标题颜色
+		 * 
+		 * @param mTitleColor
+		 * @return
+		 */
+		public Builder setTilteColor(int mTitleColor) {
+			this.mTitleColor = mContext.getResources().getColor(mTitleColor);
 			return this;
 		}
 
@@ -566,6 +579,9 @@ public abstract class J2WDialogFragment extends DialogFragment implements Dialog
 				textView.setText(text);
 			} else {
 				textView.setVisibility(View.GONE);
+			}
+			if (mTitleColor != 0) {
+				textView.setTextColor(mTitleColor);
 			}
 		}
 	}
