@@ -42,12 +42,22 @@ public interface J2WIViewPullListFragment extends J2WIViewListFragment {
 	void setLoading(boolean bool);
 
 	/**
+	 * 打开头部进度条
+	 */
+	void openRefreshing();
+
+	/**
 	 * 关闭头部进度条
 	 */
-	void notRefreshing();
+	void closeRefreshing();
+
+	/**
+	 * 打开尾部进度条
+	 */
+	void openLoading();
 
 	/**
 	 * 关闭尾部进度条
 	 */
-	void notLoading();
+	void closeLoading();
 }
