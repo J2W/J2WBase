@@ -683,6 +683,7 @@ public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment impl
 
 	/**
 	 * 点击事件
+	 * 
 	 * @param v
 	 */
 	@Override public void onClick(View v) {
@@ -885,5 +886,20 @@ public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment impl
 	 */
 	@Override public boolean isAddDelayedData() {
 		return false;
+	}
+
+	/**
+	 * 删除fragment
+	 */
+	@Override public void removeFragment(String fragmentName) {
+		int index = getFragmentManager().getBackStackEntryCount() - 1;
+		while (index >= 0) {
+			String name = getFragmentManager().getBackStackEntryAt(index).getName();
+			if (name != null && name.equals(fragmentName)) {
+				break;
+			}
+			getFragmentManager().popBackStack();
+			index--;
+		}
 	}
 }

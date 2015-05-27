@@ -113,4 +113,9 @@ public interface J2WIViewFragment extends J2WIView {
 	 * 是否添加延迟加载
 	 */
 	boolean isAddDelayedData();
+
+	/**
+	 * 删除fragment
+	 */
+	void removeFragment(String fragmentName);
 }
