@@ -97,11 +97,6 @@ public interface J2WIViewFragment extends J2WIView {
 	void isDelayedData();
 
 	/**
-	 * ViewPager切换 延迟数据初始化 - 执行一次
-	 */
-	void initDelayedData();
-
-	/**
 	 * ViewPager 重新执行
 	 *
 	 * @param index
@@ -113,6 +108,13 @@ public interface J2WIViewFragment extends J2WIView {
 	 * 是否添加延迟加载
 	 */
 	boolean isAddDelayedData();
+
+	/**
+	 * 获取延迟加载状态
+	 * 
+	 * @return true 加载过 false 没有加载过
+	 */
+	boolean getDelayeDateState();
 
 	/**
 	 * 删除fragment

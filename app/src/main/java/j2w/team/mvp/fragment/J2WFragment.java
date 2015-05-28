@@ -34,7 +34,7 @@ import j2w.team.mvp.presenter.J2WPresenterUtils;
 public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment implements J2WIViewFragment, View.OnTouchListener, IDialogListener, View.OnClickListener {
 
 	/** 默认进度条 **/
-	ProgressDailogFragment	dialogFragment;			// 交互弹窗
+	ProgressDailogFragment	dialogFragment;					// 交互弹窗
 
 	/**
 	 * view *
@@ -49,17 +49,22 @@ public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment impl
 	/**
 	 * 业务逻辑对象 *
 	 */
-	private T				presenter		= null;
+	private T				presenter				= null;
 
 	/**
 	 * 是否显示状态
 	 */
-	private boolean			isShowContent	= false;
+	private boolean			isShowContent			= false;
 
 	/**
 	 * 延迟加载 标记
 	 */
-	private boolean			isDelayedData	= false;
+	private boolean			isDelayedData			= false;
+
+	/**
+	 * 延迟加载是否完毕 true 完成 false 没有完成
+	 */
+	private boolean			isDelayedDateSuccess	= false;
 
 	/**
 	 * 获取TAG标记
@@ -532,7 +537,9 @@ public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment impl
 		J2WHelper.getInstance().onFragmentActivityCreated(this, savedInstanceState);
 		L.tag(initTag());
 		L.i("Fragment-onActivityCreated()");
-		initData(savedInstanceState);
+		if (!isAddDelayedData()) { // 如果打开延迟加载 不执行初始化数据
+			initData(savedInstanceState);
+		}
 	}
 
 	@Override public void onStart() {
@@ -850,24 +857,20 @@ public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment impl
 	 * ViewPager切换 是否调用延迟加载
 	 */
 	@Override public final void isDelayedData() {
+		if(!isAddDelayedData()){
+			L.i("Fragment-isDelayedData() 无效");
+			return;
+		}
 		L.tag(initTag());
 		L.i("Fragment-isDelayedData() return " + isDelayedData);
 		if (isDelayedData) {
+			isDelayedDateSuccess = true; //延迟加载完成
 			return;
 		}
 		// 为了只初始化一次
 		isDelayedData = true;
 		// 延迟加载数据
-		initDelayedData();
-
-	}
-
-	/**
-	 * ViewPager切换 延迟数据初始化 - 执行一次
-	 */
-	@Override public void initDelayedData() {
-		L.tag(initTag());
-		L.i("Fragment-initDelayedData()");
+		initData(getArguments());
 	}
 
 	/**
@@ -886,6 +889,15 @@ public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment impl
 	 */
 	@Override public boolean isAddDelayedData() {
 		return false;
+	}
+
+	/**
+	 * 获取延迟加载状态
+	 *
+	 * @return true 加载过 false 没有加载过
+	 */
+	@Override public boolean getDelayeDateState() {
+		return isDelayedDateSuccess;
 	}
 
 	/**
