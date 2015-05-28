@@ -115,28 +115,28 @@ public abstract class J2WPullListFragment<T extends J2WIPresenter> extends J2WLi
 	/**
 	 * 打开头部进度条
 	 */
-	@Override public void openRefreshing(){
+	@Override public void openPullRefreshing(){
 		swipe_container.openRefreshing();
 	}
 
 	/**
 	 * 关闭头部进度条
 	 */
-	@Override public void closeRefreshing(){
+	@Override public void closePullRefreshing(){
 		swipe_container.closeRefreshing();
 	}
 
 	/**
 	 * 打开尾部进度条
 	 */
-	@Override public void openLoading(){
+	@Override public void openPullLoading(){
 		swipe_container.openLoading();
 	}
 
 	/**
 	 * 关闭尾部进度条
 	 */
-	@Override public void closeLoading(){
+	@Override public void closePullLoading(){
 		swipe_container.closeLoading();
 	}
 
