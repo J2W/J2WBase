@@ -12,6 +12,7 @@ import com.squareup.picasso.PicassoTools;
 import de.greenrobot.event.EventBus;
 import j2w.team.J2WApplication;
 import j2w.team.common.utils.looper.SynchronousExecutor;
+import j2w.team.modules.dialog.J2WDialogFragment;
 import j2w.team.modules.download.J2WDownloadManager;
 import j2w.team.modules.http.J2WRestAdapter;
 import j2w.team.modules.screen.J2WIScreenManager;
@@ -148,15 +149,31 @@ public class J2WHelper {
 		boolean isMainLooper = Looper.getMainLooper().getThread() != Thread.currentThread();
 
 		if (isMainLooper) {
-            getMainLooper().execute(new Runnable() {
-                @Override public void run() {
-                    EventBus.getDefault().post(object);
-                }
-            });
+			getMainLooper().execute(new Runnable() {
+
+				@Override public void run() {
+					EventBus.getDefault().post(object);
+				}
+			});
 		} else {
-            EventBus.getDefault().post(object);
+			EventBus.getDefault().post(object);
 		}
 
+	}
+
+	/**
+	 * 显示FragmentDilaog 弹框
+	 */
+	public static void showDialog(Class<? extends J2WDialogFragment> mClass) {
+		final J2WDialogFragment fragment = (J2WDialogFragment) Fragment.instantiate(getScreenHelper().currentActivity(), mClass.getName(), null);
+		showDialog(fragment);
+	}
+
+	/**
+	 * 显示FragmentDilaog 弹框
+	 */
+	public static void showDialog(J2WDialogFragment j2WDialogFragment) {
+		getScreenHelper().currentActivity().getSupportFragmentManager().beginTransaction().add(j2WDialogFragment, j2WDialogFragment.getClass().getSimpleName()).commitAllowingStateLoss();
 	}
 
 	/**
