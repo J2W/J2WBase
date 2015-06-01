@@ -29,6 +29,9 @@ public abstract class J2WAdapterItem<T> {
 	 *            数据类型泛型
 	 * @param position
 	 *            下标
+	 * @param count
+	 *            数量
 	 */
-	public abstract void bindData(T t, int position);
+	public abstract void bindData(T t, int position, int count);
+
 }

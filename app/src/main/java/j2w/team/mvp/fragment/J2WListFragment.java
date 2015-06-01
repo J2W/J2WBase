@@ -447,7 +447,7 @@ public abstract class J2WListFragment<T extends J2WIPresenter> extends J2WFragme
 			// 获取item
 			item = item == null ? (J2WAdapterItem) convertView.getTag() : item;
 			// 绑定数据
-			item.bindData(getItem(position), position);
+			item.bindData(getItem(position), position, getCount());
 			return convertView;
 		}
 	}
