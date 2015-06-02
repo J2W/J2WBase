@@ -59,7 +59,6 @@ public abstract class J2WViewPagerFragment<T extends J2WIPresenter> extends J2WF
 	 */
 	@Override public void initLayout(LayoutInflater inflater, ViewGroup container) {
 		super.initLayout(inflater, container);
-		mContentView = inflater.inflate(layoutId(), container, false);
 		tabs = (PagerSlidingTabStrip) mContentView.findViewById(android.R.id.tabs);
 		pager = (J2WViewPager) mContentView.findViewById(R.id.pager);
 		// 设置Viewpager头部
@@ -100,6 +99,25 @@ public abstract class J2WViewPagerFragment<T extends J2WIPresenter> extends J2WF
 	}
 
 	/**
+	 /**
+	 * 初始化视图
+	 *
+	 * @param inflater
+	 *            布局加载器
+	 * @param container
+	 *            父容器
+	 */
+	@Override public void initNotState(LayoutInflater inflater, ViewGroup container) {
+		mContentView = inflater.inflate(layoutId(), container, false);
+		tabs = (PagerSlidingTabStrip) mContentView.findViewById(android.R.id.tabs);
+		pager = (J2WViewPager) mContentView.findViewById(R.id.pager);
+		// 设置Viewpager头部
+		initTabsValue();
+		// 设置Viewpager内部
+		initViewPager();
+	}
+
+	/**
 	 * 初始化 viewpager - 设置适配器
 	 */
 	@Override public final void initViewPager() {
@@ -132,8 +150,8 @@ public abstract class J2WViewPagerFragment<T extends J2WIPresenter> extends J2WF
 	 *
 	 * @return true 打开 false 关闭
 	 */
-	@Override public final boolean fragmentState() {
-		return true;
+	@Override public boolean fragmentState() {
+		return false;
 	}
 
 	/**
