@@ -1,5 +1,9 @@
 package j2w.team.mvp.fragment;
 
+import android.view.View;
+
+import j2w.team.common.widget.swipeRefresh.SwipeRefreshLayout;
+
 /**
  * Created by sky on 15/3/13.
  */
@@ -60,4 +64,9 @@ public interface J2WIViewPullListFragment extends J2WIViewListFragment {
 	 * 关闭尾部进度条
 	 */
 	void closePullLoading();
+
+	/**
+	 * 获取下拉刷新控件
+	 */
+	SwipeRefreshLayout getSwipeRefreshLayout();
 }
