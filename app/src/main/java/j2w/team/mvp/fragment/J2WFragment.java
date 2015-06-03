@@ -620,14 +620,14 @@ public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment impl
 	@Override public void showLoading() {
 		L.tag(initTag());
 		L.i("Fragment-loading()");
-		show(0);
+		show(J2WConstants.J2W_STATE_LOADING);
 		isShowContent = false;
 	}
 
 	@Override public void showContent() {
 		L.tag(initTag());
 		L.i("Fragment-content()");
-		show(1);
+		show(J2WConstants.J2W_STATE_CONTENT);
 		isShowContent = true;
 	}
 
@@ -638,14 +638,14 @@ public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment impl
 	@Override public void showEmpty() {
 		L.tag(initTag());
 		L.i("Fragment-empty()");
-		show(2);
+		show(J2WConstants.J2W_STATE_EMPTY);
 		isShowContent = false;
 	}
 
 	@Override public void showError() {
 		L.tag(initTag());
 		L.i("Fragment-error()");
-		show(3);
+		show(J2WConstants.J2W_STATE_ERROR);
 		isShowContent = false;
 	}
 
@@ -683,7 +683,7 @@ public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment impl
 		mViewAnimator.setDisplayedChild(showState);
 
 		// 如果是错误页面可以点击
-		if (showState == 3) {
+		if (showState == J2WConstants.J2W_STATE_ERROR || showState == J2WConstants.J2W_STATE_EMPTY) {
 			mViewAnimator.getCurrentView().setOnClickListener(this);
 		}
 	}

@@ -17,6 +17,26 @@ public class J2WConstants {
 	public static final int		J2W_DIALOG_FRAGMENT_CODE	= 7777 << 1;
 
 	/**
+	 * 状态 - 进度
+	 */
+	public static final int		J2W_STATE_LOADING			= 0;
+
+	/**
+	 * 状态 - 内容
+	 */
+	public static final int		J2W_STATE_CONTENT			= 1;
+
+	/**
+	 * 状态 - 空
+	 */
+	public static final int		J2W_STATE_EMPTY				= 2;
+
+	/**
+	 * 状态 - 错误
+	 */
+	public static final int		J2W_STATE_ERROR				= 3;
+
+	/**
 	 * 进度条默认TAG
 	 */
 	public static final String	J2W_DIALOG_PROGRESS			= "J2W_DIALOG_PROGRESS";
