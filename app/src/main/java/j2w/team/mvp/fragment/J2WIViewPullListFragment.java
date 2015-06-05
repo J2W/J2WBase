@@ -1,7 +1,5 @@
 package j2w.team.mvp.fragment;
 
-import android.view.View;
-
 import j2w.team.common.widget.swipeRefresh.SwipeRefreshLayout;
 
 /**
@@ -12,12 +10,12 @@ public interface J2WIViewPullListFragment extends J2WIViewListFragment {
 	/**
 	 * 下拉刷新标识
 	 */
-	static final int	PULL_ONREFRESH	= 0x0000001;
+	int	PULL_ONREFRESH	= 0x0000001;
 
 	/**
 	 * 上拉加载标识
 	 */
-	static final int	PULL_ONLOAD		= 0x0000002;
+	int	PULL_ONLOAD		= 0x0000002;
 
 	/**
 	 * 头部刷新
