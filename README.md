@@ -94,15 +94,47 @@ Wiki
 
 混淆过滤
 -----------------------------------
-#### Greendao
--libraryjars libs/greendao-1.3.7.jar<br />
--keep class de.greenrobot.dao.** {*;}<br />
--keepclassmembers class * extends de.greenrobot.dao.AbstractDao {<br />
-    public static java.lang.String TABLENAME;<br />
-}<br />
--keep class **$Properties<br />
-#### Gson
--keepattributes Signature<br />
--keep class sun.misc.Unsafe { *; }<br />
--keep class com.google.gson.examples.android.model.** { *; }<br />
+####J2W
+-keep class j2w.team.** { *; }
+-dontwarn j2w.team.**
 
+####JAVAX
+-dontwarn javax.annotation.**
+-keep class javax.annotation.**
+-dontwarn javax.inject.**
+-keep class javax.inject.**
+
+#### View注入
+-keep class * extends java.lang.annotation.Annotation { *; }
+
+#### picasso
+-dontwarn com.squareup.okhttp.**
+
+#### butterknife
+-keep class butterknife.** { *; }
+-dontwarn butterknife.internal.**
+-keep class **$$ViewInjector { *; }
+-keepclasseswithmembernames class * {
+    @butterknife.* <fields>;
+}
+-keepclasseswithmembernames class * {
+    @butterknife.* <methods>;
+}
+
+#### okio
+-dontwarn okio.**
+-dontwarn in.srain.cube.**
+-keep class in.srain.cube.**
+
+####EventBus
+-keepclassmembers class ** {
+    public void onEvent(**);
+}
+-keepclassmembers class * extends j2w.team.common.event.J2WEvent {*;}
+
+####  保留签名，解决泛型问题
+-keepattributes Signature
+
+####GSON
+-keep class sun.misc.Unsafe { *; }
+-keep class com.google.gson.examples.android.model.* { *; }
