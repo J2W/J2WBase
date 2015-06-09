@@ -157,7 +157,10 @@ public abstract class J2WListFragment<T extends J2WIPresenter> extends J2WFragme
 		inflater.inflate(fragmentEmptyLayout() == 0 ? j2WIViewActivity.fragmentEmptyLayout() : fragmentEmptyLayout(), mViewAnimator, true);
 		// 错误布局-初始化
 		inflater.inflate(fragmentErrorLayout() == 0 ? j2WIViewActivity.fragmentErrorLayout() : fragmentErrorLayout(), mViewAnimator, true);
-		listView.removeFooterView(mFooterView);
+
+		if(getFooterLayout() == 0){
+			listView.removeFooterView(mFooterView);
+		}
 	}
 
 	/**
@@ -184,8 +187,9 @@ public abstract class J2WListFragment<T extends J2WIPresenter> extends J2WFragme
 		/** 初始化适配器 **/
 		mListAdapter = new ListAdapter();
 		listView.setAdapter(mListAdapter);
-		listView.removeFooterView(mFooterView);
-
+		if(getFooterLayout() == 0){
+			listView.removeFooterView(mFooterView);
+		}
 	}
 
 	/**

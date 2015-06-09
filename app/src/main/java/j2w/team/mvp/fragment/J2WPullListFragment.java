@@ -68,7 +68,6 @@ public abstract class J2WPullListFragment<T extends J2WIPresenter> extends J2WLi
 
 		mFooterView = LayoutInflater.from(getActivity()).inflate(getFooterLayout() == 0 ? J2WHelper.getInstance().listFragmentFooterLayout() : getFooterLayout(), null, false);
 		listView.addFooterView(mFooterView);
-
 		// 设置点击事件
 		listView.setOnItemClickListener(this);
 		listView.setOnItemLongClickListener(this);
@@ -79,6 +78,9 @@ public abstract class J2WPullListFragment<T extends J2WIPresenter> extends J2WLi
 		inflater.inflate(fragmentEmptyLayout() == 0 ? j2WIViewActivity.fragmentEmptyLayout() : fragmentEmptyLayout(), mViewAnimator, true);
 		// 错误布局-初始化
 		inflater.inflate(fragmentErrorLayout() == 0 ? j2WIViewActivity.fragmentErrorLayout() : fragmentErrorLayout(), mViewAnimator, true);
+		if(getFooterLayout() == 0){
+			listView.removeFooterView(mFooterView);
+		}
 	}
 
 	/**
