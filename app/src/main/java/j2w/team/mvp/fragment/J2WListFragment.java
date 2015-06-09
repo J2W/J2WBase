@@ -145,11 +145,8 @@ public abstract class J2WListFragment<T extends J2WIPresenter> extends J2WFragme
 			View headerView = LayoutInflater.from(getActivity()).inflate(getHeaderLayout(), null, false);
 			listView.addHeaderView(headerView);
 		}
-
-		if (getFooterLayout() != 0) {
-			View footerView = LayoutInflater.from(getActivity()).inflate(getFooterLayout(), null, false);
-			listView.addFooterView(footerView);
-		}
+		mFooterView = LayoutInflater.from(getActivity()).inflate(getFooterLayout() == 0 ? J2WHelper.getInstance().listFragmentFooterLayout() : getFooterLayout(), null, false);
+		listView.addFooterView(mFooterView);
 		// 设置点击事件
 		listView.setOnItemClickListener(this);
 		listView.setOnItemLongClickListener(this);
@@ -160,6 +157,7 @@ public abstract class J2WListFragment<T extends J2WIPresenter> extends J2WFragme
 		inflater.inflate(fragmentEmptyLayout() == 0 ? j2WIViewActivity.fragmentEmptyLayout() : fragmentEmptyLayout(), mViewAnimator, true);
 		// 错误布局-初始化
 		inflater.inflate(fragmentErrorLayout() == 0 ? j2WIViewActivity.fragmentErrorLayout() : fragmentErrorLayout(), mViewAnimator, true);
+		listView.removeFooterView(mFooterView);
 	}
 
 	/**
@@ -178,26 +176,16 @@ public abstract class J2WListFragment<T extends J2WIPresenter> extends J2WFragme
 			View headerView = LayoutInflater.from(getActivity()).inflate(getHeaderLayout(), null, false);
 			listView.addHeaderView(headerView);
 		}
-
-		if (getFooterLayout() != 0) {
-			View footerView = LayoutInflater.from(getActivity()).inflate(getFooterLayout(), null, false);
-			listView.addFooterView(footerView);
-		}
+		mFooterView = LayoutInflater.from(getActivity()).inflate(getFooterLayout() == 0 ? J2WHelper.getInstance().listFragmentFooterLayout() : getFooterLayout(), null, false);
+		listView.addFooterView(mFooterView);
 		// 设置点击事件
 		listView.setOnItemClickListener(this);
 		listView.setOnItemLongClickListener(this);
 		/** 初始化适配器 **/
 		mListAdapter = new ListAdapter();
 		listView.setAdapter(mListAdapter);
-	}
+		listView.removeFooterView(mFooterView);
 
-	/**
-	 * listFragment底部布局
-	 *
-	 * @return
-	 */
-	@Override public int listFragmentFooterLayout() {
-		return 0;
 	}
 
 	/**
@@ -360,13 +348,10 @@ public abstract class J2WListFragment<T extends J2WIPresenter> extends J2WFragme
 	 * 添加底部布局
 	 */
 	public void addFooterItem() {
-		if (mFooterView == null) {
-			int layout = listFragmentFooterLayout() == 0 ? J2WHelper.getInstance().listFragmentFooterLayout() : listFragmentFooterLayout();
-			mFooterView = LayoutInflater.from(getActivity()).inflate(layout, null, false);
-
+		if (mFooterView != null) {
+			listView.removeFooterView(mFooterView);
+			listView.addFooterView(mFooterView);
 		}
-		listView.removeFooterView(mFooterView);
-		listView.addFooterView(mFooterView);
 	}
 
 	/**

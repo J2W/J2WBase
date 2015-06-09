@@ -13,6 +13,7 @@ import j2w.team.R;
 import j2w.team.common.log.L;
 import j2w.team.common.widget.swipeRefresh.SwipeRefreshLayout;
 import j2w.team.mvp.J2WIViewActivity;
+import j2w.team.mvp.presenter.J2WHelper;
 import j2w.team.mvp.presenter.J2WIPresenter;
 
 /**
@@ -65,10 +66,9 @@ public abstract class J2WPullListFragment<T extends J2WIPresenter> extends J2WLi
 			listView.addHeaderView(headerView);
 		}
 
-		if (getFooterLayout() != 0) {
-			View footerView = LayoutInflater.from(getActivity()).inflate(getFooterLayout(), null, false);
-			listView.addFooterView(footerView);
-		}
+		mFooterView = LayoutInflater.from(getActivity()).inflate(getFooterLayout() == 0 ? J2WHelper.getInstance().listFragmentFooterLayout() : getFooterLayout(), null, false);
+		listView.addFooterView(mFooterView);
+
 		// 设置点击事件
 		listView.setOnItemClickListener(this);
 		listView.setOnItemLongClickListener(this);
