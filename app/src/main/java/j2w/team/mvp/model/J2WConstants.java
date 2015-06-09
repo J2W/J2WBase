@@ -41,4 +41,8 @@ public class J2WConstants {
 	 */
 	public static final String	J2W_DIALOG_PROGRESS			= "J2W_DIALOG_PROGRESS";
 
+	/**
+	 *  默认超时
+	 */
+	public static final int DEFAULT_TIME_OUT = 30;
 }

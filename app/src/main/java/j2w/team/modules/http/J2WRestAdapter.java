@@ -440,6 +440,11 @@ public class J2WRestAdapter {
 	public static class Builder {
 
 		/**
+		 * 超时
+		 */
+		private int						timeOut;
+
+		/**
 		 * 端点地址
 		 */
 		private J2WEndpoint				endpoint;
@@ -490,6 +495,18 @@ public class J2WRestAdapter {
 				throw new NullPointerException("请求拦截器不得空.");
 			}
 			this.requestInterceptor = requestInterceptor;
+			return this;
+		}
+
+		/**
+		 * 设置超时
+		 * 
+		 * @param timeOut
+		 *            超时
+		 * @return
+		 */
+		public Builder setTimeOut(int timeOut) {
+			this.timeOut = timeOut;
 			return this;
 		}
 
@@ -545,6 +562,10 @@ public class J2WRestAdapter {
 		 * 获取默认值
 		 */
 		private void ensureSaneDefaults() {
+			// 默认超时
+			if (timeOut == 0) {
+				timeOut = J2WConstants.DEFAULT_TIME_OUT;
+			}
 			// 转换器-默认使用Gson
 			if (converter == null) {
 				converter = new GsonConverter();
@@ -552,9 +573,9 @@ public class J2WRestAdapter {
 			// 网络协议-默认使用okhttp
 			if (client == null) {
 				OkHttpClient okHttpClient = new OkHttpClient();
-				okHttpClient.setConnectTimeout(15, TimeUnit.SECONDS);// 连接超时
-				okHttpClient.setReadTimeout(15, TimeUnit.SECONDS);// 读取超时
-				okHttpClient.setWriteTimeout(15, TimeUnit.SECONDS);// 写入超时
+				okHttpClient.setConnectTimeout(timeOut, TimeUnit.SECONDS);// 连接超时
+				okHttpClient.setReadTimeout(timeOut, TimeUnit.SECONDS);// 读取超时
+				okHttpClient.setWriteTimeout(timeOut, TimeUnit.SECONDS);// 写入超时
 				client = okHttpClient;
 			}
 			// 错误处理程序-默认什么都不做
