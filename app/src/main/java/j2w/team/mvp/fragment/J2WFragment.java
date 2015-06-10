@@ -427,7 +427,9 @@ public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment impl
 		L.tag(initTag());
 		L.i("Fragment-initLayout()");
 		mContentView = inflater.inflate(R.layout.j2w_fragment_main, container, false);
-		mContentView.setBackgroundResource(android.R.color.transparent);
+		if(isFragmentBackground()){
+			mContentView.setBackgroundResource(android.R.color.transparent);
+		}
 		mViewAnimator = ButterKnife.findById(mContentView, android.R.id.home);
 
 		// 获取View层接口
@@ -451,7 +453,9 @@ public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment impl
 		L.i("Fragment-initNotState()");
 		isShowContent = true;
 		mContentView = inflater.inflate(R.layout.j2w_layout_default, container, false);
-		mContentView.setBackgroundResource(android.R.color.transparent);
+		if(isFragmentBackground()){
+			mContentView.setBackgroundResource(android.R.color.transparent);
+		}
 		inflater.inflate(layoutId(), (ViewGroup) mContentView, true);
 	}
 
@@ -859,14 +863,14 @@ public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment impl
 	 * ViewPager切换 是否调用延迟加载
 	 */
 	@Override public final void isDelayedData() {
-		if(!isAddDelayedData()){
+		if (!isAddDelayedData()) {
 			L.i("Fragment-isDelayedData() 无效");
 			return;
 		}
 		L.tag(initTag());
 		L.i("Fragment-isDelayedData() return " + isDelayedData);
 		if (isDelayedData) {
-			isDelayedDateSuccess = true; //延迟加载完成
+			isDelayedDateSuccess = true; // 延迟加载完成
 			return;
 		}
 		// 为了只初始化一次
@@ -915,5 +919,14 @@ public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment impl
 			getFragmentManager().popBackStack();
 			index--;
 		}
+	}
+
+	/**
+	 * 背景是否透明
+	 * 
+	 * @return
+	 */
+	public boolean isFragmentBackground() {
+		return false;
 	}
 }

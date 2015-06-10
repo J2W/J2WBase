@@ -120,4 +120,10 @@ public interface J2WIViewFragment extends J2WIView {
 	 * 删除fragment
 	 */
 	void removeFragment(String fragmentName);
+
+	/**
+	 * 背景是否透明
+	 * @return
+	 */
+	boolean isFragmentBackground();
 }
