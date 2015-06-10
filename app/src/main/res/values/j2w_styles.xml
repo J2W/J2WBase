@@ -105,4 +105,12 @@
         <item name="android:textSize">12sp</item>
         <item name="pstsSelectedTextColor">#51A3FF</item>
     </style>
+
+    <!-- Viewpager iconindicator  -->
+    <style name="J2W.Layout.Wrap.IconImg">
+        <item name="android:paddingBottom">@dimen/icon_indicator_img</item>
+        <item name="android:paddingTop">@dimen/icon_indicator_img</item>
+        <item name="android:paddingRight">@dimen/icon_indicator_img</item>
+        <item name="android:paddingLeft">@dimen/icon_indicator_img</item>
+    </style>
 </resources>

@@ -12,8 +12,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 /**
- * Created by skyJC on 2015/3/26.
- * yong
+ * Created by skyJC on 2015/3/26. yong
  */
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class J2WVPColorAnimation extends View implements ValueAnimator.AnimatorUpdateListener, Animator.AnimatorListener {
@@ -73,7 +72,7 @@ public class J2WVPColorAnimation extends View implements ValueAnimator.AnimatorU
 		mPageChangeListener = new PageChangeListener();
 	}
 
-	private void seek(long seekTime) {
+	public void seek(long seekTime) {
 		if (colorAnim == null) {
 			createDefaultAnimation();
 		}
@@ -96,6 +95,22 @@ public class J2WVPColorAnimation extends View implements ValueAnimator.AnimatorU
 		colorAnim.addUpdateListener(this);
 	}
 
+	/**
+	 * 滑动执行
+	 * 
+	 * @param dataCount
+	 * @param position
+	 * @param positionOffset
+	 */
+	public void onAnimationScrolled(int dataCount, int position, float positionOffset) {
+		int count = dataCount - 1;
+		if (count != 0) {
+			float length = (position + positionOffset) / count;
+			int progress = (int) (length * DURATION);
+			J2WVPColorAnimation.this.seek(progress);
+		}
+	}
+
 	@Override public void onAnimationStart(Animator animation) {
 
 	}
@@ -114,7 +129,7 @@ public class J2WVPColorAnimation extends View implements ValueAnimator.AnimatorU
 		invalidate();
 	}
 
-	private class PageChangeListener implements ViewPager.OnPageChangeListener {
+	public class PageChangeListener implements ViewPager.OnPageChangeListener {
 
 		private int	viewPagerChildCount;
 
@@ -127,13 +142,7 @@ public class J2WVPColorAnimation extends View implements ValueAnimator.AnimatorU
 		}
 
 		@Override public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-			int count = getViewPagerChildCount() - 1;
-			if (count != 0) {
-				float length = (position + positionOffset) / count;
-				int progress = (int) (length * DURATION);
-				J2WVPColorAnimation.this.seek(progress);
-			}
+			onAnimationScrolled(getViewPagerChildCount(), position, positionOffset);
 			if (onPageChangeListener != null) {
 				onPageChangeListener.onPageScrolled(position, positionOffset, positionOffsetPixels);
 			}
