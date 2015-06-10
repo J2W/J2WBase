@@ -68,12 +68,21 @@ Wiki
 [4.Modules 架构工具类](https://github.com/J2W/J2WBase/wiki/4.Modules-%E6%9E%B6%E6%9E%84%E5%B7%A5%E5%85%B7%E7%B1%BB)<br />
 [5.Common widget 控件](https://github.com/J2W/J2WBase/wiki/5.Common-widget-%E6%8E%A7%E4%BB%B6)<br />
 
+引用架构项目 - 官网地址
+-----------------------------------
+白露美 : http://www.bailumei.com/
 
 版本更新说明
 -----------------------------------
-###v1.0.4 - 测试中
-1.增加View层Fragment提交后,根据状态 切换提交方式
-###v1.0.3 - 稳定版 - APP线上正常使用
+###v1.0.4 - 稳定版 - APP上线 - 正常使用
+1.增加View层Fragment提交后,根据状态 切换提交方式<br />
+2.增加View层Framgnet公共布局<br />
+3.增加图片处理工具<br />
+4.增加适配器总数<br />
+5.增加FragmentViewPager状态<br />
+6.修复ListView 底部不显示BUG<br />
+7.增加网络架构设置超时接口<br />
+###v1.0.3 - 稳定版 - APP上线 - 正常使用
 1.view层结构改版<br />
 2.common 增加点击效果组件<br />
 3.增加View接口<br/>
@@ -95,46 +104,46 @@ Wiki
 混淆过滤
 -----------------------------------
 ####J2W
--keep class j2w.team.** { *; }
--dontwarn j2w.team.**
+-keep class j2w.team.** { *; } <br />
+-dontwarn j2w.team.**<br />
 
 ####JAVAX
--dontwarn javax.annotation.**
--keep class javax.annotation.**
--dontwarn javax.inject.**
--keep class javax.inject.**
+-dontwarn javax.annotation.**<br />
+-keep class javax.annotation.**<br />
+-dontwarn javax.inject.**<br />
+-keep class javax.inject.**<br />
 
 #### View注入
--keep class * extends java.lang.annotation.Annotation { *; }
+-keep class * extends java.lang.annotation.Annotation { *; }<br />
 
 #### picasso
--dontwarn com.squareup.okhttp.**
+-dontwarn com.squareup.okhttp.**<br />
 
 #### butterknife
--keep class butterknife.** { *; }
--dontwarn butterknife.internal.**
--keep class **$$ViewInjector { *; }
--keepclasseswithmembernames class * {
-    @butterknife.* <fields>;
-}
--keepclasseswithmembernames class * {
-    @butterknife.* <methods>;
-}
+-keep class butterknife.** { *; }<br />
+-dontwarn butterknife.internal.**<br />
+-keep class **$$ViewInjector { *; }<br />
+-keepclasseswithmembernames class * {<br />
+    @butterknife.* <fields>;<br />
+}<br />
+-keepclasseswithmembernames class * {<br />
+    @butterknife.* <methods>;<br />
+}<br />
 
 #### okio
--dontwarn okio.**
--dontwarn in.srain.cube.**
--keep class in.srain.cube.**
+-dontwarn okio.**<br />
+-dontwarn in.srain.cube.**<br />
+-keep class in.srain.cube.**<br />
 
 ####EventBus
--keepclassmembers class ** {
-    public void onEvent(**);
-}
--keepclassmembers class * extends j2w.team.common.event.J2WEvent {*;}
+-keepclassmembers class ** {<br />
+    public void onEvent(**);<br />
+}<br />
+-keepclassmembers class * extends j2w.team.common.event.J2WEvent {*;}<br />
 
 ####  保留签名，解决泛型问题
--keepattributes Signature
+-keepattributes Signature<br />
 
 ####GSON
--keep class sun.misc.Unsafe { *; }
--keep class com.google.gson.examples.android.model.* { *; }
+-keep class sun.misc.Unsafe { *; }<br />
+-keep class com.google.gson.examples.android.model.* { *; }<br />
