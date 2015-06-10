@@ -13,6 +13,7 @@ import android.view.View;
 
 /**
  * Created by skyJC on 2015/3/26.
+ * yong
  */
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class J2WVPColorAnimation extends View implements ValueAnimator.AnimatorUpdateListener, Animator.AnimatorListener {
@@ -38,8 +39,6 @@ public class J2WVPColorAnimation extends View implements ValueAnimator.AnimatorU
 	/**
 	 * @param mViewPager
 	 *            你必须在设置 Viewpager 的 Adapter 这后，才能调用这个方法。
-	 * @param obj
-	 *            ,这个obj实现了 ColorAnimationView.OnPageChangeListener ，实现回调
 	 * @param count
 	 *            ,viewpager孩子的数量
 	 * @param colors

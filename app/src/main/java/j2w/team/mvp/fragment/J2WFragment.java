@@ -427,6 +427,7 @@ public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment impl
 		L.tag(initTag());
 		L.i("Fragment-initLayout()");
 		mContentView = inflater.inflate(R.layout.j2w_fragment_main, container, false);
+		mContentView.setBackgroundResource(android.R.color.transparent);
 		mViewAnimator = ButterKnife.findById(mContentView, android.R.id.home);
 
 		// 获取View层接口
@@ -450,6 +451,7 @@ public abstract class J2WFragment<T extends J2WIPresenter> extends Fragment impl
 		L.i("Fragment-initNotState()");
 		isShowContent = true;
 		mContentView = inflater.inflate(R.layout.j2w_layout_default, container, false);
+		mContentView.setBackgroundResource(android.R.color.transparent);
 		inflater.inflate(layoutId(), (ViewGroup) mContentView, true);
 	}
 
