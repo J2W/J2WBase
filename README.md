@@ -151,5 +151,5 @@ Wiki
 -keep class sun.misc.Unsafe { *; }<br />
 -keep class com.google.gson.examples.android.model.* { *; } <br />
 
-#网络架构实体类
+#### 网络架构实体类
 -keepclassmembers class * extends j2w.team.mvp.model.J2WModel {*;} <br />
