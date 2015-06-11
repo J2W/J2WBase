@@ -30,7 +30,6 @@ Project-build.gradle
      }
 
 App-build.gradle:
-
     android {
         //配置信息
         packagingOptions {
@@ -106,11 +105,14 @@ Wiki
 
 混淆过滤
 -----------------------------------
-####J2W
+#### 保留签名，解决泛型问题<br />
+-keepattributes Signature<br />
+
+#### J2W
 -keep class j2w.team.** { *; } <br />
 -dontwarn j2w.team.**<br />
 
-####JAVAX
+#### JAVAX
 -dontwarn javax.annotation.**<br />
 -keep class javax.annotation.**<br />
 -dontwarn javax.inject.**<br />
@@ -138,15 +140,16 @@ Wiki
 -dontwarn in.srain.cube.**<br />
 -keep class in.srain.cube.**<br />
 
-####EventBus
+#### EventBus
 -keepclassmembers class ** {<br />
     public void onEvent(**);<br />
 }<br />
 -keepclassmembers class * extends j2w.team.common.event.J2WEvent {*;}<br />
+-keepclassmembers class *$* extends j2w.team.common.event.J2WEvent {*;}<br />
 
-####  保留签名，解决泛型问题
--keepattributes Signature<br />
-
-####GSON
+#### GSON
 -keep class sun.misc.Unsafe { *; }<br />
--keep class com.google.gson.examples.android.model.* { *; }<br />
+-keep class com.google.gson.examples.android.model.* { *; } <br />
+
+#网络架构实体类
+-keepclassmembers class * extends j2w.team.mvp.model.J2WModel {*;} <br />
