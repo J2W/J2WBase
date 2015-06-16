@@ -4,8 +4,8 @@ J2WBase
 
 Gradle 版本
 -----------------------------------
-1.classpath 'com.android.tools.build:gradle:1.0.0'<br />
-2.版本 - gradle-2.2.1-all.zip<br />
+1.classpath 'com.android.tools.build:gradle:1.2.3'<br />
+2.版本 - gradle-2.4-all.zip<br />
 
 新项目引用
 -----------------------------------
