@@ -43,7 +43,9 @@ Gradle依赖
 -----------------------------------
 App-build.gradle:<br />
 
-    compile 'j2w.team:base:1.0.4'
+    compile 'j2w.team:base:1.0.4' <br /> //正式版
+    
+    compile 'j2w.team:base:1.0.5' <br /> //测试版
 
 AndroidManifest 权限
 -----------------------------------
