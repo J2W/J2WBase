@@ -3,6 +3,7 @@ package j2w.team.mvp.presenter;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Looper;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -209,8 +210,12 @@ public class J2WHelper {
 
 	/**
 	 * Fragment 跳转工具
-	 *
 	 */
+	public static final void commitDialogFragment(DialogFragment dialogFragment){
+		FragmentManager fragmentManager = J2WHelper.getScreenHelper().currentActivity().getSupportFragmentManager();
+		fragmentManager.beginTransaction().add(dialogFragment,dialogFragment.getClass().getSimpleName()).commitAllowingStateLoss();
+	}
+
 	public static final void commitFragment(Fragment fragment) {
 		commitFragment(fragment, fragment.getClass().getSimpleName());
 	}
