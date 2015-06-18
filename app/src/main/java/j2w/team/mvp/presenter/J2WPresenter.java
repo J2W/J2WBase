@@ -89,7 +89,7 @@ public abstract class J2WPresenter<T> {
 	 */
 	public final void methodError(String methodName, Throwable throwable) {
 		L.tag(initTag());
-		L.i("methodError() methodName : " + methodName);
+		L.e("methodError() methodName : " + methodName);
 		if (throwable.getCause() instanceof J2WError) {
 			if ("Canceled".equals(throwable.getCause().getMessage())) {
 				errorCancel();
@@ -104,7 +104,7 @@ public abstract class J2WPresenter<T> {
 	/** 网络异常 **/
 	public final void methodHttpError(String methodName, J2WError j2WError) {
 		L.tag(initTag());
-		L.i("methodHttpError() methodName : " + methodName);
+		L.e("methodHttpError() methodName : " + methodName);
 
 		if (iView instanceof J2WIViewPullListFragment) { // 如果是有上下拉刷新
 			((J2WIViewPullListFragment) iView).setRefreshing(false);
@@ -117,15 +117,15 @@ public abstract class J2WPresenter<T> {
 
 		if (j2WError.getKind() == J2WError.Kind.NETWORK) { // 请求发送前，网络问题
 			L.tag(initTag());
-			L.i("J2WError.Kind.NETWORK");
+			L.e("J2WError.Kind.NETWORK");
 			errorNetWork();
 		} else if (j2WError.getKind() == J2WError.Kind.HTTP) {// 请求响应后，网络错误
 			L.tag(initTag());
-			L.i("J2WError.Kind.HTTP");
+			L.e("J2WError.Kind.HTTP");
 			errorHttp();
 		} else if (j2WError.getKind() == J2WError.Kind.UNEXPECTED) {// 意外错误
 			L.tag(initTag());
-			L.i("J2WError.Kind.UNEXPECTED");
+			L.e("J2WError.Kind.UNEXPECTED");
 			errorUnexpected();
 		}
 	}
@@ -133,31 +133,31 @@ public abstract class J2WPresenter<T> {
 	/** 发送请求前取消 **/
 	public void errorCancel() {
 		L.tag(initTag());
-		L.i("errorCancel()");
+		L.e("errorCancel()");
 	}
 
 	/** 发送请求前错误 **/
 	public void errorNetWork() {
 		L.tag(initTag());
-		L.i("errorNetWork()");
+		L.e("errorNetWork()");
 	}
 
 	/** 请求得到响应后错误 **/
 	public void errorHttp() {
 		L.tag(initTag());
-		L.i("errorHttp()");
+		L.e("errorHttp()");
 	}
 
 	/** 请求或者响应 意外错误 **/
 	public void errorUnexpected() {
 		L.tag(initTag());
-		L.i("errorUnexpected()");
+		L.e("errorUnexpected()");
 	}
 
 	/** 编码异常 **/
 	public void methodCodingError(String methodName, Throwable throwable) {
 		L.tag(initTag());
-		L.i("methodCodingError() methodName : " + methodName);
+		L.e("methodCodingError() methodName : " + methodName);
 	}
 
 	/**
