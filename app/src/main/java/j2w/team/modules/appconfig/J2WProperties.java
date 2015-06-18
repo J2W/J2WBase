@@ -81,7 +81,7 @@ public abstract class J2WProperties {
 	}
 
 	public J2WProperties(String propertiesFileName) {
-		propertyFilePath = J2WHelper.getInstance().getApplicationContext().getCacheDir();// 存储到/DATA/DATA/
+		propertyFilePath = getPropertyFilePath();
 		mPropertiesFileName = propertiesFileName;
 		switch (initType()) {
 			case OPEN_TYPE_ASSETS:
@@ -92,6 +92,15 @@ public abstract class J2WProperties {
 				openDataProperties();
 				break;
 		}
+	}
+
+	/**
+	 * 获取存储路径
+	 * 
+	 * @return
+	 */
+	public File getPropertyFilePath() {
+		return J2WHelper.getInstance().getApplicationContext().getCacheDir();// 存储到/DATA/DATA/
 	}
 
 	/**

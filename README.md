@@ -4,8 +4,8 @@ J2WBase
 
 Gradle 版本
 -----------------------------------
-1.classpath 'com.android.tools.build:gradle:1.0.0'<br />
-2.版本 - gradle-2.2.1-all.zip<br />
+1.classpath 'com.android.tools.build:gradle:1.2.3'<br />
+2.版本 - gradle-2.4-all.zip<br />
 
 新项目引用
 -----------------------------------
@@ -43,7 +43,9 @@ Gradle依赖
 -----------------------------------
 App-build.gradle:<br />
 
-    compile 'j2w.team:base:1.0.4'
+    compile 'j2w.team:base:1.0.4' <br /> //正式版
+    
+    compile 'j2w.team:base:1.0.5' <br /> //测试版
 
 AndroidManifest 权限
 -----------------------------------
