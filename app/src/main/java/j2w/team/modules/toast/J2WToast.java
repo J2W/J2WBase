@@ -42,7 +42,7 @@ public class J2WToast {
 	 * @param text
 	 * @param duration
 	 */
-	private static void showToast(Context context, String text, int duration) {
+	protected static void showToast(Context context, String text, int duration) {
 		if (mToast == null) {
 			mToast = Toast.makeText(context, text, duration);
 		} else {
