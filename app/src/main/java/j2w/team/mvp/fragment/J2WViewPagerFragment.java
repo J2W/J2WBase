@@ -96,6 +96,8 @@ public abstract class J2WViewPagerFragment<T extends J2WIPresenter> extends J2WF
 		tabs.setTabBackground(getTabsOnClickTitleColor());
 		// 设置背景颜色
 		tabs.setBackgroundResource(getTabsBackgroundResource());
+		// 设置Tabs宽度
+		tabs.setTabWidth(getTabWidth());
 	}
 
 	/**
@@ -120,7 +122,7 @@ public abstract class J2WViewPagerFragment<T extends J2WIPresenter> extends J2WF
 	 * 初始化 viewpager - 设置适配器
 	 */
 	@Override public void initViewPager() {
-		initViewPager(initModelPagers(),4);
+		initViewPager(initModelPagers(), 4);
 	}
 
 	/**
@@ -272,6 +274,13 @@ public abstract class J2WViewPagerFragment<T extends J2WIPresenter> extends J2WF
 	 */
 	@Override public int getTabsUnderlineHeight() {
 		return 1;
+	}
+
+	/**
+	 * 设置Item样式 - 设置每个Tab宽度
+	 */
+	@Override public int getTabWidth() {
+		return 0;
 	}
 
 	/**

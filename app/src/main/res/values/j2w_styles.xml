@@ -34,6 +34,8 @@
         <item name="android:layout_height">match_parent</item>
     </style>
 
+
+
     <!-- 进度条样式. -->
     <style name="J2W.Layout.Wrap.ProgressBar">
         <item name="android:indeterminateDrawable">@drawable/j2w_progress_indeterminate</item>
@@ -72,7 +74,10 @@
         <!-- 背景颜色-->
         <item name="android:background">@drawable/j2w_viewpager_background_tabs</item>
     </style>
-
+    <!-- 默认背景 -->
+    <style name="J2W.Layout.TabStripBackGround">
+        <item name="android:background">@android:color/white</item>
+    </style>
     <!-- Viewpager -->
     <style name="J2W.Layout.Viewpager">
         <item name="android:background">@android:color/white</item>

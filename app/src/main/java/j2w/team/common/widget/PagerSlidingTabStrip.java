@@ -35,20 +35,20 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 
 	public interface IconTabProvider {
 
-		public int getPageIconResId(int position);
+		int getPageIconResId(int position);
 	}
 
 	public interface TitleCountTabProvider {
 
-		public String getPageCount(int position);
+		String getPageCount(int position);
 
 	}
 
 	public interface CustomTabProvider {
 
-		public int getCustomTabView();
+		int getCustomTabView();
 
-		public void initTabsItem(View view, int position);
+		void initTabsItem(View view, int position);
 	}
 
 	// @formatter:off
@@ -118,6 +118,8 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 
 	private Locale						locale;
 
+	private int							tabWidth;
+
 	public PagerSlidingTabStrip(Context context) {
 		this(context, null);
 	}
@@ -134,7 +136,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 
 		tabsContainer = new LinearLayout(context);
 		tabsContainer.setOrientation(LinearLayout.HORIZONTAL);
-		tabsContainer.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+		tabsContainer.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 		addView(tabsContainer);
 
 		DisplayMetrics dm = getResources().getDisplayMetrics();
@@ -187,6 +189,20 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 
 		if (locale == null) {
 			locale = getResources().getConfiguration().locale;
+		}
+	}
+
+	/**
+	 * 设置宽度
+	 * 
+	 * @param width
+	 */
+	public void setTabWidth(int width) {
+		tabWidth = width;
+		if (tabWidth != 0) {
+			getLayoutParams().width = LayoutParams.WRAP_CONTENT;
+		} else {
+			getLayoutParams().width = LayoutParams.MATCH_PARENT;
 		}
 	}
 
@@ -375,7 +391,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 		// default: line below current tab
 		View currentTab = tabsContainer.getChildAt(currentPosition);
 		float lineLeft = currentTab.getLeft();
-		float lineRight = currentTab.getRight();
+		float lineRight = tabWidth == 0 ? currentTab.getRight() : tabWidth;
 
 		// if there is an offset, start interpolating left and right coordinates
 		// between current and next tab
@@ -383,7 +399,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 
 			View nextTab = tabsContainer.getChildAt(currentPosition + 1);
 			final float nextTabLeft = nextTab.getLeft();
-			final float nextTabRight = nextTab.getRight();
+			final float nextTabRight = tabWidth == 0 ? nextTab.getRight() : tabWidth;
 
 			lineLeft = (currentPositionOffset * nextTabLeft + (1f - currentPositionOffset) * lineLeft);
 			lineRight = (currentPositionOffset * nextTabRight + (1f - currentPositionOffset) * lineRight);
@@ -394,14 +410,14 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 		// draw underline
 
 		rectPaint.setColor(underlineColor);
-		canvas.drawRect(0, height - underlineHeight, tabsContainer.getWidth(), height, rectPaint);
+		canvas.drawRect(0, height - underlineHeight, tabWidth == 0 ? tabsContainer.getWidth() : tabWidth, height, rectPaint);
 
 		// draw divider
 
 		dividerPaint.setColor(dividerColor);
 		for (int i = 0; i < tabCount - 1; i++) {
 			View tab = tabsContainer.getChildAt(i);
-			canvas.drawLine(tab.getRight(), dividerPadding, tab.getRight(), height - dividerPadding, dividerPaint);
+			canvas.drawLine(tabWidth == 0 ? tab.getRight() : tabWidth, dividerPadding, tabWidth == 0 ? tab.getRight() : tabWidth, height - dividerPadding, dividerPaint);
 		}
 	}
 

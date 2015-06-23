@@ -99,6 +99,8 @@ public abstract class J2WViewpagerABActivity<T extends J2WIPresenter> extends J2
 		tabs.setTabBackground(getTabsOnClickTitleColor());
 		// 设置背景颜色
 		tabs.setBackgroundResource(getTabsBackgroundResource());
+		// 设置Tabs宽度
+		tabs.setTabWidth(getTabWidth());
 	}
 
 	/**
@@ -248,6 +250,13 @@ public abstract class J2WViewpagerABActivity<T extends J2WIPresenter> extends J2
 	 */
 	@Override public int getTabsUnderlineHeight() {
 		return 1;
+	}
+
+	/**
+	 * 设置Item样式 - 设置每个Tab宽度
+	 */
+	@Override public int getTabWidth() {
+		return 0;
 	}
 
 	/**

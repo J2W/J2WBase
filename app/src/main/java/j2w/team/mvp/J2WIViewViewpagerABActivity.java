@@ -30,10 +30,13 @@ public interface J2WIViewViewpagerABActivity extends J2WIView {
 
 	/**
 	 * 初始化 viewpager - 设置适配器
-	 * @param modelPagers           集合
-	 * @param offScreenPageLimit 预留数量
+	 * 
+	 * @param modelPagers
+	 *            集合
+	 * @param offScreenPageLimit
+	 *            预留数量
 	 */
-	void initViewPager(ModelPager[] modelPagers,int offScreenPageLimit);
+	void initViewPager(ModelPager[] modelPagers, int offScreenPageLimit);
 
 	/**
 	 * 初始化 ViewPager - adapter
@@ -90,6 +93,8 @@ public interface J2WIViewViewpagerABActivity extends J2WIView {
 	int getTabsUnderlineColor();// 设置Tab底部线的颜色
 
 	int getTabsUnderlineHeight();// 设置Tab底部线的高度
+
+	int getTabWidth();// 设置每个Tab宽度
 
 	/**
 	 * 设置Item样式 -替换item
