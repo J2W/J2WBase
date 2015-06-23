@@ -3,6 +3,7 @@ package j2w.team.mvp;
 import j2w.team.R;
 import j2w.team.mvp.adapter.J2WVPCustomPagerAdapter;
 import j2w.team.mvp.adapter.J2WVPDefaultPagerAdapter;
+import j2w.team.mvp.model.ModelPager;
 import j2w.team.mvp.presenter.J2WIPresenter;
 
 /**

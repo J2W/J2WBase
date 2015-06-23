@@ -79,11 +79,19 @@ public class J2WVPDefaultPagerAdapter<T extends J2WIPresenter> extends PagerAdap
 		L.i("J2WVPDefaultPagerAdapter()");
 		this.tag = tag;
 		this.j2WIViewViewpagerABActivity = j2WIViewViewpagerABActivity;
-		this.viewPagerDatas = this.j2WIViewViewpagerABActivity.initModelPagers();
 		this.fragmentManager = fragmentManager;
 		this.tabs = tabs;
 		this.pager = pager;
 		this.tabs.setOnPageChangeListener(this);
+	}
+
+	/**
+	 * 设置数据
+	 * 
+	 * @param viewPagerDatas
+	 */
+	public void setModelPagers(ModelPager[] viewPagerDatas) {
+		this.viewPagerDatas = viewPagerDatas;
 	}
 
 	/**
@@ -202,7 +210,7 @@ public class J2WVPDefaultPagerAdapter<T extends J2WIPresenter> extends PagerAdap
 			 * 要注意的是，所有的回调和相关的行为都会在这个调用中被执行完成，因此要仔细确认这个方法的调用位置。
 			 */
 			fragmentManager.executePendingTransactions();
-			fragment.setHasOptionsMenu(false);//设置actionbar不执行
+			fragment.setHasOptionsMenu(false);// 设置actionbar不执行
 			if (replacePosition != -1) {
 				((J2WFragment) viewPagerDatas[replacePosition].fragment).isDelayedData();
 				((J2WFragment) viewPagerDatas[replacePosition].fragment).onActionBar();

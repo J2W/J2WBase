@@ -104,20 +104,29 @@ public abstract class J2WViewpagerABActivity<T extends J2WIPresenter> extends J2
 	/**
 	 * 初始化 viewpager - 设置适配器
 	 */
-	@Override public final void initViewPager() {
+	@Override public void initViewPager() {
+		initViewPager(initModelPagers(), 4);
+	}
+
+	/**
+	 * 初始化 viewpager - 设置适配器
+	 */
+	@Override public void initViewPager(ModelPager[] modelPagers, int offScreenPageLimit) {
 		L.tag(initTag());
 		L.i("ViewPagerActivity-initViewPager()");
-		// 设置适配器
-		if (adapter == null) {
-			adapter = getPagerAdapter();
+		if (modelPagers == null) {
+			return;
 		}
+		// 设置适配器
+		adapter = getPagerAdapter();
+		((J2WVPDefaultPagerAdapter) adapter).setModelPagers(modelPagers);
 		pager.setAdapter(adapter);
 		// 间隔距离
 		final int pageMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4, getResources().getDisplayMetrics());
 		// 设置距离
 		pager.setPageMargin(pageMargin);
 		// 预留数量
-		pager.setOffscreenPageLimit(4);
+		pager.setOffscreenPageLimit(offScreenPageLimit);
 		// 设置给头部
 		tabs.setViewPager(pager);
 	}
@@ -159,9 +168,9 @@ public abstract class J2WViewpagerABActivity<T extends J2WIPresenter> extends J2
 	 * @return
 	 */
 	public Fragment getCurrentFragment() {
-        L.tag(initTag());
-        L.i("ViewPagerActivity-getCurrentFragment()");
-		return ((J2WVPDefaultPagerAdapter)adapter).getViewPagerDatas()[pager.getCurrentItem()].fragment;
+		L.tag(initTag());
+		L.i("ViewPagerActivity-getCurrentFragment()");
+		return ((J2WVPDefaultPagerAdapter) adapter).getViewPagerDatas()[pager.getCurrentItem()].fragment;
 	}
 
 	/**

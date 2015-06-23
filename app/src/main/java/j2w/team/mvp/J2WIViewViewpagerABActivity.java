@@ -29,6 +29,13 @@ public interface J2WIViewViewpagerABActivity extends J2WIView {
 	void initViewPager();
 
 	/**
+	 * 初始化 viewpager - 设置适配器
+	 * @param modelPagers           集合
+	 * @param offScreenPageLimit 预留数量
+	 */
+	void initViewPager(ModelPager[] modelPagers,int offScreenPageLimit);
+
+	/**
 	 * 初始化 ViewPager - adapter
 	 *
 	 * @return 适配器
