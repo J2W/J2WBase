@@ -4,3 +4,4 @@ build
 *.iml
 local.properties
 app/app.iml
+local.properties
