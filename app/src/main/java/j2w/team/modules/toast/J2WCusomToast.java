@@ -52,21 +52,7 @@ public abstract class J2WCusomToast {
 	 * 
 	 * @param msg
 	 */
-	public void show(String msg) {
-
-		if (mToast == null) {
-			mToast = new Toast(J2WHelper.getScreenHelper().currentActivity());
-			LayoutInflater inflate = (LayoutInflater) J2WHelper.getScreenHelper().currentActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			v = inflate.inflate(layoutId(), null);
-			mToast.setView(v);
-			init(v, msg);
-			mToast.setDuration(Toast.LENGTH_SHORT);
-			mToast.setGravity(getGravity(),0,0);
-		} else {
-			mToast.setDuration(Toast.LENGTH_SHORT);
-			mToast.setGravity(getGravity(),0,0);
-			init(v, msg);
-		}
+	public void show(final String msg) {
 		// 判断是否在主线程
 		boolean isMainLooper = Looper.getMainLooper().getThread() != Thread.currentThread();
 
@@ -74,11 +60,34 @@ public abstract class J2WCusomToast {
 			J2WHelper.getMainLooper().execute(new Runnable() {
 
 				@Override public void run() {
-					mToast.show();
+					cusomShow(msg);
 				}
 			});
 		} else {
+			cusomShow(msg);
+		}
+	}
+
+	/**
+	 * 显示
+	 * 
+	 * @param msg
+	 */
+	protected void cusomShow(String msg) {
+		if (mToast == null) {
+			mToast = new Toast(J2WHelper.getScreenHelper().currentActivity());
+			LayoutInflater inflate = (LayoutInflater) J2WHelper.getScreenHelper().currentActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			v = inflate.inflate(layoutId(), null);
+			mToast.setView(v);
+			init(v, msg);
+			mToast.setDuration(Toast.LENGTH_SHORT);
+			mToast.setGravity(getGravity(), 0, 0);
+		} else {
+			mToast.setDuration(Toast.LENGTH_SHORT);
+			mToast.setGravity(getGravity(), 0, 0);
+			init(v, msg);
 			mToast.show();
+
 		}
 	}
 }
