@@ -1,6 +1,7 @@
 package j2w.team.modules.toast;
 
 import android.content.Context;
+import android.os.Looper;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -52,6 +53,7 @@ public abstract class J2WCusomToast {
 	 * @param msg
 	 */
 	public void show(String msg) {
+
 		if (mToast == null) {
 			mToast = new Toast(J2WHelper.getScreenHelper().currentActivity());
 			LayoutInflater inflate = (LayoutInflater) J2WHelper.getScreenHelper().currentActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -65,6 +67,18 @@ public abstract class J2WCusomToast {
 			mToast.setGravity(getGravity(),0,0);
 			init(v, msg);
 		}
-		mToast.show();
+		// 判断是否在主线程
+		boolean isMainLooper = Looper.getMainLooper().getThread() != Thread.currentThread();
+
+		if (isMainLooper) {
+			J2WHelper.getMainLooper().execute(new Runnable() {
+
+				@Override public void run() {
+					mToast.show();
+				}
+			});
+		} else {
+			mToast.show();
+		}
 	}
 }
