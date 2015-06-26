@@ -22,7 +22,7 @@ import j2w.team.mvp.presenter.J2WIPresenter;
 /**
  * Created by sky on 15/3/3.ViewPager
  */
-public abstract class J2WViewpagerActivity<T extends J2WIPresenter> extends J2WActivity<T> implements J2WIViewViewpagerABActivity {
+public abstract class J2WViewpagerActivity<T extends J2WIPresenter> extends J2WActivity<T> implements J2WIViewViewpagerActivity {
 
 	/**
 	 * ViewPager 头部 *

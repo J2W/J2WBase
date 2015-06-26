@@ -12,6 +12,7 @@ import j2w.team.common.log.L;
 import j2w.team.common.widget.J2WViewPager;
 import j2w.team.common.widget.PagerSlidingTabStrip;
 import j2w.team.mvp.J2WIViewViewpagerABActivity;
+import j2w.team.mvp.J2WIViewViewpagerActivity;
 import j2w.team.mvp.fragment.J2WFragment;
 import j2w.team.mvp.model.ModelPager;
 import j2w.team.mvp.presenter.J2WIPresenter;
@@ -38,6 +39,8 @@ public class J2WVPDefaultPagerAdapter<T extends J2WIPresenter> extends PagerAdap
 	protected J2WViewPager					pager;							// viewpager
 
 	protected J2WIViewViewpagerABActivity	j2WIViewViewpagerABActivity;	// View层接口
+
+	protected J2WIViewViewpagerActivity		j2WIViewViewpagerActivity;		// View层接口
 
 	/**
 	 * 记录Viewpager Item
@@ -79,6 +82,31 @@ public class J2WVPDefaultPagerAdapter<T extends J2WIPresenter> extends PagerAdap
 		L.i("J2WVPDefaultPagerAdapter()");
 		this.tag = tag;
 		this.j2WIViewViewpagerABActivity = j2WIViewViewpagerABActivity;
+		this.fragmentManager = fragmentManager;
+		this.tabs = tabs;
+		this.pager = pager;
+		this.tabs.setOnPageChangeListener(this);
+	}
+
+	/**
+	 * 初始化
+	 * 
+	 * @param tag
+	 *            标记
+	 * @param fragmentManager
+	 *            管理器
+	 * @param tabs
+	 *            标题
+	 * @param pager
+	 *            内容
+	 * @param j2WIViewViewpagerActivity
+	 *            接口
+	 */
+	public J2WVPDefaultPagerAdapter(String tag, FragmentManager fragmentManager, PagerSlidingTabStrip tabs, J2WViewPager pager, J2WIViewViewpagerActivity j2WIViewViewpagerActivity) {
+		L.tag(tag);
+		L.i("J2WVPDefaultPagerAdapter()");
+		this.tag = tag;
+		this.j2WIViewViewpagerActivity = j2WIViewViewpagerActivity;
 		this.fragmentManager = fragmentManager;
 		this.tabs = tabs;
 		this.pager = pager;
@@ -239,7 +267,12 @@ public class J2WVPDefaultPagerAdapter<T extends J2WIPresenter> extends PagerAdap
 	@Override public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 		left = tabs.tabsContainer.getChildAt(position);
 		right = tabs.tabsContainer.getChildAt(position + 1);
-		j2WIViewViewpagerABActivity.onExtraPageScrolled(left, right, positionOffset, positionOffsetPixels);
+		if (j2WIViewViewpagerABActivity != null) {
+			j2WIViewViewpagerABActivity.onExtraPageScrolled(left, right, positionOffset, positionOffsetPixels);
+		}
+		if (j2WIViewViewpagerActivity != null) {
+			j2WIViewViewpagerActivity.onExtraPageScrolled(left, right, positionOffset, positionOffsetPixels);
+		}
 	}
 
 	/**
@@ -266,8 +299,12 @@ public class J2WVPDefaultPagerAdapter<T extends J2WIPresenter> extends PagerAdap
 		}
 
 		currentPageIndex = position;
-
-		j2WIViewViewpagerABActivity.onExtraPageSelected(tabs.tabsContainer.getChildAt(position), oldView, position, oldPosition);
+		if (j2WIViewViewpagerABActivity != null) {
+			j2WIViewViewpagerABActivity.onExtraPageSelected(tabs.tabsContainer.getChildAt(position), oldView, position, oldPosition);
+		}
+		if (j2WIViewViewpagerActivity != null) {
+			j2WIViewViewpagerActivity.onExtraPageSelected(tabs.tabsContainer.getChildAt(position), oldView, position, oldPosition);
+		}
 		oldView = tabs.tabsContainer.getChildAt(position);// 缓存视图
 		oldPosition = position; // 缓存坐标
 	}
@@ -278,6 +315,11 @@ public class J2WVPDefaultPagerAdapter<T extends J2WIPresenter> extends PagerAdap
 	 * @param state
 	 */
 	@Override public void onPageScrollStateChanged(int state) {
-		j2WIViewViewpagerABActivity.onExtraPageScrollStateChanged(state);
+		if (j2WIViewViewpagerABActivity != null) {
+			j2WIViewViewpagerABActivity.onExtraPageScrollStateChanged(state);
+		}
+		if (j2WIViewViewpagerActivity != null) {
+			j2WIViewViewpagerActivity.onExtraPageScrollStateChanged(state);
+		}
 	}
 }
