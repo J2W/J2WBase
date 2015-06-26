@@ -291,9 +291,6 @@ public class J2WDragTopLayout extends FrameLayout {
 
 													@Override public void onViewPositionChanged(View changedView, int left, int top, int dx, int dy) {
 														super.onViewPositionChanged(changedView, left, top, dx, dy);
-														if (hightSpace != 0 && dragContentView.getTop() <= hightSpace) {
-															return;
-														}
 														contentTop = top;
 														requestLayout();
 														calculateRatio(contentTop);
