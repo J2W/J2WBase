@@ -9,7 +9,7 @@ import j2w.team.mvp.model.ModelPager;
 /**
  * Created by sky on 15/3/3. viewpager
  */
-public interface J2WIViewViewpagerABActivity extends J2WIView {
+public interface J2WIViewViewpagerABActivity extends J2WIViewABActivity {
 
 	/**
 	 * 初始化 ItemPager
