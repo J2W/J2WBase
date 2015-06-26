@@ -120,6 +120,8 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 
 	private int							tabWidth;
 
+	private int							rectPaintWidth;
+
 	public PagerSlidingTabStrip(Context context) {
 		this(context, null);
 	}
@@ -204,6 +206,10 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 		} else {
 			getLayoutParams().width = LayoutParams.MATCH_PARENT;
 		}
+	}
+
+	public void setRectPaintWidth(int width) {
+		rectPaintWidth = width;
 	}
 
 	public void setViewPager(ViewPager pager) {
@@ -390,16 +396,16 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 
 		// default: line below current tab
 		View currentTab = tabsContainer.getChildAt(currentPosition);
-		float lineLeft = currentTab.getLeft();
-		float lineRight = tabWidth == 0 ? currentTab.getRight() : tabWidth;
+		float lineLeft = currentTab.getLeft() + rectPaintWidth;
+		float lineRight = tabWidth == 0 ? currentTab.getRight() - rectPaintWidth : tabWidth;
 
 		// if there is an offset, start interpolating left and right coordinates
 		// between current and next tab
 		if (currentPositionOffset > 0f && currentPosition < tabCount - 1) {
 
 			View nextTab = tabsContainer.getChildAt(currentPosition + 1);
-			final float nextTabLeft = nextTab.getLeft();
-			final float nextTabRight = tabWidth == 0 ? nextTab.getRight() : tabWidth;
+			final float nextTabLeft = nextTab.getLeft() + rectPaintWidth;
+			final float nextTabRight = tabWidth == 0 ? nextTab.getRight() - rectPaintWidth : tabWidth;
 
 			lineLeft = (currentPositionOffset * nextTabLeft + (1f - currentPositionOffset) * lineLeft);
 			lineRight = (currentPositionOffset * nextTabRight + (1f - currentPositionOffset) * lineRight);
