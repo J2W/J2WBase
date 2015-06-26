@@ -31,4 +31,19 @@
     <declare-styleable name="AutoScaleTextView">
         <attr name="minTextSize" format="dimension" />
     </declare-styleable>
+
+    <!-- 可拉伸 -->
+    <declare-styleable name="J2WDragTopLayout">
+        <attr name="dtlCollapseOffset" format="dimension" />
+
+        <attr name="dtlOverDrag" format="boolean" />
+
+        <attr name="dtlOpen" format="boolean" />
+
+        <attr name="dtlTopView" format="reference" />
+
+        <attr name="dtlDragContentView" format="reference" />
+
+        <attr name="dtlCaptureTop" format="boolean" />
+    </declare-styleable>
 </resources>

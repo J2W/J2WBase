@@ -3,7 +3,7 @@
 apply plugin: 'android-library'
 android {
     compileSdkVersion 21
-    buildToolsVersion "20"
+    buildToolsVersion '21.1.2'
 
     defaultConfig {
         minSdkVersion 10
@@ -29,6 +29,7 @@ dependencies {
     compile 'com.jakewharton:butterknife:6.1.0'
     //noinspection GradleCompatible
     compile 'com.android.support:appcompat-v7:21.0.3'
+    compile 'com.android.support:recyclerview-v7:21.0.3'
     compile 'commons-lang:commons-lang:2.6'
     compile 'com.squareup.picasso:picasso:2.5.0'
     compile 'com.squareup.okhttp:okhttp:2.2.0'
