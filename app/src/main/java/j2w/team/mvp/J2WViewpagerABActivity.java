@@ -66,7 +66,7 @@ public abstract class J2WViewpagerABActivity<T extends J2WIPresenter> extends J2
 	 *
 	 * @return true 打开 false 关闭
 	 */
-	@Override public final boolean activityState() {
+	@Override public boolean activityState() {
 		return super.activityState();
 	}
 
