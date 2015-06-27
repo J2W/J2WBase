@@ -144,7 +144,7 @@ public abstract class J2WViewPagerFragment<T extends J2WIPresenter> extends J2WF
 		// 设置距离
 		pager.setPageMargin(pageMargin);
 		// 预留数量
-		pager.setOffscreenPageLimit(4);
+		pager.setOffscreenPageLimit(offScreenPageLimit);
 		// 设置给头部
 		tabs.setViewPager(pager);
 	}
