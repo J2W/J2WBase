@@ -342,44 +342,4 @@ public abstract class J2WViewpagerABActivity<T extends J2WIPresenter> extends J2
 		}
 	}
 
-	/**
-	 * 默认是只有图标
-	 */
-	public final class DefaultIconPagerAdapter<T extends J2WIPresenter> extends J2WVPDefaultPagerAdapter implements PagerSlidingTabStrip.IconTabProvider {
-
-		public DefaultIconPagerAdapter(String tag, FragmentManager fragmentManager, PagerSlidingTabStrip tabs, J2WViewPager pager, J2WIViewViewpagerABActivity j2WIViewViewpagerABActivity) {
-			super(tag, fragmentManager, tabs, pager, j2WIViewViewpagerABActivity);
-		}
-
-		@Override public int getPageIconResId(int position) {
-			return viewPagerDatas[position].icon;
-		}
-	}
-
-	/**
-	 * 默认带数量标题的
-	 */
-	public final class DefaultCountPagerAdapter<T extends J2WIPresenter> extends J2WVPDefaultPagerAdapter implements PagerSlidingTabStrip.TitleCountTabProvider {
-
-		public DefaultCountPagerAdapter(String tag, FragmentManager fragmentManager, PagerSlidingTabStrip tabs, J2WViewPager pager, J2WIViewViewpagerABActivity j2WIViewViewpagerABActivity) {
-			super(tag, fragmentManager, tabs, pager, j2WIViewViewpagerABActivity);
-		}
-
-		@Override public String getPageCount(int position) {
-			String count = viewPagerDatas[position].count;
-			if (StringUtils.isEmpty(count)) {
-				return null;
-			}
-			return count;
-		}
-
-		public void setTitleCount(int position, String count) {
-			if (adapter instanceof DefaultCountPagerAdapter) {
-				DefaultCountPagerAdapter defaultCountPagerAdapter = (DefaultCountPagerAdapter) adapter;
-				ModelPager modelPager = defaultCountPagerAdapter.getData(position);
-				modelPager.count = count;
-				tabs.notifyDataSetChanged();
-			}
-		}
-	}
 }

@@ -14,6 +14,7 @@ import j2w.team.common.log.L;
 import j2w.team.common.widget.J2WViewPager;
 import j2w.team.common.widget.PagerSlidingTabStrip;
 import j2w.team.mvp.J2WIViewViewpagerABActivity;
+import j2w.team.mvp.J2WIViewViewpagerActivity;
 import j2w.team.mvp.adapter.J2WVPDefaultPagerAdapter;
 import j2w.team.mvp.model.ModelPager;
 import j2w.team.mvp.presenter.J2WIPresenter;
@@ -23,7 +24,7 @@ import j2w.team.mvp.presenter.J2WIPresenter;
  * @创建时间 15/4/24 下午3:53
  * @类描述 ViewPager
  */
-public abstract class J2WViewPagerFragment<T extends J2WIPresenter> extends J2WFragment<T> implements J2WIViewViewpagerABActivity {
+public abstract class J2WViewPagerFragment<T extends J2WIPresenter> extends J2WFragment<T> implements J2WIViewViewpagerFragment {
 
 	/**
 	 * ViewPager 头部 *

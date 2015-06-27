@@ -6,7 +6,8 @@ import android.view.View;
 import j2w.team.common.widget.J2WViewPager;
 import j2w.team.common.widget.PagerSlidingTabStrip;
 import j2w.team.mvp.J2WIViewViewpagerABActivity;
-import j2w.team.mvp.model.ModelPager;
+import j2w.team.mvp.J2WIViewViewpagerActivity;
+import j2w.team.mvp.fragment.J2WIViewViewpagerFragment;
 import j2w.team.mvp.presenter.J2WIPresenter;
 
 /**
@@ -18,6 +19,14 @@ public class J2WVPCustomPagerAdapter<T extends J2WIPresenter> extends J2WVPDefau
 
 	public J2WVPCustomPagerAdapter(String tag, FragmentManager fragmentManager, PagerSlidingTabStrip tabs, J2WViewPager pager, J2WIViewViewpagerABActivity j2WIViewViewpagerABActivity) {
 		super(tag, fragmentManager, tabs, pager, j2WIViewViewpagerABActivity);
+	}
+
+	public J2WVPCustomPagerAdapter(String tag, FragmentManager fragmentManager, PagerSlidingTabStrip tabs, J2WViewPager pager, J2WIViewViewpagerActivity j2WIViewViewpagerActivity) {
+		super(tag, fragmentManager, tabs, pager, j2WIViewViewpagerActivity);
+	}
+
+	public J2WVPCustomPagerAdapter(String tag, FragmentManager fragmentManager, PagerSlidingTabStrip tabs, J2WViewPager pager, J2WIViewViewpagerFragment j2WIViewViewpagerFragment) {
+		super(tag, fragmentManager, tabs, pager, j2WIViewViewpagerFragment);
 	}
 
 	@Override public int getCustomTabView() {

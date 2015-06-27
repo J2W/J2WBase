@@ -1,10 +1,7 @@
 package j2w.team.mvp;
 
-import org.apache.commons.lang.StringUtils;
-
 import android.graphics.Color;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.view.PagerAdapter;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
@@ -339,47 +336,6 @@ public abstract class J2WViewpagerActivity<T extends J2WIPresenter> extends J2WA
 			J2WVPDefaultPagerAdapter defaultPagerAdapter = (J2WVPDefaultPagerAdapter) adapter;
 			ModelPager modelPager = defaultPagerAdapter.getData(pager.getCurrentItem());
 			((J2WFragment) modelPager.fragment).onFragmentRestart(modelPager.position);
-		}
-	}
-
-	/**
-	 * 默认是只有图标
-	 */
-	public final class DefaultIconPagerAdapter<T extends J2WIPresenter> extends J2WVPDefaultPagerAdapter implements PagerSlidingTabStrip.IconTabProvider {
-
-		public DefaultIconPagerAdapter(String tag, FragmentManager fragmentManager, PagerSlidingTabStrip tabs, J2WViewPager pager, J2WIViewViewpagerABActivity j2WIViewViewpagerABActivity) {
-			super(tag, fragmentManager, tabs, pager, j2WIViewViewpagerABActivity);
-		}
-
-		@Override public int getPageIconResId(int position) {
-			return viewPagerDatas[position].icon;
-		}
-	}
-
-	/**
-	 * 默认带数量标题的
-	 */
-	public final class DefaultCountPagerAdapter<T extends J2WIPresenter> extends J2WVPDefaultPagerAdapter implements PagerSlidingTabStrip.TitleCountTabProvider {
-
-		public DefaultCountPagerAdapter(String tag, FragmentManager fragmentManager, PagerSlidingTabStrip tabs, J2WViewPager pager, J2WIViewViewpagerABActivity j2WIViewViewpagerABActivity) {
-			super(tag, fragmentManager, tabs, pager, j2WIViewViewpagerABActivity);
-		}
-
-		@Override public String getPageCount(int position) {
-			String count = viewPagerDatas[position].count;
-			if (StringUtils.isEmpty(count)) {
-				return null;
-			}
-			return count;
-		}
-
-		public void setTitleCount(int position, String count) {
-			if (adapter instanceof DefaultCountPagerAdapter) {
-				DefaultCountPagerAdapter defaultCountPagerAdapter = (DefaultCountPagerAdapter) adapter;
-				ModelPager modelPager = defaultCountPagerAdapter.getData(position);
-				modelPager.count = count;
-				tabs.notifyDataSetChanged();
-			}
 		}
 	}
 }
