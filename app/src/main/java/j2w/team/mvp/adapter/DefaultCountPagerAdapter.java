@@ -7,6 +7,7 @@ package j2w.team.mvp.adapter;
  */
 
 import android.support.v4.app.FragmentManager;
+import android.support.v4.view.PagerAdapter;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -39,8 +40,19 @@ public final class DefaultCountPagerAdapter<T extends J2WIPresenter> extends J2W
 	}
 
 	public void setTitleCount(int position, String count) {
-		if (j2WIViewViewpagerABActivity.getPagerAdapter() instanceof DefaultCountPagerAdapter) {
-			DefaultCountPagerAdapter defaultCountPagerAdapter = (DefaultCountPagerAdapter) j2WIViewViewpagerABActivity.getPagerAdapter();
+		PagerAdapter pagerAdapter = null;
+		if (j2WIViewViewpagerABActivity != null) {
+			pagerAdapter = j2WIViewViewpagerABActivity.getPagerAdapter();
+		}
+		if (j2WIViewViewpagerActivity != null) {
+			pagerAdapter = j2WIViewViewpagerActivity.getPagerAdapter();
+		}
+		if (j2WIViewViewpagerFragment != null) {
+			pagerAdapter = j2WIViewViewpagerFragment.getPagerAdapter();
+		}
+
+		if (pagerAdapter instanceof DefaultCountPagerAdapter) {
+			DefaultCountPagerAdapter defaultCountPagerAdapter = (DefaultCountPagerAdapter) pagerAdapter;
 			ModelPager modelPager = defaultCountPagerAdapter.getData(position);
 			modelPager.count = count;
 			tabs.notifyDataSetChanged();

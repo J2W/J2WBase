@@ -30,13 +30,41 @@ public class J2WVPCustomPagerAdapter<T extends J2WIPresenter> extends J2WVPDefau
 	}
 
 	@Override public int getCustomTabView() {
-		if (j2WIViewViewpagerABActivity.getViewPagerItemLayout() == 0) {
-			new IllegalArgumentException("必须要有自定义布局！");
+		if (j2WIViewViewpagerABActivity != null) {
+			if (j2WIViewViewpagerABActivity.getViewPagerItemLayout() == 0) {
+				new IllegalArgumentException("必须要有自定义布局！");
+			}
+			return j2WIViewViewpagerABActivity.getViewPagerItemLayout();
+
 		}
-		return j2WIViewViewpagerABActivity.getViewPagerItemLayout();
+		if (j2WIViewViewpagerActivity != null) {
+			if (j2WIViewViewpagerActivity.getViewPagerItemLayout() == 0) {
+				new IllegalArgumentException("必须要有自定义布局！");
+			}
+			return j2WIViewViewpagerActivity.getViewPagerItemLayout();
+
+		}
+		if (j2WIViewViewpagerFragment != null) {
+			if (j2WIViewViewpagerFragment.getViewPagerItemLayout() == 0) {
+				new IllegalArgumentException("必须要有自定义布局！");
+			}
+			return j2WIViewViewpagerFragment.getViewPagerItemLayout();
+
+		}
+		return 0;
 	}
 
 	@Override public void initTabsItem(View view, int position) {
-		j2WIViewViewpagerABActivity.initTab(view, viewPagerDatas[position]);
+		if (j2WIViewViewpagerABActivity != null) {
+			j2WIViewViewpagerABActivity.initTab(view, viewPagerDatas[position]);
+		}
+		if (j2WIViewViewpagerActivity != null) {
+			j2WIViewViewpagerActivity.initTab(view, viewPagerDatas[position]);
+
+
+		}
+		if (j2WIViewViewpagerFragment != null) {
+			j2WIViewViewpagerFragment.initTab(view, viewPagerDatas[position]);
+		}
 	}
 }
