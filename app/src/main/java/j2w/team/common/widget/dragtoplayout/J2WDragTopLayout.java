@@ -175,7 +175,7 @@ public class J2WDragTopLayout extends FrameLayout {
 		resetContentHeight();
 
 		topView.layout(left, Math.min(topView.getPaddingTop(), contentTop - topViewHeight), right, contentTop);
-		dragContentView.layout(left, contentTopTemp, right, contentTopTemp + dragContentView.getHeight());
+		dragContentView.layout(left, contentTop, right, contentTop + dragContentView.getHeight());
 	}
 
 	private void resetTopViewHeight() {

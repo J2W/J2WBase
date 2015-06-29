@@ -274,6 +274,9 @@ public class J2WVPDefaultPagerAdapter<T extends J2WIPresenter> extends PagerAdap
 				replacePosition = -1;
 			}
 		}
+		if(fragment.getView() == null){
+			throw new NullPointerException("fragment,没有给布局，导致获取不到View");
+		}
 
 		if (fragment.getView().getParent() == null) {
 			L.i("container.addView(fragment.getView())");
