@@ -83,11 +83,11 @@ public abstract class J2WCusomToast {
 			mToast.setDuration(Toast.LENGTH_SHORT);
 			mToast.setGravity(getGravity(), 0, 0);
 		} else {
+			init(v, msg);
 			mToast.setDuration(Toast.LENGTH_SHORT);
 			mToast.setGravity(getGravity(), 0, 0);
-			init(v, msg);
-			mToast.show();
-
 		}
+		mToast.show();
+
 	}
 }
