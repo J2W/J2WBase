@@ -188,6 +188,13 @@ public class J2WHelper {
 		J2WHelper.getScreenHelper().currentActivity().startActivity(intent);
 	}
 
+	public static final void intentTo(Class clazz,int animstart, int animstop) {
+		Intent intent = new Intent();
+		intent.setClass(J2WHelper.getScreenHelper().currentActivity(), clazz);
+		J2WHelper.getScreenHelper().currentActivity().startActivity(intent);
+		J2WHelper.getScreenHelper().currentActivity().overridePendingTransition(animstart, animstop);
+	}
+
 	public static final void intentTo(Class clazz, Bundle bundle) {
 		Intent intent = new Intent();
 		intent.setClass(J2WHelper.getScreenHelper().currentActivity(), clazz);
@@ -211,9 +218,9 @@ public class J2WHelper {
 	/**
 	 * Fragment 跳转工具
 	 */
-	public static final void commitDialogFragment(DialogFragment dialogFragment){
+	public static final void commitDialogFragment(DialogFragment dialogFragment) {
 		FragmentManager fragmentManager = J2WHelper.getScreenHelper().currentActivity().getSupportFragmentManager();
-		fragmentManager.beginTransaction().add(dialogFragment,dialogFragment.getClass().getSimpleName()).commitAllowingStateLoss();
+		fragmentManager.beginTransaction().add(dialogFragment, dialogFragment.getClass().getSimpleName()).commitAllowingStateLoss();
 	}
 
 	public static final void commitFragment(Fragment fragment) {
