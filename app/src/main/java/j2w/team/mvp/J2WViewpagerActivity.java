@@ -98,6 +98,8 @@ public abstract class J2WViewpagerActivity<T extends J2WIPresenter> extends J2WA
 		tabs.setBackgroundResource(getTabsBackgroundResource());
 		// 设置Tabs宽度
 		tabs.setTabWidth(getTabWidth());
+		// 设置Tasb切换动画
+		tabs.setIsCurrentItemAnimation(getTabsCurrentItemAnimation());
 	}
 
 	/**
@@ -254,6 +256,15 @@ public abstract class J2WViewpagerActivity<T extends J2WIPresenter> extends J2WA
 	 */
 	@Override public int getTabWidth() {
 		return 0;
+	}
+
+	/**
+	 * 设置切换是否有动画
+	 *
+	 * @return
+	 */
+	@Override public boolean getTabsCurrentItemAnimation() {
+		return false;
 	}
 
 	/**

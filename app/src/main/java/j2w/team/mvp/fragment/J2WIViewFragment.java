@@ -1,6 +1,7 @@
 package j2w.team.mvp.fragment;
 
 import android.support.v4.app.FragmentManager;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -126,4 +127,12 @@ public interface J2WIViewFragment extends J2WIView {
 	 * @return
 	 */
 	boolean isFragmentBackground();
+
+	/**
+	 * 按钮返回键
+	 * @param keyCode
+	 * @param event
+	 * @return
+	 */
+	boolean onJ2WKeyDown(int keyCode, KeyEvent event);
 }

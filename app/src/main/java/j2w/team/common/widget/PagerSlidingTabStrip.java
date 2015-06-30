@@ -122,6 +122,8 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 
 	private int							rectPaintWidth;
 
+	private boolean						isCurrentItemAnimation	= false;
+
 	public PagerSlidingTabStrip(Context context) {
 		this(context, null);
 	}
@@ -208,7 +210,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 		}
 	}
 
-	public void setRectPaintWidth(int width){
+	public void setRectPaintWidth(int width) {
 		rectPaintWidth = width;
 	}
 
@@ -274,7 +276,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 		tab.setOnClickListener(new OnClickListener() {
 
 			@Override public void onClick(View v) {
-				pager.setCurrentItem(position, false);
+				pager.setCurrentItem(position, isCurrentItemAnimation);
 			}
 		});
 		tabsContainer.addView(tab, position, shouldExpand ? expandedTabLayoutParams : defaultTabLayoutParams);
@@ -404,8 +406,8 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 		if (currentPositionOffset > 0f && currentPosition < tabCount - 1) {
 
 			View nextTab = tabsContainer.getChildAt(currentPosition + 1);
-			final float nextTabLeft = nextTab.getLeft()+rectPaintWidth;
-			final float nextTabRight = tabWidth == 0 ? nextTab.getRight()-rectPaintWidth : tabWidth;
+			final float nextTabLeft = nextTab.getLeft() + rectPaintWidth;
+			final float nextTabRight = tabWidth == 0 ? nextTab.getRight() - rectPaintWidth : tabWidth;
 
 			lineLeft = (currentPositionOffset * nextTabLeft + (1f - currentPositionOffset) * lineLeft);
 			lineRight = (currentPositionOffset * nextTabRight + (1f - currentPositionOffset) * lineRight);
@@ -629,6 +631,14 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 		SavedState savedState = new SavedState(superState);
 		savedState.currentPosition = currentPosition;
 		return savedState;
+	}
+
+	/**
+	 * 切换是否有动画
+	 * @param isCurrentItemAnimation
+	 */
+	public void setIsCurrentItemAnimation(boolean isCurrentItemAnimation) {
+		this.isCurrentItemAnimation = isCurrentItemAnimation;
 	}
 
 	static class SavedState extends BaseSavedState {
