@@ -315,12 +315,23 @@ public class J2WDragTopLayout extends FrameLayout {
 													@Override public void onViewReleased(View releasedChild, float xvel, float yvel) {
 														super.onViewReleased(releasedChild, xvel, yvel);
 														int top;
-														if (yvel > 0 || contentTop > topViewHeight) {
-															top = topViewHeight + getPaddingTop();
-														} else {
-															top = getPaddingTop() + collapseOffset;
+														if (xvel == 0.0f && yvel == 0.0f) {
+
+															if(getState() == PanelState.EXPANDED){ //如果是张开状态
+																top = topViewHeight + getPaddingTop();
+															}else{
+																top = getPaddingTop() + collapseOffset;
+															}
+															dragHelper.settleCapturedViewAt(releasedChild.getLeft(), top == 0 ? hightSpace : top);
+														}else{
+															if (yvel > 0 || contentTop > topViewHeight) {
+																top = topViewHeight + getPaddingTop();
+															} else {
+																top = getPaddingTop() + collapseOffset;
+															}
+															dragHelper.settleCapturedViewAt(releasedChild.getLeft(), top == 0 ? hightSpace : top);
 														}
-														dragHelper.settleCapturedViewAt(releasedChild.getLeft(), top == 0 ? hightSpace : top);
+
 														postInvalidate();
 													}
 
