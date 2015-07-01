@@ -206,7 +206,7 @@ public class J2WDragTopLayout extends FrameLayout {
 
 			@Override public void run() {
 				dragHelper.smoothSlideViewTo(dragContentView, getPaddingLeft(), top);
-				postInvalidate();
+				invalidate();
 			}
 		});
 	}
@@ -215,7 +215,7 @@ public class J2WDragTopLayout extends FrameLayout {
 		contentTop = top;
 		if (anim) {
 			dragHelper.smoothSlideViewTo(dragContentView, getPaddingLeft(), contentTop);
-			postInvalidate();
+			invalidate();
 		} else {
 			requestLayout();
 		}
@@ -332,7 +332,9 @@ public class J2WDragTopLayout extends FrameLayout {
 															dragHelper.settleCapturedViewAt(releasedChild.getLeft(), top == 0 ? hightSpace : top);
 														}
 
-														postInvalidate();
+														invalidate();
+//
+//														postInvalidate();
 													}
 
 													@Override public void onViewDragStateChanged(int state) {
