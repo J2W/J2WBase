@@ -18,9 +18,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ListView;
-import android.widget.ScrollView;
 
 import j2w.team.R;
+import j2w.team.mvp.adapter.J2WVPDefaultPagerAdapter;
 
 /**
  * @创建人 sky
@@ -70,6 +70,8 @@ public class J2WDragTopLayout extends FrameLayout {
 	private PanelState		panelState						= PanelState.EXPANDED;
 
 	private int				hightSpace;											// 预留空间
+
+	View					listView;
 
 	public enum PanelState {
 
@@ -331,7 +333,9 @@ public class J2WDragTopLayout extends FrameLayout {
 															}
 															dragHelper.settleCapturedViewAt(releasedChild.getLeft(), top == 0 ? hightSpace : top);
 														} else {
-															if (yvel > 0 || contentTop > topViewHeight) {
+															int bjz = topViewHeight / 2;
+
+															if (yvel > 0 || topViewHeight - contentTop < bjz) {
 																top = topViewHeight + getPaddingTop();
 															} else {
 																top = getPaddingTop() + collapseOffset;
@@ -355,6 +359,21 @@ public class J2WDragTopLayout extends FrameLayout {
 		}
 	}
 
+	private void getCurrentScrollView() {
+		if (dragContentView instanceof ViewPager) {
+
+			ViewPager mViewPager = (ViewPager) dragContentView;
+
+			int currentItem = mViewPager.getCurrentItem();
+			PagerAdapter pagerAdapter = mViewPager.getAdapter();
+			if (pagerAdapter instanceof J2WVPDefaultPagerAdapter) {
+				J2WVPDefaultPagerAdapter fadapter = (J2WVPDefaultPagerAdapter) pagerAdapter;
+				Fragment item = fadapter.getData(currentItem).fragment;
+				listView = item.getView().findViewById(R.id.swipe_container);
+			}
+		}
+	}
+
 	private float	mLastY;
 
 	@Override public boolean onInterceptTouchEvent(MotionEvent ev) {
@@ -367,8 +386,8 @@ public class J2WDragTopLayout extends FrameLayout {
 				break;
 			case MotionEvent.ACTION_MOVE:
 				float dy = y - mLastY;
-
-				if (panelState == PanelState.EXPANDED &&  dy > 0 && shouldIntercept) {
+				getCurrentScrollView();
+				if (panelState == PanelState.EXPANDED && dy > 0 && shouldIntercept && listView == null) {
 					return true;
 				}
 				break;
