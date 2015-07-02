@@ -197,7 +197,7 @@ public class J2WRestAdapter {
 			L.i("J2WMethodInfo requestTag 开始 请求方法名 : " + request.tag());
 			dialogFragment = (ProgressDailogFragment) fragmentManager.findFragmentByTag(J2WConstants.J2W_DIALOG_PROGRESS);
 			if (dialogFragment != null) {
-				dialogFragment.setCancelable(true);
+				dialogFragment.setCancelable(false);
 			}
 			// 发送请求
 			Response response = call.execute();
