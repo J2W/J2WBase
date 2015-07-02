@@ -4,14 +4,21 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Handler;
 import android.os.Parcelable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.MotionEventCompat;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.ViewDragHelper;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ListView;
+import android.widget.ScrollView;
 
 import j2w.team.R;
 
@@ -317,13 +324,13 @@ public class J2WDragTopLayout extends FrameLayout {
 														int top;
 														if (xvel == 0.0f && yvel == 0.0f) {
 
-															if(getState() == PanelState.EXPANDED){ //如果是张开状态
+															if (getState() == PanelState.EXPANDED) { // 如果是张开状态
 																top = topViewHeight + getPaddingTop();
-															}else{
+															} else {
 																top = getPaddingTop() + collapseOffset;
 															}
 															dragHelper.settleCapturedViewAt(releasedChild.getLeft(), top == 0 ? hightSpace : top);
-														}else{
+														} else {
 															if (yvel > 0 || contentTop > topViewHeight) {
 																top = topViewHeight + getPaddingTop();
 															} else {
@@ -333,8 +340,8 @@ public class J2WDragTopLayout extends FrameLayout {
 														}
 
 														invalidate();
-//
-//														postInvalidate();
+														//
+														// postInvalidate();
 													}
 
 													@Override public void onViewDragStateChanged(int state) {
@@ -348,9 +355,25 @@ public class J2WDragTopLayout extends FrameLayout {
 		}
 	}
 
-	@Override public boolean onInterceptTouchEvent(MotionEvent ev) {
-		try {
+	private float	mLastY;
 
+	@Override public boolean onInterceptTouchEvent(MotionEvent ev) {
+		int action = ev.getAction();
+		float y = ev.getY();
+
+		switch (action) {
+			case MotionEvent.ACTION_DOWN:
+				mLastY = y;
+				break;
+			case MotionEvent.ACTION_MOVE:
+				float dy = y - mLastY;
+
+				if (panelState == PanelState.EXPANDED &&  dy > 0 && shouldIntercept) {
+					return true;
+				}
+				break;
+		}
+		try {
 			boolean intercept = shouldIntercept && dragHelper.shouldInterceptTouchEvent(ev);
 			return intercept;
 		} catch (NullPointerException e) {
