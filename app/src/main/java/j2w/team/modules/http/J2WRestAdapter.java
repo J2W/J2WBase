@@ -192,22 +192,8 @@ public class J2WRestAdapter {
 			FragmentManager fragmentManager = J2WHelper.getScreenHelper().currentActivity().getSupportFragmentManager();
 			ProgressDailogFragment dialogFragment;
 			Call call = client.newCall(request);
-			// 缓存
-			L.tag("J2WRestAdapter");
-			L.i("J2WMethodInfo requestTag 开始 请求方法名 : " + request.tag());
-			dialogFragment = (ProgressDailogFragment) fragmentManager.findFragmentByTag(J2WConstants.J2W_DIALOG_PROGRESS);
-			if (dialogFragment != null) {
-				dialogFragment.setCancelable(false);
-			}
 			// 发送请求
 			Response response = call.execute();
-			// 查找dialog
-			dialogFragment = (ProgressDailogFragment) fragmentManager.findFragmentByTag(J2WConstants.J2W_DIALOG_PROGRESS);
-			if (dialogFragment != null) {
-				dialogFragment.setCancelable(false);
-			}
-			L.tag("J2WRestAdapter");
-			L.i("J2WMethodInfo requestTag 结束 请求方法名 : " + request.tag());
 			// 拿到结果调用结果处理方法
 			return createResult(methodInfo, response);
 		} catch (IOException e) {
