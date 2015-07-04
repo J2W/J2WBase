@@ -333,9 +333,7 @@ public class J2WDragTopLayout extends FrameLayout {
 															}
 															dragHelper.settleCapturedViewAt(releasedChild.getLeft(), top == 0 ? hightSpace : top);
 														} else {
-															int bjz = topViewHeight / 2;
-
-															if (yvel > 0 || topViewHeight - contentTop < bjz) {
+															if (yvel > 0) {
 																top = topViewHeight + getPaddingTop();
 															} else {
 																top = getPaddingTop() + collapseOffset;
