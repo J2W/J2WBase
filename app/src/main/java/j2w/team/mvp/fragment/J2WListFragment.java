@@ -258,6 +258,7 @@ public abstract class J2WListFragment<T extends J2WIPresenter> extends J2WFragme
 				showEmpty();
 			} else {
 				mList = new ArrayList();
+				mListAdapter.notifyDataSetChanged();
 				showContent();
 			}
 			return;
