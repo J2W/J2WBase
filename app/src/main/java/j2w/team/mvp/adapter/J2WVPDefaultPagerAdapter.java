@@ -29,7 +29,7 @@ public class J2WVPDefaultPagerAdapter<T extends J2WIPresenter> extends PagerAdap
 
 	protected FragmentManager				fragmentManager;				// 管理器
 
-	protected int							currentPageIndex	= 0;		// 当前page索引（切换之前）
+	protected int							currentPageIndex	= -1;		// 当前page索引（切换之前）
 
 	protected int							replacePosition		= -1;		// 替换标识
 
@@ -317,6 +317,10 @@ public class J2WVPDefaultPagerAdapter<T extends J2WIPresenter> extends PagerAdap
 	@Override public void onPageSelected(int position) {
 		L.tag(tag);
 		L.i("onPageSelected() :getCurrentItem() :" + pager.getCurrentItem() + " currentPageIndex : " + currentPageIndex + " position :" + position);
+		if(currentPageIndex == -1){
+			currentPageIndex = position;
+			oldView = tabs.tabsContainer.getChildAt(0);
+		}
 		viewPagerDatas[currentPageIndex].fragment.onPause(); // 调用切换前Fargment的onPause()
 		// 调用切换前Fargment的onStop()
 		if (viewPagerDatas[position].fragment.isAdded()) {
