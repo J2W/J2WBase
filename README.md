@@ -17,7 +17,7 @@ Project-build.gradle
              jcenter()
          }
          dependencies {
-             classpath 'com.android.tools.build:gradle:1.0.0'
+             classpath 'com.android.tools.build:gradle:1.2.3'
          }
      }
      
