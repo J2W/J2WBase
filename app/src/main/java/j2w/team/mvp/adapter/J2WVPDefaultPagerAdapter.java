@@ -320,6 +320,7 @@ public class J2WVPDefaultPagerAdapter<T extends J2WIPresenter> extends PagerAdap
 		if(currentPageIndex == -1){
 			currentPageIndex = position;
 			oldView = tabs.tabsContainer.getChildAt(0);
+            oldPosition = position;
 		}
 		viewPagerDatas[currentPageIndex].fragment.onPause(); // 调用切换前Fargment的onPause()
 		// 调用切换前Fargment的onStop()
