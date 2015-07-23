@@ -98,6 +98,10 @@ public interface J2WIViewViewpagerABActivity extends J2WIViewABActivity {
 
 	boolean getTabsCurrentItemAnimation(); // 设置切换是否有动画
 
+	int getTabMargins();
+
+	int getTabPaddingLeftRight();
+
 	/**
 	 * 设置Item样式 -替换item
 	 */

@@ -100,6 +100,8 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 
 	private int							tabPadding				= 20;
 
+	private int							tabMargins				= 0;
+
 	private int							dividerWidth			= 1;
 
 	private int							tabTextSize				= 12;
@@ -190,7 +192,6 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 
 		defaultTabLayoutParams = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
 		expandedTabLayoutParams = new LinearLayout.LayoutParams(0, LayoutParams.MATCH_PARENT, 1.0f);
-
 		if (locale == null) {
 			locale = getResources().getConfiguration().locale;
 		}
@@ -328,6 +329,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 		});
 
 		tab.setPadding(tabPadding, 0, tabPadding, 0);
+
 		tabsContainer.addView(tab, position, shouldExpand ? expandedTabLayoutParams : defaultTabLayoutParams);
 	}
 
@@ -611,7 +613,17 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 	}
 
 	public void setTabPaddingLeftRight(int paddingPx) {
-		this.tabPadding = paddingPx;
+		DisplayMetrics dm = getResources().getDisplayMetrics();
+		this.tabPadding = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, paddingPx, dm);
+		updateTabStyles();
+	}
+
+	public void setTabMarginsLeftRight(int marginsPx) {
+		DisplayMetrics dm = getResources().getDisplayMetrics();
+		tabMargins = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, marginsPx, dm);
+
+		defaultTabLayoutParams.setMargins(tabMargins, 0, tabMargins, 0);
+		expandedTabLayoutParams.setMargins(tabMargins, 0, tabMargins, 0);
 		updateTabStyles();
 	}
 
@@ -635,6 +647,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 
 	/**
 	 * 切换是否有动画
+	 * 
 	 * @param isCurrentItemAnimation
 	 */
 	public void setIsCurrentItemAnimation(boolean isCurrentItemAnimation) {

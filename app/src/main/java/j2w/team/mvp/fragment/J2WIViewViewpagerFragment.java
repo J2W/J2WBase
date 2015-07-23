@@ -99,6 +99,8 @@ public interface J2WIViewViewpagerFragment extends J2WIViewFragment {
 
     boolean getTabsCurrentItemAnimation(); // 设置切换是否有动画
 
+    int getTabMargins();
+     int getTabPaddingLeftRight();
     /**
      * 设置Item样式 -替换item
      */
