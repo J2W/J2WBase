@@ -97,7 +97,9 @@ public interface J2WIViewViewpagerActivity extends J2WIViewActivity {
 	int getTabWidth();// 设置每个Tab宽度
 
 	boolean getTabsCurrentItemAnimation(); // 设置切换是否有动画
+	int getTabMargins();
 
+	int getTabPaddingLeftRight();
 	/**
 	 * 设置Item样式 -替换item
 	 */
