@@ -77,6 +77,11 @@ public class J2WSyncHandler<T> extends BaseHandler<T> {
 		}
 		// 获取后台线程池类型
 		BackgroundType backgroundType = background.value();
+		if (j2WStack == null || !j2WStack.value()) { // 拦截
+			L.tag("J2W-Method");
+			L.i("Stack  入栈 : " + key);
+			stack.push(key); // 入栈
+		}
 		// 生成执行任务
 		SyncHandlerCall syncHandlerCall = new SyncHandlerCall(key, j2WStack, method, methodError, args);
 		switch (backgroundType) {
@@ -111,14 +116,7 @@ public class J2WSyncHandler<T> extends BaseHandler<T> {
 
 		@Override protected void execute() {
 			try {
-				if (super.j2WStack == null || !super.j2WStack.value()) { // 拦截
-					L.tag("J2W-Method");
-					L.i("Stack  入栈 : " + super.mehtodName);
-					stack.push(super.mehtodName); // 入栈
-					super.method.invoke(t, args);// 执行
-				} else {
-					super.method.invoke(t, args);// 执行
-				}
+				super.method.invoke(t, args);// 执行
 			} catch (Throwable e) {
 				try {
 					super.methodError.invoke(t, new Object[] { method.getName(), e });
